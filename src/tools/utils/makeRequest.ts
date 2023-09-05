@@ -33,6 +33,7 @@ type OptionsType<SuccessData, ErrorData> = {
     finallyStart?: Function;
     finallyEnd?: Function;
 };
+const numberOfAttempts = { value: 2 };
 
 export function* makeRequest<SuccessData, ErrorData = {}>(options: OptionsType<SuccessData, ErrorData>) {
     const {
@@ -44,6 +45,7 @@ export function* makeRequest<SuccessData, ErrorData = {}>(options: OptionsType<S
         finallyStart, finallyEnd,
         success, error,
     } = options;
+
 
     try {
         // ------------- TRY BLOCK START -------------
@@ -58,14 +60,14 @@ export function* makeRequest<SuccessData, ErrorData = {}>(options: OptionsType<S
             }));
         }
 
-        const result: SuccessData = yield call(() => customFetch(fetchOptions));
+        const result: { data: SuccessData } = yield call(() => customFetch(fetchOptions));
 
         if (success) {
-            yield success(result);
+            yield success(result.data);
         }
 
         if (tryEnd) {
-            yield tryEnd(result);
+            yield tryEnd(result.data);
         }
 
         return result;
@@ -80,7 +82,8 @@ export function* makeRequest<SuccessData, ErrorData = {}>(options: OptionsType<S
             yield error(errorData);
         }
 
-        if (callAction) {
+        if (callAction && numberOfAttempts.value > 0) {
+            yield numberOfAttempts.value -= 1;
             yield put(callAction);
         }
 
