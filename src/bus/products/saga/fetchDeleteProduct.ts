@@ -4,7 +4,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { put, takeLatest } from 'redux-saga/effects';
 
 // API
-import { deleteProductFetch } from '../../../api';
+import { deleteProductFetcher } from '../../../api';
 
 // Slice
 import { productsActions, sliceName } from '../slice';
@@ -13,8 +13,8 @@ import { productsActions, sliceName } from '../slice';
 import { makeRequest } from '../../../tools/utils';
 
 // Types
-import * as commonTypes from '../../common';
-import * as types from '../types';
+import * as commonTypes from '../../commonTypes';
+import * as types from './types';
 
 // Action
 export const fetchDeleteProductAction = createAction<types.FetchDeleteProductRequest>(`${sliceName}/FETCH_DELETE_PRODUCT_ASYNC`);
@@ -26,11 +26,14 @@ const fetchDeleteProduct = (
     callAction,
     fetchOptions: {
         successStatusCode: 200,
-        fetch:             () => deleteProductFetch(callAction.payload),
+        fetch:             () => deleteProductFetcher(callAction.payload),
     },
     tryStart: function* () {
         if (callAction.payload) {
-            yield put(productsActions.setIsLoadingOfProducts(true));
+            yield put(productsActions.setIsLoadingOfProducts({
+                type:  'delete',
+                value: true,
+            }));
         }
     },
     success: function* (result) {
@@ -41,7 +44,10 @@ const fetchDeleteProduct = (
     },
     finallyEnd: function* () {
         if (callAction.payload) {
-            yield put(productsActions.setIsLoadingOfProducts(false));
+            yield put(productsActions.setIsLoadingOfProducts({
+                type:  'delete',
+                value: false,
+            }));
         }
     },
 });

@@ -2,9 +2,9 @@
 import { CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
 // Types
-import { State } from '../common';
+import * as commonTypes from '../commonTypes';
 
-// Types
+// Types of Entities
 export type Product = {
     title: string;
     description: string;
@@ -23,33 +23,16 @@ export type ExtendedProduct = Product & {
 };
 export type Products = ExtendedProduct[];
 
-// Types Request / Response
-// Products
-export type FetchProductsRequest = boolean | undefined;
-export type FetchProductsResponse = Products;
-
-// Create product
-export type FetchCreateNewProductRequest = Product;
-export type FetchCreateNewProductResponse = ExtendedProduct;
-
-// Delete product
-export type FetchDeleteProductRequest = ExtendedProduct['_id'];
-export type FetchDeleteProductResponse = ExtendedProduct['_id'];
-
-// Edit product
-export interface FetchEditProductRequest extends Pick<ExtendedProduct, '_id'> {
-    editedProduct: Product;
-}
-export type FetchEditProductResponse = ExtendedProduct;
-
-// Increment product
-export type FetchIncrementProductViewsRequest = string;
-export type FetchIncrementProductViewsResponse = ExtendedProduct;
-
 // State
-export interface ProductsState extends State {
-    items: null | Products;
+export type IsLoadings = 'products' | 'incrementViews' | 'edit' | 'delete' | 'create';
+export interface ProductsState extends commonTypes.State<Record<IsLoadings, commonTypes.IsLoading>> {
+    products: null | Products;
 }
+
+// Actions
+export type SetIsLoadingOfProductsAction = commonTypes.SetIsLoading<IsLoadings>
 
 // Contracts
 export type BaseContact<T = any> = CaseReducer<ProductsState, PayloadAction<T>>;
+
+export type SetIsLoadingOfProductsContact = BaseContact<SetIsLoadingOfProductsAction>;

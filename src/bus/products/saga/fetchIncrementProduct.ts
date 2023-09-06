@@ -4,7 +4,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { put, takeLatest } from 'redux-saga/effects';
 
 // API
-import { incrementProductViewsFetch } from '../../../api';
+import { incrementProductViewsFetcher } from '../../../api';
 
 // Slice
 import { productsActions, sliceName } from '../slice';
@@ -13,8 +13,8 @@ import { productsActions, sliceName } from '../slice';
 import { makeRequest } from '../../../tools/utils';
 
 // Types
-import * as commonTypes from '../../common';
-import * as types from '../types';
+import * as commonTypes from '../../commonTypes';
+import * as types from './types';
 
 // Action
 export const fetchIncrementProductViewsAction = createAction<types.FetchIncrementProductViewsRequest>(`${sliceName}/FETCH_INCREMENT_PRODUCT_VIEWS_ASYNC`);
@@ -26,11 +26,14 @@ const fetchIncrementProductViews = (
     callAction,
     fetchOptions: {
         successStatusCode: 200,
-        fetch:             () => incrementProductViewsFetch(callAction.payload),
+        fetch:             () => incrementProductViewsFetcher(callAction.payload),
     },
     tryStart: function* () {
         if (callAction.payload) {
-            yield put(productsActions.setIsLoadingOfProducts(true));
+            yield put(productsActions.setIsLoadingOfProducts({
+                type:  'incrementViews',
+                value: true,
+            }));
         }
     },
     success: function* (result) {
@@ -41,7 +44,10 @@ const fetchIncrementProductViews = (
     },
     finallyEnd: function* () {
         if (callAction.payload) {
-            yield put(productsActions.setIsLoadingOfProducts(false));
+            yield put(productsActions.setIsLoadingOfProducts({
+                type:  'incrementViews',
+                value: false,
+            }));
         }
     },
 });

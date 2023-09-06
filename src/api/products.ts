@@ -2,10 +2,10 @@
 import { API, HEADERS } from './config';
 
 // Types
-import * as types from '../bus/products/types';
+import * as types from '../bus/products/saga/types';
 
-export const productsFetch = () => {
-    return fetch(API.PRODUCTS, {
+export const productsFetcher = () => {
+    return fetch(API.PRODUCTS.PRODUCTS, {
         method:  'GET',
         headers: {
             ...HEADERS,
@@ -13,8 +13,8 @@ export const productsFetch = () => {
     });
 };
 
-export const createNewProductFetch = (body: types.Product) => {
-    return fetch(API.PRODUCTS, {
+export const createNewProductFetcher = (body: types.FetchCreateNewProductRequest) => {
+    return fetch(API.PRODUCTS.PRODUCTS, {
         method:      'POST',
         credentials: 'include',
         headers:     {
@@ -24,8 +24,8 @@ export const createNewProductFetch = (body: types.Product) => {
     });
 };
 
-export const deleteProductFetch = (payload: types.FetchDeleteProductRequest) => {
-    return fetch(API.PRODUCT(payload), {
+export const deleteProductFetcher = (payload: types.FetchDeleteProductRequest) => {
+    return fetch(API.PRODUCTS.PRODUCT(payload), {
         method:      'DELETE',
         credentials: 'include',
         headers:     {
@@ -34,8 +34,8 @@ export const deleteProductFetch = (payload: types.FetchDeleteProductRequest) => 
     });
 };
 
-export const editProductFetch = (payload: types.FetchEditProductRequest) => {
-    return fetch(API.PRODUCT(payload._id), {
+export const editProductFetcher = (payload: types.FetchEditProductRequest) => {
+    return fetch(API.PRODUCTS.PRODUCT(payload._id), {
         method:      'PUT',
         credentials: 'include',
         headers:     {
@@ -45,8 +45,8 @@ export const editProductFetch = (payload: types.FetchEditProductRequest) => {
     });
 };
 
-export const incrementProductViewsFetch = (_id: types.FetchIncrementProductViewsRequest) => {
-    return fetch(API.INCREMENT_VIEWS(_id), {
+export const incrementProductViewsFetcher = (_id: types.FetchIncrementProductViewsRequest) => {
+    return fetch(API.PRODUCTS.INCREMENT_VIEWS(_id), {
         method:      'POST',
         credentials: 'include',
         headers:     {

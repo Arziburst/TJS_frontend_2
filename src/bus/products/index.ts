@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from '../../tools/hooks'; /* Typed selector 
 import { productsActions } from './slice';
 
 // Types
+import * as commonTypes from '../commonTypes';
 import * as types from './types';
-import * as commonTypes from '../common';
 
 // MarkerGen middleware
 import { useProductsSaga } from './saga';
@@ -18,10 +18,6 @@ export const useProducts = () => {
     const dispatch = useDispatch();
     const products = useSelector((state) => state.products);
 
-    // useEffect(() => {
-    //     // MarkerGen use api hook
-    // }, []);
-
     return {
         products,
         setProducts:       (payload: types.Products) => dispatch(productsActions.setProducts(payload)),
@@ -32,7 +28,7 @@ export const useProducts = () => {
             payload: types.ExtendedProduct,
         ) => dispatch(productsActions.setEditedProduct(payload)),
         setIsLoadingOfProducts: (
-            payload: commonTypes.IsLoading,
+            payload: types.SetIsLoadingOfProductsAction,
         ) => dispatch(productsActions.setIsLoadingOfProducts(payload)),
         setErrorOfProducts: (payload: commonTypes.Error) => dispatch(productsActions.setErrorOfProducts(payload)),
         ...productsSagas,

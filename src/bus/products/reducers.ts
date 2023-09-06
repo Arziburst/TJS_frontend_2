@@ -1,5 +1,8 @@
+// Common
+import { setIsLoading } from '../common';
+
 // Types
-import * as commonTypes from '../common';
+import * as commonTypes from '../commonTypes';
 import * as types from './types';
 
 export const setProducts: types.BaseContact<types.Products> = (state, action) => ({
@@ -8,10 +11,10 @@ export const setProducts: types.BaseContact<types.Products> = (state, action) =>
 });
 
 export const setProduct: types.BaseContact<types.ExtendedProduct> = (state, action) => {
-    if (state.items) {
+    if (state.products) {
         return {
             ...state,
-            items: [ action.payload, ...state.items ],
+            items: [ action.payload, ...state.products ],
         };
     }
 
@@ -22,14 +25,14 @@ export const setProduct: types.BaseContact<types.ExtendedProduct> = (state, acti
 };
 
 export const setDeleteProduct: types.BaseContact<string> = (state, action) => {
-    if (state.items) {
-        state.items.filter(({ _id }) => _id !== action.payload);
+    if (state.products) {
+        state.products.filter(({ _id }) => _id !== action.payload);
     }
 };
 
 export const setEditedProduct: types.BaseContact<types.ExtendedProduct> = (state, action) => {
-    if (state.items) {
-        const newItems = state.items.map((product) => {
+    if (state.products) {
+        const newItems = state.products.map((product) => {
             if (product._id === action.payload._id) {
                 return {
                     ...product,
@@ -55,7 +58,4 @@ export const setErrorOfProducts: types.BaseContact<commonTypes.Error> = (state, 
 });
 
 
-export const setIsLoadingOfProducts: types.BaseContact<commonTypes.IsLoading> = (state, action) => ({
-    ...state,
-    isLoading: action.payload,
-});
+export const setIsLoadingOfProducts: types.SetIsLoadingOfProductsContact = setIsLoading;

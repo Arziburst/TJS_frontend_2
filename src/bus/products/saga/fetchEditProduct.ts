@@ -4,7 +4,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { put, takeLatest } from 'redux-saga/effects';
 
 // API
-import { editProductFetch } from '../../../api';
+import { editProductFetcher } from '../../../api';
 
 // Slice
 import { productsActions, sliceName } from '../slice';
@@ -13,8 +13,8 @@ import { productsActions, sliceName } from '../slice';
 import { makeRequest } from '../../../tools/utils';
 
 // Types
-import * as commonTypes from '../../common';
-import * as types from '../types';
+import * as commonTypes from '../../commonTypes';
+import * as types from './types';
 
 // Action
 export const fetchEditProductAction = createAction<types.FetchEditProductRequest>(`${sliceName}/FETCH_EDIT_PRODUCT_ASYNC`);
@@ -26,11 +26,14 @@ const fetchEditProduct = (
     callAction,
     fetchOptions: {
         successStatusCode: 200,
-        fetch:             () => editProductFetch(callAction.payload),
+        fetch:             () => editProductFetcher(callAction.payload),
     },
     tryStart: function* () {
         if (callAction.payload) {
-            yield put(productsActions.setIsLoadingOfProducts(true));
+            yield put(productsActions.setIsLoadingOfProducts({
+                type:  'edit',
+                value: true,
+            }));
         }
     },
     success: function* (result) {
@@ -41,7 +44,10 @@ const fetchEditProduct = (
     },
     finallyEnd: function* () {
         if (callAction.payload) {
-            yield put(productsActions.setIsLoadingOfProducts(false));
+            yield put(productsActions.setIsLoadingOfProducts({
+                type:  'edit',
+                value: false,
+            }));
         }
     },
 });

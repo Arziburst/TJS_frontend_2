@@ -13,7 +13,14 @@ import * as reducers from './reducers';
 
 const initialState: types.ProductsState = {
     ...commonInitialState,
-    items: null,
+    isLoadings: {
+        products:       false,
+        create:         false,
+        incrementViews: false,
+        edit:           false,
+        delete:         false,
+    },
+    products: null,
 };
 
 export const productsSlice = createSlice<types.ProductsState, typeof reducers>({

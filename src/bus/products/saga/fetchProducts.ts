@@ -3,8 +3,11 @@ import { SagaIterator } from '@redux-saga/core';
 import { createAction } from '@reduxjs/toolkit';
 import { put, takeLatest } from 'redux-saga/effects';
 
+// Init
+import { LOCAL_STORAGE } from '../../../init';
+
 // API
-import { productsFetch } from '../../../api';
+import { productsFetcher } from '../../../api';
 
 // Slice
 import { productsActions, sliceName } from '../slice';
@@ -13,9 +16,8 @@ import { productsActions, sliceName } from '../slice';
 import { arrayComparison, makeRequest } from '../../../tools/utils';
 
 // Types
-import * as commonTypes from '../../common';
-import * as types from '../types';
-import { LOCAL_STORAGE } from '../../../init';
+import * as commonTypes from '../../commonTypes';
+import * as types from './types';
 
 // Action
 export const fetchProductsAction = createAction<types.FetchProductsRequest>(`${sliceName}/FETCH_PRODUCTS_ASYNC`);
@@ -27,11 +29,14 @@ const fetchProducts = (
     callAction,
     fetchOptions: {
         successStatusCode: 200,
-        fetch:             productsFetch,
+        fetch:             productsFetcher,
     },
     tryStart: function* () {
         if (callAction.payload || typeof callAction.payload === 'undefined') {
-            yield put(productsActions.setIsLoadingOfProducts(true));
+            yield put(productsActions.setIsLoadingOfProducts({
+                type:  'products',
+                value: true,
+            }));
         }
     },
     success: function* (result) {
@@ -68,7 +73,10 @@ const fetchProducts = (
     },
     finallyEnd: function* () {
         if (callAction.payload || typeof callAction.payload === 'undefined') {
-            yield put(productsActions.setIsLoadingOfProducts(false));
+            yield put(productsActions.setIsLoadingOfProducts({
+                type:  'products',
+                value: false,
+            }));
         }
     },
 });

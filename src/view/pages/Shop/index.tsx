@@ -28,7 +28,7 @@ const Shop: FC<PropTypes> = () => {
     useEffect(() => {
         // console.log('text');
         console.log('products >>> ', products);
-    }, [ products.items ]);
+    }, [ products.products ]);
 
     return (
         <S.Container>

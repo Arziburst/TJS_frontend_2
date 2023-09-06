@@ -1,0 +1,1 @@
+fetch__sagaName__(pascalCase): (_id: types.Fetch__sagaName__(pascalCase)Request) => dispatch(fetch__sagaName__(pascalCase)Action(_id)),

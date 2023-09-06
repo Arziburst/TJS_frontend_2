@@ -4,7 +4,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { put, takeLatest } from 'redux-saga/effects';
 
 // API
-import { createNewProductFetch } from '../../../api';
+import { createNewProductFetcher } from '../../../api';
 
 // Slice
 import { productsActions, sliceName } from '../slice';
@@ -13,8 +13,8 @@ import { productsActions, sliceName } from '../slice';
 import { makeRequest } from '../../../tools/utils';
 
 // Types
-import * as commonTypes from '../../common';
-import * as types from '../types';
+import * as commonTypes from '../../commonTypes';
+import * as types from './types';
 
 // Action
 export const fetchCreateNewProductAction = createAction<types.FetchCreateNewProductRequest>(`${sliceName}/FETCH_CREATE_NEW_PRODUCT_ASYNC`);
@@ -26,10 +26,13 @@ const fetchCreateNewProduct = (
     callAction,
     fetchOptions: {
         successStatusCode: 200,
-        fetch:             () => createNewProductFetch(callAction.payload),
+        fetch:             () => createNewProductFetcher(callAction.payload),
     },
     tryStart: function* () {
-        yield put(productsActions.setIsLoadingOfProducts(true));
+        yield put(productsActions.setIsLoadingOfProducts({
+            type:  'create',
+            value: true,
+        }));
     },
     success: function* (result) {
         yield put(productsActions.setProduct(result));
@@ -38,7 +41,10 @@ const fetchCreateNewProduct = (
         yield put(productsActions.setErrorOfProducts(error));
     },
     finallyEnd: function* () {
-        yield put(productsActions.setIsLoadingOfProducts(false));
+        yield put(productsActions.setIsLoadingOfProducts({
+            type:  'create',
+            value: false,
+        }));
     },
 });
 

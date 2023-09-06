@@ -1,0 +1,1 @@
+call(watchFetch__sagaName__(pascalCase)),

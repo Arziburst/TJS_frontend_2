@@ -2,6 +2,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 // MarkerGen reducers
+import profile from '../../bus/profile/slice';
 import products from '../../bus/products/slice';
 import toggles from '../../bus/client/toggles';
 
@@ -18,6 +19,7 @@ import { rootSaga } from './rootSaga';
 export const store = configureStore({
     reducer: {
         // MarkerGen add reducer
+        profile,
         products,
         toggles,
     },
