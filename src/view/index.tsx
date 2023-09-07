@@ -12,6 +12,7 @@ import { useTogglesRedux } from '../bus/client/toggles';
 import { GlobalStyles, defaultTheme } from '../assets';
 
 // Styles
+import './index.css';
 export const AppContainer = styled.div`
     height: 100vh;
     width: 100vw;

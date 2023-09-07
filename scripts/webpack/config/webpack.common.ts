@@ -31,6 +31,9 @@ export const getCommonConfig = () => {
             },
             resolve: {
                 extensions: [ '.tsx', '.ts', '.js', '.jsx' ],
+                alias:      {
+                    '@': SOURCE_DIRECTORY,
+                },
             },
         },
         modules.loadTypeScript(),

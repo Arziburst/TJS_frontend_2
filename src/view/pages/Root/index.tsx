@@ -5,7 +5,7 @@ import React, { FC } from 'react';
 import { ErrorBoundary } from '../../components';
 
 // Elements
-import { HelloBurst } from '../../elements';
+import { HelloBurst } from '@/view/elements';
 
 // Styles
 import { Container } from './styles';
