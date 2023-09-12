@@ -16,9 +16,6 @@ import { NavLink } from '@/view/elements';
 import { NavItem } from './NavItem';
 import { NavItemText } from './NavItem/NavItemText';
 
-// UI
-import { Button } from '@/view/ui/button';
-
 // Static
 import { NAV_LEFT, NAV_RIGHT } from './static';
 
@@ -26,12 +23,19 @@ import { NAV_LEFT, NAV_RIGHT } from './static';
 import S from './styles.module.css';
 
 // Types
-type NavPropTypes = {
+interface NavPropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> {
     variant: 'mobile' | 'desktop';
     onClickCloseSideBar?: () => void;
 }
 
-export const Nav: FC<NavPropTypes> = ({ variant, onClickCloseSideBar, ...props }) => {
+export const Nav: FC<NavPropTypes> = ({
+    variant,
+    className,
+    onClickCloseSideBar,
+    ...props
+}) => {
+    const SPACE_BETWEEN_ITEMS_OF_HEADER = '70px';
+
     const isMobile = variant === 'mobile';
 
     const onClickCloseSidebarHandler = () => {
@@ -39,10 +43,18 @@ export const Nav: FC<NavPropTypes> = ({ variant, onClickCloseSideBar, ...props }
     };
 
     return (
-        <nav { ...props }>
+        <nav
+            className = { cn(
+                'grow',
+                {
+                    [ `px-[${SPACE_BETWEEN_ITEMS_OF_HEADER}]` ]: !isMobile,
+                },
+                className,
+            ) }
+            { ...props }>
             <ul className = { cn({
-                '':                     isMobile,
-                'flex justify-between': !isMobile,
+                // '':                            isMobile,
+                'flex justify-between w-full': !isMobile,
             }) }>
                 <li>
                     <ul>
@@ -85,30 +97,41 @@ export const Nav: FC<NavPropTypes> = ({ variant, onClickCloseSideBar, ...props }
                         )}
                     </ul>
                 </li>
-                {NAV_RIGHT.map((navItem) => (
-                    <NavItem
-                        className = { S.spacing_top_nav_item }
-                        key = { navItem }
-                        onClickCloseSidebarHandler = { onClickCloseSidebarHandler }>
-                        {navItem}
-                    </NavItem>
-                ))}
-                <li className = { `text-center ${S.spacing_bottom_nav_item} ${S.spacing_top_nav_item}` }>
-                    <NavItemText>
-                        language
-                    </NavItemText>
-                    <ul className = { `flex justify-evenly ${S.spacing_bottom_nav_item_subblock}` }>
-                        {LANGUAGES.map((language) => (
-                            <li>
-                                <NavLink to = { `/${language}` }>
-                                    <span className = 'text-base font-secondary font-semibold uppercase'>
-                                        {language}
-                                    </span>
-                                </NavLink>
-                            </li>
+                <li>
+                    <ul>
+                        {NAV_RIGHT.map((navItem) => (
+                            <NavItem
+                                className = { cn(
+                                    S.spacing_top_nav_item,
+                                    {
+                                        'text-right': !isMobile,
+                                    },
+                                ) }
+                                key = { navItem }
+                                onClickCloseSidebarHandler = { onClickCloseSidebarHandler }>
+                                {navItem}
+                            </NavItem>
                         ))}
                     </ul>
                 </li>
+                {isMobile && (
+                    <li className = { `text-center ${S.spacing_bottom_nav_item} ${S.spacing_top_nav_item}` }>
+                        <NavItemText>
+                            language
+                        </NavItemText>
+                        <ul className = { `flex justify-evenly ${S.spacing_bottom_nav_item_subblock}` }>
+                            {LANGUAGES.map((language) => (
+                                <li>
+                                    <NavLink to = { `/${language}` }>
+                                        <span className = 'text-base font-secondary font-semibold uppercase'>
+                                            {language}
+                                        </span>
+                                    </NavLink>
+                                </li>
+                            ))}
+                        </ul>
+                    </li>
+                )}
             </ul>
         </nav>
     );

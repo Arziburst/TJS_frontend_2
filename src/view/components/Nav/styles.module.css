@@ -9,3 +9,10 @@
 .spacing_bottom_nav_item_subblock {
     margin-top: 4px;
 }
+
+
+@media (min-width: 1024px) {
+    .spacing_top_nav_item, .spacing_bottom_nav_item {
+        margin: auto;
+    }
+}

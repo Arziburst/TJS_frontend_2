@@ -32,10 +32,9 @@ const navLinkVariants = cva(
 );
 
 // Types
-interface PropTypes extends NavLinkProps, VariantProps<typeof navLinkVariants> {}
+export interface NavLinkPropTypes extends NavLinkProps, VariantProps<typeof navLinkVariants> {}
 
-
-export const NavLink: FC<PropTypes> = ({ children, variant, className,  ...props }) => {
+export const NavLink: FC<NavLinkPropTypes> = ({ children, variant, className,  ...props }) => {
     return (
         <NavLinkCore
             className = { (params) => params.isActive ? cn(navLinkVariants({ variant, className }), 'text-quaternary') : cn(navLinkVariants({ variant, className })) }

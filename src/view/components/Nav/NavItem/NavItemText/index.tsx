@@ -16,7 +16,11 @@ export const NavItemText: FC<NavItemTextPropTypes> = ({
     return (
         <span
             { ...props }
-            className = { cn('text-center text-base font-secondary font-semibold capitalize tracking-[1.6px] italic', className) }>
+            className = { cn(
+                `text-center text-base font-secondary font-semibold capitalize tracking-[1.6px] italic
+                sb:text-sm sb:not-italic`,
+                className,
+            ) }>
             {children}
         </span>
     );

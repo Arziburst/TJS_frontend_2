@@ -2,7 +2,7 @@
 import tailwindcssAnimate from 'tailwindcss-animate';
 
 // Assets
-import { fonts } from './src/assets/themes';
+import { fonts, screens } from './src/assets/themes';
 
 // Types
 import { Config } from 'tailwindcss/types';
@@ -21,7 +21,7 @@ export default {
         },
         extend: {
             screens: {
-                sb: '1024px', // for component SideBar
+                ...screens,
             },
             colors: {
                 border: {
