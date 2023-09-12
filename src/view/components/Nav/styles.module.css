@@ -1,0 +1,11 @@
+.spacing_top_nav_item {
+    margin-top: clamp(10px, 5vh, 100px);
+}
+
+.spacing_bottom_nav_item {
+    margin-bottom: clamp(10px, 5vh, 100px);
+}
+
+.spacing_bottom_nav_item_subblock {
+    margin-top: 4px;
+}

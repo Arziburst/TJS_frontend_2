@@ -4,18 +4,15 @@ import React, { FC } from 'react';
 // Bus
 // import {} from '../../../bus/'
 
-// Styles
-import * as S from './styles';
-
 // Types
 type PropTypes = {
     /* type props here */
 }
 
-export const __componentName__(pascalCase): FC<PropTypes> = () => {
+export const __componentName__(pascalCase): FC<PropTypes> = ({ ...props }) => {
     return (
-        <S.Container>
+        <div {...props}>
             Component: __componentName__(pascalCase)
-        </S.Container>
+        </div>
     );
 };

@@ -1,6 +1,9 @@
 // Core
 import tailwindcssAnimate from 'tailwindcss-animate';
 
+// Assets
+import { fonts } from './src/assets/themes';
+
 // Types
 import { Config } from 'tailwindcss/types';
 
@@ -17,19 +20,37 @@ export default {
             },
         },
         extend: {
+            screens: {
+                sb: '1024px', // for component SideBar
+            },
             colors: {
-                border:     'hsl(var(--border))',
+                border: {
+                    DEFAULT: 'var(--border)',
+                    100:     'var(--border_100)',
+                },
                 input:      'hsl(var(--input))',
                 ring:       'hsl(var(--ring))',
-                background: 'hsl(var(--background))',
+                background: 'var(--background)',
                 foreground: 'hsl(var(--foreground))',
-                primary:    {
-                    DEFAULT:    'hsl(var(--primary))',
-                    foreground: 'hsl(var(--primary-foreground))',
+
+                primary: {
+                    DEFAULT: 'var(--primary)',
+                    100:     'var(--primary_100)',
+                    200:     'var(--primary_200)',
                 },
                 secondary: {
-                    DEFAULT:    'hsl(var(--secondary))',
-                    foreground: 'hsl(var(--secondary-foreground))',
+                    DEFAULT: 'var(--secondary)',
+                    100:     'var(--secondary_100)',
+                    200:     'var(--secondary_200)',
+                },
+                tertiary: {
+                    DEFAULT: 'var(--tertiary)',
+                    100:     'var(--tertiary_100)',
+                    200:     'var(--tertiary_200)',
+                },
+
+                quaternary: {
+                    DEFAULT: 'var(--quaternary)',
                 },
                 destructive: {
                     DEFAULT:    'hsl(var(--destructive))',
@@ -57,7 +78,8 @@ export default {
                 md: 'calc(var(--radius) - 2px)',
                 sm: 'calc(var(--radius) - 4px)',
             },
-            keyframes: {
+            fontFamily: fonts.family,
+            keyframes:  {
                 'accordion-down': {
                     from: { height: '0' },
                     to:   { height: 'var(--radix-accordion-content-height)' },

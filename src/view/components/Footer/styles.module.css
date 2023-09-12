@@ -1,0 +1,11 @@
+.contact_title {
+    @apply text-xs font-tertiary font-medium
+}
+
+.contact_subtitle {
+    @apply text-xs font-secondary font-medium tracking-[1.2px]
+}
+
+.contact_small {
+    @apply text-xs font-secondary font-normal tracking-[0.24px] 
+}

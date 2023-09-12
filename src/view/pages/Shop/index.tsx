@@ -1,10 +1,12 @@
 // Core
 import React, { FC, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
+// Tools
+import { ParamsLowerCase } from '@/view/routes/book';
 
 // Bus
-// import {} from '../../../bus/'
 import { useProducts } from '../../../bus/products';
-import { useProductsSaga } from '../../../bus/products/saga';
 
 // Components
 import { ErrorBoundary } from '../../components';
@@ -18,6 +20,8 @@ type PropTypes = {
 }
 
 const Shop: FC<PropTypes> = () => {
+    const { category } = useParams<Pick<ParamsLowerCase, 'category'>>();
+
     const { products, fetchProducts } = useProducts();
     // const { fetchProducts } = useProductsSaga();
 
@@ -26,9 +30,13 @@ const Shop: FC<PropTypes> = () => {
     }, []);
 
     useEffect(() => {
-        // console.log('text');
         console.log('products >>> ', products);
     }, [ products.products ]);
+
+
+    useEffect(() => {
+        console.log('category >>> ', category);
+    }, [ category ]);
 
     return (
         <S.Container>

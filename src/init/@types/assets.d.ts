@@ -28,3 +28,5 @@ declare module '*.svg' {
 
     export = File
 }
+
+declare module '*.module.css'

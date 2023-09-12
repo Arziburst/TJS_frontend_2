@@ -1,6 +1,5 @@
 // Core
 import React, { FC, useEffect, useCallback } from 'react';
-import styled, { ThemeProvider } from 'styled-components';
 
 // Routes
 import { Routes } from './routes';
@@ -8,15 +7,14 @@ import { Routes } from './routes';
 // Hooks
 import { useTogglesRedux } from '../bus/client/toggles';
 
-// Assets
-import { GlobalStyles, defaultTheme } from '../assets';
+// Containers
+import { Wrapper } from '@/view/containers';
+
+// Components
+import { Header } from './components';
 
 // Styles
-import './index.css';
-export const AppContainer = styled.div`
-    height: 100vh;
-    width: 100vw;
-`;
+import '../assets/globalStyles/index.css';
 
 export const App: FC = () => {
     const { setToggleAction: setTogglerAction } = useTogglesRedux();
@@ -33,11 +31,9 @@ export const App: FC = () => {
     }, []);
 
     return (
-        <ThemeProvider theme = { defaultTheme }>
-            <GlobalStyles />
-            <AppContainer>
-                <Routes />
-            </AppContainer>
-        </ThemeProvider>
+        <Wrapper>
+            <Header />
+            <Routes />
+        </Wrapper>
     );
 };

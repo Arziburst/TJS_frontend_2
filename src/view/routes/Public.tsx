@@ -6,25 +6,41 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import * as Pages from '../pages';
 
 // Tools
-import * as book from './book';
+import * as BOOK from './book';
 
 export const Public: FC = () => {
     return (
         <Routes>
             <Route
                 element = { <Pages.Root /> }
-                path = { book.ROOT }
+                path = { BOOK.ROOT }
             />
             <Route
                 element = { <Pages.Shop /> }
-                path = { book.SHOP }
+                path = { BOOK.SHOP }
+            />
+            <Route
+                element = { <Pages.Shop /> }
+                path = { BOOK.SHOP + BOOK.PARAMS.CATEGORY }
+            />
+            <Route
+                element = { <Pages.Cart /> }
+                path = { BOOK.CART }
+            />
+            <Route
+                element = { <Pages.Contacts /> }
+                path = { BOOK.CONTACTS }
+            />
+            <Route
+                element = { <Pages.About /> }
+                path = { BOOK.ABOUT }
             />
             {/* MarkerGen route */}
             <Route
                 element = {
                     <Navigate
                         replace
-                        to = { book.ROOT }
+                        to = { BOOK.ROOT }
                     />
                 }
                 path = '*'
