@@ -11,7 +11,7 @@ import {
     SheetHeader,
     SheetTitle,
     SheetTrigger,
-} from '@/view/ui/sheet';
+} from '@/view/components/SideBar/sheet';
 
 // Components
 import { Footer, Icons, Nav } from '@/view/components';

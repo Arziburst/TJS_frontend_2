@@ -1,6 +1,5 @@
 // Core
 import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
 
 // Init
 import { CATEGORIES_ITEMS, LANGUAGES } from '@/init';
@@ -16,11 +15,16 @@ import { NavLink } from '@/view/elements';
 import { NavItem } from './NavItem';
 import { NavItemText } from './NavItem/NavItemText';
 
+// UI
+import { Select } from '@/view/components';
+
+
 // Static
 import { NAV_LEFT, NAV_RIGHT } from './static';
 
 // Styles
 import S from './styles.module.css';
+import { SPACE_BETWEEN_ITEMS_OF_HEADER } from '../Header';
 
 // Types
 interface NavPropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> {
@@ -34,20 +38,19 @@ export const Nav: FC<NavPropTypes> = ({
     onClickCloseSideBar,
     ...props
 }) => {
-    const SPACE_BETWEEN_ITEMS_OF_HEADER = '70px';
-
     const isMobile = variant === 'mobile';
 
     const onClickCloseSidebarHandler = () => {
         onClickCloseSideBar && onClickCloseSideBar();
     };
 
+
     return (
         <nav
             className = { cn(
                 'grow',
                 {
-                    [ `px-[${SPACE_BETWEEN_ITEMS_OF_HEADER}]` ]: !isMobile,
+                    [ `${SPACE_BETWEEN_ITEMS_OF_HEADER} flex` ]: !isMobile,
                 },
                 className,
             ) }
@@ -132,7 +135,30 @@ export const Nav: FC<NavPropTypes> = ({
                         </ul>
                     </li>
                 )}
+
             </ul>
+            {!isMobile && (
+                <div className = { `${SPACE_BETWEEN_ITEMS_OF_HEADER} pr-0` }>
+                    <Select.Root>
+                        <Select.SelectTrigger
+                            variant = 'ghost'>
+                            <Select.SelectValue
+                                placeholder = 'EN'
+                            />
+                        </Select.SelectTrigger>
+                        <Select.SelectContent variant = 'ghost'>
+                            {LANGUAGES.map((language) => (
+                                <Select.SelectItem
+                                    key = { language }
+                                    value = { language }>
+                                    {language.toUpperCase()}
+                                </Select.SelectItem>
+                            ))}
+                        </Select.SelectContent>
+                    </Select.Root>
+                </div>
+            )}
         </nav>
     );
 };
+

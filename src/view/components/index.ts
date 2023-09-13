@@ -1,4 +1,5 @@
 // MarkerGen re-export
+export * from './Select';
 export * from './Footer';
 export * from './Nav';
 export * from './SideBar';

@@ -13,6 +13,8 @@ import { ButtonCart, Logo, Nav, SideBar } from '@/view/components';
 // Types
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> {}
 
+export const SPACE_BETWEEN_ITEMS_OF_HEADER = 'px-[70px]';
+
 export const Header: FC<PropTypes> = () => {
     const [ width ] = useWindowWidth();
 
