@@ -19,7 +19,7 @@ import { cn } from '@/tools/lib/utils';
 // Types
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>, SideBarPropTypes {}
 
-export const SPACE_BETWEEN_ITEMS_OF_HEADER = 'px-[70px]';
+export const GAP_BETWEEN_ITEMS_OF_HEADER = 'gap-[70px]';
 
 export const Header: FC<PropTypes> = ({ variant }) => {
     const [ width ] = useWindowWidth();
@@ -46,7 +46,7 @@ export const Header: FC<PropTypes> = ({ variant }) => {
 
     return (
         <header className = { cn(
-            'flex justify-between items-center sb:items-start',
+            `flex justify-between items-center sb:items-start sb:${GAP_BETWEEN_ITEMS_OF_HEADER}`,
             { 'py-4 sb:pt-[42px] sb:pb-[24px]': isOpen },
             { '': !isOpen },
         ) }>
@@ -76,7 +76,7 @@ export const Header: FC<PropTypes> = ({ variant }) => {
                     onClick = { onClickCloseSideBarHandler }
                 />
             )}
-            <ul className = 'flex flex-col self-stretch'>
+            <ul className = 'flex flex-col items-end self-stretch'>
                 <ButtonCart
                     className = 'whitespace-nowrap'
                     onClick = { onClickCloseSideBarHandler }

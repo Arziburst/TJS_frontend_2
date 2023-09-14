@@ -1,27 +1,19 @@
-.spacing_top_nav_item {
-    margin-top: clamp(20px, 2vh, 100px);
+.nav__item_category {
+    @apply text-3xl text-[28px] font-primary font-normal uppercase tracking-[2.8px]
 }
 
-.spacing_bottom_nav_item {
-    margin-bottom: clamp(20px, 2vh, 100px);
+.nav__item_category > span {
+    @apply text-[34px]
 }
 
-.spacing_bottom_nav_item_subblock {
-    margin-top: 4px;
-}
-
-@media (min-height: 900px) {
-    .spacing_top_nav_item {
-        margin-top: clamp(20px, 3vh, 100px);
+@media (max-height: 800px) {
+    .nav_list {
+        @apply gap-[10px]
     }
-
-    .spacing_bottom_nav_item {
-        margin-bottom: clamp(20px, 3vh, 100px);
+    .nav__item_category {
+        @apply text-xl
     }
-}
-
-@media (min-width: 1024px) {
-    .spacing_top_nav_item, .spacing_bottom_nav_item {
-        margin: auto;
+    .nav__item_category > span {
+        @apply text-[22px]
     }
 }

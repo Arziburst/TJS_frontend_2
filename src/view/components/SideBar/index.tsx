@@ -14,7 +14,7 @@ import {
 } from '@/view/components/SideBar/sheet';
 
 // Components
-import { Footer, Icons, Nav } from '@/view/components';
+import { Footer, Icons, Nav, SPACE_FOOTER } from '@/view/components';
 import { useTogglesRedux } from '@/bus/client/toggles';
 import { ScrollArea } from '@/view/containers';
 
@@ -55,19 +55,15 @@ export const SideBar: FC<SideBarPropTypes> = ({ variant = 'open', ...props }) =>
                 )}
             </SheetTrigger> */}
             <SheetContent onClickCloseSideBar = { onClickCloseSideBarHandler }>
-                <ScrollArea className = 'h-full'>
-                    <SheetHeader>
+                <ScrollArea
+                    className = 'h-full'>
+                    <SheetHeader className = { `h-full ${SPACE_FOOTER}` }>
                         <Nav
                             variant = 'mobile'
                             onClickCloseSideBar = { onClickCloseSideBarHandler }
                         />
-                        {/* <SheetTitle>Are you sure absolutely sure?</SheetTitle>
-                    <SheetDescription>
-                        This action cannot be undone. This will permanently delete your account
-                        and remove your data from our servers.
-                    </SheetDescription> */}
                     </SheetHeader>
-                    <SheetFooter>
+                    <SheetFooter className = { SPACE_FOOTER }>
                         <Footer />
                     </SheetFooter>
                 </ScrollArea>

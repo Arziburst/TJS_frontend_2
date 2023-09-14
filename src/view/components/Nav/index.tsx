@@ -10,6 +10,9 @@ import * as BOOK from '@/view/routes/book';
 // Tools
 import { cn } from '@/tools/lib/utils';
 
+// Components
+import { GAP_BETWEEN_ITEMS_OF_HEADER } from '../Header';
+
 // Elements
 import { NavLink } from '@/view/elements';
 import { NavItem } from './NavItem';
@@ -24,7 +27,6 @@ import { NAV_LEFT, NAV_RIGHT } from './static';
 
 // Styles
 import S from './styles.module.css';
-import { SPACE_BETWEEN_ITEMS_OF_HEADER } from '../Header';
 
 // Types
 interface NavPropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> {
@@ -44,26 +46,38 @@ export const Nav: FC<NavPropTypes> = ({
         onClickCloseSideBar && onClickCloseSideBar();
     };
 
+    const listPageRightNav = () => NAV_RIGHT.map((navItem) => (
+        <NavItem
+            className = { cn(
+                {
+                    'text-right': !isMobile,
+                },
+            ) }
+            key = { navItem }
+            to = { navItem }
+            onClickCloseSidebarHandler = { onClickCloseSidebarHandler }>
+            {navItem.replace('/', '')}
+        </NavItem>
+    ));
 
     return (
         <nav
             className = { cn(
-                'grow',
+                'grow h-full',
                 {
-                    [ `${SPACE_BETWEEN_ITEMS_OF_HEADER} flex` ]: !isMobile,
+                    [ `${GAP_BETWEEN_ITEMS_OF_HEADER} flex` ]: !isMobile,
                 },
                 className,
             ) }
             { ...props }>
             <ul className = { cn({
-                // '':                            isMobile,
-                'flex justify-between w-full': !isMobile,
+                'flex flex-col justify-evenly gap-[20px] h-full nav': isMobile,
+                'flex justify-between w-full':                        !isMobile,
             }) }>
                 <li>
                     <ul>
                         {NAV_LEFT.map((navItem) => (
                             <NavItem
-                                className = { S.spacing_top_nav_item }
                                 key = { navItem }
                                 to = { navItem }
                                 onClickCloseSidebarHandler = { onClickCloseSidebarHandler }>
@@ -71,7 +85,7 @@ export const Nav: FC<NavPropTypes> = ({
                             </NavItem>
                         ))}
                         {isMobile && (
-                            <li className = { `flex justify-center ${S.spacing_bottom_nav_item_subblock}` }>
+                            <li className = { 'flex justify-center' }>
                                 <ul>
                                     {CATEGORIES_ITEMS.map((category) => (
                                         <li
@@ -89,10 +103,10 @@ export const Nav: FC<NavPropTypes> = ({
                                                 />
                                             </svg>
                                             <NavLink
-                                                className = 'text-3xl text-[28px] font-primary font-normal uppercase tracking-[2.8px]'
+                                                className = { S.nav__item_category }
                                                 to = { `${BOOK.SHOP}/${category}` }
                                                 onClick = { onClickCloseSidebarHandler }>
-                                                <span className = 'text-[34px]'>{category[ 0 ]}</span>{category.substring(1)}
+                                                <span>{category[ 0 ]}</span>{category.substring(1)}
                                             </NavLink>
                                         </li>
                                     ))}
@@ -101,32 +115,21 @@ export const Nav: FC<NavPropTypes> = ({
                         )}
                     </ul>
                 </li>
-                <li>
-                    <ul>
-                        {NAV_RIGHT.map((navItem) => (
-                            <NavItem
-                                className = { cn(
-                                    S.spacing_top_nav_item,
-                                    {
-                                        'text-right': !isMobile,
-                                    },
-                                ) }
-                                key = { navItem }
-                                to = { navItem }
-                                onClickCloseSidebarHandler = { onClickCloseSidebarHandler }>
-                                {navItem.replace('/', '')}
-                            </NavItem>
-                        ))}
-                    </ul>
-                </li>
+                {isMobile ? listPageRightNav() : (
+                    <li>
+                        <ul>
+                            {listPageRightNav()}
+                        </ul>
+                    </li>
+                )}
                 {isMobile && (
-                    <li className = { `text-center ${S.spacing_top_nav_item}` }>
+                    <li className = { 'text-center' }>
                         <NavItemText>
                             language
                         </NavItemText>
-                        <ul className = { `flex justify-evenly ${S.spacing_bottom_nav_item_subblock}` }>
+                        <ul className = { 'flex justify-evenly' }>
                             {LANGUAGES.map((language) => (
-                                <li>
+                                <li key = { language }>
                                     <NavLink to = { `/${language}` }>
                                         <span className = 'text-base font-secondary font-semibold uppercase'>
                                             {language}
@@ -138,11 +141,11 @@ export const Nav: FC<NavPropTypes> = ({
                     </li>
                 )}
                 {isMobile && (
-                    <ButtonSignInAndUp className = { `${S.spacing_bottom_nav_item} ${S.spacing_top_nav_item}` } />
+                    <ButtonSignInAndUp />
                 )}
             </ul>
             {!isMobile && (
-                <div className = { `${SPACE_BETWEEN_ITEMS_OF_HEADER} pr-0` }>
+                <div>
                     <Select.Root>
                         <Select.SelectTrigger
                             variant = 'ghost'>

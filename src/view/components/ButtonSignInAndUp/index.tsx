@@ -18,7 +18,7 @@ export const ButtonSignInAndUp: FC<PropTypes> = ({ className, ...props }) => {
             className = { className }
             to = { BOOK.SIGN_IN_AND_UP }
             { ...props }>
-            Sign In & Sign Up
+            Sign In & Up
         </NavItem>
     );
     // return (
