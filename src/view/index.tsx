@@ -1,6 +1,9 @@
 // Core
 import React, { FC, useEffect, useCallback } from 'react';
 
+// Assets
+import { SCREENS_NUMBER } from '@/assets';
+
 // Routes
 import { Routes } from './routes';
 
@@ -11,12 +14,17 @@ import { useTogglesRedux } from '../bus/client/toggles';
 import { Wrapper } from '@/view/containers';
 
 // Components
-import { Header } from './components';
+import { Header, SideBar } from './components';
+
+// Tools
+import { useWindowWidth } from '@/tools/hooks';
 
 // Styles
 import '../assets/globalStyles/index.css';
 
 export const App: FC = () => {
+    const [ width ] = useWindowWidth();
+
     const { setToggleAction: setTogglerAction } = useTogglesRedux();
 
     const setOnlineStatusHandler = useCallback(() => void setTogglerAction({
@@ -32,7 +40,10 @@ export const App: FC = () => {
 
     return (
         <Wrapper>
-            <Header />
+            <Header variant = 'open' />
+            {width < SCREENS_NUMBER.SB && (
+                <SideBar variant = { 'close' } />
+            )}
             <Routes />
         </Wrapper>
     );

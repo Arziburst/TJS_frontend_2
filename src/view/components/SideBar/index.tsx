@@ -19,11 +19,12 @@ import { useTogglesRedux } from '@/bus/client/toggles';
 import { ScrollArea } from '@/view/containers';
 
 // Types
-type PropTypes = {
+export type SideBarPropTypes = {
     /* type props here */
+    variant?: 'open' | 'close';
 }
 
-export const SideBar: FC<PropTypes> = ({ ...props }) => {
+export const SideBar: FC<SideBarPropTypes> = ({ variant = 'open', ...props }) => {
     const { togglesRedux: { isOpenSideBar }, setToggleAction } = useTogglesRedux();
 
     const onClickOpenSideBarHandler = () => {
@@ -44,11 +45,15 @@ export const SideBar: FC<PropTypes> = ({ ...props }) => {
         <Sheet
             open = { isOpenSideBar }
             { ...props }>
-            <SheetTrigger
+            {/* <SheetTrigger
                 className = 'aspect-square transition-opacity hover:opacity-70'
-                onClick = { onClickOpenSideBarHandler }>
-                <Icons.SideBarOpen />
-            </SheetTrigger>
+                onClick = { variant === 'open' ? onClickOpenSideBarHandler : onClickCloseSideBarHandler }>
+                {variant === 'open' ? (
+                    <Icons.SideBarOpen />
+                ) : (
+                    <Icons.SideBarClose />
+                )}
+            </SheetTrigger> */}
             <SheetContent onClickCloseSideBar = { onClickCloseSideBarHandler }>
                 <ScrollArea className = 'h-full'>
                     <SheetHeader>

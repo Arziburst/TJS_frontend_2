@@ -12,6 +12,7 @@ export const PARAMS: Params = {
 };
 
 // MarkerGen books
+export const SIGN_IN_AND_UP = '/sign-in-and-up';
 export const ABOUT = '/about';
 export const CONTACTS = '/contacts';
 export const CART = '/cart';

@@ -16,7 +16,7 @@ import { NavItem } from './NavItem';
 import { NavItemText } from './NavItem/NavItemText';
 
 // UI
-import { Select } from '@/view/components';
+import { ButtonSignInAndUp, Select } from '@/view/components';
 
 
 // Static
@@ -65,8 +65,9 @@ export const Nav: FC<NavPropTypes> = ({
                             <NavItem
                                 className = { S.spacing_top_nav_item }
                                 key = { navItem }
+                                to = { navItem }
                                 onClickCloseSidebarHandler = { onClickCloseSidebarHandler }>
-                                {navItem}
+                                {navItem.replace('/', '')}
                             </NavItem>
                         ))}
                         {isMobile && (
@@ -111,14 +112,15 @@ export const Nav: FC<NavPropTypes> = ({
                                     },
                                 ) }
                                 key = { navItem }
+                                to = { navItem }
                                 onClickCloseSidebarHandler = { onClickCloseSidebarHandler }>
-                                {navItem}
+                                {navItem.replace('/', '')}
                             </NavItem>
                         ))}
                     </ul>
                 </li>
                 {isMobile && (
-                    <li className = { `text-center ${S.spacing_bottom_nav_item} ${S.spacing_top_nav_item}` }>
+                    <li className = { `text-center ${S.spacing_top_nav_item}` }>
                         <NavItemText>
                             language
                         </NavItemText>
@@ -135,7 +137,9 @@ export const Nav: FC<NavPropTypes> = ({
                         </ul>
                     </li>
                 )}
-
+                {isMobile && (
+                    <ButtonSignInAndUp className = { `${S.spacing_bottom_nav_item} ${S.spacing_top_nav_item}` } />
+                )}
             </ul>
             {!isMobile && (
                 <div className = { `${SPACE_BETWEEN_ITEMS_OF_HEADER} pr-0` }>

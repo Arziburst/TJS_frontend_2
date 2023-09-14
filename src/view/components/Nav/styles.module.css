@@ -1,15 +1,24 @@
 .spacing_top_nav_item {
-    margin-top: clamp(10px, 5vh, 100px);
+    margin-top: clamp(20px, 2vh, 100px);
 }
 
 .spacing_bottom_nav_item {
-    margin-bottom: clamp(10px, 5vh, 100px);
+    margin-bottom: clamp(20px, 2vh, 100px);
 }
 
 .spacing_bottom_nav_item_subblock {
     margin-top: 4px;
 }
 
+@media (min-height: 900px) {
+    .spacing_top_nav_item {
+        margin-top: clamp(20px, 3vh, 100px);
+    }
+
+    .spacing_bottom_nav_item {
+        margin-bottom: clamp(20px, 3vh, 100px);
+    }
+}
 
 @media (min-width: 1024px) {
     .spacing_top_nav_item, .spacing_bottom_nav_item {

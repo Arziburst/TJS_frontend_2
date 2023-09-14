@@ -35,6 +35,10 @@ export const Public: FC = () => {
                 element = { <Pages.About /> }
                 path = { BOOK.ABOUT }
             />
+            <Route
+                element = { <Pages.SignInAndUp /> }
+                path = { BOOK.SIGN_IN_AND_UP }
+            />
             {/* MarkerGen route */}
             <Route
                 element = {

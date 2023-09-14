@@ -1,10 +1,17 @@
+// Core
 import * as React from 'react';
 import * as SheetPrimitive from '@radix-ui/react-dialog';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { X } from 'lucide-react'; // todo npm un lucide-react
+import { X } from 'lucide-react'; // todo npm un lucide-react ????
 
+// Book
+import * as BOOK from '@/view/routes/book';
+
+// Tools
 import { cn } from '@/tools/lib/utils';
-import { ButtonCart, Icons, Logo } from '@/view/components';
+
+// Components
+import { ButtonCart, Header, Icons, Logo } from '@/view/components';
 
 const Sheet = SheetPrimitive.Root;
 
@@ -74,8 +81,8 @@ SheetContentProps
                 className = { cn(sheetVariants({ side }), className, 'w-full') }
                 ref = { ref }
                 { ...props }>
-                <div className = 'flex justify-between'>
-                    <SheetPrimitive.Close
+                {/* <div className = 'flex justify-between'> */}
+                {/* <SheetPrimitive.Close
                         className = 'rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary'
                         onClick = { onClickCloseSideBar }>
                         <Icons.SideBarClose />
@@ -89,9 +96,10 @@ SheetContentProps
                     <SheetPrimitive.Close
                         asChild
                         onClick = { onClickCloseSideBar }>
-                        <ButtonCart />
-                    </SheetPrimitive.Close>
-                </div>
+                        <ButtonCart to = { BOOK.CART } />
+                    </SheetPrimitive.Close> */}
+                <Header variant = 'close' />
+                {/* </div> */}
                 <div className = 'flex flex-col justify-between h-full'>
                     {children}
                 </div>
