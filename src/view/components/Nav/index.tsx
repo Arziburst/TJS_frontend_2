@@ -10,9 +10,6 @@ import * as BOOK from '@/view/routes/book';
 // Tools
 import { cn } from '@/tools/lib/utils';
 
-// Components
-import { GAP_BETWEEN_ITEMS_OF_HEADER } from '../Header';
-
 // Elements
 import { NavLink } from '@/view/elements';
 import { NavItem } from './NavItem';
@@ -65,7 +62,7 @@ export const Nav: FC<NavPropTypes> = ({
             className = { cn(
                 'grow h-full',
                 {
-                    [ `${GAP_BETWEEN_ITEMS_OF_HEADER} flex` ]: !isMobile,
+                    [ 'flex gap-x-between-items-of-header' ]: !isMobile,
                 },
                 className,
             ) }

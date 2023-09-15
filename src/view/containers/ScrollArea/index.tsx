@@ -19,20 +19,8 @@ interface PropTypes {
 
 export const ScrollArea: FC<PropTypes> = ({ children, className, classNameViewport, ...props }) => {
     return ( // todo add style for Thumb and Scrollbar
-        <ScrollAreaCore.Root
-            { ...props }
-            className = { className }>
-            <ScrollAreaCore.Viewport className = { cn(S.viewport, classNameViewport) }>
-                {children}
-            </ScrollAreaCore.Viewport>
-            <ScrollAreaCore.Scrollbar
-                orientation = 'horizontal'>
-                <ScrollAreaCore.Thumb />
-            </ScrollAreaCore.Scrollbar>
-            <ScrollAreaCore.Scrollbar orientation = 'vertical'>
-                <ScrollAreaCore.Thumb />
-            </ScrollAreaCore.Scrollbar>
-            <ScrollAreaCore.Corner />
-        </ScrollAreaCore.Root>
+        <div style = {{ overflow: 'scroll' }}>
+            {children}
+        </div>
     );
 };

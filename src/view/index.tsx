@@ -14,7 +14,7 @@ import { useTogglesRedux } from '../bus/client/toggles';
 import { Wrapper } from '@/view/containers';
 
 // Components
-import { Header, SideBar } from './components';
+import { Footer, Header, SideBar } from '@/view/components';
 
 // Tools
 import { useWindowWidth } from '@/tools/hooks';
@@ -39,12 +39,15 @@ export const App: FC = () => {
     }, []);
 
     return (
-        <Wrapper>
+        <Wrapper className = 'flex flex-col h-screen'>
             <Header variant = 'open' />
             {width < SCREENS_NUMBER.SB && (
                 <SideBar variant = { 'close' } />
             )}
-            <Routes />
+            <div className = 'grow'>
+                <Routes />
+            </div>
+            <Footer />
         </Wrapper>
     );
 };

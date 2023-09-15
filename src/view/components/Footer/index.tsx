@@ -21,7 +21,7 @@ interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLEle
     /* type props here */
 }
 
-export const SPACE_FOOTER = 'pt-6';
+export const SPACE_FOOTER = 'mt-6';
 
 export const Footer: FC<PropTypes> = ({
     className,
@@ -30,7 +30,8 @@ export const Footer: FC<PropTypes> = ({
     return (
         <footer
             className = { cn(
-                `${SPACE_FOOTER} pb-3.5 flex flex-col gap-5 border-t-2 border-secondary-100/10`,
+                `${SPACE_FOOTER} pt-6 pb-3.5 flex flex-col gap-5 border-t-2 border-secondary-100/10
+                    sb:mt-6`,
                 className,
             ) }
             { ...props }>

@@ -23,6 +23,9 @@ export default {
             screens: {
                 ...screens,
             },
+            gap: {
+                'between-items-of-header': '70px',
+            },
             colors: {
                 border: {
                     DEFAULT: 'var(--border)',

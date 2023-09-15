@@ -54,19 +54,17 @@ export const SideBar: FC<SideBarPropTypes> = ({ variant = 'open', ...props }) =>
                     <Icons.SideBarClose />
                 )}
             </SheetTrigger> */}
-            <SheetContent onClickCloseSideBar = { onClickCloseSideBarHandler }>
-                <ScrollArea
-                    className = 'h-full'>
-                    <SheetHeader className = { `h-full ${SPACE_FOOTER}` }>
-                        <Nav
-                            variant = 'mobile'
-                            onClickCloseSideBar = { onClickCloseSideBarHandler }
-                        />
-                    </SheetHeader>
-                    <SheetFooter className = { SPACE_FOOTER }>
-                        <Footer />
-                    </SheetFooter>
-                </ScrollArea>
+            <SheetContent
+                onClickCloseSideBar = { onClickCloseSideBarHandler }>
+                <div className = { `flex flex-col space-y-2 h-full ${SPACE_FOOTER}` }>
+                    <Nav
+                        variant = 'mobile'
+                        onClickCloseSideBar = { onClickCloseSideBarHandler }
+                    />
+                </div>
+                <div>
+                    <Footer />
+                </div>
             </SheetContent>
         </Sheet>
     );

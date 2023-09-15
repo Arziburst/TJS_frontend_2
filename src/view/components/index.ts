@@ -1,4 +1,6 @@
 // MarkerGen re-export
+export * from './Form';
+export * from './Tabs';
 export * from './Avatar';
 export * from './ButtonSignInAndUp';
 export * from './DropdownMenu';

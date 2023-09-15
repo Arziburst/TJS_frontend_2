@@ -14,9 +14,10 @@ const buttonVariants = cva(
     {
         variants: {
             variant: {
-                default: `py-5 w-full border-2 border-secondary-100 text-primary-200 bg-secondary-100 transaction
+                default: `font-secondary text-sm py-5 w-full border-2 border-secondary-100 text-primary-200 bg-secondary-100 transaction
                     hover:text-secondary-100 hover:bg-transparent 
-                    focus-visible:text-secondary-100 focus-visible:bg-transparent`,
+                    focus-visible:text-secondary-100 focus-visible:bg-transparent
+                    sb:text-base`,
                 outline: `border border-input bg-background 
                     hover:bg-accent hover:text-accent-foreground`,
                 // todo make animate bottom border
