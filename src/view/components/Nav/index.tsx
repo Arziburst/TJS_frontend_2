@@ -10,17 +10,15 @@ import { BOOK } from '@/view/routes/book';
 // Tools
 import { cn } from '@/tools/lib/utils';
 
-// Bus
-import { useTogglesRedux } from '@/bus/client/toggles';
-
-// Elements
-import { NavLink } from '@/view/elements';
+// Components
 import { NavItem } from './NavItem';
 import { NavItemText } from './NavItem/NavItemText';
 
+// Elements
+import { NavLink } from '@/view/elements';
+
 // UI
 import { ButtonSignInAndUp, Select } from '@/view/components';
-
 
 // Static
 import { NAV_LEFT, NAV_RIGHT } from './static';
@@ -41,8 +39,6 @@ export const Nav: FC<NavPropTypes> = ({
     ...props
 }) => {
     const isMobile = variant === 'mobile';
-
-    const { togglesRedux: { isLoggedIn }} = useTogglesRedux();
 
     const onClickCloseSidebarHandler = () => {
         onClickCloseSideBar && onClickCloseSideBar();
@@ -142,8 +138,10 @@ export const Nav: FC<NavPropTypes> = ({
                         </ul>
                     </li>
                 )}
-                {isLoggedIn && isMobile && (
-                    <ButtonSignInAndUp />
+                {isMobile && (
+                    <li className = 'flex justify-center'>
+                        <ButtonSignInAndUp isMobile />
+                    </li>
                 )}
             </ul>
             {!isMobile && (

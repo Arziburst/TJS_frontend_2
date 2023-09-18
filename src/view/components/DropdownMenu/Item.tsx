@@ -4,21 +4,34 @@ import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 
 // Tools
 import { cn } from '@/tools/lib/utils';
+import { Button, ButtonProps } from '@/view/elements';
 
 export const Item = React.forwardRef<
 React.ElementRef<typeof DropdownMenuPrimitive.Item>,
 React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
-    inset?: boolean
+    propsButton?: Omit<ButtonProps, 'className' | 'variant'>;
 }
->(({ className, inset, ...props }, ref) => (
+>(({
+    children,
+    className,
+    propsButton,
+    ...props
+}, ref) => (
     <DropdownMenuPrimitive.Item
         className = { cn(
-            'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-            inset && 'pl-8',
+            `relative flex justify-center items-center
+                text-sm
+                data-[disabled]:pointer-events-none data-[disabled]:opacity-50`,
             className,
         ) }
         ref = { ref }
-        { ...props }
-    />
+        { ...props }>
+        <Button
+            className = 'text-xs py-1 sb:text-xs'
+            variant = 'outline'
+            { ...propsButton }>
+            {children}
+        </Button>
+    </DropdownMenuPrimitive.Item>
 ));
 Item.displayName = DropdownMenuPrimitive.Item.displayName;

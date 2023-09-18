@@ -39,7 +39,7 @@ export const Header: FC<PropTypes> = ({ variant }) => {
     const isSB = width < SCREENS_NUMBER.SB;
 
 
-    const { togglesRedux: { isOpenSideBar, isLoggedIn }, setToggleAction } = useTogglesRedux();
+    const { setToggleAction } = useTogglesRedux();
 
     const onClickOpenSideBarHandler = () => {
         setToggleAction({
@@ -58,7 +58,7 @@ export const Header: FC<PropTypes> = ({ variant }) => {
     return (
         <header className = { cn(
             'flex justify-between items-center sb:items-start sb:gap-x-between-items-of-header',
-            { 'py-4 sb:pt-[42px] sb:pb-[24px]': isOpen },
+            { 'py-4 sb:pt-[24px] sb:pb-[24px]': isOpen },
             { '': !isOpen },
         ) }>
             {isSB ? (
@@ -92,11 +92,14 @@ export const Header: FC<PropTypes> = ({ variant }) => {
                     className = 'whitespace-nowrap'
                     onClick = { onClickCloseSideBarHandler }
                 />
-                {isLoggedIn && isOpen && !isSB && (
-                    <ButtonSignInAndUp
-                        className = 'whitespace-nowrap'
-                        onClick = { onClickCloseSideBarHandler }
-                    />
+                {isOpen && !isSB && (
+                    <li>
+                        <ButtonSignInAndUp
+                            className = 'whitespace-nowrap'
+                            isMobile = { false }
+                            onClick = { onClickCloseSideBarHandler }
+                        />
+                    </li>
                 )}
             </ul>
         </header>

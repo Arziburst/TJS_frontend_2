@@ -10,7 +10,7 @@ React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
 React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>
 >(({ className, ...props }, ref) => (
     <DropdownMenuPrimitive.Separator
-        className = { cn('-mx-1 my-1 h-px bg-muted', className) }
+        className = { cn('-mx-1 my-1 h-px bg-border', className) }
         ref = { ref }
         { ...props }
     />

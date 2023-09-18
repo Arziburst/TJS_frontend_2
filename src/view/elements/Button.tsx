@@ -8,21 +8,26 @@ import { Loader2 } from 'lucide-react';
 import { cn } from '@/tools/lib/utils';
 
 const buttonVariants = cva(
-    `w-full inline-flex items-center justify-center text-sm font-primary ring-offset-background transition
+    `w-full inline-flex items-center justify-center text-sm font-primary ring-offset-background transition transaction
         focus-visible:outline-none
         hover:opacity-70
-        active:opacity-100
+        focus-visible:opacity-70
+        active:opacity-100 active:scale-[0.9]
         disabled:pointer-events-none disabled:opacity-50`,
     {
         variants: {
             variant: {
-                default: `font-secondary text-sm py-5 border-2 border-secondary-100 text-primary-200 bg-secondary-100 transaction
+                default: `font-secondary text-sm py-5 border-2 border-secondary-100 
+                    text-primary-200 bg-secondary-100 
                     hover:text-secondary-100 hover:bg-transparent hover:opacity-100
-                    focus-visible:text-secondary-100 focus-visible:bg-transparent
+                    focus-visible:text-secondary-100 focus-visible:bg-transparent hover:opacity-100
+                    active:scale-[0.9]
                     sb:text-base`,
-                // outline: `border border-input bg-background
-                //     hover:bg-accent hover:text-accent-foreground`,
-                // todo make animate bottom border
+                outline: `font-secondary text-sm py-5 border-2 border-secondary-100 
+                    text-secondary-100 bg-transparent 
+                    hover:text-background hover:bg-secondary-100 hover:opacity-100
+                    focus-visible:text-background focus-visible:bg-secondary-100 hover:opacity-100
+                    sb:text-base`,
                 // underline: `border-b-2
                 //     hover:border-red-900`,
                 // ghost: 'hover:bg-accent hover:text-accent-foreground',
