@@ -56,7 +56,7 @@ export const SideBar: FC<SideBarPropTypes> = ({ variant = 'open', ...props }) =>
             </SheetTrigger> */}
             <SheetContent
                 onClickCloseSideBar = { onClickCloseSideBarHandler }>
-                <div className = { `flex flex-col space-y-2 h-full ${SPACE_FOOTER}` }>
+                <div className = { `flex flex-col space-y-2 grow ${SPACE_FOOTER}` }>
                     <Nav
                         variant = 'mobile'
                         onClickCloseSideBar = { onClickCloseSideBarHandler }

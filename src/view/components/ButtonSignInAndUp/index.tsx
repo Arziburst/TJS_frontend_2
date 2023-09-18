@@ -2,7 +2,7 @@
 import React, { FC } from 'react';
 
 // Book
-import * as BOOK from '@/view/routes/book';
+import { BOOK } from '@/view/routes/book';
 
 // Components
 import { NavItem, NavItemPropTypes } from '@/view/components/Nav/NavItem';

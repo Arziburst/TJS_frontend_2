@@ -2,6 +2,7 @@
 export type IsLoading = boolean;
 export type Error = {
     message: string;
+    statusCode: number;
 };
 
 export type SetIsLoading<T = string> = {

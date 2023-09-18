@@ -6,7 +6,7 @@ import { LinkProps } from 'react-router-dom';
 import { clsx, cn } from '@/tools/lib/utils';
 
 // Book
-import * as BOOK from '@/view/routes/book';
+import { BOOK } from '@/view/routes/book';
 
 // Elements
 import { Link } from '@/view/elements';

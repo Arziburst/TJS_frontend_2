@@ -1,8 +1,14 @@
 // Core
 import React, { FC } from 'react';
 
+// Tools
+import { cn } from '@/tools/lib/utils';
+
+// Bus
+import { useTogglesRedux } from '@/bus/client/toggles';
+
 // Book
-import * as BOOK from '@/view/routes/book';
+import { BOOK } from '@/view/routes/book';
 
 // Assets
 import { SCREENS_NUMBER } from '@/assets';
@@ -11,10 +17,17 @@ import { SCREENS_NUMBER } from '@/assets';
 import { useWindowWidth } from '@/tools/hooks';
 
 // Components
-import { Avatar, ButtonCart, ButtonSignInAndUp, Icons, Logo, Nav, SideBar, SideBarPropTypes } from '@/view/components';
+import {
+    Avatar,
+    ButtonCart,
+    ButtonSignInAndUp,
+    Icons,
+    Logo,
+    Nav,
+    SideBar,
+    SideBarPropTypes,
+} from '@/view/components';
 import { SheetTrigger } from '../SideBar/sheet';
-import { useTogglesRedux } from '@/bus/client/toggles';
-import { cn } from '@/tools/lib/utils';
 
 // Types
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>, SideBarPropTypes {}
@@ -26,7 +39,7 @@ export const Header: FC<PropTypes> = ({ variant }) => {
     const isSB = width < SCREENS_NUMBER.SB;
 
 
-    const { togglesRedux: { isOpenSideBar }, setToggleAction } = useTogglesRedux();
+    const { togglesRedux: { isOpenSideBar, isLoggedIn }, setToggleAction } = useTogglesRedux();
 
     const onClickOpenSideBarHandler = () => {
         setToggleAction({
@@ -79,12 +92,11 @@ export const Header: FC<PropTypes> = ({ variant }) => {
                     className = 'whitespace-nowrap'
                     onClick = { onClickCloseSideBarHandler }
                 />
-                {isOpen && !isSB && (
+                {isLoggedIn && isOpen && !isSB && (
                     <ButtonSignInAndUp
                         className = 'whitespace-nowrap'
                         onClick = { onClickCloseSideBarHandler }
                     />
-
                 )}
             </ul>
         </header>

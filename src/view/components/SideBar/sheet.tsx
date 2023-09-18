@@ -5,7 +5,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { X } from 'lucide-react'; // todo npm un lucide-react ????
 
 // Book
-import * as BOOK from '@/view/routes/book';
+import { BOOK } from '@/view/routes/book';
 
 // Tools
 import { cn } from '@/tools/lib/utils';

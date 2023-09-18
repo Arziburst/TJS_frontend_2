@@ -1,5 +1,5 @@
 // BOOK
-import * as BOOK from '../../routes/book';
+import  { BOOK } from '@/view/routes/book';
 
 export const NAV_LEFT = [ BOOK.SHOP ];
 

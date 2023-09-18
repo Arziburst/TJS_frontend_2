@@ -5,10 +5,13 @@ import React, { FC } from 'react';
 import { CATEGORIES_ITEMS, LANGUAGES } from '@/init';
 
 // BOOK
-import * as BOOK from '@/view/routes/book';
+import { BOOK } from '@/view/routes/book';
 
 // Tools
 import { cn } from '@/tools/lib/utils';
+
+// Bus
+import { useTogglesRedux } from '@/bus/client/toggles';
 
 // Elements
 import { NavLink } from '@/view/elements';
@@ -38,6 +41,8 @@ export const Nav: FC<NavPropTypes> = ({
     ...props
 }) => {
     const isMobile = variant === 'mobile';
+
+    const { togglesRedux: { isLoggedIn }} = useTogglesRedux();
 
     const onClickCloseSidebarHandler = () => {
         onClickCloseSideBar && onClickCloseSideBar();
@@ -137,7 +142,7 @@ export const Nav: FC<NavPropTypes> = ({
                         </ul>
                     </li>
                 )}
-                {isMobile && (
+                {isLoggedIn && isMobile && (
                     <ButtonSignInAndUp />
                 )}
             </ul>

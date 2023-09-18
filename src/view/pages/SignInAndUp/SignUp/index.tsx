@@ -2,6 +2,9 @@
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigate } from 'react-router-dom';
+// Bus
+import { useProfile } from '@/bus/profile';
 
 // Containers
 import { InputGroup } from '@/view/containers';
@@ -29,13 +32,24 @@ type PropTypes = {
 }
 
 export const SignUp: FC<PropTypes> = () => {
+    const navigate = useNavigate();
+
     const form = useForm({
         resolver: yupResolver(validationForm),
         defaultValues,
     });
 
-    const onSubmit = (values: any) => {
-        console.log(values);
+    const { profile: { isLoadings }, fetchRegistrationProfile } = useProfile();
+
+    const onSubmit = (values: typeof defaultValues) => {
+        console.log('onSubmit => values:', values);
+        fetchRegistrationProfile({
+            name:     values.name,
+            phone:    values.phone,
+            email:    values.email,
+            password: values.password,
+            navigate,
+        });
     };
 
     return (
@@ -123,6 +137,7 @@ export const SignUp: FC<PropTypes> = () => {
                     ) }
                 />
                 <Button
+                    isLoading = { isLoadings.profile }
                     type = 'submit'
                     variant = 'default'>
                     Submit
