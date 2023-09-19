@@ -23,7 +23,9 @@ type OptionsType<SuccessData, ErrorData> = {
     fetchOptions: FetchOptions;
     callAction?: Action<any>;
     toggleType?: TogglesKeys;
+    // -------------------------------------------------
     skipAttemptsIfStatusCode?: number;
+    skipAlertIfStatusCode?: number;
     // -------------------------------------------------
     tryStart?: Function;
     success?: (successData: SuccessData) => void;
@@ -44,6 +46,7 @@ const numberOfAttempts = { value: defaultNumberOfAttempts }; // todo how to impr
 export function* makeRequest<SuccessData, ErrorData = {}>(options: OptionsType<SuccessData, ErrorData>) {
     const {
         skipAttemptsIfStatusCode = 0,
+        skipAlertIfStatusCode = 0,
         fetchOptions,
         callAction,
         toggleType,
@@ -95,7 +98,7 @@ export function* makeRequest<SuccessData, ErrorData = {}>(options: OptionsType<S
             yield numberOfAttempts.value = defaultNumberOfAttempts;
         }
 
-        if (numberOfAttempts.value === defaultNumberOfAttempts && errorData.message) {
+        if (skipAlertIfStatusCode !== errorData.statusCode && errorData.message) {
             toast.error(errorData.message);
         }
 

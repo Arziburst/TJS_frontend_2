@@ -29,7 +29,9 @@ const fetchAuthenticateProfile = (
         successStatusCode: 200,
         fetch:             () => authenticateProfileFetcher(),
     },
-    success: function* (result) {
+    skipAttemptsIfStatusCode: 401,
+    skipAlertIfStatusCode:    401,
+    success:                  function* (result) {
         yield put(profileActions.setProfile(result));
         yield put(togglesActions.toggleCreatorAction({
             type:  'isLoggedIn',
