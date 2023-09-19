@@ -157,6 +157,6 @@
     @apply border-border;
   }
   body {
-    @apply bg-primary-200 text-secondary-100;
+    @apply bg-primary-200 font-primary text-secondary-100;
   }
 }

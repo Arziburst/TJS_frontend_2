@@ -2,15 +2,20 @@
 import { SagaIterator } from '@redux-saga/core';
 import { createAction } from '@reduxjs/toolkit';
 import { put, takeLatest } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
+
+// Book
+import { BOOK } from '@/view/routes/book';
 
 // API
 import { registrationProfileFetcher } from '../../../api';
 
 // Slice
 import { profileActions, sliceName } from '../slice';
+import { togglesActions } from '@/bus/client/toggles';
 
 // Tools
-import { makeRequest } from '../../../tools/utils';
+import { makeRequest, removeKeysOfObject } from '../../../tools/utils';
 
 // Types
 import * as commonTypes from '../../commonTypes';
@@ -26,20 +31,28 @@ const fetchRegistrationProfile = (
     callAction,
     fetchOptions: {
         successStatusCode: 200,
-        fetch:             () => registrationProfileFetcher(callAction.payload),
+        fetch:             () => registrationProfileFetcher(removeKeysOfObject<types.FetchRegistrationProfileRequest, 'navigate'>({
+            keys:   [ 'navigate' ],
+            object: callAction.payload,
+        })),
     },
-    tryStart: function* () {
+    skipAttemptsIfStatusCode: 400,
+    tryStart:                 function* () {
+        yield put(profileActions.setErrorOfProfile(null));
         yield put(profileActions.setIsLoadingOfProfile({
             type:  'profile',
             value: true,
         }));
     },
     success: function* (result) {
-        yield console.log(result);
-        // yield put(profileActions.setProfile(result));
-    },
-    error: function* (error) {
-        yield put(profileActions.setErrorOfProfile(error));
+        yield put(profileActions.setProfile(result));
+        yield put(togglesActions.toggleCreatorAction({
+            type:  'isLoggedIn',
+            value: true,
+        }));
+        toast.success('Success Registration!');
+        toast.success('Success Login!');
+        yield callAction.payload.navigate(BOOK.ROOT);
     },
     finallyEnd: function* () {
         yield put(profileActions.setIsLoadingOfProfile({

@@ -5,8 +5,8 @@ import React, { FC } from 'react';
 import { cn } from '@/tools/lib/utils';
 
 // Types
-interface NavItemTextPropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement> {
-}
+export interface NavItemTextPropTypes extends
+    React.DetailedHTMLProps<React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement> {}
 
 export const NavItemText: FC<NavItemTextPropTypes> = ({
     children,

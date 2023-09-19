@@ -1,10 +1,17 @@
+// Core
 import * as React from 'react';
 import * as SheetPrimitive from '@radix-ui/react-dialog';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { X } from 'lucide-react'; // todo npm un lucide-react
+import { X } from 'lucide-react'; // todo npm un lucide-react ????
 
+// Book
+import { BOOK } from '@/view/routes/book';
+
+// Tools
 import { cn } from '@/tools/lib/utils';
-import { ButtonCart, Icons, Logo } from '@/view/components';
+
+// Components
+import { ButtonCart, Header, Icons, Logo } from '@/view/components';
 
 const Sheet = SheetPrimitive.Root;
 
@@ -39,7 +46,7 @@ React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
 const sheetVariants = cva(
-    'fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500',
+    'fixed z-50 flex flex-col bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500',
     {
         variants: {
             side: {
@@ -71,30 +78,11 @@ SheetContentProps
         <SheetPortal>
             <SheetOverlay onClick = { onClickCloseSideBar } />
             <SheetPrimitive.Content
-                className = { cn(sheetVariants({ side }), className, 'w-full') }
+                className = { cn(sheetVariants({ side }), className, 'w-full overflow-y-auto') }
                 ref = { ref }
                 { ...props }>
-                <div className = 'flex justify-between'>
-                    <SheetPrimitive.Close
-                        className = 'rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary'
-                        onClick = { onClickCloseSideBar }>
-                        <Icons.SideBarClose />
-                        <span className = 'sr-only'>Close</span>
-                    </SheetPrimitive.Close>
-                    <SheetPrimitive.Close
-                        asChild
-                        onClick = { onClickCloseSideBar }>
-                        <Logo variant = 'mobile' />
-                    </SheetPrimitive.Close>
-                    <SheetPrimitive.Close
-                        asChild
-                        onClick = { onClickCloseSideBar }>
-                        <ButtonCart />
-                    </SheetPrimitive.Close>
-                </div>
-                <div className = 'flex flex-col justify-between h-full'>
-                    {children}
-                </div>
+                <Header variant = 'close' />
+                {children}
             </SheetPrimitive.Content>
         </SheetPortal>
     );

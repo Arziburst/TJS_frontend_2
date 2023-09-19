@@ -14,16 +14,17 @@ import {
 } from '@/view/components/SideBar/sheet';
 
 // Components
-import { Footer, Icons, Nav } from '@/view/components';
+import { Footer, Icons, Nav, SPACE_FOOTER } from '@/view/components';
 import { useTogglesRedux } from '@/bus/client/toggles';
 import { ScrollArea } from '@/view/containers';
 
 // Types
-type PropTypes = {
+export type SideBarPropTypes = {
     /* type props here */
+    variant?: 'open' | 'close';
 }
 
-export const SideBar: FC<PropTypes> = ({ ...props }) => {
+export const SideBar: FC<SideBarPropTypes> = ({ variant = 'open', ...props }) => {
     const { togglesRedux: { isOpenSideBar }, setToggleAction } = useTogglesRedux();
 
     const onClickOpenSideBarHandler = () => {
@@ -44,28 +45,26 @@ export const SideBar: FC<PropTypes> = ({ ...props }) => {
         <Sheet
             open = { isOpenSideBar }
             { ...props }>
-            <SheetTrigger
+            {/* <SheetTrigger
                 className = 'aspect-square transition-opacity hover:opacity-70'
-                onClick = { onClickOpenSideBarHandler }>
-                <Icons.SideBarOpen />
-            </SheetTrigger>
-            <SheetContent onClickCloseSideBar = { onClickCloseSideBarHandler }>
-                <ScrollArea className = 'h-full'>
-                    <SheetHeader>
-                        <Nav
-                            variant = 'mobile'
-                            onClickCloseSideBar = { onClickCloseSideBarHandler }
-                        />
-                        {/* <SheetTitle>Are you sure absolutely sure?</SheetTitle>
-                    <SheetDescription>
-                        This action cannot be undone. This will permanently delete your account
-                        and remove your data from our servers.
-                    </SheetDescription> */}
-                    </SheetHeader>
-                    <SheetFooter>
-                        <Footer />
-                    </SheetFooter>
-                </ScrollArea>
+                onClick = { variant === 'open' ? onClickOpenSideBarHandler : onClickCloseSideBarHandler }>
+                {variant === 'open' ? (
+                    <Icons.SideBarOpen />
+                ) : (
+                    <Icons.SideBarClose />
+                )}
+            </SheetTrigger> */}
+            <SheetContent
+                onClickCloseSideBar = { onClickCloseSideBarHandler }>
+                <div className = { `flex flex-col space-y-2 grow ${SPACE_FOOTER}` }>
+                    <Nav
+                        variant = 'mobile'
+                        onClickCloseSideBar = { onClickCloseSideBarHandler }
+                    />
+                </div>
+                <div>
+                    <Footer />
+                </div>
             </SheetContent>
         </Sheet>
     );

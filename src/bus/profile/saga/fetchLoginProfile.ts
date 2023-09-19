@@ -34,9 +34,9 @@ const fetchLoginProfile = (
             value: true,
         }));
     },
-    success: function* (result) {
-        // yield put(profileActions.setLogin(result));
-    },
+    // success: function* (result) {
+    //     // yield put(profileActions.setLogin(result));
+    // },
     error: function* (error) {
         yield put(profileActions.setErrorOfProfile(error));
     },

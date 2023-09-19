@@ -1,6 +1,7 @@
 // Core
 import { Action } from '@reduxjs/toolkit';
 import { put, call } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 
 // Redux
 import { TogglesKeys } from '../../bus/client/toggles';
@@ -21,6 +22,7 @@ type OptionsType<SuccessData, ErrorData> = {
     fetchOptions: FetchOptions;
     callAction?: Action<any>;
     toggleType?: TogglesKeys;
+    skipAttemptsIfStatusCode?: number;
     // -------------------------------------------------
     tryStart?: Function;
     success?: (successData: SuccessData) => void;
@@ -33,10 +35,14 @@ type OptionsType<SuccessData, ErrorData> = {
     finallyStart?: Function;
     finallyEnd?: Function;
 };
-const numberOfAttempts = { value: 2 };
+
+const defaultNumberOfAttempts = 2;
+
+const numberOfAttempts = { value: defaultNumberOfAttempts };
 
 export function* makeRequest<SuccessData, ErrorData = {}>(options: OptionsType<SuccessData, ErrorData>) {
     const {
+        skipAttemptsIfStatusCode,
         fetchOptions,
         callAction,
         toggleType,
@@ -45,7 +51,6 @@ export function* makeRequest<SuccessData, ErrorData = {}>(options: OptionsType<S
         finallyStart, finallyEnd,
         success, error,
     } = options;
-
 
     try {
         // ------------- TRY BLOCK START -------------
@@ -82,9 +87,13 @@ export function* makeRequest<SuccessData, ErrorData = {}>(options: OptionsType<S
             yield error(errorData);
         }
 
-        if (callAction && numberOfAttempts.value > 0) {
+        if (errorData.statusCode !== skipAttemptsIfStatusCode && callAction && numberOfAttempts.value > 0) {
             yield numberOfAttempts.value -= 1;
             yield put(callAction);
+        }
+
+        if (numberOfAttempts.value === defaultNumberOfAttempts && errorData.message) {
+            toast.error(errorData.message);
         }
 
         if (catchEnd) {

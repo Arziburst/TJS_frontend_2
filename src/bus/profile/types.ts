@@ -5,7 +5,12 @@ import { CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 import * as commonTypes from '../commonTypes';
 
 // Types of Entities
-export type Profile = Array<any>
+export type Profile = {
+    email: string;
+    name: string,
+    phone: string,
+    role: string,
+}
 
 // State
 export type IsLoadings = 'profile';

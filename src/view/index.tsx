@@ -1,5 +1,9 @@
 // Core
 import React, { FC, useEffect, useCallback } from 'react';
+import { ToastContainer } from 'react-toastify';
+
+// Assets
+import { SCREENS_NUMBER } from '@/assets';
 
 // Routes
 import { Routes } from './routes';
@@ -11,12 +15,17 @@ import { useTogglesRedux } from '../bus/client/toggles';
 import { Wrapper } from '@/view/containers';
 
 // Components
-import { Header } from './components';
+import { Alert, Footer, Header, SideBar } from '@/view/components';
+
+// Tools
+import { useWindowWidth } from '@/tools/hooks';
 
 // Styles
 import '../assets/globalStyles/index.css';
 
 export const App: FC = () => {
+    const [ width ] = useWindowWidth();
+
     const { setToggleAction: setTogglerAction } = useTogglesRedux();
 
     const setOnlineStatusHandler = useCallback(() => void setTogglerAction({
@@ -31,9 +40,16 @@ export const App: FC = () => {
     }, []);
 
     return (
-        <Wrapper>
-            <Header />
-            <Routes />
+        <Wrapper className = 'flex flex-col min-h-screen'>
+            <Alert />
+            <Header variant = 'open' />
+            {width < SCREENS_NUMBER.SB && (
+                <SideBar variant = { 'close' } />
+            )}
+            <div className = 'grow'>
+                <Routes />
+            </div>
+            <Footer />
         </Wrapper>
     );
 };

@@ -12,7 +12,7 @@ export const setProfile: types.BaseContact<types.Profile> = (state, action) => {
     };
 };
 
-export const setErrorOfProfile: types.BaseContact<commonTypes.Error> = (state, action) => ({
+export const setErrorOfProfile: types.BaseContact<commonTypes.Error | null> = (state, action) => ({
     ...state,
     error: action.payload,
 });

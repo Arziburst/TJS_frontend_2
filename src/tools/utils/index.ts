@@ -1,3 +1,4 @@
+export * from './removeKeysOfObject';
 export * from './arrayComparison';
 export * from './makeRequest';
 export * from './customFetch';

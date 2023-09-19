@@ -1,18 +1,19 @@
-.spacing_top_nav_item {
-    margin-top: clamp(10px, 5vh, 100px);
+.nav__item_category {
+    @apply text-3xl text-[28px] font-primary font-normal uppercase tracking-[2.8px]
 }
 
-.spacing_bottom_nav_item {
-    margin-bottom: clamp(10px, 5vh, 100px);
+.nav__item_category > span {
+    @apply text-[34px]
 }
 
-.spacing_bottom_nav_item_subblock {
-    margin-top: 4px;
-}
-
-
-@media (min-width: 1024px) {
-    .spacing_top_nav_item, .spacing_bottom_nav_item {
-        margin: auto;
+@media (max-height: 800px) {
+    .nav_list {
+        @apply gap-[10px]
+    }
+    .nav__item_category {
+        @apply text-xl
+    }
+    .nav__item_category > span {
+        @apply text-[22px]
     }
 }

@@ -2,11 +2,11 @@
 import React, { FC } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
+// Book
+import { BOOK, PARAMS } from './book';
+
 // Pages
 import * as Pages from '../pages';
-
-// Tools
-import * as BOOK from './book';
 
 export const Public: FC = () => {
     return (
@@ -21,7 +21,7 @@ export const Public: FC = () => {
             />
             <Route
                 element = { <Pages.Shop /> }
-                path = { BOOK.SHOP + BOOK.PARAMS.CATEGORY }
+                path = { BOOK.SHOP + PARAMS.CATEGORY }
             />
             <Route
                 element = { <Pages.Cart /> }
@@ -34,6 +34,10 @@ export const Public: FC = () => {
             <Route
                 element = { <Pages.About /> }
                 path = { BOOK.ABOUT }
+            />
+            <Route
+                element = { <Pages.SignInAndUp /> }
+                path = { BOOK.SIGN_IN_AND_UP }
             />
             {/* MarkerGen route */}
             <Route

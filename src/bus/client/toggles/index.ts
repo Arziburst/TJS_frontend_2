@@ -7,8 +7,8 @@ import { useSelector } from '../../../tools/hooks';
 
 const initialState = {
     isOnline:      navigator.onLine,
-    isLoggedIn:    false,
-    isOpenSideBar: true,
+    isLoggedIn:    false, // isAuthenticated
+    isOpenSideBar: false,
 };
 
 // Types
@@ -29,7 +29,7 @@ export const togglesSlice = createSlice({
 });
 
 // Interfaces
-const togglesActions = togglesSlice.actions;
+export const togglesActions = togglesSlice.actions;
 export default togglesSlice.reducer;
 
 export const useTogglesRedux = () => {

@@ -5,18 +5,24 @@ import React, { FC } from 'react';
 import { cn } from '@/tools/lib/utils';
 
 // Elements
-import { NavLink } from '@/view/elements';
-import { NavItemText } from './NavItemText';
+import { NavLink, NavLinkPropTypes } from '@/view/elements';
+import { NavItemText, NavItemTextPropTypes } from './NavItemText';
 
 // Types
-interface NavItemPropTypes extends React.DetailedHTMLProps<React.LiHTMLAttributes<HTMLLIElement>, HTMLLIElement>{
-    children: string;
+export interface NavItemPropTypes extends
+    React.DetailedHTMLProps<React.LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {
+    to: string;
     onClickCloseSidebarHandler?: () => void;
+    classNameNavLink?: NavLinkPropTypes['className'];
+    classNameNavItemText?: NavItemTextPropTypes['className'];
 }
 
 export const NavItem: FC<NavItemPropTypes> = ({
     children,
     className,
+    classNameNavLink,
+    classNameNavItemText,
+    to,
     onClickCloseSidebarHandler,
     ...props
 }) => {
@@ -25,11 +31,12 @@ export const NavItem: FC<NavItemPropTypes> = ({
             { ...props }
             className = { cn('text-center', className) }>
             <NavLink
-                to = { children }
+                className = { classNameNavLink }
+                to = { to }
                 variant = 'underline'
                 onClick = { onClickCloseSidebarHandler }>
-                <NavItemText>
-                    {children.replace('/', '')}
+                <NavItemText className = { classNameNavItemText }>
+                    {children}
                 </NavItemText>
             </NavLink>
         </li>

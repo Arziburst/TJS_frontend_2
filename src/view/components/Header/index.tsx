@@ -1,6 +1,15 @@
 // Core
 import React, { FC } from 'react';
 
+// Tools
+import { cn } from '@/tools/lib/utils';
+
+// Bus
+import { useTogglesRedux } from '@/bus/client/toggles';
+
+// Book
+import { BOOK } from '@/view/routes/book';
+
 // Assets
 import { SCREENS_NUMBER } from '@/assets';
 
@@ -8,20 +17,61 @@ import { SCREENS_NUMBER } from '@/assets';
 import { useWindowWidth } from '@/tools/hooks';
 
 // Components
-import { ButtonCart, Logo, Nav, SideBar } from '@/view/components';
+import {
+    Avatar,
+    ButtonCart,
+    ButtonSignInAndUp,
+    Icons,
+    Logo,
+    Nav,
+    SideBar,
+    SideBarPropTypes,
+} from '@/view/components';
+import { SheetTrigger } from '../SideBar/sheet';
 
 // Types
-interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> {}
+interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>, SideBarPropTypes {}
 
-export const SPACE_BETWEEN_ITEMS_OF_HEADER = 'px-[70px]';
-
-export const Header: FC<PropTypes> = () => {
+export const Header: FC<PropTypes> = ({ variant }) => {
     const [ width ] = useWindowWidth();
 
+    const isOpen = variant === 'open';
+    const isSB = width < SCREENS_NUMBER.SB;
+
+
+    const { setToggleAction } = useTogglesRedux();
+
+    const onClickOpenSideBarHandler = () => {
+        setToggleAction({
+            type:  'isOpenSideBar',
+            value: true,
+        });
+    };
+
+    const onClickCloseSideBarHandler = () => {
+        setToggleAction({
+            type:  'isOpenSideBar',
+            value: false,
+        });
+    };
+
     return (
-        <header className = 'flex justify-between items-center py-4 sb:pt-[42px] sb:pb-[24px] sb:items-start'>
-            {width < SCREENS_NUMBER.SB ? (
-                <SideBar />
+        <header className = { cn(
+            'flex justify-between items-center sb:items-start sb:gap-x-between-items-of-header',
+            { 'py-4 sb:pt-[24px] sb:pb-[24px]': isOpen },
+            { '': !isOpen },
+        ) }>
+            {isSB ? (
+                // <SideBar variant = { variant } />
+                <button
+                    className = 'aspect-square transition-opacity hover:opacity-70'
+                    onClick = { isOpen ? onClickOpenSideBarHandler : onClickCloseSideBarHandler }>
+                    {isOpen ? (
+                        <Icons.SideBarOpen />
+                    ) : (
+                        <Icons.SideBarClose />
+                    )}
+                </button>
             ) : (
                 <>
                     <Logo
@@ -31,7 +81,27 @@ export const Header: FC<PropTypes> = () => {
                     <Nav variant = 'desktop' />
                 </>
             )}
-            <ButtonCart className = 'whitespace-nowrap' />
+            {!isOpen && (
+                <Logo
+                    variant = 'mobile'
+                    onClick = { onClickCloseSideBarHandler }
+                />
+            )}
+            <ul className = 'flex flex-col items-end self-stretch'>
+                <ButtonCart
+                    className = 'whitespace-nowrap'
+                    onClick = { onClickCloseSideBarHandler }
+                />
+                {isOpen && !isSB && (
+                    <li>
+                        <ButtonSignInAndUp
+                            className = 'whitespace-nowrap'
+                            isMobile = { false }
+                            onClick = { onClickCloseSideBarHandler }
+                        />
+                    </li>
+                )}
+            </ul>
         </header>
     );
 };
