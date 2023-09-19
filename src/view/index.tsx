@@ -22,11 +22,13 @@ import { useWindowWidth } from '@/tools/hooks';
 
 // Styles
 import '../assets/globalStyles/index.css';
+import { useProfileSaga } from '@/bus/profile/saga';
 
 export const App: FC = () => {
     const [ width ] = useWindowWidth();
 
     const { setToggleAction: setTogglerAction } = useTogglesRedux();
+    const { fetchAuthenticateProfile } = useProfileSaga();
 
     const setOnlineStatusHandler = useCallback(() => void setTogglerAction({
         type:  'isOnline',
@@ -34,6 +36,7 @@ export const App: FC = () => {
     }), [ setTogglerAction ]);
 
     useEffect(() => {
+        fetchAuthenticateProfile();
         setOnlineStatusHandler();
         window.addEventListener('online', setOnlineStatusHandler);
         window.addEventListener('offline', setOnlineStatusHandler);

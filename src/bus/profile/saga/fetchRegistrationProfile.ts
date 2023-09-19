@@ -38,7 +38,6 @@ const fetchRegistrationProfile = (
     },
     skipAttemptsIfStatusCode: 400,
     tryStart:                 function* () {
-        yield put(profileActions.setErrorOfProfile(null));
         yield put(profileActions.setIsLoadingOfProfile({
             type:  'profile',
             value: true,

@@ -18,6 +18,7 @@ React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
     ...props
 }, ref) => (
     <DropdownMenuPrimitive.Item
+        asChild
         className = { cn(
             `relative flex justify-center items-center
                 text-sm

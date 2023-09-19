@@ -11,10 +11,11 @@ import * as types from './types';
 import * as reducers from './reducers';
 // MarkerGen import extraReducers
 
-const initialState: types.ProfileState = {
+export const initialState: types.ProfileState = {
     ...commonInitialState,
     isLoadings: {
         profile: false,
+        logout:  false,
     },
     profile: null,
 };

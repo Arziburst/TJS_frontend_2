@@ -2,15 +2,20 @@
 import { SagaIterator } from '@redux-saga/core';
 import { createAction } from '@reduxjs/toolkit';
 import { put, takeLatest } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
+
+// Book
+import { BOOK } from '@/view/routes/book';
 
 // API
 import { LoginProfileFetcher } from '../../../api';
 
 // Slice
 import { profileActions, sliceName } from '../slice';
+import { togglesActions } from '@/bus/client/toggles';
 
 // Tools
-import { makeRequest } from '../../../tools/utils';
+import { makeRequest, removeKeysOfObject } from '../../../tools/utils';
 
 // Types
 import * as commonTypes from '../../commonTypes';
@@ -21,12 +26,15 @@ export const fetchLoginProfileAction = createAction<types.FetchLoginProfileReque
 
 // Saga
 const fetchLoginProfile = (
-    callAction: ReturnType<typeof fetchLoginProfileAction >,
+    callAction: ReturnType<typeof fetchLoginProfileAction>,
 ) => makeRequest<types.FetchLoginProfileResponse, commonTypes.Error>({
     callAction,
     fetchOptions: {
         successStatusCode: 200,
-        fetch:             () => LoginProfileFetcher(callAction.payload),
+        fetch:             () => LoginProfileFetcher(removeKeysOfObject<types.FetchLoginProfileRequest, 'navigate'>({
+            keys:   [ 'navigate' ],
+            object: callAction.payload,
+        })),
     },
     tryStart: function* () {
         yield put(profileActions.setIsLoadingOfProfile({
@@ -34,11 +42,14 @@ const fetchLoginProfile = (
             value: true,
         }));
     },
-    // success: function* (result) {
-    //     // yield put(profileActions.setLogin(result));
-    // },
-    error: function* (error) {
-        yield put(profileActions.setErrorOfProfile(error));
+    success: function* (result) {
+        yield put(profileActions.setProfile(result));
+        yield put(togglesActions.toggleCreatorAction({
+            type:  'isLoggedIn',
+            value: true,
+        }));
+        toast.success('Success Login!');
+        yield callAction.payload.navigate(BOOK.ROOT);
     },
     finallyEnd: function* () {
         yield put(profileActions.setIsLoadingOfProfile({

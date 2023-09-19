@@ -24,31 +24,37 @@ export const ButtonSignInAndUp: FC<PropTypes> = ({
     isMobile,
     ...props
 }) => {
-    const { togglesRedux: { isLoggedIn }, resetTogglesToInitial } = useTogglesRedux();
-    const { profile: { profile }} = useProfile();
+    const { togglesRedux: { isLoggedIn }} = useTogglesRedux();
+    const { profile: { profile, isLoadings }, fetchLogoutProfile } = useProfile();
 
     const onClickLogoutHandler = () => {
-        resetTogglesToInitial();
+        fetchLogoutProfile();
     };
 
     if (isLoggedIn) {
         return (
-            <DropdownMenu.Root modal = { false }>
-                <DropdownMenu.Trigger asChild>
-                    <Avatar
-                        fallback = { profile ? profile.name.slice(0, 2) : 'XX' }
-                    />
-                </DropdownMenu.Trigger>
-                <DropdownMenu.Content side = { isMobile ? 'top' : 'right' }>
-                    <DropdownMenu.Label>
-                        Settings
-                    </DropdownMenu.Label>
-                    <DropdownMenu.Separator />
-                    <DropdownMenu.Item onClick = { onClickLogoutHandler }>
-                        Logout
-                    </DropdownMenu.Item>
-                </DropdownMenu.Content>
-            </DropdownMenu.Root>
+            <li className = { className }>
+                <DropdownMenu.Root modal = { false }>
+                    <DropdownMenu.Trigger asChild>
+                        <Avatar
+                            fallback = { profile ? profile.name.slice(0, 2) : 'XX' }
+                        />
+                    </DropdownMenu.Trigger>
+                    <DropdownMenu.Content side = { isMobile ? 'top' : 'right' }>
+                        <DropdownMenu.Label>
+                            Settings
+                        </DropdownMenu.Label>
+                        <DropdownMenu.Separator />
+                        <DropdownMenu.Item
+                            propsButton = {{
+                                isLoading: isLoadings.logout,
+                            }}
+                            onClick = { onClickLogoutHandler }>
+                            Logout
+                        </DropdownMenu.Item>
+                    </DropdownMenu.Content>
+                </DropdownMenu.Root>
+            </li>
         );
     }
 

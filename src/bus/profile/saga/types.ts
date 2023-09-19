@@ -16,5 +16,12 @@ export type FetchRegistrationProfileResponse = types.Profile;
 export type FetchLoginProfileRequest = {
     email: string;
     password: string;
+    navigate: NavigateFunction;
 };
-export type FetchLoginProfileResponse = unknown;
+export type FetchLoginProfileResponse = types.Profile;
+
+// Authenticate
+export type FetchAuthenticateProfileResponse = types.Profile;
+
+// Logout
+export type FetchLogoutProfileResponse = number;

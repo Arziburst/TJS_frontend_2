@@ -4,6 +4,7 @@ import React, { FC } from 'react';
 // Components
 import { ErrorBoundary, Tabs } from '../../components';
 import { SignUp } from './SignUp';
+import { SignIn } from './SignIn';
 
 // Types
 type PropTypes = {
@@ -20,7 +21,7 @@ const SignInAndUp: FC<PropTypes> = () => {
         <div className = 'flex justify-center'>
             <Tabs.Root
                 className = 'w-[400px]'
-                defaultValue = { TABS_VALUES.UP }>
+                defaultValue = { TABS_VALUES.IN }>
                 <Tabs.List>
                     <Tabs.Trigger value = { TABS_VALUES.IN }>{TABS_VALUES.IN}</Tabs.Trigger>
                     <Tabs.Trigger value = { TABS_VALUES.UP }>{TABS_VALUES.UP}</Tabs.Trigger>
@@ -28,7 +29,7 @@ const SignInAndUp: FC<PropTypes> = () => {
                 <Tabs.Content
                     className = 'w-full'
                     value = { TABS_VALUES.IN }>
-                    in
+                    <SignIn />
                 </Tabs.Content>
                 <Tabs.Content
                     className = 'w-full'

@@ -2,6 +2,12 @@
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigate } from 'react-router-dom';
+// Bus
+import { useProfile } from '@/bus/profile';
+
+// Containers
+import { InputGroup } from '@/view/containers';
 
 // Components
 import {
@@ -15,7 +21,7 @@ import {
 } from '@/view/components';
 
 // Elements
-import { Input } from '@/view/elements';
+import { Button, FormTitle, Input } from '@/view/elements';
 
 // Static
 import { validationForm, defaultValues } from './static';
@@ -26,52 +32,66 @@ type PropTypes = {
 }
 
 export const SignIn: FC<PropTypes> = () => {
+    const navigate = useNavigate();
+
     const form = useForm({
         resolver: yupResolver(validationForm),
         defaultValues,
     });
 
-    const onSubmit = (values: any) => {
-        console.log(values);
+    const { profile: { isLoadings }, fetchLoginProfile } = useProfile();
+
+    const onSubmit = (values: typeof defaultValues) => {
+        fetchLoginProfile({
+            ...values,
+            navigate,
+        });
     };
 
     return (
-        <div>
-            {/* Enter your name and surname:
-            Enter your e-mail:
-            Enter your phone:
-            Enter your password:
-            Enter password again: */}
-
-            <p>Please enter your data</p>
-
-            <Form { ...form }>
-                <form
-                    className = 'space-y-8'
-                    onSubmit = { form.handleSubmit(onSubmit) }>
-                    <FormField
-                        control = { form.control }
-                        name = 'name'
-                        render = { ({ field }) => (
-                            <FormItem>
-                                <FormLabel>Username</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        placeholder = 'shadcn'
-                                        { ...field }
-                                    />
-                                </FormControl>
-                                <FormDescription>
-                                    This is your public display name.
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        ) }
-                    />
-                    <button type = 'submit'>Submit</button>
-                </form>
-            </Form>
-
-        </div>
+        <Form { ...form }>
+            <InputGroup
+                onSubmit = { form.handleSubmit(onSubmit) }>
+                <FormTitle className = 'text-center'>
+                    Please enter your authentication information.
+                </FormTitle>
+                <FormField
+                    control = { form.control }
+                    name = 'email'
+                    render = { ({ field }) => (
+                        <FormItem>
+                            <FormControl>
+                                <Input
+                                    placeholder = 'Email'
+                                    { ...field }
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    ) }
+                />
+                <FormField
+                    control = { form.control }
+                    name = 'password'
+                    render = { ({ field }) => (
+                        <FormItem>
+                            <FormControl>
+                                <Input
+                                    placeholder = 'Password'
+                                    { ...field }
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    ) }
+                />
+                <Button
+                    isLoading = { isLoadings.profile }
+                    type = 'submit'
+                    variant = 'default'>
+                    Submit
+                </Button>
+            </InputGroup>
+        </Form>
     );
 };
