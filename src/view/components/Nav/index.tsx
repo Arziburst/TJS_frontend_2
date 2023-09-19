@@ -139,9 +139,10 @@ export const Nav: FC<NavPropTypes> = ({
                     </li>
                 )}
                 {isMobile && (
-                    <li className = 'flex justify-center'>
-                        <ButtonSignInAndUp isMobile />
-                    </li>
+                    <ButtonSignInAndUp
+                        isMobile
+                        className = 'flex justify-center'
+                    />
                 )}
             </ul>
             {!isMobile && (

@@ -24,5 +24,4 @@ export type FetchLoginProfileResponse = types.Profile;
 export type FetchAuthenticateProfileResponse = types.Profile;
 
 // Logout
-export type FetchLogoutProfileRequest = unknown;
-export type FetchLogoutProfileResponse = unknown;
+export type FetchLogoutProfileResponse = number;

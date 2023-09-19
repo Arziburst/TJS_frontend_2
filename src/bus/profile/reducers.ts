@@ -1,6 +1,9 @@
 // Common
 import { setIsLoading } from '../common';
 
+// Slice
+import { initialState } from './slice';
+
 // Types
 import * as commonTypes from '../commonTypes';
 import * as types from './types';
@@ -17,5 +20,6 @@ export const setErrorOfProfile: types.BaseContact<commonTypes.Error | null> = (s
     error: action.payload,
 });
 
-
 export const setIsLoadingOfProfile: types.SetIsLoadingOfProfileContact = setIsLoading;
+
+export const resetProfile = () => initialState;

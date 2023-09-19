@@ -14,6 +14,7 @@ export const API = {
         REGISTRATION: `${API_URL}/profile/registration`,
         LOGIN:        `${API_URL}/profile/login`,
         REFRESH:      `${API_URL}/profile/refresh`,
+        LOGOUT:       `${API_URL}/profile/logout`,
     },
 
 };

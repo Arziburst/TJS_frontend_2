@@ -13,7 +13,7 @@ export type Profile = {
 }
 
 // State
-export type IsLoadings = 'profile';
+export type IsLoadings = 'profile' | 'logout';
 export interface ProfileState extends commonTypes.State<Record<IsLoadings, commonTypes.IsLoading>> {
     profile: null | Profile
 }

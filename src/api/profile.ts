@@ -26,10 +26,19 @@ export const LoginProfileFetcher = ({ email, password }: Omit<types.FetchLoginPr
     });
 };
 
-
 export const authenticateProfileFetcher = () => {
     return fetch(API.PROFILE.REFRESH, {
         method:      'GET',
+        credentials: 'include',
+        headers:     {
+            ...HEADERS,
+        },
+    });
+};
+
+export const logoutProfileFetcher = () => {
+    return fetch(API.PROFILE.LOGOUT, {
+        method:      'DELETE',
         credentials: 'include',
         headers:     {
             ...HEADERS,

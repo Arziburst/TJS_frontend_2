@@ -24,6 +24,10 @@ export const customFetch = async <SuccessData, ErrorData = {}>(fetchOptions: Fet
         });
     }
 
+    if (fetchOptions.isNoData) {
+        return { ...response, data: null };
+    }
+
     const successData: SuccessData = await response.json();
 
     return successData;

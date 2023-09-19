@@ -16,6 +16,7 @@ import { customFetch } from './customFetch';
 export type FetchOptions = {
     fetch: () => ReturnType<typeof fetch>;
     successStatusCode?: number;
+    isNoData?: boolean;
 }
 
 type OptionsType<SuccessData, ErrorData> = {

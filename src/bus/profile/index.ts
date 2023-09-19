@@ -28,6 +28,7 @@ export const useProfile = () => {
             payload: types.SetIsLoadingOfProfileAction,
         ) => dispatch(profileActions.setIsLoadingOfProfile(payload)),
         setErrorOfProfile: (payload: commonTypes.Error) => dispatch(profileActions.setErrorOfProfile(payload)),
+        resetProfile:      () => dispatch(profileActions.resetProfile()),
         ...profileSagas,
     };
 };

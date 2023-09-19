@@ -93,13 +93,11 @@ export const Header: FC<PropTypes> = ({ variant }) => {
                     onClick = { onClickCloseSideBarHandler }
                 />
                 {isOpen && !isSB && (
-                    <li>
-                        <ButtonSignInAndUp
-                            className = 'whitespace-nowrap'
-                            isMobile = { false }
-                            onClick = { onClickCloseSideBarHandler }
-                        />
-                    </li>
+                    <ButtonSignInAndUp
+                        className = 'whitespace-nowrap'
+                        isMobile = { false }
+                        onClick = { onClickCloseSideBarHandler }
+                    />
                 )}
             </ul>
         </header>
