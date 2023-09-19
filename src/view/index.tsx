@@ -1,6 +1,5 @@
 // Core
 import React, { FC, useEffect, useCallback } from 'react';
-import { ToastContainer } from 'react-toastify';
 
 // Assets
 import { SCREENS_NUMBER } from '@/assets';
