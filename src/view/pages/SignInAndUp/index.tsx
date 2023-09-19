@@ -4,6 +4,7 @@ import React, { FC } from 'react';
 // Components
 import { ErrorBoundary, Tabs } from '../../components';
 import { SignUp } from './SignUp';
+import { SignIn } from './SignIn';
 
 // Types
 type PropTypes = {
@@ -28,7 +29,7 @@ const SignInAndUp: FC<PropTypes> = () => {
                 <Tabs.Content
                     className = 'w-full'
                     value = { TABS_VALUES.IN }>
-                    in
+                    <SignIn />
                 </Tabs.Content>
                 <Tabs.Content
                     className = 'w-full'

@@ -15,13 +15,24 @@ export const registrationProfileFetcher = (body: Omit<types.FetchRegistrationPro
     });
 };
 
-export const LoginProfileFetcher = ({ email, password }: types.FetchLoginProfileRequest) => {
+export const LoginProfileFetcher = ({ email, password }: Omit<types.FetchLoginProfileRequest, 'navigate'>) => {
     return fetch(API.PROFILE.LOGIN, {
         method:      'POST',
         credentials: 'include',
         headers:     {
             ...HEADERS,
             Authorization: `Basic ${email}:${password}`,
+        },
+    });
+};
+
+
+export const authenticateProfileFetcher = () => {
+    return fetch(API.PROFILE.REFRESH, {
+        method:      'GET',
+        credentials: 'include',
+        headers:     {
+            ...HEADERS,
         },
     });
 };

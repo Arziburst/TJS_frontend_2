@@ -8,6 +8,7 @@ import { useDispatch } from '../../../tools/hooks';
 // MarkerGen Watchers & Actions
 import { fetchLoginProfileAction, watchFetchLoginProfile } from './fetchLoginProfile';
 import { fetchRegistrationProfileAction, watchFetchRegistrationProfile } from './fetchRegistrationProfile';
+import { fetchAuthenticateProfileAction, watchFetchAuthenticateProfile } from './fetchAuthenticateProfile';
 
 // Types
 import * as types from './types';
@@ -19,7 +20,10 @@ export const useProfileSaga = () => {
         fetchRegistrationProfile: (
             payload: types.FetchRegistrationProfileRequest,
         ) => dispatch(fetchRegistrationProfileAction(payload)),
-        fetchLoginProfile: (_id: types.FetchLoginProfileRequest) => dispatch(fetchLoginProfileAction(_id)),
+        fetchLoginProfile: (
+            payload: types.FetchLoginProfileRequest,
+        ) => dispatch(fetchLoginProfileAction(payload)),
+        fetchAuthenticateProfile: () => dispatch(fetchAuthenticateProfileAction()),
         // MarkerGen function
     };
 };
@@ -29,5 +33,6 @@ export function* watchProfile(): SagaIterator {
         // MarkerGen watchers
         call(watchFetchLoginProfile),
         call(watchFetchRegistrationProfile),
+        call(watchFetchAuthenticateProfile),
     ]);
 }

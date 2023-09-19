@@ -13,10 +13,8 @@ import { InputGroup } from '@/view/containers';
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
-    FormLabel,
     FormMessage,
 } from '@/view/components';
 
@@ -42,7 +40,6 @@ export const SignUp: FC<PropTypes> = () => {
     const { profile: { isLoadings }, fetchRegistrationProfile } = useProfile();
 
     const onSubmit = (values: typeof defaultValues) => {
-        console.log('onSubmit => values:', values);
         fetchRegistrationProfile({
             name:     values.name,
             phone:    values.phone,
@@ -56,22 +53,20 @@ export const SignUp: FC<PropTypes> = () => {
         <Form { ...form }>
             <InputGroup
                 onSubmit = { form.handleSubmit(onSubmit) }>
-                <FormTitle className = 'text-center'>Please enter your data</FormTitle>
+                <FormTitle className = 'text-center'>
+                    Please enter your registration information.
+                </FormTitle>
                 <FormField
                     control = { form.control }
                     name = 'name'
                     render = { ({ field }) => (
                         <FormItem>
-                            {/* <FormLabel>Username</FormLabel> */}
                             <FormControl>
                                 <Input
                                     placeholder = 'Name and Surname'
                                     { ...field }
                                 />
                             </FormControl>
-                            {/* <FormDescription>
-                                    This is your public display name.
-                                </FormDescription> */}
                             <FormMessage />
                         </FormItem>
                     ) }
