@@ -1,11 +1,8 @@
 // Core
 import { Configuration } from 'webpack';
-import { createTransformer } from 'typescript-plugin-styled-components';
 
 // Tools
 import { nodeModulePath } from '../constants';
-
-const styledComponentsTransformer = createTransformer();
 
 export const loadTypeScript = (): Configuration => ({
     module: {
@@ -17,8 +14,7 @@ export const loadTypeScript = (): Configuration => ({
                 use:     {
                     loader:  'ts-loader',
                     options: {
-                        compilerOptions:       { noEmit: false },
-                        getCustomTransformers: () => ({ before: [ styledComponentsTransformer ]}),
+                        compilerOptions: { noEmit: false },
                     },
                 },
             },

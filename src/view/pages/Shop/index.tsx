@@ -11,9 +11,6 @@ import { useProducts } from '../../../bus/products';
 // Components
 import { ErrorBoundary } from '../../components';
 
-// Styles
-import * as S from './styles';
-
 // Types
 type PropTypes = {
     /* type props here */
@@ -39,9 +36,9 @@ const Shop: FC<PropTypes> = () => {
     }, [ category ]);
 
     return (
-        <S.Container>
+        <div>
             Page: Shop
-        </S.Container>
+        </div>
     );
 };
 
