@@ -7,9 +7,6 @@ import React, { FC } from 'react';
 // Components
 import { ErrorBoundary } from '../../components';
 
-// Styles
-import * as S from './styles';
-
 // Types
 type PropTypes = {
     /* type props here */
@@ -17,9 +14,9 @@ type PropTypes = {
 
 const Contacts: FC<PropTypes> = () => {
     return (
-        <S.Container>
+        <div>
             Page: Contacts
-        </S.Container>
+        </div>
     );
 };
 
