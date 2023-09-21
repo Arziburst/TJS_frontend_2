@@ -33,9 +33,14 @@ import {
 import { SheetTrigger } from '../SideBar/sheet';
 
 // Types
-interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>, SideBarPropTypes {}
+interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>, SideBarPropTypes {
+    isSetHeightToCssVariable?: boolean;
+}
 
-export const Header: FC<PropTypes> = ({ variant }) => {
+export const Header: FC<PropTypes> = ({
+    variant,
+    isSetHeightToCssVariable,
+}) => {
     const refHeader = useRef<null | HTMLElement>(null);
 
     const [ width ] = useWindowWidth();
@@ -60,7 +65,7 @@ export const Header: FC<PropTypes> = ({ variant }) => {
     };
 
     useEffect(() => {
-        if (refHeader.current && refHeader.current.clientHeight) {
+        if (isSetHeightToCssVariable && refHeader.current && refHeader.current.clientHeight) {
             document.documentElement.style.setProperty(CSS_VARIABLES.HEADER, `${refHeader.current.clientHeight}px`);
         }
     }, [ refHeader.current?.clientHeight ]);

@@ -57,7 +57,10 @@ export const App: FC = () => {
             <Alert />
             <Wrapper
                 className = 'grid grid-rows-[auto_1fr_auto] min-h-screen'>
-                <Header variant = 'open' />
+                <Header
+                    isSetHeightToCssVariable
+                    variant = 'open'
+                />
                 <Routes />
                 <Footer />
             </Wrapper>
