@@ -1,5 +1,8 @@
 // Core
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
+
+// Init
+import { CSS_VARIABLES } from '@/init';
 
 // Tools
 import { cn } from '@/tools/lib/utils';
@@ -33,11 +36,12 @@ import { SheetTrigger } from '../SideBar/sheet';
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>, SideBarPropTypes {}
 
 export const Header: FC<PropTypes> = ({ variant }) => {
+    const refHeader = useRef<null | HTMLElement>(null);
+
     const [ width ] = useWindowWidth();
 
     const isOpen = variant === 'open';
     const isSB = width < SCREENS_NUMBER.SB;
-
 
     const { setToggleAction } = useTogglesRedux();
 
@@ -55,12 +59,20 @@ export const Header: FC<PropTypes> = ({ variant }) => {
         });
     };
 
+    useEffect(() => {
+        if (refHeader.current && refHeader.current.clientHeight) {
+            document.documentElement.style.setProperty(CSS_VARIABLES.HEADER, `${refHeader.current.clientHeight}px`);
+        }
+    }, [ refHeader.current?.clientHeight ]);
+
     return (
-        <header className = { cn(
-            'flex justify-between items-center sb:items-start sb:gap-x-between-items-of-header',
-            { 'py-4 sb:pt-[24px] sb:pb-[24px]': isOpen },
-            { '': !isOpen },
-        ) }>
+        <header
+            className = { cn(
+                'flex justify-between items-center sb:items-start sb:gap-x-between-items-of-header',
+                { 'py-4 sb:pt-[24px] sb:pb-[24px]': isOpen },
+                { '': !isOpen },
+            ) }
+            ref = { refHeader }>
             {isSB ? (
                 // <SideBar variant = { variant } />
                 <button
