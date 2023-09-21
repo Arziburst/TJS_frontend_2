@@ -41,6 +41,7 @@
         "clsx": "^2.0.0",
         "lucide-react": "^0.274.0",
         "nori-store": "^1.0.3",
+        "postcss-viewport-height-correction": "^1.1.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-hook-form": "^7.46.1",
