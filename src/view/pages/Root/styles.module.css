@@ -1,0 +1,10 @@
+.root {
+    display: grid;
+    gap: 12px;
+    grid-template: 
+        "g-0 g-1"
+        "g-2 g-2"
+        "g-3 g-4"
+        "g-5 g-5";
+    grid-template-columns: repeat(2, 1fr);
+}

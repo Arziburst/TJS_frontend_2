@@ -23,4 +23,3 @@ export const LANGUAGES = [ 'en', 'ua', 'ru' ];
 export const LINK_GOHARD = 'https://gohard.team/';
 
 export const LINK_INSTAGRAM = 'https://www.instagram.com/';
-

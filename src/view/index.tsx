@@ -4,11 +4,17 @@ import React, { FC, useEffect, useCallback } from 'react';
 // Assets
 import { SCREENS_NUMBER } from '@/assets';
 
+// Images
+import '@/assets/images/image_category_brooch.png';
+
 // Routes
 import { Routes } from './routes';
 
 // Hooks
 import { useTogglesRedux } from '../bus/client/toggles';
+
+// Bus
+import { useProfileSaga } from '@/bus/profile/saga';
 
 // Containers
 import { Wrapper } from '@/view/containers';
@@ -21,7 +27,6 @@ import { useWindowWidth } from '@/tools/hooks';
 
 // Styles
 import '../assets/globalStyles/index.css';
-import { useProfileSaga } from '@/bus/profile/saga';
 
 export const App: FC = () => {
     const [ width ] = useWindowWidth();
@@ -35,23 +40,23 @@ export const App: FC = () => {
     }), [ setTogglerAction ]);
 
     useEffect(() => {
-        fetchAuthenticateProfile();
+        // fetchAuthenticateProfile();
         setOnlineStatusHandler();
         window.addEventListener('online', setOnlineStatusHandler);
         window.addEventListener('offline', setOnlineStatusHandler);
     }, []);
 
     return (
-        <Wrapper className = 'flex flex-col min-h-screen'>
-            <Alert />
-            <Header variant = 'open' />
+        <div>
             {width < SCREENS_NUMBER.SB && (
                 <SideBar variant = { 'close' } />
             )}
-            <div className = 'grow'>
+            <Alert />
+            <Wrapper className = 'grid grid-rows-[auto_1fr_auto] min-h-screen'>
+                <Header variant = 'open' />
                 <Routes />
-            </div>
-            <Footer />
-        </Wrapper>
+                <Footer />
+            </Wrapper>
+        </div>
     );
 };

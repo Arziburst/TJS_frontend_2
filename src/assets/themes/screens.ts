@@ -4,6 +4,8 @@ type SCREENS = {
 };
 
 export enum SCREENS_NUMBER {
+    SM = 640,
+    MD = 768,
     SB = 1024, // for SideBar
 }
 

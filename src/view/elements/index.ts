@@ -1,4 +1,6 @@
 // MarkerGen re-export
+export * from './Separator';
+export * from './Image';
 export * from './FormTitle';
 export * from './Input';
 export * from './Label';
