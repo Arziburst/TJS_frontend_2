@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* TT Ricordi Allegria Trial */
+/* TT Ricordi Allegria Trial */ 
+/* todo find new font "TT Ricordi Allegria Trial" */
 @font-face {
     font-family: 'TT Ricordi Allegria Trial';
     src: local('TT Ricordi Allegria Trial Regular'), local('TT-Ricordi-Allegria-Trial-Regular'), local('TTRicordiAllegriaTrial-Regular'), local('TTRicordiAllegriaTrialRegular'), local('TTRicordiAllegriaTrial'),
@@ -119,7 +120,6 @@
     --ring: 222.2 84% 4.9%;
  
     --radius: 0.5rem;
-    --value: 0;
   }
  
   /* .dark {

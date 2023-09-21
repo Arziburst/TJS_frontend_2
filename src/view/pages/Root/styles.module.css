@@ -1,6 +1,6 @@
 .root {
-    height: calc(var(--vh, 1vh) * 100 - var(--vh_header));
-    height: calc(100svh - var(--vh_header));
+    min-height: calc(var(--vh, 1vh) * 100 - var(--vh_header));
+    min-height: calc(100svh - var(--vh_header));
 }
 
 .el {
@@ -23,4 +23,10 @@
     .grid > *:nth-child(2n):not(:last-child)::after {
         display: none;
     }   
+}
+
+@media (min-height: 700px) and (min-width: 1024px) {
+    .footer {
+        @apply py-16
+    }
 }

@@ -43,10 +43,6 @@ const fetchLogoutProfile = (
         }));
         yield put(profileActions.resetProfile()); // setIsLoadingOfProfile >>> false
     },
-    // todo add alert when error, and for all sagas
-    // error: function* (error) {
-    //     // console.log('error >>> ', error);
-    // },
 });
 
 // Watcher

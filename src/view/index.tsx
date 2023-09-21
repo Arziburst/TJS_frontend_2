@@ -1,11 +1,12 @@
 // Core
-import React, { FC, useEffect, useCallback, useRef } from 'react';
+import React, { FC, useEffect, useCallback } from 'react';
 
 // Assets
 import { SCREENS_NUMBER } from '@/assets';
 
 // Images
 import '@/assets/images/image_category_brooch.png';
+import '@/assets/images/image_category_see_all.png';
 
 // Routes
 import { Routes } from './routes';
@@ -30,8 +31,6 @@ import { useWindowWidth } from '@/tools/hooks';
 import '../assets/globalStyles/index.css';
 
 export const App: FC = () => {
-    const refWrapper = useRef(null);
-
     const [ width ] = useWindowWidth();
 
     const { setToggleAction: setTogglerAction } = useTogglesRedux();
@@ -41,15 +40,6 @@ export const App: FC = () => {
         type:  'isOnline',
         value: navigator.onLine,
     }), [ setTogglerAction ]);
-
-    useEffect(() => {
-        if (refWrapper.current) {
-            const element = refWrapper.current;
-            const computedStyle = window.getComputedStyle(element);
-            const propertyValue = computedStyle.getPropertyValue('padding-left');
-            document.documentElement.style.setProperty('--test', propertyValue);
-        }
-    }, [ width, refWrapper.current ]);
 
     useEffect(() => {
         postcssViewportHeightCorrection();
@@ -66,8 +56,7 @@ export const App: FC = () => {
             )}
             <Alert />
             <Wrapper
-                className = 'grid grid-rows-[auto_1fr_auto] min-h-screen'
-                ref = { refWrapper }>
+                className = 'grid grid-rows-[auto_1fr_auto] min-h-screen'>
                 <Header variant = 'open' />
                 <Routes />
                 <Footer />

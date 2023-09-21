@@ -5,7 +5,7 @@ import React, { FC, useEffect, useRef } from 'react';
 import { SCREENS_NUMBER } from '@/assets';
 
 // Init
-import { CATEGORIES_ITEMS } from '@/init';
+import { CATEGORIES_ITEMS, ENUM_CATEGORIES } from '@/init';
 
 // Tools
 import { useWindowWidth } from '@/tools/hooks';
@@ -18,6 +18,7 @@ import { LinkCategory } from './LinkCategory';
 
 // Styles
 import S from './styles.module.css';
+import { Image, NavLink } from '@/view/elements';
 
 const Root: FC = () => {
     const refRoot = useRef<null | HTMLDivElement>(null);
@@ -123,8 +124,29 @@ const Root: FC = () => {
                 ))}
 
             </div>
-            <div className = ''>
-                <p>TJStore is a store of fashionable and stylish jewelry, which the author-designer brings to life.</p>
+            <div className = { `${S.footer} flex flex-col gap-3 py-6 justify-between
+                sb:flex-row` }>
+                <p className = { `text-[14px] leading-[180%] uppercase 
+                    md:text-[24px]
+                    sb:max-w-[680px] sb:gap-5` }>
+                    <span className = 'text-quaternary'>
+                        TJStore
+                    </span> is a store of fashionable and stylish jewelry, which the author-designer brings to life.
+                </p>
+                <div className = 'flex gap-6 justify-end items-center'>
+                    <NavLink
+                        className = 'text-sm font-secondary font-semibold capitalize'
+                        to = { `/${ENUM_CATEGORIES.ALL}` }
+                        variant = 'underline'>
+                        see all
+                    </NavLink>
+                    <Image
+                        alt = 'Image see all'
+                        className = { `w-[60px] aspect-[10/8]
+                            sb:w-[100px]` }
+                        src = 'assets/image_category_see_all.png'
+                    />
+                </div>
             </div>
         </div>
     );

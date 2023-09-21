@@ -18,7 +18,6 @@ const buttonVariants = cva(
                     focus-visible:text-secondary-100 focus-visible:bg-transparent`,
                 outline: `border border-input bg-background 
                     hover:bg-accent hover:text-accent-foreground`,
-                // todo make animate bottom border
                 underline: `border-b-2
                     hover:border-red-900`,
                 ghost: 'hover:bg-accent hover:text-accent-foreground',
