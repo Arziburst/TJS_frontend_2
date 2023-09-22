@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
+
 // Bus
 import { useProfile } from '@/bus/profile';
 
@@ -58,10 +59,11 @@ export const SignIn: FC<PropTypes> = () => {
                 <FormField
                     control = { form.control }
                     name = 'email'
-                    render = { ({ field }) => (
+                    render = { ({ field, fieldState }) => (
                         <FormItem>
                             <FormControl>
                                 <Input
+                                    isValidate = { fieldState.invalid }
                                     placeholder = 'Email'
                                     { ...field }
                                 />
@@ -73,10 +75,11 @@ export const SignIn: FC<PropTypes> = () => {
                 <FormField
                     control = { form.control }
                     name = 'password'
-                    render = { ({ field }) => (
+                    render = { ({ field, fieldState }) => (
                         <FormItem>
                             <FormControl>
                                 <Input
+                                    isValidate = { fieldState.invalid }
                                     placeholder = 'Password'
                                     { ...field }
                                 />

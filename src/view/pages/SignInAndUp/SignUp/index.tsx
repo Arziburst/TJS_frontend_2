@@ -59,10 +59,11 @@ export const SignUp: FC<PropTypes> = () => {
                 <FormField
                     control = { form.control }
                     name = 'name'
-                    render = { ({ field }) => (
+                    render = { ({ field, fieldState }) => (
                         <FormItem>
                             <FormControl>
                                 <Input
+                                    isValidate = { fieldState.invalid }
                                     placeholder = 'Name and Surname'
                                     { ...field }
                                 />
@@ -74,10 +75,11 @@ export const SignUp: FC<PropTypes> = () => {
                 <FormField
                     control = { form.control }
                     name = 'email'
-                    render = { ({ field }) => (
+                    render = { ({ field, fieldState }) => (
                         <FormItem>
                             <FormControl>
                                 <Input
+                                    isValidate = { fieldState.invalid }
                                     placeholder = 'Email'
                                     { ...field }
                                 />
@@ -89,10 +91,11 @@ export const SignUp: FC<PropTypes> = () => {
                 <FormField
                     control = { form.control }
                     name = 'phone'
-                    render = { ({ field }) => (
+                    render = { ({ field, fieldState }) => (
                         <FormItem>
                             <FormControl>
                                 <Input
+                                    isValidate = { fieldState.invalid }
                                     placeholder = 'Phone'
                                     { ...field }
                                 />
@@ -104,10 +107,11 @@ export const SignUp: FC<PropTypes> = () => {
                 <FormField
                     control = { form.control }
                     name = 'password'
-                    render = { ({ field }) => (
+                    render = { ({ field, fieldState }) => (
                         <FormItem>
                             <FormControl>
                                 <Input
+                                    isValidate = { fieldState.invalid }
                                     placeholder = 'Password'
                                     { ...field }
                                 />
@@ -119,10 +123,11 @@ export const SignUp: FC<PropTypes> = () => {
                 <FormField
                     control = { form.control }
                     name = 'passwordAgain'
-                    render = { ({ field }) => (
+                    render = { ({ field, fieldState }) => (
                         <FormItem>
                             <FormControl>
                                 <Input
+                                    isValidate = { fieldState.invalid }
                                     placeholder = 'Password again'
                                     { ...field }
                                 />

@@ -2,7 +2,7 @@
 import * as yup from 'yup';
 
 // Init
-import { ERRORS } from '@/init/';
+import { ERRORS, INPUT_VALIDATION_VALUES } from '@/init/';
 
 // Types
 type DefaultValues = {
@@ -11,8 +11,10 @@ type DefaultValues = {
 }
 
 export const validationForm = yup.object({
-    email:    yup.string().required(ERRORS.REQUIRED),
-    password: yup.string().required(ERRORS.REQUIRED),
+    email: yup.string().required(ERRORS.REQUIRED)
+        .email(ERRORS.INVALID_EMAIL),
+    password: yup.string().required(ERRORS.REQUIRED)
+        .min(INPUT_VALIDATION_VALUES.PASSWORD, ERRORS.PASSWORD_MIN_LENGTH),
 });
 
 export const defaultValues: DefaultValues = process.env.NODE_ENV === 'development' ? {

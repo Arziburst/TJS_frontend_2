@@ -3,10 +3,12 @@ import * as React from 'react';
 import { cn } from '@/tools/lib/utils';
 
 export interface InputProps
-    extends React.InputHTMLAttributes<HTMLInputElement> { }
+    extends React.InputHTMLAttributes<HTMLInputElement> {
+    isValidate?: boolean;
+}
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-    ({ className, type, ...props }, ref) => {
+    ({ className, isValidate, type, ...props }, ref) => {
         return (
             <input
                 className = { cn(
@@ -17,6 +19,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                         hover:opacity-70
                         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 
                         disabled:cursor-not-allowed disabled:opacity-50`,
+                    { 'border-quaternary': isValidate },
                     className,
                 ) }
                 ref = { ref }
