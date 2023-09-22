@@ -1,9 +1,32 @@
-export const useR = () => {
+// Core
+import { MutableRefObject, useEffect } from 'react';
+
+// Assets
+import { SCREENS_NUMBER } from '@/assets';
+
+// Init
+import { CATEGORIES_ITEMS } from '@/init';
+
+// Types
+type UseStatic = {
+    width: number;
+    refGrid: MutableRefObject<HTMLDivElement | null>;
+}
+
+type MakeJustifySelf = {
+    index: number;
+    width: number;
+}
+
+export const useStatic = ({
+    width,
+    refGrid,
+}: UseStatic) => {
     useEffect(() => {
         if (refGrid && refGrid.current) {
             const CATEGORIES_ITEMS_MAPPED = CATEGORIES_ITEMS.map((_, index) => index); // [0, 1, 2, 3, 4]
 
-            if (width > SCREENS_NUMBER.SM) { // desktop
+            if (width > SCREENS_NUMBER.MD) { // desktop
                 let newArray: number[] = [];
 
 
@@ -55,4 +78,24 @@ export const useR = () => {
             }
         }
     }, [ refGrid, width ]);
+};
+
+export const makeJustifySelf = ({ index, width }: MakeJustifySelf): string => {
+    if (width < SCREENS_NUMBER.MD + 1) {
+        return 'start';
+    }
+
+    if (index === 0) {
+        return 'start';
+    } else if (index === 1) {
+        return 'end';
+    }
+
+    if ((index + 1) % 3 === 0) {
+        return 'stretch';
+    } else if ((index + 1) % 2 !== 0) {
+        return 'end';
+    }
+
+    return 'start';
 };

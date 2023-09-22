@@ -7,6 +7,9 @@ import { cn } from '@/tools/lib/utils';
 // Elements
 import { Image, NavLink } from '@/view/elements';
 
+// Styles
+import S from './styles.module.css';
+
 // Types
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>{
     category: string;
@@ -22,8 +25,9 @@ export const LinkCategory: FC<PropTypes> = ({
             { ...props }
             className = { cn('flex sm:justify-center', className) }>
             <NavLink
-                className = { cn('flex gap-3 flex-wrap items-center', className) }
-                to = { `/${category}` }>
+                className = { cn(`${S.root} flex gap-3 flex-wrap items-center`, className) }
+                to = { `/${category}` }
+                variant = 'none'>
                 <Image
                     alt = { `Image of category ${category}` }
                     className = 'w-[60px] aspect-[10/8] sb:w-[100px]'

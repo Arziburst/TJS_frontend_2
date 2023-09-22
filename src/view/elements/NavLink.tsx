@@ -23,6 +23,7 @@ const navLinkVariants = cva(
                     hover:after:translate-x-[0%]
                     hover:before:translate-x-[150%]
                     `,
+                none: '',
             },
         },
         defaultVariants: {

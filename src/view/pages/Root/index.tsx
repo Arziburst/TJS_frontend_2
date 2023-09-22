@@ -1,8 +1,7 @@
 // Core
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useRef } from 'react';
 
 // Assets
-import { SCREENS_NUMBER } from '@/assets';
 
 // Init
 import { CATEGORIES_ITEMS, ENUM_CATEGORIES } from '@/init';
@@ -14,11 +13,14 @@ import { useWindowWidth } from '@/tools/hooks';
 import { ErrorBoundary } from '@/view/components';
 
 // Elements
+import { Image, NavLink } from '@/view/elements';
 import { LinkCategory } from './LinkCategory';
+
+// Static
+import { makeJustifySelf, useStatic } from './static';
 
 // Styles
 import S from './styles.module.css';
-import { Image, NavLink } from '@/view/elements';
 
 const Root: FC = () => {
     const refRoot = useRef<null | HTMLDivElement>(null);
@@ -26,82 +28,7 @@ const Root: FC = () => {
 
     const [ width ] = useWindowWidth();
 
-    useEffect(() => {
-        if (refGrid && refGrid.current) {
-            const CATEGORIES_ITEMS_MAPPED = CATEGORIES_ITEMS.map((_, index) => index);
-
-            if (width > SCREENS_NUMBER.MD) { // desktop
-                let newArray: number[] = [];
-
-
-                CATEGORIES_ITEMS_MAPPED.forEach((item, index) => {
-                    if (index === 0) {
-                        newArray.push(index);
-
-                        return;
-                    }
-                    if ((index + 1) % 3 === 0) {
-                        newArray.push(index);
-                        newArray.push(index);
-                    } else {
-                        newArray.push(index);
-                    }
-                });
-
-
-                if (newArray.length % 2 !== 0) {
-                    newArray.splice(-2, 1);
-                }
-
-                const outputArray = [];
-
-                for (let i = 0; i < newArray.length; i += 2) {
-                    const firstNumber = newArray[ i ]; // 5
-                    const secondNumber = newArray[ i + 1 ];
-                    const combinedNumbers = `g-${firstNumber} g-${secondNumber}`;
-                    outputArray.push(combinedNumbers);
-                }
-
-                const result = `"${outputArray.join('" "')}"`;
-
-                refGrid.current.style.gridTemplate = result;
-                refGrid.current.style.justifyContent = 'normal';
-            } else { // mobile
-                let outputArray: string[] = [];
-                CATEGORIES_ITEMS_MAPPED.forEach((number) => {
-                    outputArray.push(`g-${number}`);
-                });
-
-                const result = `"${outputArray.join('" "')}"`;
-
-                refGrid.current.style.gridTemplate = result;
-                refGrid.current.style.justifyContent = 'center';
-            }
-            if (width < 400) {
-                refGrid.current.style.justifyContent = 'normal';
-            }
-        }
-    }, [ refGrid, width ]);
-
-    const makeJustifySelf = (index: number): string => {
-        if (width < SCREENS_NUMBER.MD) {
-            return 'start';
-        }
-
-        if (index === 0) {
-            return 'start';
-        } else if (index === 1) {
-            return 'end';
-        }
-
-        if ((index + 1) % 3 === 0) {
-            return 'stretch';
-        } else if ((index + 1) % 2 !== 0) {
-            return 'end';
-        }
-
-        return 'start';
-    };
+    useStatic({ width, refGrid });
 
     return (
         <div
@@ -118,7 +45,7 @@ const Root: FC = () => {
                         key = { category }
                         style = {{
                             gridArea:    `g-${index}`,
-                            justifySelf: makeJustifySelf(index),
+                            justifySelf: makeJustifySelf({ index, width }),
                         }}
                     />
                 ))}
