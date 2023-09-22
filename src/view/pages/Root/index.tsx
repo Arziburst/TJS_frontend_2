@@ -1,13 +1,14 @@
 // Core
 import React, { FC, useRef } from 'react';
 
-// Assets
-
 // Init
 import { CATEGORIES_ITEMS, ENUM_CATEGORIES } from '@/init';
 
 // Tools
 import { useWindowWidth } from '@/tools/hooks';
+
+// Book
+import { BOOK } from '@/view/routes/book';
 
 // Components
 import { ErrorBoundary } from '@/view/components';
@@ -43,6 +44,7 @@ const Root: FC = () => {
                         category = { category }
                         className = { `${S.el}` }
                         key = { category }
+                        numberItems = { index + 1 }
                         style = {{
                             gridArea:    `g-${index}`,
                             justifySelf: makeJustifySelf({ index, width }),
@@ -63,7 +65,7 @@ const Root: FC = () => {
                 <div className = 'flex gap-6 justify-end items-center'>
                     <NavLink
                         className = 'text-sm font-secondary font-semibold capitalize'
-                        to = { `/${ENUM_CATEGORIES.ALL}` }
+                        to = { `${BOOK.SHOP}/${ENUM_CATEGORIES.ALL}` }
                         variant = 'underline'>
                         see all
                     </NavLink>

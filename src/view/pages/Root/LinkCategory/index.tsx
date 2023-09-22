@@ -1,6 +1,9 @@
 // Core
 import React, { FC } from 'react';
 
+// Book
+import { BOOK } from '@/view/routes/book';
+
 // Tools
 import { cn } from '@/tools/lib/utils';
 
@@ -11,13 +14,15 @@ import { Image, NavLink } from '@/view/elements';
 import S from './styles.module.css';
 
 // Types
-interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>{
+interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     category: string;
+    numberItems: number;
 }
 
 export const LinkCategory: FC<PropTypes> = ({
     className,
     category,
+    numberItems,
     ...props
 }) => {
     return (
@@ -26,7 +31,7 @@ export const LinkCategory: FC<PropTypes> = ({
             className = { cn('flex sm:justify-center', className) }>
             <NavLink
                 className = { cn(`${S.root} flex gap-3 flex-wrap items-center`, className) }
-                to = { `/${category}` }
+                to = { `${BOOK.SHOP}/${category}` }
                 variant = 'none'>
                 <Image
                     alt = { `Image of category ${category}` }
@@ -39,7 +44,7 @@ export const LinkCategory: FC<PropTypes> = ({
                 ` }>
                     {category}
                     <span className = 'text-base font-secondary text-quaternary'>
-                        {'(03)'}
+                        {`(${numberItems < 10 ? `0${numberItems}` : numberItems})`}
                     </span>
                 </p>
             </NavLink>
