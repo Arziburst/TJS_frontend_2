@@ -4,11 +4,19 @@ import React, { FC, useEffect, useCallback } from 'react';
 // Assets
 import { SCREENS_NUMBER } from '@/assets';
 
+// Images
+import '@/assets/images/image_category_brooch.png';
+import '@/assets/images/image_category_see_all.png';
+
 // Routes
 import { Routes } from './routes';
 
-// Hooks
+// Tools
+import { postcssViewportHeightCorrection } from '@/tools/utils';
+
+// Bus
 import { useTogglesRedux } from '../bus/client/toggles';
+import { useProfileSaga } from '@/bus/profile/saga';
 
 // Containers
 import { Wrapper } from '@/view/containers';
@@ -21,7 +29,6 @@ import { useWindowWidth } from '@/tools/hooks';
 
 // Styles
 import '../assets/globalStyles/index.css';
-import { useProfileSaga } from '@/bus/profile/saga';
 
 export const App: FC = () => {
     const [ width ] = useWindowWidth();
@@ -35,6 +42,7 @@ export const App: FC = () => {
     }), [ setTogglerAction ]);
 
     useEffect(() => {
+        postcssViewportHeightCorrection();
         fetchAuthenticateProfile();
         setOnlineStatusHandler();
         window.addEventListener('online', setOnlineStatusHandler);
@@ -42,16 +50,20 @@ export const App: FC = () => {
     }, []);
 
     return (
-        <Wrapper className = 'flex flex-col min-h-screen'>
-            <Alert />
-            <Header variant = 'open' />
+        <div>
             {width < SCREENS_NUMBER.SB && (
                 <SideBar variant = { 'close' } />
             )}
-            <div className = 'grow'>
+            <Alert />
+            <Wrapper
+                className = 'grid grid-rows-[auto_1fr_auto] min-h-screen'>
+                <Header
+                    isSetHeightToCssVariable
+                    variant = 'open'
+                />
                 <Routes />
-            </div>
-            <Footer />
-        </Wrapper>
+                <Footer />
+            </Wrapper>
+        </div>
     );
 };
