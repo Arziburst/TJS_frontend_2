@@ -91,7 +91,7 @@ export const SignIn: FC<PropTypes> = () => {
                 <Button
                     isLoading = { isLoadings.profile }
                     type = 'submit'
-                    variant = 'default'>
+                    variant = 'contain'>
                     Submit
                 </Button>
             </InputGroup>

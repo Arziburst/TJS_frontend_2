@@ -17,7 +17,8 @@ const buttonVariants = cva(
     {
         variants: {
             variant: {
-                default: `font-secondary text-sm py-5 border-2 border-secondary-100 
+                default: '',
+                contain: `font-secondary text-sm py-5 border-2 border-secondary-100 
                     text-primary-200 bg-secondary-100 
                     hover:text-secondary-100 hover:bg-transparent hover:opacity-100
                     focus-visible:text-secondary-100 focus-visible:bg-transparent hover:opacity-100
@@ -36,7 +37,7 @@ const buttonVariants = cva(
             },
         },
         defaultVariants: {
-            variant: 'default',
+            variant: 'contain',
         },
     },
 );

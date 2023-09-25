@@ -1,0 +1,38 @@
+.root {
+    @apply w-[164px] 
+        sb:w-[200px];
+}
+
+.root:hover .title {
+    @apply text-quaternary;
+}
+
+.images_container {
+    @apply w-[164px] h-[154px] rounded 
+        sb:w-[200px] sb:h-[200px];
+}
+
+.root:hover .first_image {
+    @apply opacity-0;
+}
+
+.root:hover .second_image {
+    @apply opacity-100;
+}
+
+.first_image, 
+.second_image {
+    @apply transition duration-500;
+}
+
+.second_image {
+    @apply absolute inset-0 opacity-0;
+}
+
+.title {
+    @apply text-sm text-[15px] transition duration-500;
+}
+
+.price {
+    @apply text-sm text-[15px] text-quaternary;
+}

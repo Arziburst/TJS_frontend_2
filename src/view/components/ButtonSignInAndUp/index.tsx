@@ -24,11 +24,19 @@ export const ButtonSignInAndUp: FC<PropTypes> = ({
     isMobile,
     ...props
 }) => {
-    const { togglesRedux: { isLoggedIn }} = useTogglesRedux();
+    const { togglesRedux: { isLoggedIn }, setToggleAction } = useTogglesRedux();
     const { profile: { profile, isLoadings }, fetchLogoutProfile } = useProfile();
+
+    const closeSideBar = () => {
+        isMobile && setToggleAction({
+            type:  'isOpenSideBar',
+            value: false,
+        });
+    };
 
     const onClickLogoutHandler = () => {
         fetchLogoutProfile();
+        closeSideBar();
     };
 
     if (isLoggedIn) {
@@ -62,6 +70,7 @@ export const ButtonSignInAndUp: FC<PropTypes> = ({
         <NavItem
             className = { className }
             to = { BOOK.SIGN_IN_AND_UP }
+            onClick = { () => closeSideBar() }
             { ...props }>
             Sign In & Up
         </NavItem>

@@ -20,7 +20,7 @@ const SignInAndUp: FC<PropTypes> = () => {
     return (
         <div className = 'flex justify-center'>
             <Tabs.Root
-                className = 'w-[400px]'
+                className = 'max-w-[400px]'
                 defaultValue = { TABS_VALUES.IN }>
                 <Tabs.List>
                     <Tabs.Trigger value = { TABS_VALUES.IN }>{TABS_VALUES.IN}</Tabs.Trigger>
