@@ -1,6 +1,3 @@
-// Core
-// import { useEffect } from 'react';
-
 // Tools
 import { useDispatch, useSelector } from '../../tools/hooks'; /* Typed selector */
 
@@ -27,7 +24,7 @@ export const useProfile = () => {
         setIsLoadingOfProfile: (
             payload: types.SetIsLoadingOfProfileAction,
         ) => dispatch(profileActions.setIsLoadingOfProfile(payload)),
-        setErrorOfProfile: (payload: commonTypes.Error) => dispatch(profileActions.setErrorOfProfile(payload)),
+        setErrorOfProfile: (payload: commonTypes.Error) => dispatch(profileActions.setErrorOfProfile(payload)), // todo need???
         resetProfile:      () => dispatch(profileActions.resetProfile()),
         ...profileSagas,
     };

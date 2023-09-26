@@ -12,7 +12,7 @@ const selectTriggerVariants = cva(
     {
         variants: {
             variant: {
-                outline: '',
+                outline: 'p-2.5 border-2 border-secondary-100',
                 ghost:   `text-sm font-secondary font-semibold
                     hover:text-quaternary`,
             },

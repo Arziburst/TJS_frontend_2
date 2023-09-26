@@ -35,6 +35,18 @@ export const Private: FC = () => {
                 element = { <Pages.About /> }
                 path = { BOOK.ABOUT }
             />
+            <Route
+                element = { <Pages.Management /> }
+                path = { BOOK.MANAGEMENT }
+            />
+            <Route
+                element = { <Pages.Management /> }
+                path = { BOOK.ADD_ITEM }
+            />
+            <Route
+                element = { <Pages.Item /> }
+                path = { BOOK.ITEM }
+            />
             {/* MarkerGen route */}
             <Route
                 element = {
