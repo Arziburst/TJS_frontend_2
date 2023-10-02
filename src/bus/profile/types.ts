@@ -9,7 +9,7 @@ export type Profile = {
     email: string;
     name: string,
     phone: string,
-    role: string,
+    role: 'customer' | 'admin',
 }
 
 // State

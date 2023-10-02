@@ -7,7 +7,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/tools/lib/utils';
 
 const selectItemVariants = cva(
-    `relative flex cursor-default select-none items-center rounded-sm text-sm outline-none transition
+    `relative flex cursor-default select-none items-center text-sm outline-none transition
         hover:opacity-70
         focus-visible:opacity-70
         active:opacity-100
@@ -15,11 +15,11 @@ const selectItemVariants = cva(
     {
         variants: {
             variant: {
-                primary: `font-semibold 
+                primary: `font-secondary font-semibold 
                     data-[state=checked]:text-quaternary`,
-                secondary: `text-base font-tertiary font-medium
-                    hover:text-primary hover:bg-secondary-100
-                    data-[state=checked]:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)_inset]`,
+                secondary: `p-3 text-base font-tertiary font-medium
+                    hover:text-background hover:bg-secondary-100
+                    data-[state=checked]:text-background data-[state=checked]:bg-secondary-100`,
             },
         },
         defaultVariants: {

@@ -10,9 +10,6 @@ import { cn } from '@/tools/lib/utils';
 // Bus
 import { useTogglesRedux } from '@/bus/client/toggles';
 
-// Book
-import { BOOK } from '@/view/routes/book';
-
 // Assets
 import { SCREENS_NUMBER } from '@/assets';
 
@@ -21,16 +18,13 @@ import { useWindowWidth } from '@/tools/hooks';
 
 // Components
 import {
-    Avatar,
     ButtonCart,
     ButtonSignInAndUp,
     Icons,
     Logo,
     Nav,
-    SideBar,
     SideBarPropTypes,
 } from '@/view/components';
-import { SheetTrigger } from '../SideBar/sheet';
 
 // Types
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>, SideBarPropTypes {
@@ -40,6 +34,8 @@ interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLEle
 export const Header: FC<PropTypes> = ({
     variant,
     isSetHeightToCssVariable,
+    className,
+    ...props
 }) => {
     const refHeader = useRef<null | HTMLElement>(null);
 
@@ -72,14 +68,16 @@ export const Header: FC<PropTypes> = ({
 
     return (
         <header
+            { ...props }
             className = { cn(
-                'flex justify-between items-center sb:items-start sb:gap-x-between-items-of-header',
-                { 'py-4 sb:pt-[24px] sb:pb-[24px]': isOpen },
+                `flex justify-between items-center bg-background z-10
+                    sb:items-start sb:gap-x-between-items-of-header`,
+                { 'py-4 sb:pt-[24px] sb:pb-[12px]': isOpen },
                 { '': !isOpen },
+                className,
             ) }
             ref = { refHeader }>
             {isSB ? (
-                // <SideBar variant = { variant } />
                 <button
                     className = 'aspect-square transition-opacity hover:opacity-70'
                     onClick = { isOpen ? onClickOpenSideBarHandler : onClickCloseSideBarHandler }>
@@ -98,7 +96,7 @@ export const Header: FC<PropTypes> = ({
                     <Nav variant = 'desktop' />
                 </>
             )}
-            {!isOpen && (
+            {isSB && (
                 <Logo
                     variant = 'mobile'
                     onClick = { onClickCloseSideBarHandler }

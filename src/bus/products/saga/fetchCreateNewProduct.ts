@@ -2,6 +2,7 @@
 import { SagaIterator } from '@redux-saga/core';
 import { createAction } from '@reduxjs/toolkit';
 import { put, takeLatest } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 
 // API
 import { createNewProductFetcher } from '../../../api';
@@ -10,7 +11,7 @@ import { createNewProductFetcher } from '../../../api';
 import { productsActions, sliceName } from '../slice';
 
 // Tools
-import { makeRequest } from '../../../tools/utils';
+import { makeRequest, removeKeysOfObject } from '../../../tools/utils';
 
 // Types
 import * as commonTypes from '../../commonTypes';
@@ -25,8 +26,11 @@ const fetchCreateNewProduct = (
 ) => makeRequest<types.FetchCreateNewProductResponse, commonTypes.Error>({
     callAction,
     fetchOptions: {
-        successStatusCode: 200,
-        fetch:             () => createNewProductFetcher(callAction.payload),
+        successStatusCode: 201,
+        fetch:             () => createNewProductFetcher(removeKeysOfObject<types.FetchCreateNewProductRequest, 'reset'>({
+            keys:   [ 'reset' ],
+            object: callAction.payload,
+        })),
     },
     tryStart: function* () {
         yield put(productsActions.setIsLoadingOfProducts({
@@ -34,8 +38,9 @@ const fetchCreateNewProduct = (
             value: true,
         }));
     },
-    success: function* (result) {
-        yield put(productsActions.setProduct(result));
+    success: function* () {
+        yield callAction.payload.reset();
+        yield toast.success('Product created successfully!');
     },
     error: function* (error) {
         yield put(productsActions.setErrorOfProducts(error));

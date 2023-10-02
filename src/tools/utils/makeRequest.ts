@@ -99,7 +99,8 @@ export function* makeRequest<SuccessData, ErrorData = {}>(options: OptionsType<S
         }
 
         if (skipAlertIfStatusCode !== errorData.statusCode && errorData.message) {
-            toast.error(errorData.message);
+            yield toast.error(errorData.message);
+            yield console.error(errorData);
         }
 
         if (catchEnd) {

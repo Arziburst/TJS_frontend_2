@@ -74,9 +74,111 @@ const Instagram: FC<PropTypes> = ({ ...props }) => {
     );
 };
 
+const AddItem: FC<PropTypes> = ({ ...props }) => {
+    return (
+        <svg
+            { ...props }
+            fill = 'none'
+            height = '800px'
+            viewBox = '0 0 48 48'
+            width = '800px'
+            xmlns = 'http://www.w3.org/2000/svg'>
+            <path
+                d = 'M24 32L24 16'
+                stroke = '#000000'
+                strokeLinecap = 'round'
+                strokeLinejoin = 'round'
+                strokeWidth = '4'
+            />
+            <path
+                d = 'M42 27L42 21'
+                stroke = '#000000'
+                strokeLinecap = 'round'
+                strokeLinejoin = 'round'
+                strokeWidth = '4'
+            />
+            <path
+                d = 'M6 27L6 21'
+                stroke = '#000000'
+                strokeLinecap = 'round'
+                strokeLinejoin = 'round'
+                strokeWidth = '4'
+            />
+            <path
+                d = 'M14 6H8C6.89543 6 6 6.89543 6 8V14'
+                stroke = '#000000'
+                strokeLinecap = 'round'
+                strokeLinejoin = 'round'
+                strokeWidth = '4'
+            />
+            <path
+                d = 'M34 6H40C41.1046 6 42 6.89543 42 8V14'
+                stroke = '#000000'
+                strokeLinecap = 'round'
+                strokeLinejoin = 'round'
+                strokeWidth = '4'
+            />
+            <path
+                d = 'M34 42H40C41.1046 42 42 41.1046 42 40V34'
+                stroke = '#000000'
+                strokeLinecap = 'round'
+                strokeLinejoin = 'round'
+                strokeWidth = '4'
+            />
+            <path
+                d = 'M14 42H8C6.89543 42 6 41.1046 6 40V34'
+                stroke = '#000000'
+                strokeLinecap = 'round'
+                strokeLinejoin = 'round'
+                strokeWidth = '4'
+            />
+            <path
+                d = 'M27 6H21'
+                stroke = '#000000'
+                strokeLinecap = 'round'
+                strokeLinejoin = 'round'
+                strokeWidth = '4'
+            />
+            <path
+                d = 'M32 24L16 24'
+                stroke = '#000000'
+                strokeLinecap = 'round'
+                strokeLinejoin = 'round'
+                strokeWidth = '4'
+            />
+            <path
+                d = 'M27 42H21'
+                stroke = '#000000'
+                strokeLinecap = 'round'
+                strokeLinejoin = 'round'
+                strokeWidth = '4'
+            />
+        </svg>
+    );
+};
+
+const DeleteItem: FC<PropTypes> = ({ ...props }) => {
+    return (
+        <svg
+            { ...props }
+            fill = 'none'
+            height = '48'
+            stroke = 'currentColor'
+            strokeLinecap = 'round'
+            strokeLinejoin = 'round'
+            strokeWidth = '2'
+            viewBox = '0 0 24 24'
+            width = '48'
+            xmlns = 'http://www.w3.org/2000/svg'><path d = 'M3 6h18' /><path d = 'M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6' /><path d = 'M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2' />
+        </svg>
+    );
+};
+
 
 export const Icons = {
     SideBarClose,
     SideBarOpen,
     Instagram,
+    AddItem,
+    DeleteItem,
 };

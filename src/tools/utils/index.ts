@@ -5,3 +5,4 @@ export * from './customFetch';
 export * from './controlledError';
 export * from './types';
 export * from './postcssViewportHeightCorrection';
+export * from './ls';

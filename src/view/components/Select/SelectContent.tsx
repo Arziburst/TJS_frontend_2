@@ -13,7 +13,7 @@ const selectContentVariants = cva(
             variant: {
                 outline: '',
                 ghost:   'top-2',
-                shadow:  'shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]',
+                shadow:  'shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] bg-background',
             },
         },
         defaultVariants: {

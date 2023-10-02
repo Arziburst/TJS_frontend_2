@@ -15,7 +15,7 @@ export const registrationProfileFetcher = (body: Omit<types.FetchRegistrationPro
     });
 };
 
-export const LoginProfileFetcher = ({ email, password }: Omit<types.FetchLoginProfileRequest, 'navigate'>) => {
+export const loginProfileFetcher = ({ email, password }: Omit<types.FetchLoginProfileRequest, 'navigate'>) => {
     return fetch(API.PROFILE.LOGIN, {
         method:      'POST',
         credentials: 'include',

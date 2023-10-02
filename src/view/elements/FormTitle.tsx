@@ -10,7 +10,7 @@ interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLPar
 export const FormTitle: FC<PropTypes> = ({ children, className, ...props }) => {
     return (
         <p
-            className = { cn('text-2xl', className) }
+            className = { cn('text-2xl mb-7', className) }
             { ...props }>
             {children}
         </p>

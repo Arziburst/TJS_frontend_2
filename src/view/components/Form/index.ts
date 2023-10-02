@@ -5,11 +5,20 @@ import { FormProvider } from 'react-hook-form';
 export * from './hooks';
 
 // Part of component
-export * from './FormItem';
-export * from  './FormLabel';
-export * from  './FormControl';
-export * from  './FormDescription';
-export * from  './FormMessage';
-export * from  './FormField';
+import { FormItem } from './FormItem';
+import { FormLabel } from './FormLabel';
+import { FormControl } from './FormControl';
+import { FormDescription } from './FormDescription';
+import { FormMessage } from './FormMessage';
+import { FormField } from './FormField';
 
-export const Form = FormProvider;
+// export const Form = FormProvider;
+export const Form = {
+    Root: FormProvider,
+    FormItem,
+    FormLabel,
+    FormControl,
+    FormDescription,
+    FormMessage,
+    FormField,
+};

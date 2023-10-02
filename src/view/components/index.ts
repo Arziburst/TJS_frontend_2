@@ -1,4 +1,7 @@
 // MarkerGen re-export
+export * from './Dialog';
+export * from './Tooltip';
+export * from './CardItem';
 export * from './Alert';
 export * from './Form';
 export * from './Tabs';

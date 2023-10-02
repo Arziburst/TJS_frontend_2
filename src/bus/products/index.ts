@@ -30,7 +30,7 @@ export const useProducts = () => {
         setIsLoadingOfProducts: (
             payload: types.SetIsLoadingOfProductsAction,
         ) => dispatch(productsActions.setIsLoadingOfProducts(payload)),
-        setErrorOfProducts: (payload: commonTypes.Error) => dispatch(productsActions.setErrorOfProducts(payload)),
+        setErrorOfProducts: (payload: commonTypes.Error) => dispatch(productsActions.setErrorOfProducts(payload)), // todo need???
         ...productsSagas,
     };
 };

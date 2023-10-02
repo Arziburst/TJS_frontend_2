@@ -45,16 +45,23 @@ export default {
                     DEFAULT: 'var(--secondary)',
                     100:     'var(--secondary_100)',
                     200:     'var(--secondary_200)',
+                    300:     'var(--secondary_300)',
                 },
                 tertiary: {
                     DEFAULT: 'var(--tertiary)',
                     100:     'var(--tertiary_100)',
                     200:     'var(--tertiary_200)',
                 },
-
                 quaternary: {
                     DEFAULT: 'var(--quaternary)',
                 },
+                quinary: {
+                    DEFAULT: 'var(--quinary)',
+                    100:     'var(--quinary_100)',
+                },
+
+
+                // todo remove
                 destructive: {
                     DEFAULT:    'hsl(var(--destructive))',
                     foreground: 'hsl(var(--destructive-foreground))',

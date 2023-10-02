@@ -77,6 +77,7 @@
     --secondary: #000;
     --secondary_100:     #635A59;
     --secondary_200:     #5F6368;
+    --secondary_300:     #635a5985;
 
     /* Tertiary (Blue) */
     --tertiary: #0E307D;
@@ -85,6 +86,10 @@
 
     /* Quaternary (Red) */
     --quaternary: #FF614A;
+
+    /* quinary (Green) */
+    --quinary: #00C853;
+    --quinary_100: #00c85388;
 
 
     /* Border */
@@ -160,4 +165,19 @@
   body {
     @apply bg-primary-200 font-primary text-secondary-100;
   }
+}
+
+@layer components {
+  .interaction {
+    @apply cursor-pointer transition
+        hover:opacity-70 
+        focus-visible:opacity-70
+        active:opacity-100 active:scale-[0.99]
+    }
+    .absolute-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 }

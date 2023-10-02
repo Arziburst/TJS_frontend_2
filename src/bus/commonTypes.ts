@@ -1,3 +1,6 @@
+// Core
+import { UseFormReset } from 'react-hook-form/dist/types';
+
 // Types
 export type IsLoading = boolean;
 export type Error = {
@@ -5,13 +8,17 @@ export type Error = {
     statusCode: number;
 };
 
-export type SetIsLoading<T = string> = {
+export type SetIsLoading<T = string, V = IsLoading> = {
     type: T;
-    value: IsLoading;
+    value: V;
 }
 
 
 export type State<TIsLoadings> = { // TIsLoadings = Record<string, IsLoading>
     isLoadings: TIsLoadings;
     error: null | Error;
+}
+
+export type ResetForm = {
+    reset: UseFormReset<any>; // todo remove any
 }

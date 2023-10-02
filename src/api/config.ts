@@ -6,7 +6,7 @@ import { ExtendedProduct } from '../bus/products/types';
 
 export const API = {
     PRODUCTS: {
-        PRODUCTS:        `${API_URL}/products`,
+        ROOT:            `${API_URL}/products`,
         PRODUCT:         (_id: ExtendedProduct['_id']) => `${API_URL}/products${_id}`,
         INCREMENT_VIEWS: (_id: ExtendedProduct['_id']) => `${API_URL}/products/incrementViews/${_id}`,
     },
@@ -16,7 +16,10 @@ export const API = {
         REFRESH:      `${API_URL}/profile/refresh`,
         LOGOUT:       `${API_URL}/profile/logout`,
     },
-
+    IMAGES: {
+        ROOT:   `${API_URL}/images`,
+        DELETE: (id: string) => `${API_URL}/images/${id}`,
+    },
 };
 
 export const HEADERS = {

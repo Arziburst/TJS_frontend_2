@@ -5,7 +5,7 @@ import { API, HEADERS } from './config';
 import * as types from '../bus/products/saga/types';
 
 export const productsFetcher = () => {
-    return fetch(API.PRODUCTS.PRODUCTS, {
+    return fetch(API.PRODUCTS.ROOT, {
         method:  'GET',
         headers: {
             ...HEADERS,
@@ -13,8 +13,8 @@ export const productsFetcher = () => {
     });
 };
 
-export const createNewProductFetcher = (body: types.FetchCreateNewProductRequest) => {
-    return fetch(API.PRODUCTS.PRODUCTS, {
+export const createNewProductFetcher = (body: Omit<types.FetchCreateNewProductRequest, 'reset'>) => {
+    return fetch(API.PRODUCTS.ROOT, {
         method:      'POST',
         credentials: 'include',
         headers:     {

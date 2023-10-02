@@ -10,13 +10,7 @@ import { useProfile } from '@/bus/profile';
 import { InputGroup } from '@/view/containers';
 
 // Components
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormMessage,
-} from '@/view/components';
+import { Form } from '@/view/components';
 
 // Elements
 import { Button, FormTitle, Input } from '@/view/elements';
@@ -50,99 +44,99 @@ export const SignUp: FC<PropTypes> = () => {
     };
 
     return (
-        <Form { ...form }>
+        <Form.Root { ...form }>
             <InputGroup
                 onSubmit = { form.handleSubmit(onSubmit) }>
                 <FormTitle className = 'text-center'>
                     Please enter your registration information.
                 </FormTitle>
-                <FormField
+                <Form.FormField
                     control = { form.control }
                     name = 'name'
                     render = { ({ field, fieldState }) => (
-                        <FormItem>
-                            <FormControl>
+                        <Form.FormItem>
+                            <Form.FormControl>
                                 <Input
                                     isValidate = { fieldState.invalid }
                                     placeholder = 'Name and Surname'
                                     { ...field }
                                 />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
+                            </Form.FormControl>
+                            <Form.FormMessage />
+                        </Form.FormItem>
                     ) }
                 />
-                <FormField
+                <Form.FormField
                     control = { form.control }
                     name = 'email'
                     render = { ({ field, fieldState }) => (
-                        <FormItem>
-                            <FormControl>
+                        <Form.FormItem>
+                            <Form.FormControl>
                                 <Input
                                     isValidate = { fieldState.invalid }
                                     placeholder = 'Email'
                                     { ...field }
                                 />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
+                            </Form.FormControl>
+                            <Form.FormMessage />
+                        </Form.FormItem>
                     ) }
                 />
-                <FormField
+                <Form.FormField
                     control = { form.control }
                     name = 'phone'
                     render = { ({ field, fieldState }) => (
-                        <FormItem>
-                            <FormControl>
+                        <Form.FormItem>
+                            <Form.FormControl>
                                 <Input
                                     isValidate = { fieldState.invalid }
                                     placeholder = 'Phone'
                                     { ...field }
                                 />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
+                            </Form.FormControl>
+                            <Form.FormMessage />
+                        </Form.FormItem>
                     ) }
                 />
-                <FormField
+                <Form.FormField
                     control = { form.control }
                     name = 'password'
                     render = { ({ field, fieldState }) => (
-                        <FormItem>
-                            <FormControl>
+                        <Form.FormItem>
+                            <Form.FormControl>
                                 <Input
                                     isValidate = { fieldState.invalid }
                                     placeholder = 'Password'
                                     { ...field }
                                 />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
+                            </Form.FormControl>
+                            <Form.FormMessage />
+                        </Form.FormItem>
                     ) }
                 />
-                <FormField
+                <Form.FormField
                     control = { form.control }
                     name = 'passwordAgain'
                     render = { ({ field, fieldState }) => (
-                        <FormItem>
-                            <FormControl>
+                        <Form.FormItem>
+                            <Form.FormControl>
                                 <Input
                                     isValidate = { fieldState.invalid }
                                     placeholder = 'Password again'
                                     { ...field }
                                 />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
+                            </Form.FormControl>
+                            <Form.FormMessage />
+                        </Form.FormItem>
                     ) }
                 />
                 <Button
                     isLoading = { isLoadings.profile }
                     type = 'submit'
-                    variant = 'default'>
+                    variant = 'contain'>
                     Submit
                 </Button>
             </InputGroup>
-        </Form>
+        </Form.Root>
     );
 };

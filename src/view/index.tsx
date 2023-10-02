@@ -7,6 +7,7 @@ import { SCREENS_NUMBER } from '@/assets';
 // Images
 import '@/assets/images/image_category_brooch.png';
 import '@/assets/images/image_category_see_all.png';
+import '@/assets/images/test.png'; // todo remove when finish
 
 // Routes
 import { Routes } from './routes';
@@ -25,12 +26,20 @@ import { Wrapper } from '@/view/containers';
 import { Alert, Footer, Header, SideBar } from '@/view/components';
 
 // Tools
-import { useWindowWidth } from '@/tools/hooks';
+import { useCssPropertyValue, useWindowWidth } from '@/tools/hooks';
 
 // Styles
 import '../assets/globalStyles/index.css';
+import { CSS_VARIABLES } from '@/init';
 
 export const App: FC = () => {
+    const refWrapper = React.useRef<null | HTMLDivElement>(null);
+
+    const [ paddingLeftWrapper ] = useCssPropertyValue({
+        ref:      refWrapper,
+        property: 'padding-left',
+    });
+
     const [ width ] = useWindowWidth();
 
     const { setToggleAction: setTogglerAction } = useTogglesRedux();
@@ -56,11 +65,21 @@ export const App: FC = () => {
             )}
             <Alert />
             <Wrapper
-                className = 'grid grid-rows-[auto_1fr_auto] min-h-screen'>
-                <Header
-                    isSetHeightToCssVariable
-                    variant = 'open'
-                />
+                className = 'grid grid-rows-[auto_1fr_auto] min-h-screen'
+                ref = { refWrapper }>
+                <div style = {{
+                    minHeight: `var(${CSS_VARIABLES.HEADER})`,
+                }}>
+                    <Header
+                        isSetHeightToCssVariable
+                        className = 'fixed inset-x-0'
+                        style = { paddingLeftWrapper ? {
+                            paddingLeft:  paddingLeftWrapper,
+                            paddingRight: paddingLeftWrapper,
+                        } : {} }
+                        variant = 'open'
+                    />
+                </div>
                 <Routes />
                 <Footer />
             </Wrapper>
