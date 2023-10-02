@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { BOOK } from '@/view/routes/book';
 
 // API
-import { LoginProfileFetcher } from '../../../api';
+import { loginProfileFetcher } from '../../../api';
 
 // Slice
 import { profileActions, sliceName } from '../slice';
@@ -31,7 +31,7 @@ const fetchLoginProfile = (
     callAction,
     fetchOptions: {
         successStatusCode: 200,
-        fetch:             () => LoginProfileFetcher(removeKeysOfObject<types.FetchLoginProfileRequest, 'navigate'>({
+        fetch:             () => loginProfileFetcher(removeKeysOfObject<types.FetchLoginProfileRequest, 'navigate'>({
             keys:   [ 'navigate' ],
             object: callAction.payload,
         })),

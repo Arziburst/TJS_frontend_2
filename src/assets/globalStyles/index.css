@@ -166,3 +166,18 @@
     @apply bg-primary-200 font-primary text-secondary-100;
   }
 }
+
+@layer components {
+  .interaction {
+    @apply cursor-pointer transition
+        hover:opacity-70 
+        focus-visible:opacity-70
+        active:opacity-100 active:scale-[0.99]
+    }
+    .absolute-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}

@@ -10,6 +10,7 @@
         "weight"
         "price"
         "discount"
+        "images"
         "available"
         "submit";
 }
@@ -19,10 +20,10 @@
         grid-template-columns: 1fr 1fr ;
         grid-template-rows: auto;
         grid-template-areas: 
-        "title type"
-        "description weight"
-        "price discount"
-        "available available"
-        "submit submit";
+            "title type"
+            "description weight"
+            "price discount"
+            "images available"
+            "submit submit";
     }
 }

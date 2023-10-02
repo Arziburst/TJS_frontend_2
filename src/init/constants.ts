@@ -37,3 +37,5 @@ export const LINK_INSTAGRAM = 'https://www.instagram.com/';
 export enum CSS_VARIABLES {
     HEADER = '--vh_header',
 }
+
+export const typesOfImage: Array<string> = [ 'image/png', 'image/jpeg', 'image/gif' ];

@@ -3,7 +3,7 @@ import React, { FC, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 // Book
-import { ParamsLowerCase } from '@/view/routes/book';
+import { BOOK, ParamsLowerCase } from '@/view/routes/book';
 
 // Bus
 import { useTogglesRedux } from '@/bus/client/toggles';
@@ -73,7 +73,7 @@ const Shop: FC<PropTypes> = () => {
                 sb:gap-[20px]` }>
                 {isLoggedIn && profile?.role === 'admin' && (
                     <div className = { SCardItem.images_container }>
-                        <NavLink to = { '/' }>
+                        <NavLink to = { BOOK.ADD_ITEM }>
                             <Button
                                 className = 'h-full'
                                 variant = 'default'>

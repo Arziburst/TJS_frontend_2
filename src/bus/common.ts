@@ -1,7 +1,7 @@
 // Types
 import * as commonTypes from './commonTypes';
 
-export const commonInitialState: Omit<commonTypes.State<{}>, 'isLoadings'> = {
+export const commonInitialState: Omit<commonTypes.State<{}>, 'isLoadings'> = { // todo need ????
     error: null,
 };
 

@@ -1,4 +1,5 @@
 // Types
+import * as commonTypes from '@/bus/commonTypes';
 import * as types from '../types';
 
 // Products
@@ -6,7 +7,7 @@ export type FetchProductsRequest = boolean | undefined; // todo improve or remov
 export type FetchProductsResponse = types.Products;
 
 // Create product
-export type FetchCreateNewProductRequest = types.Product;
+export interface FetchCreateNewProductRequest extends types.Product, commonTypes.ResetForm {}
 export type FetchCreateNewProductResponse = types.ExtendedProduct;
 
 // Delete product

@@ -12,8 +12,8 @@ const buttonVariants = cva(
         focus-visible:outline-none
         hover:opacity-70
         focus-visible:opacity-70
-        active:opacity-100 active:scale-[0.9]
-        disabled:pointer-events-none disabled:opacity-50`,
+        active:opacity-100 active:scale-[0.95]
+        disabled:opacity-50`,
     {
         variants: {
             variant: {
@@ -22,7 +22,7 @@ const buttonVariants = cva(
                     text-primary-200 bg-secondary-100 
                     hover:text-secondary-100 hover:bg-transparent hover:opacity-100
                     focus-visible:text-secondary-100 focus-visible:bg-transparent hover:opacity-100
-                    active:scale-[0.9]
+                    active:scale-[0.95]
                     sb:text-base`,
                 outline: `font-secondary text-sm py-5 border-2 border-secondary-100 
                     text-secondary-100 bg-transparent 
@@ -53,10 +53,18 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ({ children, disabled, className, variant, isLoading, asChild = false, ...props }, ref) => {
         const Comp = asChild ? Slot : 'button';
 
+        const isDisabled = disabled || isLoading;
+
         return (
             <Comp
-                className = { cn(buttonVariants({ variant, className })) }
-                disabled = { disabled || isLoading }
+                className = { cn(
+                    buttonVariants({ variant, className }),
+                    {
+                        'cursor-wait':        isLoading,
+                        'cursor-not-allowed': disabled,
+                    },
+                ) }
+                disabled = { isDisabled }
                 ref = { ref }
                 { ...props }>
                 {isLoading && (

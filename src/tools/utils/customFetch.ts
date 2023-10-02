@@ -16,6 +16,7 @@ export const customFetch = async <SuccessData, ErrorData = {}>(fetchOptions: Fet
         } catch {
             throw new ControlledError({ message: 'Parsing error' });
         }
+        console.log('customFetch => errorData:', errorData);
 
         throw new ControlledError({
             message:    'Parsed error',

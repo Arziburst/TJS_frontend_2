@@ -1,5 +1,6 @@
 // Core
 import React, { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Book
 import { BOOK } from '@/view/routes/book';
@@ -13,6 +14,9 @@ import { NavItem, NavItemPropTypes } from '@/view/components/Nav/NavItem';
 import { DropdownMenu } from '../DropdownMenu';
 import { Avatar } from '../Avatar';
 
+// Elements
+import { NavLink } from '@/view/elements';
+
 // Types
 interface PropTypes extends Omit<NavItemPropTypes, 'children' | 'to'> {
     /* type props here */
@@ -24,6 +28,8 @@ export const ButtonSignInAndUp: FC<PropTypes> = ({
     isMobile,
     ...props
 }) => {
+    const navigate = useNavigate();
+
     const { togglesRedux: { isLoggedIn }, setToggleAction } = useTogglesRedux();
     const { profile: { profile, isLoadings }, fetchLogoutProfile } = useProfile();
 
@@ -53,6 +59,11 @@ export const ButtonSignInAndUp: FC<PropTypes> = ({
                             Settings
                         </DropdownMenu.Label>
                         <DropdownMenu.Separator />
+                        {profile?.role === 'admin' && (
+                            <DropdownMenu.Item onClick = { () => navigate(BOOK.ADD_ITEM) }>
+                                Add item
+                            </DropdownMenu.Item>
+                        )}
                         <DropdownMenu.Item
                             propsButton = {{
                                 isLoading: isLoadings.logout,
