@@ -111,7 +111,6 @@ const Management: FC<PropTypes> = () => {
             fetchEditProduct({
                 _id:           currentProduct._id,
                 editedProduct: values,
-                navigate,
             });
 
             return;
@@ -209,7 +208,7 @@ const Management: FC<PropTypes> = () => {
                                                 className = 'capitalize'
                                                 key = { item }
                                                 value = { item }
-                                                variant = 'secondary'>
+                                                variant = 'contain'>
                                                 {item}
                                             </Select.SelectItem>
                                         ))}

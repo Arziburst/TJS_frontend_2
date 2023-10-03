@@ -34,7 +34,7 @@ export const deleteProductFetcher = (payload: Omit<types.FetchDeleteProductReque
     });
 };
 
-export const editProductFetcher = (payload: Omit<types.FetchEditProductRequest, 'navigate'>) => {
+export const editProductFetcher = (payload: types.FetchEditProductRequest) => {
     return fetch(API.PRODUCTS.PRODUCT(payload._id), {
         method:      'PUT',
         credentials: 'include',

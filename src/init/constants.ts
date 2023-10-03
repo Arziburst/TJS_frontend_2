@@ -5,7 +5,6 @@ export const API_URL = process.env.API_URL || 'http://localhost:4000';
 export const APP_NAME = process.env.APP_NAME || 'burst-template';
 
 export enum LOCAL_STORAGE {
-    VIEWED_PRODUCTS = 'viewedProducts',
     CART = 'cart',
 }
 
@@ -19,6 +18,7 @@ export enum ENUM_CATEGORIES {
     RINGS = 'rings',
 }
 
+export const CATEGORY_ALL = 'see all';
 export const CATEGORIES_ITEMS = [
     ENUM_CATEGORIES.BROOCH,
     ENUM_CATEGORIES.EARRING,

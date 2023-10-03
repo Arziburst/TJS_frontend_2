@@ -20,7 +20,6 @@ export type FetchDeleteProductResponse = types.ExtendedProduct['_id'];
 // Edit product
 export interface FetchEditProductRequest extends Pick<types.ExtendedProduct, '_id'> {
     editedProduct: types.Product;
-    navigate: NavigateFunction;
 }
 export type FetchEditProductResponse = types.ExtendedProduct;
 

@@ -1,6 +1,12 @@
 // Core
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+
+// Init
+import { CATEGORIES_ITEMS, ENUM_CATEGORIES } from '@/init';
+
+// Hooks
+import { useWindowWidth } from '@/tools/hooks';
 
 // Book
 import { BOOK, ParamsLowerCase } from '@/view/routes/book';
@@ -16,9 +22,17 @@ import { ErrorBoundary, Icons, CardItem, Select } from '@/view/components';
 // Elements
 import { Button, NavLink } from '@/view/elements';
 
+// Static
+import { ARRAY_FILTERS_BY_PRICE, ENUM_FILTERS_BY_PRICE, sortByPriceHighToLow, sortByPriceLowToHigh } from './static';
+
+// Styles
 import SCardItem from '@/view/components/CardItem/styles.module.css';
 
 // Types
+import { ExtendedProduct } from '@/bus/products/types';
+import { SCREENS_NUMBER } from '@/assets';
+import { SelectShop } from './Select';
+
 type PropTypes = {
     /* type props here */
 }
@@ -27,6 +41,19 @@ const Shop: FC<PropTypes> = () => {
     const { category } = useParams<Pick<ParamsLowerCase, 'category'>>();
 
     const navigate = useNavigate();
+
+    const [ width ] = useWindowWidth();
+
+    const [
+        filterByCategoryState,
+        setFilterByCategoryState,
+    ] = useState<string>(category || ENUM_CATEGORIES.ALL);
+    const [
+        filteredProductsState,
+        setFilteredProductsState,
+    ] = useState<null | ExtendedProduct[]>(null);
+
+    const [ filteredByPriceState, setFilteredByPriceState ] = useState<null | string>(null);
 
     const { togglesRedux: { isLoggedIn }} = useTogglesRedux();
     const { profile: { profile }} = useProfile();
@@ -37,40 +64,98 @@ const Shop: FC<PropTypes> = () => {
     };
 
     useEffect(() => {
-        fetchProducts(); // todo fix error >>> localStorage.get is not a function
+        fetchProducts();
     }, []);
 
     useEffect(() => {
-        console.log('products >>> ', products);
-    }, [ products ]);
-
-
-    useEffect(() => {
-        console.log('category >>> ', category);
+        setFilterByCategoryState(category || ENUM_CATEGORIES.ALL);
     }, [ category ]);
 
+    useEffect(() => {
+        if (filterByCategoryState && filterByCategoryState !== ENUM_CATEGORIES.ALL) {
+            navigate(`${BOOK.SHOP}/${filterByCategoryState}`);
+        } else {
+            navigate(`${BOOK.SHOP}`);
+        }
+    }, [ filterByCategoryState ]);
+
+    useEffect(() => {
+        if (products && category) {
+            const filletedProducts = products.filter((product) => product.type === category);
+            setFilteredProductsState(filletedProducts);
+        } else {
+            setFilteredProductsState(products);
+        }
+    }, [ products, category ]);
+
+    useEffect(() => {
+        if (filteredProductsState) {
+            if (filteredByPriceState === ENUM_FILTERS_BY_PRICE.LOW_TO_HIGH) {
+                const sortedByPriceLowToHigh = sortByPriceLowToHigh(filteredProductsState);
+                setFilteredProductsState(sortedByPriceLowToHigh);
+            } else {
+                const sortedByPriceHighToLow = sortByPriceHighToLow(filteredProductsState);
+                setFilteredProductsState(sortedByPriceHighToLow);
+            }
+        }
+    }, [ filteredByPriceState ]);
+
     return (
-        <div>
+        <div className = { `flex flex-col gap-8
+            sb:flex-row sb:gap-20` }>
             <div>
-                {/* <Select.Root>
-                    <Select.SelectTrigger
-                        isArrow
-                        variant = 'ghost'>
-                        <Select.SelectValue
-                            placeholder = 'EN'
+                {width < SCREENS_NUMBER.SB && (
+                    <div className = { `flex gap-4 
+                        [&>*]:w-1/2
+                        max-[360px]:flex-col 
+                        max-[360px]:[&>*]:w-full` }>
+                        <SelectShop
+                            items = { [ ENUM_CATEGORIES.ALL, ...CATEGORIES_ITEMS ] }
+                            label = 'Shop by'
+                            setValue = { setFilterByCategoryState }
+                            showValue = { filterByCategoryState }
+                            value = { filterByCategoryState }
                         />
-                    </Select.SelectTrigger>
-                    <Select.SelectContent variant = 'ghost'>
-                        {[ '1', '2', '3' ].map((language) => (
-                            <Select.SelectItem
-                                key = { language }
-                                value = { language }>
-                                {language.toUpperCase()}
-                            </Select.SelectItem>
-                        ))}
-                    </Select.SelectContent>
-                </Select.Root> */}
-                filters
+                        <SelectShop
+                            items = { ARRAY_FILTERS_BY_PRICE }
+                            label = 'Filter by'
+                            placeholder = 'select filter'
+                            setValue = { setFilteredByPriceState }
+                            showValue = { filteredByPriceState }
+                            value = { filteredByPriceState }
+                        />
+                    </div>
+                    // <div className = 'flex flex-col gap-[10px]'>
+                    //     <p className = 'text-sm text-[15px] font-secondary font-semibold opacity-50'>
+                    //         Shop by
+                    //     </p>
+                    //     <Select.Root
+                    //         value = { filterByCategoryState }
+                    //         onValueChange = { setFilterByCategoryState }>
+                    //         <Select.SelectTrigger
+                    //             isArrow
+                    //             className = 'capitalize'
+                    //             variant = 'ghost'>
+                    //             <Select.SelectValue
+                    //                 aria-label = { filterByCategoryState }
+                    //                 className = 'text=[15px]'>
+                    //                 {filterByCategoryState || ENUM_CATEGORIES.ALL}
+                    //             </Select.SelectValue>
+                    //         </Select.SelectTrigger>
+                    //         <Select.SelectContent variant = 'outline'>
+                    //             {[ ENUM_CATEGORIES.ALL, ...CATEGORIES_ITEMS ].map((category) => (
+                    //                 <Select.SelectItem
+                    //                     className = 'py-2 px-3 capitalize'
+                    //                     key = { category }
+                    //                     value = { category }
+                    //                     onClick = { () => navigate('/') }>
+                    //                     {category}
+                    //                 </Select.SelectItem>
+                    //             ))}
+                    //         </Select.SelectContent>
+                    //     </Select.Root>
+                    // </div>
+                )}
             </div>
             <div className = { `flex flex-wrap gap-[14px] justify-center
                 sb:gap-[20px]` }>
@@ -86,7 +171,7 @@ const Shop: FC<PropTypes> = () => {
 
                     </div>
                 )}
-                {products?.map((item) => (
+                {filteredProductsState?.map((item) => (
                     <CardItem
                         firstImage = {{
                             src: item.images[ 0 ],

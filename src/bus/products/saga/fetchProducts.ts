@@ -41,26 +41,14 @@ const fetchProducts = (
         yield put(productsActions.setProducts(result));
 
         const productsIds = result.map(({ _id }) => _id);
-        const viewedProducts: Array<string> = ls.get(LOCAL_STORAGE.VIEWED_PRODUCTS) || [];
         const cart: Array<string> = ls.get(LOCAL_STORAGE.CART) || [];
-
-        // Checking viewedProducts
-        if (viewedProducts && viewedProducts.length !== 0) {
-            const { isAllStringsExists, newArray } = arrayComparison(productsIds, viewedProducts);
-
-            if (!isAllStringsExists) {
-                yield localStorage.set(LOCAL_STORAGE.VIEWED_PRODUCTS, newArray);
-            }
-
-            // yield put(setInitialViewedProductsState(newArray)); // todo check?
-        }
 
         // Checkind cart
         if (cart && cart.length !== 0) {
             const { isAllStringsExists, newArray } = arrayComparison(productsIds, cart);
 
             if (!isAllStringsExists) {
-                yield localStorage.set(LOCAL_STORAGE.CART, newArray);
+                yield ls.set(LOCAL_STORAGE.CART, newArray);
             }
 
             // yield put(setInitialCartState(newArray)); // todo check?

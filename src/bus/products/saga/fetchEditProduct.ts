@@ -11,7 +11,7 @@ import { editProductFetcher } from '../../../api';
 import { productsActions, sliceName } from '../slice';
 
 // Tools
-import { makeRequest, removeKeysOfObject } from '../../../tools/utils';
+import { makeRequest } from '../../../tools/utils';
 
 // Types
 import * as commonTypes from '../../commonTypes';
@@ -27,10 +27,7 @@ const fetchEditProduct = (
     callAction,
     fetchOptions: {
         successStatusCode: 200,
-        fetch:             () => editProductFetcher(removeKeysOfObject<types.FetchEditProductRequest, 'navigate'>({
-            keys:   [ 'navigate' ],
-            object: callAction.payload,
-        })),
+        fetch:             () => editProductFetcher(callAction.payload),
     },
     tryStart: function* () {
         if (callAction.payload) {
