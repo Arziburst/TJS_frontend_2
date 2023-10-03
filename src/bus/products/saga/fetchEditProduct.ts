@@ -2,6 +2,7 @@
 import { SagaIterator } from '@redux-saga/core';
 import { createAction } from '@reduxjs/toolkit';
 import { put, takeLatest } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 
 // API
 import { editProductFetcher } from '../../../api';
@@ -10,7 +11,7 @@ import { editProductFetcher } from '../../../api';
 import { productsActions, sliceName } from '../slice';
 
 // Tools
-import { makeRequest } from '../../../tools/utils';
+import { makeRequest, removeKeysOfObject } from '../../../tools/utils';
 
 // Types
 import * as commonTypes from '../../commonTypes';
@@ -26,7 +27,10 @@ const fetchEditProduct = (
     callAction,
     fetchOptions: {
         successStatusCode: 200,
-        fetch:             () => editProductFetcher(callAction.payload),
+        fetch:             () => editProductFetcher(removeKeysOfObject<types.FetchEditProductRequest, 'navigate'>({
+            keys:   [ 'navigate' ],
+            object: callAction.payload,
+        })),
     },
     tryStart: function* () {
         if (callAction.payload) {
@@ -38,6 +42,7 @@ const fetchEditProduct = (
     },
     success: function* (result) {
         yield put(productsActions.setEditedProduct(result));
+        yield toast.success('Product edited successfully!');
     },
     error: function* (error) {
         yield put(productsActions.setErrorOfProducts(error));

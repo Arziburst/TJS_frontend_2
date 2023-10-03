@@ -2,13 +2,20 @@
 import React, { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useLocation, useNavigate, useParams } from 'react-router';
 
 // Init
 import { CATEGORIES_ITEMS } from '@/init';
 
+// Tools
+import { cn } from '@/tools/lib/utils';
+
 // Bus
 import { useGallery } from '@/bus/gallery';
 import { useProducts } from '@/bus/products';
+
+// Book
+import { PARAMS_VALUES } from '@/view/routes/book';
 
 // Components
 import {
@@ -37,19 +44,31 @@ import { ModalAddImages } from './ModalAddImages';
 
 // Types
 import { Image as ImageType } from '@/bus/gallery/types';
-import { cn } from '@/tools/lib/utils';
 
 type PropTypes = {
     /* type props here */
 }
 
 const Management: FC<PropTypes> = () => {
+    const { id } = useParams<PARAMS_VALUES.ID>();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const isModeEdit = !!id;
+
     const { fetchGallery } = useGallery();
-    const { products: { isLoadings }, fetchCreateNewProduct } = useProducts();
+    const {
+        products: { currentProduct, products, isLoadings },
+        setCurrentProduct,
+        fetchProducts,
+        fetchCreateNewProduct,
+        fetchDeleteProduct,
+        fetchEditProduct,
+    } = useProducts();
 
     const form = useForm({
-        resolver: yupResolver(validationForm),
-        defaultValues,
+        resolver:      yupResolver(validationForm),
+        defaultValues: isModeEdit ? currentProduct || defaultValues : defaultValues,
     });
 
     const { images } = form.getValues();
@@ -70,6 +89,15 @@ const Management: FC<PropTypes> = () => {
         form.setValue('images', oldImages.filter((img) => img !== image.imageUrl), { shouldDirty: true, shouldTouch: true });
     };
 
+    const onClickDeleteItemHandler = (_id?: string) => {
+        if (_id) {
+            fetchDeleteProduct({
+                _id,
+                navigate,
+            });
+        }
+    };
+
     const onClickDeleteImageFromProductHandler = (src: ImageType['imageUrl']) => {
         if (isValidateInputImages) {
             const newImages = images.filter((oldSrc) => oldSrc !== src);
@@ -79,6 +107,16 @@ const Management: FC<PropTypes> = () => {
 
     // const onSubmit = (values: typeof defaultValues) => {
     const onSubmit = (values: any) => { // todo how to remove any ???
+        if (isModeEdit && currentProduct) {
+            fetchEditProduct({
+                _id:           currentProduct._id,
+                editedProduct: values,
+                navigate,
+            });
+
+            return;
+        }
+
         fetchCreateNewProduct({
             ...values,
             reset: form.reset,
@@ -87,7 +125,33 @@ const Management: FC<PropTypes> = () => {
 
     useEffect(() => {
         fetchGallery();
+        id && fetchProducts(); // todo need to fetch only one product ???!!!!!
     }, []);
+
+    useEffect(() => {
+        if (products) {
+            const foundCurrentProduct = products.find((product) => product._id === id);
+            if (foundCurrentProduct) {
+                setCurrentProduct(foundCurrentProduct);
+                currentProduct && form.reset({
+                    available:   foundCurrentProduct.available,
+                    description: foundCurrentProduct.description,
+                    discount:    foundCurrentProduct.discount,
+                    images:      foundCurrentProduct.images,
+                    price:       foundCurrentProduct.price,
+                    title:       foundCurrentProduct.title,
+                    type:        foundCurrentProduct.type,
+                    weight:      foundCurrentProduct.weight,
+                });
+            }
+        }
+    }, [ products ]);
+
+    useEffect(() => {
+        if (!isModeEdit) {
+            form.reset(defaultValues);
+        }
+    }, [ location ]);
 
     return (
         <div>
@@ -272,7 +336,7 @@ const Management: FC<PropTypes> = () => {
                                 </Form.FormItem>
                             ) }
                         />
-                        {images.map((src) => src && (
+                        {isValidateInputImages && images.map((src) => src && (
                             <Button
                                 className = { `group w-auto relative border-2 border-transparent overflow-hidden
                                     hover:border-quaternary hover:opacity-100
@@ -294,13 +358,24 @@ const Management: FC<PropTypes> = () => {
                             </Button>
                         ))}
                     </div>
+                    {isModeEdit && (
+                        <Button
+                            className = 'max-w-[300px]'
+                            isLoading = { isLoadings.delete }
+                            style = {{ gridArea: 'delete' }}
+                            type = 'button'
+                            variant = 'outline'
+                            onClick = { () => onClickDeleteItemHandler(currentProduct?._id) }>
+                            Delete
+                        </Button>
+                    )}
                     <Button
                         className = 'max-w-[300px]'
                         isLoading = { isLoadings.create }
                         style = {{ gridArea: 'submit' }}
                         type = 'submit'
                         variant = 'contain'>
-                        Submit
+                        {isModeEdit ? 'Edit' : 'Create'}
                     </Button>
                 </form>
             </Form.Root>

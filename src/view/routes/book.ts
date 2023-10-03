@@ -8,15 +8,21 @@ type Params = {
 }
 export type ParamsLowerCase = LowercaseKeys<Params>;
 
+export enum PARAMS_VALUES {
+    CATEGORY = 'category',
+    ID = 'id',
+}
+
 export enum PARAMS {
-    CATEGORY = '/:category',
-    ID = '/:ID',
+    CATEGORY = `/:${PARAMS_VALUES.CATEGORY}`,
+    ID = `/:${PARAMS_VALUES.ID}`,
 }
 
 export enum BOOK {
     // MarkerGen books
     ITEM = '/item',
     ADD_ITEM = '/add-item',
+    EDIT_ITEM = '/edit-item',
     MANAGEMENT = '/management',
     SIGN_IN_AND_UP = '/sign-in-and-up',
     ABOUT = '/about',

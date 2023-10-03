@@ -27,6 +27,7 @@ export type Products = ExtendedProduct[];
 export type IsLoadings = 'products' | 'incrementViews' | 'edit' | 'delete' | 'create';
 export interface ProductsState extends commonTypes.State<Record<IsLoadings, commonTypes.IsLoading>> {
     products: null | Products;
+    currentProduct: null | ExtendedProduct;
 }
 
 // Actions

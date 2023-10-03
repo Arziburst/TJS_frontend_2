@@ -24,8 +24,8 @@ export const createNewProductFetcher = (body: Omit<types.FetchCreateNewProductRe
     });
 };
 
-export const deleteProductFetcher = (payload: types.FetchDeleteProductRequest) => {
-    return fetch(API.PRODUCTS.PRODUCT(payload), {
+export const deleteProductFetcher = (payload: Omit<types.FetchDeleteProductRequest, 'navigate'>) => {
+    return fetch(API.PRODUCTS.PRODUCT(payload._id), {
         method:      'DELETE',
         credentials: 'include',
         headers:     {
@@ -34,7 +34,7 @@ export const deleteProductFetcher = (payload: types.FetchDeleteProductRequest) =
     });
 };
 
-export const editProductFetcher = (payload: types.FetchEditProductRequest) => {
+export const editProductFetcher = (payload: Omit<types.FetchEditProductRequest, 'navigate'>) => {
     return fetch(API.PRODUCTS.PRODUCT(payload._id), {
         method:      'PUT',
         credentials: 'include',

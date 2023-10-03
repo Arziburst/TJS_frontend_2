@@ -13,14 +13,14 @@ import { productsFetcher } from '../../../api';
 import { productsActions, sliceName } from '../slice';
 
 // Tools
-import { arrayComparison, makeRequest } from '../../../tools/utils';
+import { arrayComparison, ls, makeRequest } from '../../../tools/utils';
 
 // Types
 import * as commonTypes from '../../commonTypes';
 import * as types from './types';
 
 // Action
-export const fetchProductsAction = createAction<types.FetchProductsRequest>(`${sliceName}/FETCH_PRODUCTS_ASYNC`);
+export const fetchProductsAction = createAction(`${sliceName}/FETCH_PRODUCTS_ASYNC`);
 
 // Saga
 const fetchProducts = (
@@ -32,19 +32,17 @@ const fetchProducts = (
         fetch:             productsFetcher,
     },
     tryStart: function* () {
-        if (callAction.payload || typeof callAction.payload === 'undefined') {
-            yield put(productsActions.setIsLoadingOfProducts({
-                type:  'products',
-                value: true,
-            }));
-        }
+        yield put(productsActions.setIsLoadingOfProducts({
+            type:  'products',
+            value: true,
+        }));
     },
     success: function* (result) {
         yield put(productsActions.setProducts(result));
 
         const productsIds = result.map(({ _id }) => _id);
-        const viewedProducts: Array<string> = localStorage.get(LOCAL_STORAGE.VIEWED_PRODUCTS) || [];
-        const cart: Array<string> = localStorage.get('cart') || [];
+        const viewedProducts: Array<string> = ls.get(LOCAL_STORAGE.VIEWED_PRODUCTS) || [];
+        const cart: Array<string> = ls.get(LOCAL_STORAGE.CART) || [];
 
         // Checking viewedProducts
         if (viewedProducts && viewedProducts.length !== 0) {
@@ -72,12 +70,10 @@ const fetchProducts = (
         yield put(productsActions.setErrorOfProducts(error));
     },
     finallyEnd: function* () {
-        if (callAction.payload || typeof callAction.payload === 'undefined') {
-            yield put(productsActions.setIsLoadingOfProducts({
-                type:  'products',
-                value: false,
-            }));
-        }
+        yield put(productsActions.setIsLoadingOfProducts({
+            type:  'products',
+            value: false,
+        }));
     },
 });
 

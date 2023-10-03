@@ -21,6 +21,8 @@ export const useProducts = () => {
     return {
         products,
         setProducts:       (payload: types.Products) => dispatch(productsActions.setProducts(payload)),
+        setProduct:        (payload: types.ExtendedProduct) => dispatch(productsActions.setProduct(payload)),
+        setCurrentProduct: (payload: types.ExtendedProduct) => dispatch(productsActions.setCurrentProduct(payload)),
         setCreatedProduct: (
             payload: types.ExtendedProduct,
         ) => dispatch(productsActions.setProduct(payload)),

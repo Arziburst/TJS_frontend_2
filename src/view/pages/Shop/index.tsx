@@ -1,6 +1,6 @@
 // Core
 import React, { FC, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // Book
 import { BOOK, ParamsLowerCase } from '@/view/routes/book';
@@ -23,15 +23,18 @@ type PropTypes = {
     /* type props here */
 }
 
-const mockItems = Array.from({ length: 33 });
-
 const Shop: FC<PropTypes> = () => {
     const { category } = useParams<Pick<ParamsLowerCase, 'category'>>();
 
+    const navigate = useNavigate();
+
     const { togglesRedux: { isLoggedIn }} = useTogglesRedux();
     const { profile: { profile }} = useProfile();
-    const { products, fetchProducts } = useProducts();
-    // const { fetchProducts } = useProductsSaga();
+    const { products: { products }, fetchProducts } = useProducts();
+
+    const onClickEditItem = (id: string) => {
+        navigate(`${BOOK.ITEM}/${id}${BOOK.MANAGEMENT}`);
+    };
 
     useEffect(() => {
         fetchProducts(); // todo fix error >>> localStorage.get is not a function
@@ -39,7 +42,7 @@ const Shop: FC<PropTypes> = () => {
 
     useEffect(() => {
         console.log('products >>> ', products);
-    }, [ products.products ]);
+    }, [ products ]);
 
 
     useEffect(() => {
@@ -83,19 +86,20 @@ const Shop: FC<PropTypes> = () => {
 
                     </div>
                 )}
-                {mockItems.map((item, index) => (
+                {products?.map((item) => (
                     <CardItem
                         firstImage = {{
-                            src: 'assets/test.png',
-                            alt: 'test',
+                            src: item.images[ 0 ],
+                            alt: 'First image of item',
                         }}
-                        key = { index }
-                        name = { `name_${index}` }
-                        price = { index * 100 }
+                        key = { item._id }
+                        name = { item.title }
+                        price = { item.price }
                         secondImage = {{
-                            src: 'assets/image_category_see_all.png',
-                            alt: 'test',
+                            src: item.images[ 1 ],
+                            alt: 'Second image of item',
                         }}
+                        onClickEditItem = { () => onClickEditItem(item._id) }
                     />
                 ))}
             </div>

@@ -12,6 +12,7 @@
         "discount"
         "images"
         "available"
+        "delete"
         "submit";
 }
 
@@ -24,6 +25,7 @@
             "description weight"
             "price discount"
             "images available"
+            "delete delete"
             "submit submit";
     }
 }

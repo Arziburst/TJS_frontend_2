@@ -12,7 +12,7 @@ export type DefaultValues = Product;
 
 const minLength = 3;
 
-export const minLengthImages = 1;
+export const minLengthImages = 2;
 
 export const validationForm = yup.object({
     title: yup.string().min(minLength)

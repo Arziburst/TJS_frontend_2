@@ -2,6 +2,10 @@
 import { SagaIterator } from '@redux-saga/core';
 import { createAction } from '@reduxjs/toolkit';
 import { put, takeLatest } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
+
+// Book
+import { BOOK } from '@/view/routes/book';
 
 // API
 import { deleteProductFetcher } from '../../../api';
@@ -10,7 +14,7 @@ import { deleteProductFetcher } from '../../../api';
 import { productsActions, sliceName } from '../slice';
 
 // Tools
-import { makeRequest } from '../../../tools/utils';
+import { makeRequest, removeKeysOfObject } from '../../../tools/utils';
 
 // Types
 import * as commonTypes from '../../commonTypes';
@@ -26,7 +30,10 @@ const fetchDeleteProduct = (
     callAction,
     fetchOptions: {
         successStatusCode: 200,
-        fetch:             () => deleteProductFetcher(callAction.payload),
+        fetch:             () => deleteProductFetcher(removeKeysOfObject<types.FetchDeleteProductRequest, 'navigate'>({
+            keys:   [ 'navigate' ],
+            object: callAction.payload,
+        })),
     },
     tryStart: function* () {
         if (callAction.payload) {
@@ -37,7 +44,9 @@ const fetchDeleteProduct = (
         }
     },
     success: function* (result) {
-        yield put(productsActions.setDeleteProduct(result));
+        yield put(productsActions.setDeleteProduct(result)); // todo need remove ???
+        yield callAction.payload.navigate(BOOK.SHOP);
+        yield toast.success('Product deleted successfully!');
     },
     error: function* (error) {
         yield put(productsActions.setErrorOfProducts(error));
