@@ -2,7 +2,8 @@
 import React, { FC } from 'react';
 
 // Components
-import { Select } from '@/view/components';
+import { Select as SelectCore } from '@/view/components';
+import { Label } from '../Label';
 
 // Types
 export type SelectShopPropTypes = {
@@ -15,7 +16,7 @@ export type SelectShopPropTypes = {
     onClick?: (item: string) => void;
 }
 
-export const SelectShop: FC<SelectShopPropTypes> = ({
+export const Select: FC<SelectShopPropTypes> = ({
     label,
     value,
     showValue,
@@ -26,34 +27,34 @@ export const SelectShop: FC<SelectShopPropTypes> = ({
 }) => {
     return (
         <div className = 'flex flex-col gap-[10px]'>
-            <p className = 'text-sm text-[15px] font-secondary font-semibold opacity-50'>
+            <Label>
                 {label}
-            </p>
-            <Select.Root
+            </Label>
+            <SelectCore.Root
                 value = { value || '' }
                 onValueChange = { setValue }>
-                <Select.SelectTrigger
+                <SelectCore.SelectTrigger
                     isArrow
                     className = 'capitalize'
                     variant = 'ghost'>
-                    <Select.SelectValue
+                    <SelectCore.SelectValue
                         aria-label = { value || '' }
                         className = 'text=[15px]'>
                         {showValue || placeholder}
-                    </Select.SelectValue>
-                </Select.SelectTrigger>
-                <Select.SelectContent variant = 'outline'>
+                    </SelectCore.SelectValue>
+                </SelectCore.SelectTrigger>
+                <SelectCore.SelectContent variant = 'outline'>
                     {items.map((item) => (
-                        <Select.SelectItem
+                        <SelectCore.SelectItem
                             className = 'py-2 px-3 capitalize'
                             key = { item }
                             value = { item }
                             onClick = { () => onClick && onClick(item) }>
                             {item}
-                        </Select.SelectItem>
+                        </SelectCore.SelectItem>
                     ))}
-                </Select.SelectContent>
-            </Select.Root>
+                </SelectCore.SelectContent>
+            </SelectCore.Root>
         </div>
     );
 };
