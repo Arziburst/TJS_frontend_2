@@ -19,9 +19,14 @@ import { useTogglesRedux } from '@/bus/client/toggles';
 import { useProfile } from '@/bus/profile';
 import { useProducts } from '@/bus/products';
 
+// Containers
+import { MoveUnderline, NotData } from '@/view/containers';
+
 // Components
 import { ErrorBoundary, Icons, CardItem } from '@/view/components';
 import { Select } from './Select';
+import { Label } from './Label';
+import { NavItemText } from '@/view/components/Nav/NavItem/NavItemText';
 
 // Elements
 import { Button, NavLink } from '@/view/elements';
@@ -39,6 +44,8 @@ import SCardItem from '@/view/components/CardItem/styles.module.css';
 
 // Types
 import { ExtendedProduct } from '@/bus/products/types';
+import { SelectItem } from '@/view/components/Select/SelectItem';
+import { cn } from '@/tools/lib/utils';
 
 type PropTypes = {
     /* type props here */
@@ -67,7 +74,7 @@ const Shop: FC<PropTypes> = () => {
 
     const { togglesRedux: { isLoggedIn, isFilterByLowToHigh }, setToggleAction } = useTogglesRedux();
     const { profile: { profile }} = useProfile();
-    const { products: { products }, fetchProducts } = useProducts();
+    const { products: { products, isLoadings }, fetchProducts } = useProducts();
 
     const onClickEditItem = (id: string) => {
         navigate(`${BOOK.ITEM}/${id}${BOOK.MANAGEMENT}`);
@@ -107,7 +114,6 @@ const Shop: FC<PropTypes> = () => {
 
     // Select // navigate another category
     useEffect(() => {
-        console.log(' // Select // navigate another category');
         if (!isFirstVisitState) {
             if (filterByCategoryState && filterByCategoryState !== ENUM_CATEGORIES.ALL) {
                 navigate(`${BOOK.SHOP}/${filterByCategoryState}`);
@@ -161,15 +167,69 @@ const Shop: FC<PropTypes> = () => {
                         />
                     </div>
                 ) : (
-                    <div>
-                        asd
+                    <div className = 'flex flex-col gap-8'>
+                        <ul className = 'flex flex-col gap-5'>
+                            <li>
+                                <Label className = 'capitalize'>
+                                    Shop by
+                                </Label>
+                            </li>
+                            {[ ENUM_CATEGORIES.ALL, ...CATEGORIES_ITEMS ].map((item) => (
+                                <li
+                                    className = 'leading-none'
+                                    key = { item }>
+                                    <MoveUnderline
+                                        asChild
+                                        variant = 'skipFirstLine'>
+                                        <NavLink
+                                            to = { `${BOOK.SHOP}/${item === ENUM_CATEGORIES.ALL ? '' : item}` }
+                                            variant = 'default'>
+                                            <NavItemText className = 'text-[15px]'>
+                                                {item.replace('-', ' ')}
+                                            </NavItemText>
+                                        </NavLink>
+                                    </MoveUnderline>
+                                </li>
+                            ))}
+                        </ul>
+                        <ul className = 'flex flex-col gap-5'>
+                            <li>
+                                <Label className = 'capitalize'>
+                                    filter by
+                                </Label>
+                            </li>
+                            {ARRAY_FILTERS_BY_PRICE.map((str, index) => (
+                                <li>
+                                    <MoveUnderline
+                                        asChild
+                                        variant = 'skipFirstLine'>
+                                        <Button
+                                            className = { cn(
+                                                `font-secondary text-xs text-[13px] font-semibold whitespace-nowrap capitalize
+                                                    hover:text-quaternary`,
+                                                { 'text-quaternary': typeof isFilterByLowToHigh === 'boolean' &&  Boolean(index) !== isFilterByLowToHigh },
+                                            ) }
+                                            variant = 'default'
+                                            onClick = { () => setToggleAction({
+                                                type:  'isFilterByLowToHigh',
+                                                value: str === ENUM_FILTERS_BY_PRICE.LOW_TO_HIGH,
+                                            }) }>
+                                            {str}
+                                        </Button>
+                                    </MoveUnderline>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 )}
             </div>
             <div className = { `flex flex-col ${S.common_gap} grow justify-between
                 sb:gap-14` }>
-                <div className = { `flex flex-wrap gap-[14px] justify-center
-                    sb:gap-[20px]` }>
+                <NotData
+                    className = { `flex flex-wrap gap-[14px] justify-center
+                    sb:gap-[20px]` }
+                    count = { profile?.role === 'admin' ? 2 : 1 }
+                    isLoading = { isLoadings.products }>
                     {isLoggedIn && profile?.role === 'admin' && (
                         <div className = { SCardItem.images_container }>
                             <NavLink to = { BOOK.ADD_ITEM }>
@@ -198,7 +258,7 @@ const Shop: FC<PropTypes> = () => {
                             onClickEditItem = { () => onClickEditItem(item._id) }
                         />
                     ))}
-                </div>
+                </NotData>
                 <div className = { S.common_gap }>
                     <button>Add to Cart</button>
                     <div className = { `flex flex-col gap-4

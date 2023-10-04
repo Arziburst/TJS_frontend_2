@@ -21,8 +21,7 @@ const navLinkVariants = cva(
                     after:content-[\'\'] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-quaternary after:translate-x-[-150%] after:transition after:duration-500
                     before:content-[\'\'] before:absolute before:bottom-0 before:left-0 before:w-full before:h-[2px] before:bg-quaternary before:transition before:duration-500
                     hover:after:translate-x-[0%]
-                    hover:before:translate-x-[150%]
-                    `,
+                    hover:before:translate-x-[150%]`,
                 none: '',
             },
         },
