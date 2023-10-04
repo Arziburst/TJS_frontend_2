@@ -1,9 +1,9 @@
 // Types
+import { NavigateFunction } from 'react-router';
 import * as commonTypes from '@/bus/commonTypes';
 import * as types from '../types';
 
 // Products
-export type FetchProductsRequest = boolean | undefined; // todo improve or remove boolean???
 export type FetchProductsResponse = types.Products;
 
 // Create product
@@ -11,7 +11,10 @@ export interface FetchCreateNewProductRequest extends types.Product, commonTypes
 export type FetchCreateNewProductResponse = types.ExtendedProduct;
 
 // Delete product
-export type FetchDeleteProductRequest = types.ExtendedProduct['_id'];
+export type FetchDeleteProductRequest = {
+    _id: types.ExtendedProduct['_id'];
+    navigate: NavigateFunction;
+};
 export type FetchDeleteProductResponse = types.ExtendedProduct['_id'];
 
 // Edit product

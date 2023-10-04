@@ -7,13 +7,13 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/tools/lib/utils';
 
 const selectContentVariants = cva(
-    'flex w-full items-center justify-between transition',
+    'flex w-full items-center justify-between transition bg-background',
     {
         variants: {
             variant: {
-                outline: '',
+                outline: 'border-2 border-secondary-100',
                 ghost:   'top-2',
-                shadow:  'shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] bg-background',
+                shadow:  'shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]',
             },
         },
         defaultVariants: {

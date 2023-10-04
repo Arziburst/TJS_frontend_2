@@ -15,15 +15,15 @@ const selectItemVariants = cva(
     {
         variants: {
             variant: {
-                primary: `font-secondary font-semibold 
+                ghost: `font-secondary font-semibold 
                     data-[state=checked]:text-quaternary`,
-                secondary: `p-3 text-base font-tertiary font-medium
+                contain: `p-3 text-base font-tertiary font-medium
                     hover:text-background hover:bg-secondary-100
                     data-[state=checked]:text-background data-[state=checked]:bg-secondary-100`,
             },
         },
         defaultVariants: {
-            variant: 'primary',
+            variant: 'ghost',
         },
     },
 );

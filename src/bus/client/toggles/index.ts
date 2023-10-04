@@ -5,15 +5,24 @@ import { useDispatch } from 'react-redux';
 // Tools
 import { useSelector } from '../../../tools/hooks';
 
-const initialState = {
-    isOnline:      navigator.onLine,
-    isLoggedIn:    true, // isAuthenticated
-    isOpenSideBar: false,
+// Types
+export type InitialStateToggles = {
+    isOnline: boolean,
+    isLoggedIn: boolean,
+    isOpenSideBar: boolean,
+    isFilterByLowToHigh: null | boolean,
+}
+
+const initialState: InitialStateToggles = {
+    isOnline:            navigator.onLine,
+    isLoggedIn:          true, // isAuthenticated
+    isOpenSideBar:       false,
+    isFilterByLowToHigh: null,
 };
 
 // Types
 export type TogglesKeys = keyof typeof initialState;
-type Options = { type: TogglesKeys, value: boolean };
+type Options = { type: TogglesKeys, value: boolean | null };
 
 // Slice
 export const togglesSlice = createSlice({

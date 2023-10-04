@@ -37,11 +37,11 @@ export const Private: FC = () => {
             />
             <Route
                 element = { <Pages.Management /> }
-                path = { BOOK.MANAGEMENT }
+                path = { BOOK.ADD_ITEM }
             />
             <Route
                 element = { <Pages.Management /> }
-                path = { BOOK.ADD_ITEM }
+                path = { BOOK.ITEM + PARAMS.ID + BOOK.MANAGEMENT }
             />
             <Route
                 element = { <Pages.Item /> }

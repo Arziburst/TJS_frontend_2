@@ -19,7 +19,7 @@ export const useProductsSaga = () => {
     const dispatch = useDispatch();
 
     return {
-        fetchProducts:         () => dispatch(fetchProductsAction(true)),
+        fetchProducts:         () => dispatch(fetchProductsAction()),
         fetchCreateNewProduct: (payload: types.FetchCreateNewProductRequest) => dispatch(
             fetchCreateNewProductAction(payload),
         ),

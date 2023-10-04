@@ -2,6 +2,7 @@
 import { SagaIterator } from '@redux-saga/core';
 import { createAction } from '@reduxjs/toolkit';
 import { put, takeLatest } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 
 // API
 import { editProductFetcher } from '../../../api';
@@ -38,6 +39,7 @@ const fetchEditProduct = (
     },
     success: function* (result) {
         yield put(productsActions.setEditedProduct(result));
+        yield toast.success('Product edited successfully!');
     },
     error: function* (error) {
         yield put(productsActions.setErrorOfProducts(error));

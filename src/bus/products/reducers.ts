@@ -7,24 +7,29 @@ import * as types from './types';
 
 export const setProducts: types.BaseContact<types.Products> = (state, action) => ({
     ...state,
-    items: action.payload,
+    products: action.payload,
 });
 
 export const setProduct: types.BaseContact<types.ExtendedProduct> = (state, action) => {
     if (state.products) {
         return {
             ...state,
-            items: [ action.payload, ...state.products ],
+            products: [ action.payload, ...state.products ],
         };
     }
 
     return {
         ...state,
-        items: [ action.payload ],
+        products: [ action.payload ],
     };
 };
 
-export const setDeleteProduct: types.BaseContact<string> = (state, action) => {
+export const setCurrentProduct: types.BaseContact<types.ExtendedProduct> = (state, action) => ({
+    ...state,
+    currentProduct: action.payload,
+});
+
+export const setDeleteProduct: types.BaseContact<string> = (state, action) => { // todo need remove ???
     if (state.products) {
         state.products.filter(({ _id }) => _id !== action.payload);
     }

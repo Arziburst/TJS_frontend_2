@@ -20,7 +20,8 @@ const initialState: types.ProductsState = {
         edit:           false,
         delete:         false,
     },
-    products: null,
+    products:       null,
+    currentProduct: null,
 };
 
 export const productsSlice = createSlice<types.ProductsState, typeof reducers>({
