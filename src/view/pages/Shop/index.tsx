@@ -5,6 +5,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 // Assets
 import { SCREENS_NUMBER } from '@/assets';
 
+// Tools
+import { cn } from '@/tools/lib/utils';
+
 // Init
 import { CATEGORIES_ITEMS, ENUM_CATEGORIES } from '@/init';
 
@@ -23,7 +26,7 @@ import { useProducts } from '@/bus/products';
 import { MoveUnderline, NotData } from '@/view/containers';
 
 // Components
-import { ErrorBoundary, Icons, CardItem } from '@/view/components';
+import { ErrorBoundary, Icons, CardItem, Pagination } from '@/view/components';
 import { Select } from './Select';
 import { Label } from './Label';
 import { NavItemText } from '@/view/components/Nav/NavItem/NavItemText';
@@ -44,8 +47,7 @@ import SCardItem from '@/view/components/CardItem/styles.module.css';
 
 // Types
 import { ExtendedProduct } from '@/bus/products/types';
-import { SelectItem } from '@/view/components/Select/SelectItem';
-import { cn } from '@/tools/lib/utils';
+import { calculateTotalPages, pagination } from '@/view/components/Pagination/static';
 
 type PropTypes = {
     /* type props here */
@@ -55,12 +57,21 @@ const S = {
     common_gap: 'gap-8',
 };
 
+// const limitForShowingPaginationStateInitial = 20;
+
 const Shop: FC<PropTypes> = () => {
     const { category } = useParams<Pick<ParamsLowerCase, 'category'>>();
 
     const navigate = useNavigate();
 
     const [ width ] = useWindowWidth();
+
+    // States
+    const [
+        limitForShowingPaginationState,
+        setLimitForShowingPaginationState,
+    ] = useState(20);
+    const [ stepPaginationState, setStepPaginationState ] = useState(1);
 
     const [ isFirstVisitState, setIsFirstVisitState ] = useState(true);
     const [
@@ -72,10 +83,12 @@ const Shop: FC<PropTypes> = () => {
         setFilteredProductsState,
     ] = useState<null | ExtendedProduct[]>(null);
 
+    // Hooks of Bus
     const { togglesRedux: { isLoggedIn, isFilterByLowToHigh }, setToggleAction } = useTogglesRedux();
     const { profile: { profile }} = useProfile();
     const { products: { products, isLoadings }, fetchProducts } = useProducts();
 
+    // Handlers
     const onClickEditItem = (id: string) => {
         navigate(`${BOOK.ITEM}/${id}${BOOK.MANAGEMENT}`);
     };
@@ -99,13 +112,12 @@ const Shop: FC<PropTypes> = () => {
         fetchProducts();
 
         return () => {
-            console.log('text');
             setToggleAction({
                 type:  'isFilterByLowToHigh',
                 value: null,
             });
         };
-    }, []);
+    }, [ category ]);
 
     // step 1
     useEffect(() => {
@@ -129,6 +141,7 @@ const Shop: FC<PropTypes> = () => {
     useEffect(() => {
         if (products && category) {
             const filletedProducts = products.filter((product) => product.type === category);
+
             setFilteredProductsState(sortByPrice({
                 array: filletedProducts,
                 isFilterByLowToHigh,
@@ -139,7 +152,7 @@ const Shop: FC<PropTypes> = () => {
                 isFilterByLowToHigh,
             }));
         }
-    }, [ products, category, isFilterByLowToHigh ]);
+    }, [ products, category, isFilterByLowToHigh, stepPaginationState ]);
 
     return (
         <div className = { `flex flex-col ${S.common_gap} 
@@ -199,7 +212,7 @@ const Shop: FC<PropTypes> = () => {
                                 </Label>
                             </li>
                             {ARRAY_FILTERS_BY_PRICE.map((str, index) => (
-                                <li>
+                                <li key = { str }>
                                     <MoveUnderline
                                         asChild
                                         variant = 'skipFirstLine'>
@@ -242,7 +255,11 @@ const Shop: FC<PropTypes> = () => {
 
                         </div>
                     )}
-                    {filteredProductsState?.map((item) => (
+                    {pagination({
+                        array:       filteredProductsState,
+                        currentStep: stepPaginationState,
+                        limit:       limitForShowingPaginationState,
+                    })?.map((item) => (
                         <CardItem
                             firstImage = {{
                                 src: item.images[ 0 ],
@@ -263,10 +280,13 @@ const Shop: FC<PropTypes> = () => {
                     <button>Add to Cart</button>
                     <div className = { `flex flex-col gap-4
                         sb:${S.common_gap}` }>
-                        <p>Showed 20 from 440 products</p>
-                        <div>
-                            pagination
-                        </div>
+                        <p>Showed 20 from {filteredProductsState?.length || '00'} products</p>
+                        <Pagination
+                            array = { filteredProductsState }
+                            limit = { limitForShowingPaginationState }
+                            setValue = { setStepPaginationState }
+                            value = { stepPaginationState }
+                        />
                     </div>
                 </div>
             </div>
@@ -279,8 +299,3 @@ export default () => (
         <Shop />
     </ErrorBoundary>
 );
-
-
-// item/4 // сторінка продукта
-// item/4/management // сторінка редагування продукта
-// item/add // сторінка додавання продукта

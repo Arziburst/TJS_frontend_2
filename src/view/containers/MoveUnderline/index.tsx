@@ -27,7 +27,7 @@ const moveUnderlineVariants = cva(
 
 // Types
 export interface PropTypes
-    extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof moveUnderlineVariants> {
+    extends React.AllHTMLAttributes<HTMLButtonElement>, VariantProps<typeof moveUnderlineVariants> {
     asChild?: boolean;
 }
 

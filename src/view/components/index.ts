@@ -1,4 +1,5 @@
 // MarkerGen re-export
+export * from './Pagination';
 export * from './Dialog';
 export * from './Tooltip';
 export * from './CardItem';
