@@ -14,8 +14,12 @@ import { Button } from '@/view/elements';
 // Static
 import { calculateTotalPages, createPageList, ellipsis } from './static';
 
+// Styles
+import S from './styles.module.css';
+
 // Types
 import { ExtendedProduct } from '@/bus/products/types';
+import { Icons } from '../Icons';
 
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 {
@@ -23,6 +27,7 @@ interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDiv
     value: number;
     limit: number;
     setValue: React.Dispatch<React.SetStateAction<number>>;
+    onClickDesktopNumber?: () => void;
 }
 
 export const Pagination: FC<PropTypes> = ({
@@ -31,15 +36,20 @@ export const Pagination: FC<PropTypes> = ({
     setValue,
     className,
     array,
+    onClickDesktopNumber,
     ...props
 }) => {
     const [ width ] = useWindowWidth();
 
-    // const maxValue = (Array.isArray(array) && array.length) || 0;
     const maxStep: number = Array.isArray(array) ? calculateTotalPages({
         array,
         limit,
     }) : 0;
+
+    const onClickDesktopNumberHandler = (numberStep: string | number) => {
+        setValue(Number(numberStep));
+        onClickDesktopNumber && onClickDesktopNumber();
+    };
 
     if (maxStep <= 1) {
         return null;
@@ -54,7 +64,7 @@ export const Pagination: FC<PropTypes> = ({
                     disabled = { value <= 1 }
                     variant = 'default'
                     onClick = { () => setValue((prev) => prev - 1) }>
-                    {'<'}
+                    <Icons.Arrow className = 'rotate-180' />
                 </Button>
             </div>
             {array && width > SCREENS_NUMBER.SB && (
@@ -74,23 +84,25 @@ export const Pagination: FC<PropTypes> = ({
                             disabled = { numberStep === ellipsis }
                             key = { `${numberStep}-${index}` }
                             variant = 'default'
-                            onClick = { () => setValue(Number(numberStep)) }>
-                            {numberStep}
+                            onClick = { () => onClickDesktopNumberHandler(numberStep) }>
+                            <span className = { S.text }>
+                                {numberStep}
+                            </span>
                         </Button>
                     ))}
                 </div>
             )}
             {width < SCREENS_NUMBER.SB && (
-                <div>
-                    {value < 10 ? `0${value}` : value} OF {maxStep < 10 ? `0${maxStep}` : maxStep}
-                </div>
+                <p className = { S.text }>
+                    <span className = 'text-quaternary'>{value < 10 ? `0${value}` : value}</span> OF {maxStep < 10 ? `0${maxStep}` : maxStep}
+                </p>
             )}
             <div>
                 <Button
                     disabled = { value >= maxStep }
                     variant = 'default'
                     onClick = { () => setValue((prev) => prev + 1) }>
-                    {'>'}
+                    <Icons.Arrow />
                 </Button>
             </div>
         </div>

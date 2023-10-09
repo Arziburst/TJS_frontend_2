@@ -41,23 +41,23 @@ import {
     getValueOfSelectFilterByPrice,
     sortByPrice,
 } from './static';
+import { pagination } from '@/view/components/Pagination/static';
 
 // Styles
 import SCardItem from '@/view/components/CardItem/styles.module.css';
 
 // Types
 import { ExtendedProduct } from '@/bus/products/types';
-import { calculateTotalPages, pagination } from '@/view/components/Pagination/static';
 
 type PropTypes = {
     /* type props here */
 }
 
 const S = {
-    common_gap: 'gap-8',
+    common_gap:    'gap-[32px]',
+    sb_common_gap: 'sb:gap-[32px]',
+    semibold:      'font-semibold',
 };
-
-// const limitForShowingPaginationStateInitial = 20;
 
 const Shop: FC<PropTypes> = () => {
     const { category } = useParams<Pick<ParamsLowerCase, 'category'>>();
@@ -82,6 +82,7 @@ const Shop: FC<PropTypes> = () => {
         filteredProductsState,
         setFilteredProductsState,
     ] = useState<null | ExtendedProduct[]>(null);
+    const [ paginationProductsState, setPaginationProductsState ] = useState<null | ExtendedProduct[]>(null);
 
     // Hooks of Bus
     const { togglesRedux: { isLoggedIn, isFilterByLowToHigh }, setToggleAction } = useTogglesRedux();
@@ -105,6 +106,10 @@ const Shop: FC<PropTypes> = () => {
                 value: false,
             });
         }
+    };
+
+    const onClickShowMoreHandler = () => {
+        setLimitForShowingPaginationState((prev) => prev + prev);
     };
 
     // init
@@ -153,6 +158,20 @@ const Shop: FC<PropTypes> = () => {
             }));
         }
     }, [ products, category, isFilterByLowToHigh, stepPaginationState ]);
+
+    useEffect(() => {
+        const result = pagination({
+            array:       filteredProductsState,
+            currentStep: stepPaginationState,
+            limit:       limitForShowingPaginationState,
+        });
+
+        setPaginationProductsState(result);
+
+        if (result && result.length < 1) {
+            setStepPaginationState((prev) => prev - 1);
+        }
+    }, [ filteredProductsState, stepPaginationState, limitForShowingPaginationState ]);
 
     return (
         <div className = { `flex flex-col ${S.common_gap} 
@@ -255,11 +274,7 @@ const Shop: FC<PropTypes> = () => {
 
                         </div>
                     )}
-                    {pagination({
-                        array:       filteredProductsState,
-                        currentStep: stepPaginationState,
-                        limit:       limitForShowingPaginationState,
-                    })?.map((item) => (
+                    {paginationProductsState?.map((item) => (
                         <CardItem
                             firstImage = {{
                                 src: item.images[ 0 ],
@@ -276,18 +291,34 @@ const Shop: FC<PropTypes> = () => {
                         />
                     ))}
                 </NotData>
-                <div className = { S.common_gap }>
-                    <button>Add to Cart</button>
-                    <div className = { `flex flex-col gap-4
-                        sb:${S.common_gap}` }>
-                        <p>Showed 20 from {filteredProductsState?.length || '00'} products</p>
-                        <Pagination
-                            array = { filteredProductsState }
-                            limit = { limitForShowingPaginationState }
-                            setValue = { setStepPaginationState }
-                            value = { stepPaginationState }
-                        />
-                    </div>
+                <div className = { `flex flex-col gap-4 items-center
+                    ${S.sb_common_gap}` }>
+                    {paginationProductsState && filteredProductsState
+                        && paginationProductsState < filteredProductsState
+                            && (
+                                <Button
+                                    className = 'capitalize max-w-[540px]'
+                                    onClick = { onClickShowMoreHandler }>
+                                    show more
+                                </Button>
+                            )
+                    }
+                    <p className = { `text-xs font-secondary tracking-[0.24px]
+                        sb:text-sm sb:tracking-[0.28px]` }>
+                        Showed
+                        <span className = { S.semibold }>
+                            {` ${paginationProductsState?.length} `}
+                        </span>
+                        from <span className = { S.semibold }>{filteredProductsState?.length || '00'}</span> products
+                    </p>
+                    <Pagination
+                        array = { filteredProductsState }
+                        className = 'w-full'
+                        limit = { limitForShowingPaginationState }
+                        setValue = { setStepPaginationState }
+                        value = { stepPaginationState }
+                        onClickDesktopNumber = { () => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }) }
+                    />
                 </div>
             </div>
         </div>
