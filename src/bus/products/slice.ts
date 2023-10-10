@@ -11,15 +11,20 @@ import * as types from './types';
 import * as reducers from './reducers';
 // MarkerGen import extraReducers
 
-const initialState: types.ProductsState = {
+export const initialState: types.ProductsState = {
     ...commonInitialState,
     isLoadings: {
-        products:       false,
-        create:         false,
-        incrementViews: false,
-        edit:           false,
-        delete:         false,
+        fetchProducts:      false,
+        fetchProductsAtEnd: false,
+        create:             false,
+        incrementViews:     false,
+        edit:               false,
+        delete:             false,
     },
+    limit:          8,
+    page:           1,
+    totalShowed:    0,
+    total:          0,
     products:       null,
     currentProduct: null,
 };

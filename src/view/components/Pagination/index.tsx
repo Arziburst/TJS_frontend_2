@@ -26,13 +26,15 @@ interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDiv
     array: null | [] | ExtendedProduct[];
     value: number;
     limit: number;
-    setValue: React.Dispatch<React.SetStateAction<number>>;
+    total: number;
+    setValue: (value: number) => void;
     onClickDesktopNumber?: () => void;
 }
 
 export const Pagination: FC<PropTypes> = ({
     value,
     limit,
+    total,
     setValue,
     className,
     array,
@@ -42,7 +44,7 @@ export const Pagination: FC<PropTypes> = ({
     const [ width ] = useWindowWidth();
 
     const maxStep: number = Array.isArray(array) ? calculateTotalPages({
-        array,
+        total,
         limit,
     }) : 0;
 
@@ -61,16 +63,17 @@ export const Pagination: FC<PropTypes> = ({
             className = { cn('flex justify-between', className) }>
             <div>
                 <Button
+                    className = { S.arrow }
                     disabled = { value <= 1 }
                     variant = 'default'
-                    onClick = { () => setValue((prev) => prev - 1) }>
+                    onClick = { () => setValue(value - 1) }>
                     <Icons.Arrow className = 'rotate-180' />
                 </Button>
             </div>
             {array && width > SCREENS_NUMBER.SB && (
                 <div className = 'flex gap-3'>
                     {createPageList({
-                        array,
+                        total,
                         currentStep: value,
                         limit,
                     }).map((numberStep, index) => (
@@ -99,9 +102,10 @@ export const Pagination: FC<PropTypes> = ({
             )}
             <div>
                 <Button
+                    className = { S.arrow }
                     disabled = { value >= maxStep }
                     variant = 'default'
-                    onClick = { () => setValue((prev) => prev + 1) }>
+                    onClick = { () => setValue(value + 1) }>
                     <Icons.Arrow />
                 </Button>
             </div>

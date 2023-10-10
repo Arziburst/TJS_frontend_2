@@ -21,6 +21,7 @@ import { BOOK, ParamsLowerCase } from '@/view/routes/book';
 import { useTogglesRedux } from '@/bus/client/toggles';
 import { useProfile } from '@/bus/profile';
 import { useProducts } from '@/bus/products';
+import { initialState } from '@/bus/products/slice';
 
 // Containers
 import { MoveUnderline, NotData } from '@/view/containers';
@@ -39,16 +40,12 @@ import {
     ARRAY_FILTERS_BY_PRICE,
     ENUM_FILTERS_BY_PRICE,
     getValueOfSelectFilterByPrice,
-    sortByPrice,
 } from './static';
-import { pagination } from '@/view/components/Pagination/static';
 
 // Styles
 import SCardItem from '@/view/components/CardItem/styles.module.css';
 
 // Types
-import { ExtendedProduct } from '@/bus/products/types';
-
 type PropTypes = {
     /* type props here */
 }
@@ -66,28 +63,29 @@ const Shop: FC<PropTypes> = () => {
 
     const [ width ] = useWindowWidth();
 
-    // States
-    const [
-        limitForShowingPaginationState,
-        setLimitForShowingPaginationState,
-    ] = useState(20);
-    const [ stepPaginationState, setStepPaginationState ] = useState(1);
+    // Hooks of Bus
+    const { togglesRedux: { isLoggedIn, isFilterByLowToHigh }, setToggleAction } = useTogglesRedux();
+    const { profile: { profile }} = useProfile();
+    const {
+        products: {
+            products,
+            limit,
+            total,
+            totalShowed,
+            page,
+            isLoadings,
+        },
+        setPageOfProducts,
+        fetchProductsByPagination,
+        fetchProductsByPaginationAtEnd,
+    } = useProducts();
 
-    const [ isFirstVisitState, setIsFirstVisitState ] = useState(true);
+    // States
+    const [ localPageState, setLocalPageState ] = useState(initialState.page);
     const [
         filterByCategoryState,
         setFilterByCategoryState,
     ] = useState<string>(category || ENUM_CATEGORIES.ALL); // for Select category
-    const [
-        filteredProductsState,
-        setFilteredProductsState,
-    ] = useState<null | ExtendedProduct[]>(null);
-    const [ paginationProductsState, setPaginationProductsState ] = useState<null | ExtendedProduct[]>(null);
-
-    // Hooks of Bus
-    const { togglesRedux: { isLoggedIn, isFilterByLowToHigh }, setToggleAction } = useTogglesRedux();
-    const { profile: { profile }} = useProfile();
-    const { products: { products, isLoadings }, fetchProducts } = useProducts();
 
     // Handlers
     const onClickEditItem = (id: string) => {
@@ -109,69 +107,39 @@ const Shop: FC<PropTypes> = () => {
     };
 
     const onClickShowMoreHandler = () => {
-        setLimitForShowingPaginationState((prev) => prev + prev);
+        const rightPage = localPageState <= 1 ? 2 : localPageState + 1;
+        setLocalPageState(rightPage);
+        fetchProductsByPaginationAtEnd({
+            limit:       limit,
+            type:        category || ENUM_CATEGORIES.ALL,
+            page:        rightPage,
+            isLowToHigh: isFilterByLowToHigh,
+        });
     };
 
     // init
     useEffect(() => {
-        fetchProducts();
-
-        return () => {
-            setToggleAction({
-                type:  'isFilterByLowToHigh',
-                value: null,
-            });
-        };
-    }, [ category ]);
-
-    // step 1
-    useEffect(() => {
         setFilterByCategoryState(category || ENUM_CATEGORIES.ALL);
-    }, [ category ]);
+        fetchProductsByPagination({
+            limit,
+            type:        category || ENUM_CATEGORIES.ALL,
+            page,
+            isLowToHigh: isFilterByLowToHigh,
+        });
+    }, [ category, limit, page, isFilterByLowToHigh ]);
 
-    // Select // navigate another category
+    // step 1 // Select // navigate another category
     useEffect(() => {
-        if (!isFirstVisitState) {
-            if (filterByCategoryState && filterByCategoryState !== ENUM_CATEGORIES.ALL) {
-                navigate(`${BOOK.SHOP}/${filterByCategoryState}`);
-            } else {
-                navigate(`${BOOK.SHOP}`);
-            }
+        if (filterByCategoryState && filterByCategoryState !== ENUM_CATEGORIES.ALL) {
+            navigate(`${BOOK.SHOP}/${filterByCategoryState}`);
         } else {
-            setIsFirstVisitState(false);
+            navigate(`${BOOK.SHOP}`);
         }
     }, [ filterByCategoryState ]);
 
-    // 1 lvl filter
     useEffect(() => {
-        if (products && category) {
-            const filletedProducts = products.filter((product) => product.type === category);
-
-            setFilteredProductsState(sortByPrice({
-                array: filletedProducts,
-                isFilterByLowToHigh,
-            }));
-        } else {
-            setFilteredProductsState(sortByPrice({
-                array: products,
-                isFilterByLowToHigh,
-            }));
-        }
-    }, [ products, category, isFilterByLowToHigh, stepPaginationState ]);
-
-    useEffect(() => {
-        const result = pagination({
-            array:       filteredProductsState,
-            currentStep: stepPaginationState,
-            limit:       limitForShowingPaginationState,
-        });
-
-        setPaginationProductsState(result);
-
-        if (result && result.length < 1) {
-            setStepPaginationState((prev) => prev - 1);
-        }
-    }, [ filteredProductsState, stepPaginationState, limitForShowingPaginationState ]);
+        setLocalPageState(initialState.page);
+    }, [ category, isFilterByLowToHigh ]);
 
     return (
         <div className = { `flex flex-col ${S.common_gap} 
@@ -261,7 +229,7 @@ const Shop: FC<PropTypes> = () => {
                     className = { `flex flex-wrap gap-[14px] justify-center
                     sb:gap-[20px]` }
                     count = { profile?.role === 'admin' ? 2 : 1 }
-                    isLoading = { isLoadings.products }>
+                    isLoading = { isLoadings.fetchProducts }>
                     {isLoggedIn && profile?.role === 'admin' && (
                         <div className = { SCardItem.images_container }>
                             <NavLink to = { BOOK.ADD_ITEM }>
@@ -274,7 +242,7 @@ const Shop: FC<PropTypes> = () => {
 
                         </div>
                     )}
-                    {paginationProductsState?.map((item) => (
+                    {products?.map((item) => (
                         <CardItem
                             firstImage = {{
                                 src: item.images[ 0 ],
@@ -293,30 +261,32 @@ const Shop: FC<PropTypes> = () => {
                 </NotData>
                 <div className = { `flex flex-col gap-4 items-center
                     ${S.sb_common_gap}` }>
-                    {paginationProductsState && filteredProductsState
-                        && paginationProductsState < filteredProductsState
-                            && (
-                                <Button
-                                    className = 'capitalize max-w-[540px]'
-                                    onClick = { onClickShowMoreHandler }>
-                                    show more
-                                </Button>
-                            )
-                    }
+                    {totalShowed < total && (
+                        <Button
+                            className = 'capitalize max-w-[540px]'
+                            onClick = { onClickShowMoreHandler }>
+                            show more
+                        </Button>
+                    )}
                     <p className = { `text-xs font-secondary tracking-[0.24px]
                         sb:text-sm sb:tracking-[0.28px]` }>
                         Showed
                         <span className = { S.semibold }>
-                            {` ${paginationProductsState?.length} `}
+                            {` ${totalShowed} `}
                         </span>
-                        from <span className = { S.semibold }>{filteredProductsState?.length || '00'}</span> products
+                        from
+                        <span className = { S.semibold }>
+                            {' ' + total + ' '}
+                        </span>
+                        products
                     </p>
                     <Pagination
-                        array = { filteredProductsState }
+                        array = { products }
                         className = 'w-full'
-                        limit = { limitForShowingPaginationState }
-                        setValue = { setStepPaginationState }
-                        value = { stepPaginationState }
+                        limit = { limit }
+                        setValue = { (value: number) => setPageOfProducts(value) }
+                        total = { total }
+                        value = { page }
                         onClickDesktopNumber = { () => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }) }
                     />
                 </div>

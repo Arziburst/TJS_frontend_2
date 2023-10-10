@@ -7,7 +7,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 import { LOCAL_STORAGE } from '../../../init';
 
 // API
-import { productsFetcher } from '../../../api';
+import { productsByPaginationFetcher } from '../../../api';
 
 // Slice
 import { productsActions, sliceName } from '../slice';
@@ -20,16 +20,16 @@ import * as commonTypes from '../../commonTypes';
 import * as types from './types';
 
 // Action
-export const fetchProductsAction = createAction(`${sliceName}/FETCH_PRODUCTS_ASYNC`);
+export const fetchProductsByPaginationAction = createAction<types.FetchProductsByPaginationRequest>(`${sliceName}/FETCH_PRODUCTS_BY_PAGINATION_ASYNC`);
 
 // Saga
-const fetchProducts = (
-    callAction: ReturnType<typeof fetchProductsAction>,
-) => makeRequest<types.FetchProductsResponse, commonTypes.Error>({
+const fetchProductsByPagination = (
+    callAction: ReturnType<typeof fetchProductsByPaginationAction>,
+) => makeRequest<types.FetchProductsByPaginationResponse, commonTypes.Error>({
     callAction,
     fetchOptions: {
         successStatusCode: 200,
-        fetch:             productsFetcher,
+        fetch:             () => productsByPaginationFetcher(callAction.payload),
     },
     tryStart: function* () {
         yield put(productsActions.setIsLoadingOfProducts({
@@ -38,9 +38,11 @@ const fetchProducts = (
         }));
     },
     success: function* (result) {
-        yield put(productsActions.setProducts(result));
+        yield put(productsActions.setProducts(result.data));
+        yield put(productsActions.setTotalOfProducts(result.total));
+        yield put(productsActions.setTotalShowedOfProducts(result.totalShowed));
 
-        const productsIds = result.map(({ _id }) => _id);
+        const productsIds = result.data.map(({ _id }) => _id);
         const cart: Array<string> = ls.get(LOCAL_STORAGE.CART) || [];
 
         // Checkind cart
@@ -66,6 +68,6 @@ const fetchProducts = (
 });
 
 // Watcher
-export function* watchFetchProducts(): SagaIterator {
-    yield takeLatest(fetchProductsAction.type, fetchProducts);
+export function* watchFetchProductsByPagination(): SagaIterator {
+    yield takeLatest(fetchProductsByPaginationAction.type, fetchProductsByPagination);
 }

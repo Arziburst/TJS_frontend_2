@@ -20,10 +20,13 @@ export const useProducts = () => {
 
     return {
         products,
-        setProducts:       (payload: types.Products) => dispatch(productsActions.setProducts(payload)),
-        setProduct:        (payload: types.ExtendedProduct) => dispatch(productsActions.setProduct(payload)),
-        setCurrentProduct: (payload: types.ExtendedProduct) => dispatch(productsActions.setCurrentProduct(payload)),
-        setCreatedProduct: (
+        setProducts:        (payload: types.Products) => dispatch(productsActions.setProducts(payload)),
+        setProduct:         (payload: types.ExtendedProduct) => dispatch(productsActions.setProduct(payload)),
+        setLimitOfProducts: (payload: types.ProductsState['limit']) => dispatch(productsActions.setLimitOfProducts(payload)),
+        setTotalOfProducts: (payload: types.ProductsState['total']) => dispatch(productsActions.setTotalOfProducts(payload)),
+        setPageOfProducts:  (payload: types.ProductsState['page']) => dispatch(productsActions.setPageOfProducts(payload)),
+        setCurrentProduct:  (payload: types.ExtendedProduct) => dispatch(productsActions.setCurrentProduct(payload)),
+        setCreatedProduct:  (
             payload: types.ExtendedProduct,
         ) => dispatch(productsActions.setProduct(payload)),
         setEditedProduct: (
@@ -33,6 +36,7 @@ export const useProducts = () => {
             payload: types.SetIsLoadingOfProductsAction,
         ) => dispatch(productsActions.setIsLoadingOfProducts(payload)),
         setErrorOfProducts: (payload: commonTypes.Error) => dispatch(productsActions.setErrorOfProducts(payload)), // todo need???
+        resetProducts:      () => dispatch(productsActions.resetProducts()),
         ...productsSagas,
     };
 };

@@ -70,7 +70,6 @@ export function* makeRequest<SuccessData, ErrorData = {}>(options: OptionsType<S
         }
 
         const result: { data: SuccessData } = yield call(() => customFetch(fetchOptions));
-
         if (success) {
             yield success(result.data);
         }
