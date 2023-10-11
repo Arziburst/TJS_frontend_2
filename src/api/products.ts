@@ -4,6 +4,15 @@ import { API, HEADERS } from './config';
 // Types
 import * as types from '../bus/products/saga/types';
 
+export const productsByPaginationFetcher = (payload: types.FetchProductsByPaginationRequest) => {
+    return fetch(API.PRODUCTS.PRODUCTS_BY_PAGINATION(payload), {
+        method:  'GET',
+        headers: {
+            ...HEADERS,
+        },
+    });
+};
+
 export const productsFetcher = () => {
     return fetch(API.PRODUCTS.ROOT, {
         method:  'GET',

@@ -3,11 +3,37 @@ import { setIsLoading } from '../common';
 
 // Types
 import * as commonTypes from '../commonTypes';
+import { initialState } from './slice';
 import * as types from './types';
 
 export const setProducts: types.BaseContact<types.Products> = (state, action) => ({
     ...state,
     products: action.payload,
+});
+
+export const setProductsAtEnd: types.BaseContact<types.Products> = (state, action) => ({
+    ...state,
+    products: state.products ? [ ...state.products, ...action.payload ] : action.payload,
+});
+
+export const setLimitOfProducts: types.BaseContact<types.ProductsState['limit']> = (state, action) => ({
+    ...state,
+    limit: action.payload,
+});
+
+export const setTotalOfProducts: types.BaseContact<types.ProductsState['total']> = (state, action) => ({
+    ...state,
+    total: action.payload,
+});
+
+export const setTotalShowedOfProducts: types.BaseContact<types.ProductsState['totalShowed']> = (state, action) => ({
+    ...state,
+    totalShowed: action.payload,
+});
+
+export const setPageOfProducts: types.BaseContact<types.ProductsState['page']> = (state, action) => ({
+    ...state,
+    page: action.payload,
 });
 
 export const setProduct: types.BaseContact<types.ExtendedProduct> = (state, action) => {
@@ -62,5 +88,6 @@ export const setErrorOfProducts: types.BaseContact<commonTypes.Error> = (state, 
     error: action.payload,
 });
 
-
 export const setIsLoadingOfProducts: types.SetIsLoadingOfProductsContact = setIsLoading;
+
+export const resetProducts: types.BaseContact<void> = () => initialState;

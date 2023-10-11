@@ -2,7 +2,7 @@
 import { lazy } from 'react';
 
 // MarkerGen pages
-export const Item = lazy(() => import(/* webpackChunkName: "Item" */ './Item'));
+export const Product = lazy(() => import(/* webpackChunkName: "Product" */ './Product'));
 export const Management = lazy(() => import(/* webpackChunkName: "Management" */ './Management'));
 export const SignInAndUp = lazy(() => import(/* webpackChunkName: "SignInAndUp" */ './SignInAndUp'));
 export const About = lazy(() => import(/* webpackChunkName: "About" */ './About'));

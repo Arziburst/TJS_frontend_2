@@ -5,7 +5,7 @@ export const ellipsis = '...';
 import { ExtendedProduct } from '@/bus/products/types';
 
 type CalculateTotalPages = {
-    array: [] | ExtendedProduct[];
+    total: number;
     limit: number;
 }
 
@@ -16,13 +16,13 @@ type Pagination = {
 }
 
 type DetermineVisiblePages = {
-    array: [] | ExtendedProduct[];
+    total: number;
     limit: number;
     currentStep: number
 }
 
 type CreatePageList = {
-    array: [] | ExtendedProduct[];
+    total: number;
     limit: number;
     currentStep: number
 }
@@ -31,8 +31,8 @@ type CreatePageList = {
 const stepsBetweenCurrentStep = 2;
 
 // Functions
-export const calculateTotalPages = ({ array, limit }: CalculateTotalPages) => {
-    return Math.ceil(array.length / limit);
+export const calculateTotalPages = ({ total, limit }: CalculateTotalPages) => {
+    return Math.ceil(total / limit);
 };
 
 export const pagination = ({
@@ -50,19 +50,19 @@ export const pagination = ({
     return array;
 };
 
-const determineVisiblePages = ({ array, limit, currentStep }: DetermineVisiblePages) => {
+const determineVisiblePages = ({ total, limit, currentStep }: DetermineVisiblePages) => {
     const startPage = Math.max(1, currentStep - stepsBetweenCurrentStep);
-    const endPage = Math.min(calculateTotalPages({ array, limit }), currentStep + stepsBetweenCurrentStep);
+    const endPage = Math.min(calculateTotalPages({ total, limit }), currentStep + stepsBetweenCurrentStep);
 
     return { startPage, endPage };
 };
 
-export const createPageList = ({ array, limit, currentStep }: CreatePageList) => {
-    const visiblePages = determineVisiblePages({ array, limit, currentStep });
+export const createPageList = ({ total, limit, currentStep }: CreatePageList) => {
+    const visiblePages = determineVisiblePages({ total, limit, currentStep });
     const pageList = [];
     const doubleStepsBetweenCurrentStep = stepsBetweenCurrentStep + stepsBetweenCurrentStep;
     const totalPages = calculateTotalPages({
-        array,
+        total,
         limit,
     });
 

@@ -24,10 +24,14 @@ export type ExtendedProduct = Product & {
 export type Products = ExtendedProduct[];
 
 // State
-export type IsLoadings = 'products' | 'incrementViews' | 'edit' | 'delete' | 'create';
+export type IsLoadings = 'fetchProducts' | 'fetchProductsAtEnd' | 'incrementViews' | 'edit' | 'delete' | 'create';
 export interface ProductsState extends commonTypes.State<Record<IsLoadings, commonTypes.IsLoading>> {
     products: null | Products;
     currentProduct: null | ExtendedProduct;
+    total: number;
+    totalShowed: number;
+    limit: number;
+    page: number;
 }
 
 // Actions

@@ -7,6 +7,7 @@ import { BOOK, PARAMS } from './book';
 
 // Pages
 import * as Pages from '../pages';
+import { ContainerShop } from '../pages/Shop/router';
 
 export const Private: FC = () => {
     return (
@@ -16,13 +17,17 @@ export const Private: FC = () => {
                 path = { BOOK.ROOT }
             />
             <Route
-                element = { <Pages.Shop /> }
-                path = { BOOK.SHOP }
-            />
-            <Route
-                element = { <Pages.Shop /> }
-                path = { BOOK.SHOP + PARAMS.CATEGORY }
-            />
+                element = { <ContainerShop /> }
+                path = { BOOK.SHOP }>
+                <Route
+                    element = { <Pages.Shop /> }
+                    path = { BOOK.SHOP }
+                />
+                <Route
+                    element = { <Pages.Shop /> }
+                    path = { BOOK.SHOP + PARAMS.CATEGORY }
+                />
+            </Route>
             <Route
                 element = { <Pages.Cart /> }
                 path = { BOOK.CART }
@@ -41,11 +46,11 @@ export const Private: FC = () => {
             />
             <Route
                 element = { <Pages.Management /> }
-                path = { BOOK.ITEM + PARAMS.ID + BOOK.MANAGEMENT }
+                path = { BOOK.PRODUCT + PARAMS.ID + BOOK.MANAGEMENT }
             />
             <Route
-                element = { <Pages.Item /> }
-                path = { BOOK.ITEM }
+                element = { <Pages.Product /> }
+                path = { BOOK.PRODUCT + PARAMS.ID }
             />
             {/* MarkerGen route */}
             <Route

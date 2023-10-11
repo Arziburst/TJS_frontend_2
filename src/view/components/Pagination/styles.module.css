@@ -1,3 +1,7 @@
 .text {
     @apply text-2xl
 }
+
+.arrow {
+    @apply p-2
+}

@@ -6,6 +6,22 @@ import * as types from '../types';
 // Products
 export type FetchProductsResponse = types.Products;
 
+// Products by pagination
+export interface FetchProductsByPaginationRequest extends Pick<types.ExtendedProduct, 'type'> {
+    limit: number;
+    page: number;
+    isLowToHigh: null | boolean;
+}
+export type FetchProductsByPaginationResponse = {
+    data: types.Products;
+    total: number;
+    totalShowed: number;
+};
+
+// Products by pagination at end
+export type FetchProductsByPaginationAtEndRequest = FetchProductsByPaginationRequest
+export type FetchProductsByPaginationAtEndResponse = FetchProductsByPaginationResponse
+
 // Create product
 export interface FetchCreateNewProductRequest extends types.Product, commonTypes.ResetForm {}
 export type FetchCreateNewProductResponse = types.ExtendedProduct;

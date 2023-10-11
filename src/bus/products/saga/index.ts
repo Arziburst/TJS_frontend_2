@@ -6,6 +6,8 @@ import { all, call } from 'redux-saga/effects';
 import { useDispatch } from '../../../tools/hooks';
 
 // MarkerGen Watchers & Actions
+import { fetchProductsByPaginationAction, watchFetchProductsByPagination } from './fetchProductsByPagination';
+import { fetchProductsByPaginationAtEndAction, watchFetchProductsByPaginationAtEnd } from './fetchProductsByPaginationAtEnd';
 import { fetchProductsAction, watchFetchProducts } from './fetchProducts';
 import { fetchCreateNewProductAction, watchFetchCreateNewProduct } from './fetchCreateNewProduct';
 import { fetchDeleteProductAction, watchFetchDeleteProduct } from './fetchDeleteProduct';
@@ -19,6 +21,12 @@ export const useProductsSaga = () => {
     const dispatch = useDispatch();
 
     return {
+        fetchProductsByPagination: (
+            payload: types.FetchProductsByPaginationRequest,
+        ) => dispatch(fetchProductsByPaginationAction(payload)),
+        fetchProductsByPaginationAtEnd: (
+            payload: types.FetchProductsByPaginationAtEndRequest,
+        ) => dispatch(fetchProductsByPaginationAtEndAction(payload)),
         fetchProducts:         () => dispatch(fetchProductsAction()),
         fetchCreateNewProduct: (payload: types.FetchCreateNewProductRequest) => dispatch(
             fetchCreateNewProductAction(payload),
@@ -36,6 +44,8 @@ export const useProductsSaga = () => {
 export function* watchProducts(): SagaIterator {
     yield all([
         // MarkerGen watchers
+        call(watchFetchProductsByPagination),
+        call(watchFetchProductsByPaginationAtEnd),
         call(watchFetchProducts),
         call(watchFetchCreateNewProduct),
         call(watchFetchDeleteProduct),
