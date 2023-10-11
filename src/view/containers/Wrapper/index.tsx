@@ -1,5 +1,5 @@
 // Core
-import React, { FC, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 
 // Tools
 import { cn } from '@/tools/lib/utils';
@@ -16,7 +16,7 @@ export const Wrapper = forwardRef<HTMLDivElement, any>(({
         <div
             ref = { ref }
             { ...props }
-            className = { cn('px-[10px] sm:px-[20px] md:px-[40px]', className) }>
+            className = { cn('px-[16px] sm:px-[32px] md:px-[40px] sb:px-[56px]', className) }>
             {children}
         </div>
     );

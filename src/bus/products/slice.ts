@@ -21,7 +21,7 @@ export const initialState: types.ProductsState = {
         edit:               false,
         delete:             false,
     },
-    limit:          8,
+    limit:          20,
     page:           1,
     totalShowed:    0,
     total:          0,

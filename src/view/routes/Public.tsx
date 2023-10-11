@@ -45,8 +45,8 @@ export const Public: FC = () => {
                 path = { BOOK.SIGN_IN_AND_UP }
             />
             <Route
-                element = { <Pages.Item /> }
-                path = { BOOK.ITEM }
+                element = { <Pages.Product /> }
+                path = { BOOK.PRODUCT + PARAMS.ID }
             />
             {/* MarkerGen route */}
             <Route

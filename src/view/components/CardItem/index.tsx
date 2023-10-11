@@ -34,7 +34,7 @@ export const CardItem: FC<PropTypes> = ({
 }) => {
     return (
         <div
-            className = { cn(`${S.root} flex flex-col gap-1 relative
+            className = { cn(`${S.root} flex flex-col gap-1 relative cursor-pointer
                 sb:gap-3`, className) }
             { ...props }>
 

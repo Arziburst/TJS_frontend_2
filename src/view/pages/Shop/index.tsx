@@ -33,7 +33,7 @@ import { Label } from './Label';
 import { NavItemText } from '@/view/components/Nav/NavItem/NavItemText';
 
 // Elements
-import { Button, NavLink } from '@/view/elements';
+import { Button, Link, NavLink } from '@/view/elements';
 
 // Static
 import {
@@ -88,11 +88,11 @@ const Shop: FC<PropTypes> = () => {
     ] = useState<string>(category || ENUM_CATEGORIES.ALL); // for Select category
 
     // Handlers
-    const onClickEditItem = (id: string) => {
-        navigate(`${BOOK.ITEM}/${id}${BOOK.MANAGEMENT}`);
+    const onClickEditItemHandler = (id: string) => {
+        navigate(`${BOOK.PRODUCT}/${id}${BOOK.MANAGEMENT}`);
     };
 
-    const onClickItemsOfSelectFilterByPrice = (item: string) => {
+    const onClickItemsOfSelectFilterByPriceHandler = (item: string) => {
         if (item === ENUM_FILTERS_BY_PRICE.LOW_TO_HIGH) {
             setToggleAction({
                 type:  'isFilterByLowToHigh',
@@ -146,25 +146,32 @@ const Shop: FC<PropTypes> = () => {
             sb:flex-row sb:gap-20` }>
             <div>
                 {width < SCREENS_NUMBER.SB ? (
-                    <div className = { `flex gap-4 
-                        [&>*]:w-1/2
-                        max-[360px]:flex-col 
-                        max-[360px]:[&>*]:w-full` }>
-                        <Select
-                            items = { [ ENUM_CATEGORIES.ALL, ...CATEGORIES_ITEMS ] }
-                            label = 'Shop by'
-                            setValue = { setFilterByCategoryState }
-                            showValue = { filterByCategoryState }
-                            value = { filterByCategoryState }
-                        />
-                        <Select
-                            items = { ARRAY_FILTERS_BY_PRICE }
-                            label = 'Filter by'
-                            placeholder = 'select filter'
-                            setValue = { onClickItemsOfSelectFilterByPrice }
-                            showValue = { getValueOfSelectFilterByPrice(isFilterByLowToHigh) }
-                            value = { getValueOfSelectFilterByPrice(isFilterByLowToHigh) }
-                        />
+                    <div className = 'flex flex-col gap-12'>
+                        {category && (
+                            <h2 className = 'text-[40px] uppercase text-center'>
+                                {category}
+                            </h2>
+                        )}
+                        <div className = { `flex gap-4
+                            [&>*]:w-1/2
+                            max-[360px]:flex-col 
+                            max-[360px]:[&>*]:w-full` }>
+                            <Select
+                                items = { [ ENUM_CATEGORIES.ALL, ...CATEGORIES_ITEMS ] }
+                                label = 'Shop by'
+                                setValue = { setFilterByCategoryState }
+                                showValue = { filterByCategoryState }
+                                value = { filterByCategoryState }
+                            />
+                            <Select
+                                items = { ARRAY_FILTERS_BY_PRICE }
+                                label = 'Filter by'
+                                placeholder = 'select filter'
+                                setValue = { onClickItemsOfSelectFilterByPriceHandler }
+                                showValue = { getValueOfSelectFilterByPrice(isFilterByLowToHigh) }
+                                value = { getValueOfSelectFilterByPrice(isFilterByLowToHigh) }
+                            />
+                        </div>
                     </div>
                 ) : (
                     <div className = 'flex flex-col gap-8'>
@@ -243,20 +250,25 @@ const Shop: FC<PropTypes> = () => {
                         </div>
                     )}
                     {products?.map((item) => (
-                        <CardItem
-                            firstImage = {{
-                                src: item.images[ 0 ],
-                                alt: 'First image of item',
-                            }}
-                            key = { item._id }
-                            name = { item.title }
-                            price = { item.price }
-                            secondImage = {{
-                                src: item.images[ 1 ],
-                                alt: 'Second image of item',
-                            }}
-                            onClickEditItem = { () => onClickEditItem(item._id) }
-                        />
+                        <Link
+                            to = { `${BOOK.PRODUCT}/${item._id}` }
+                            variant = 'none'>
+                            <CardItem
+                                firstImage = {{
+                                    src: item.images[ 0 ],
+                                    alt: 'First image of item',
+                                }}
+                                key = { item._id }
+                                name = { item.title }
+                                price = { item.price }
+                                secondImage = {{
+                                    src: item.images[ 1 ],
+                                    alt: 'Second image of item',
+                                }}
+                                // onClick = { () => onClickItemHandler(item._id) }
+                                onClickEditItem = { () => onClickEditItemHandler(item._id) }
+                            />
+                        </Link>
                     ))}
                 </NotData>
                 <div className = { `flex flex-col gap-4 items-center

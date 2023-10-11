@@ -14,6 +14,7 @@ const linkVariants = cva(
                 default: `hover:opacity-70
                     focus-visible:opacity-70
                     active:opacity-100`,
+                none: '',
             },
         },
         defaultVariants: {
