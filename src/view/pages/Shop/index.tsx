@@ -251,6 +251,7 @@ const Shop: FC<PropTypes> = () => {
                     )}
                     {products?.map((item) => (
                         <Link
+                            key = { item._id }
                             to = { `${BOOK.PRODUCT}/${item._id}` }
                             variant = 'none'>
                             <CardItem
@@ -258,7 +259,6 @@ const Shop: FC<PropTypes> = () => {
                                     src: item.images[ 0 ],
                                     alt: 'First image of item',
                                 }}
-                                key = { item._id }
                                 name = { item.title }
                                 price = { item.price }
                                 secondImage = {{

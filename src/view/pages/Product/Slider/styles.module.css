@@ -1,0 +1,15 @@
+.root {
+  min-height: 100px;
+}
+
+.root .swiper-slide {
+}
+
+.root .swiper-slide img {
+}
+
+.root .swiper-pagination {
+    top: auto;
+    background-color: red !important;
+    bottom: 0;
+}

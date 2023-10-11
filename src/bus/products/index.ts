@@ -25,8 +25,10 @@ export const useProducts = () => {
         setLimitOfProducts: (payload: types.ProductsState['limit']) => dispatch(productsActions.setLimitOfProducts(payload)),
         setTotalOfProducts: (payload: types.ProductsState['total']) => dispatch(productsActions.setTotalOfProducts(payload)),
         setPageOfProducts:  (payload: types.ProductsState['page']) => dispatch(productsActions.setPageOfProducts(payload)),
-        setCurrentProduct:  (payload: types.ExtendedProduct) => dispatch(productsActions.setCurrentProduct(payload)),
-        setCreatedProduct:  (
+        setCurrentProduct:  (
+            payload: types.SetCurrentProductAction,
+        ) => dispatch(productsActions.setCurrentProduct(payload)),
+        setCreatedProduct: (
             payload: types.ExtendedProduct,
         ) => dispatch(productsActions.setProduct(payload)),
         setEditedProduct: (

@@ -13,7 +13,7 @@ import '@/assets/images/test.png'; // todo remove when finish
 import { Routes } from './routes';
 
 // Tools
-import { postcssViewportHeightCorrection } from '@/tools/utils';
+import { postcssViewportHeightCorrection, setValueToCSSVariable } from '@/tools/utils';
 
 // Bus
 import { useTogglesRedux } from '../bus/client/toggles';
@@ -57,6 +57,13 @@ export const App: FC = () => {
         window.addEventListener('online', setOnlineStatusHandler);
         window.addEventListener('offline', setOnlineStatusHandler);
     }, []);
+
+    useEffect(() => {
+        paddingLeftWrapper && setValueToCSSVariable(
+            CSS_VARIABLES.WRAPPER_LEFT_PADDING,
+            paddingLeftWrapper,
+        );
+    }, [ paddingLeftWrapper ]);
 
     return (
         <div>

@@ -24,7 +24,7 @@ export type ExtendedProduct = Product & {
 export type Products = ExtendedProduct[];
 
 // State
-export type IsLoadings = 'fetchProducts' | 'fetchProductsAtEnd' | 'incrementViews' | 'edit' | 'delete' | 'create';
+export type IsLoadings = 'fetchProduct' | 'fetchProducts' | 'fetchProductsAtEnd' | 'incrementViews' | 'edit' | 'delete' | 'create';
 export interface ProductsState extends commonTypes.State<Record<IsLoadings, commonTypes.IsLoading>> {
     products: null | Products;
     currentProduct: null | ExtendedProduct;
@@ -36,6 +36,7 @@ export interface ProductsState extends commonTypes.State<Record<IsLoadings, comm
 
 // Actions
 export type SetIsLoadingOfProductsAction = commonTypes.SetIsLoading<IsLoadings>
+export type SetCurrentProductAction = ProductsState['currentProduct']
 
 // Contracts
 export type BaseContact<T = any> = CaseReducer<ProductsState, PayloadAction<T>>;

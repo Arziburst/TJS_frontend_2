@@ -13,6 +13,15 @@ export const productsByPaginationFetcher = (payload: types.FetchProductsByPagina
     });
 };
 
+export const productFetcher = (_id: types.FetchProductRequest) => {
+    return fetch(API.PRODUCTS.PRODUCT(_id), {
+        method:  'GET',
+        headers: {
+            ...HEADERS,
+        },
+    });
+};
+
 export const productsFetcher = () => {
     return fetch(API.PRODUCTS.ROOT, {
         method:  'GET',

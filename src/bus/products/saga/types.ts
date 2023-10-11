@@ -3,6 +3,10 @@ import { NavigateFunction } from 'react-router';
 import * as commonTypes from '@/bus/commonTypes';
 import * as types from '../types';
 
+// Product
+export type FetchProductRequest = types.ExtendedProduct['_id'];
+export type FetchProductResponse = types.ExtendedProduct;
+
 // Products
 export type FetchProductsResponse = types.Products;
 

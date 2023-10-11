@@ -14,6 +14,7 @@ import * as reducers from './reducers';
 export const initialState: types.ProductsState = {
     ...commonInitialState,
     isLoadings: {
+        fetchProduct:       false,
         fetchProducts:      false,
         fetchProductsAtEnd: false,
         create:             false,
