@@ -1,5 +1,5 @@
 .root {
-  min-height: 100px;
+  	min-height: 100px;
 }
 
 .root .swiper-slide {
@@ -8,8 +8,18 @@
 .root .swiper-slide img {
 }
 
-.root .swiper-pagination {
-    top: auto;
-    background-color: red !important;
-    bottom: 0;
+.button {
+	position: absolute;
+	top: 50%;
+	z-index: 1;
+	width: auto;
+}
+
+.arrow {
+	height: clamp(50px, 6vh, 100px);
+	aspect-ratio: 1;
+}
+
+.arrow, .arrow path {
+	fill: var(--quaternary);
 }

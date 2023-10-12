@@ -1,6 +1,8 @@
 // Core
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useRef } from 'react';
 
+// Init
+import { CSS_VARIABLES } from '@/init';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -10,13 +12,14 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-import S from './styles.module.css';
-
 // import required modules
 import { Navigation, Pagination } from 'swiper/modules';
 import { useProducts } from '@/bus/products';
-import { Image } from '@/view/elements';
-import { CSS_VARIABLES } from '@/init';
+import { Button, Image } from '@/view/elements';
+
+// Styles
+import S from './styles.module.css';
+import { Icons } from '@/view/components';
 
 // Types
 type PropTypes = {
@@ -24,25 +27,24 @@ type PropTypes = {
 }
 
 export const Slider: FC<PropTypes> = () => {
+    const idPrevButton = 'prevButton-swiper';
+    const idNextButton = 'nextButton-swiper';
+
     const ref = useRef<null | HTMLDivElement>(null);
     const refSwiper = useRef<null | any>(null);
 
     const { products: { currentProduct }} = useProducts();
-
-    useEffect(() => {
-        console.log('refSwiper.current >>> ', refSwiper.current.style);
-    }, [ refSwiper ]);
 
     return (
         <div
             className = 'relative'
             ref = { ref }>
             <Swiper
-                navigation
                 pagination
                 roundLengths
                 className = { S.root }
                 modules = { [ Navigation, Pagination ] }
+                navigation = {{ prevEl: `#${idPrevButton}`, nextEl: `#${idNextButton}` }}
                 ref = { refSwiper }
                 slidesPerView = { 1 }
                 style = {{ width: `calc(100vw - var(${CSS_VARIABLES.WRAPPER_LEFT_PADDING}) - var(${CSS_VARIABLES.WRAPPER_LEFT_PADDING}))` }}>
@@ -57,6 +59,18 @@ export const Slider: FC<PropTypes> = () => {
                     </SwiperSlide>
                 ))}
             </Swiper>
+            <Button
+                className = { `${S.button} left-0` }
+                id = { idPrevButton }
+                variant = 'default'>
+                <Icons.Arrow className = { `${S.arrow} rotate-180` } />
+            </Button>
+            <Button
+                className = { `${S.button} right-0` }
+                id = { idNextButton }
+                variant = 'default'>
+                <Icons.Arrow className = { `${S.arrow}` } />
+            </Button>
         </div>
     );
 };
