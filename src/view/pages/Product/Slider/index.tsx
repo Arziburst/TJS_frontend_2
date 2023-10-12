@@ -14,12 +14,18 @@ import 'swiper/css/pagination';
 
 // import required modules
 import { Navigation, Pagination } from 'swiper/modules';
+
+// Bus
 import { useProducts } from '@/bus/products';
+
+// Components
+import { Icons } from '@/view/components';
+
+// Elements
 import { Button, Image } from '@/view/elements';
 
 // Styles
 import S from './styles.module.css';
-import { Icons } from '@/view/components';
 
 // Types
 type PropTypes = {
@@ -40,11 +46,11 @@ export const Slider: FC<PropTypes> = () => {
             className = 'relative'
             ref = { ref }>
             <Swiper
-                pagination
                 roundLengths
                 className = { S.root }
                 modules = { [ Navigation, Pagination ] }
                 navigation = {{ prevEl: `#${idPrevButton}`, nextEl: `#${idNextButton}` }}
+                pagination = {{ el: '#swiper-pagination', clickable: true }}
                 ref = { refSwiper }
                 slidesPerView = { 1 }
                 style = {{ width: `calc(100vw - var(${CSS_VARIABLES.WRAPPER_LEFT_PADDING}) - var(${CSS_VARIABLES.WRAPPER_LEFT_PADDING}))` }}>
@@ -59,8 +65,12 @@ export const Slider: FC<PropTypes> = () => {
                     </SwiperSlide>
                 ))}
             </Swiper>
+            <div
+                className = 'flex justify-center py-[6px]'
+                id = 'swiper-pagination'>
+            </div>
             <Button
-                className = { `${S.button} left-0` }
+                className = { `${S.button} left-0 translate-y-[-50%]` }
                 id = { idPrevButton }
                 variant = 'default'>
                 <Icons.Arrow className = { `${S.arrow} rotate-180` } />

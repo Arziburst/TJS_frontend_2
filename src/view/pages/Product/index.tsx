@@ -48,8 +48,12 @@ const Product: FC<PropTypes> = () => {
                 sb:text-[56px] sb:leading-[76px] sb:text-left` }>
                 {currentProduct?.type}
             </h2>
-            {width < SCREENS_NUMBER.SB && (
+            {width < SCREENS_NUMBER.SB ? (
                 <Slider />
+            ) : (
+                <div>
+                    imagas
+                </div>
             )}
         </div>
     );
