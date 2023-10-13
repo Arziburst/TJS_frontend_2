@@ -1,5 +1,5 @@
 // Core
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useRef } from 'react';
 
 // Init
 import { CSS_VARIABLES } from '@/init';
@@ -40,37 +40,6 @@ export const Slider: FC<PropTypes> = () => {
 
     const { products: { currentProduct }} = useProducts();
 
-    const [ scrollbarWidth, setScrollbarWidth ] = useState(0); // todo how to fix this?
-
-    useEffect(() => {
-        const getScrollbarWidth = () => {
-            const outer = document.createElement('div');
-            outer.style.visibility = 'hidden';
-            outer.style.width = '100px';
-            // outer.style.msOverflowStyle = 'scrollbar'; // for Internet Explorer
-            document.body.appendChild(outer);
-            const widthNoScroll = outer.offsetWidth;
-            outer.style.overflow = 'scroll';
-            const inner = document.createElement('div');
-            inner.style.width = '100%';
-            outer.appendChild(inner);
-            const widthWithScroll = inner.offsetWidth;
-            outer.parentNode && outer.parentNode.removeChild(outer);
-
-            const result = widthNoScroll - widthWithScroll;
-
-            setScrollbarWidth(result);
-        };
-
-        getScrollbarWidth();
-
-        window.addEventListener('resize', getScrollbarWidth);
-
-        return () => {
-            window.removeEventListener('resize', getScrollbarWidth);
-        };
-    }, []);
-
     return (
         <Swiper
             roundLengths
@@ -81,8 +50,7 @@ export const Slider: FC<PropTypes> = () => {
                 nextEl: refNext.current,
             }}
             pagination = {{ el: refPagination.current, clickable: true }}
-            slidesPerView = { 1 }
-            style = {{ width: `calc(100vw - var(${CSS_VARIABLES.WRAPPER_LEFT_PADDING}) - var(${CSS_VARIABLES.WRAPPER_LEFT_PADDING}) - ${scrollbarWidth}px)` }}>
+            slidesPerView = { 'auto' }>
             {currentProduct?.images.map((image, index) => (
                 <SwiperSlide key = { image }>
                     <Image

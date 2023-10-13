@@ -108,7 +108,8 @@ const Product: FC<PropTypes> = () => {
                                     sb:text-sm` }>
                                     {currentProduct?.title}
                                 </p>
-                                <p>
+                                <p className = { `text-lg
+                                    sb:text-2xl` }>
                                     {currentProduct?.price}
                                 </p>
                             </div>
