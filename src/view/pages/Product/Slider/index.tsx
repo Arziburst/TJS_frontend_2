@@ -50,7 +50,7 @@ export const Slider: FC<PropTypes> = () => {
                 nextEl: refNext.current,
             }}
             pagination = {{ el: refPagination.current, clickable: true }}
-            slidesPerView = { 'auto' }>
+            slidesPerView = { 1 }>
             {currentProduct?.images.map((image, index) => (
                 <SwiperSlide key = { image }>
                     <Image

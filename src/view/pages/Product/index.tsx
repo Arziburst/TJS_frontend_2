@@ -23,7 +23,7 @@ import { Slider } from './Slider';
 import { ImageProduct } from './ImageProduct';
 
 // Elements
-import { Button, Image } from '@/view/elements';
+import { Button, Image, Link } from '@/view/elements';
 
 // Styles
 import S from './styles.module.css';
@@ -62,7 +62,9 @@ const Product: FC<PropTypes> = () => {
     }, [ currentProduct ]);
 
     return (
-        <div className = { 'flex flex-row gap-6' }>
+        <div
+            className = { 'flex flex-row gap-6' }
+            style = {{ minWidth: 0 }}>
             {width > SCREENS_NUMBER.SB && (
                 <div className = 'w-1/2 space-y-[50px]'>
                     <div ref = { refDescriptionProduct }>
@@ -84,8 +86,10 @@ const Product: FC<PropTypes> = () => {
                         ))}
                 </div>
             )}
-            <div className = { `break-all 
-                sb:w-1/2` }>
+            <div
+                className = { `break-all 
+                sb:w-1/2` }
+                style = {{ minWidth: 0 }}>
                 <div
                     className = { `${S.sticky} flex flex-col gap-[32px]
                     sb:sticky sb:justify-between` }
@@ -108,17 +112,23 @@ const Product: FC<PropTypes> = () => {
                                     sb:text-sm` }>
                                     {currentProduct?.title}
                                 </p>
-                                <p className = { `text-lg
+                                <p className = { `text-lg text-quaternary
                                     sb:text-2xl` }>
-                                    {currentProduct?.price}
+                                    {currentProduct?.price} ₴
                                 </p>
                             </div>
-                            <p>
+                            <p className = { `text-sm tracking-[10%]
+                                sb:text-base` }>
                                 {currentProduct?.description}
                             </p>
-                            <p>
-                                Size Guide
-                            </p>
+                            <div>
+                                <Link
+                                    className = { `font-secondary text-xs font-semibold tracking-[10%] text-quaternary underline transition
+                                        hover:no-underline` }
+                                    to = '/'>
+                                    Size Guide
+                                </Link>
+                            </div>
                         </div>
                         <Button>
                             Add to Cart
