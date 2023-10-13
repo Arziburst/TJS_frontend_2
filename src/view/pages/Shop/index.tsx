@@ -33,7 +33,7 @@ import { Label } from './Label';
 import { NavItemText } from '@/view/components/Nav/NavItem/NavItemText';
 
 // Elements
-import { Button, Link, NavLink } from '@/view/elements';
+import { Button, NavLink } from '@/view/elements';
 
 // Static
 import {
@@ -250,25 +250,22 @@ const Shop: FC<PropTypes> = () => {
                         </div>
                     )}
                     {products?.map((item) => (
-                        <Link
+                        <CardItem
+                            firstImage = {{
+                                src: item.images[ 0 ],
+                                alt: 'First image of item',
+                            }}
                             key = { item._id }
+                            name = { item.title }
+                            price = { item.price }
+                            role = { profile?.role }
+                            secondImage = {{
+                                src: item.images[ 1 ],
+                                alt: 'Second image of item',
+                            }}
                             to = { `${BOOK.PRODUCT}/${item._id}` }
-                            variant = 'none'>
-                            <CardItem
-                                firstImage = {{
-                                    src: item.images[ 0 ],
-                                    alt: 'First image of item',
-                                }}
-                                name = { item.title }
-                                price = { item.price }
-                                secondImage = {{
-                                    src: item.images[ 1 ],
-                                    alt: 'Second image of item',
-                                }}
-                                // onClick = { () => onClickItemHandler(item._id) }
-                                onClickEditItem = { () => onClickEditItemHandler(item._id) }
-                            />
-                        </Link>
+                            onClickEditItem = { () => onClickEditItemHandler(item._id) }
+                        />
                     ))}
                 </NotData>
                 <div className = { `flex flex-col gap-4 items-center

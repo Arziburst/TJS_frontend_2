@@ -1,5 +1,5 @@
 // Core
-import React, { FC, useRef } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 
 // Init
 import { CSS_VARIABLES } from '@/init';
@@ -33,54 +33,82 @@ type PropTypes = {
 }
 
 export const Slider: FC<PropTypes> = () => {
-    const idPrevButton = 'prevButton-swiper';
-    const idNextButton = 'nextButton-swiper';
+    const refPrev = useRef<null | HTMLButtonElement>(null);
+    const refNext = useRef<null | HTMLButtonElement>(null);
 
-    const ref = useRef<null | HTMLDivElement>(null);
-    const refSwiper = useRef<null | any>(null);
+    const refPagination = useRef<null | HTMLDivElement>(null);
 
     const { products: { currentProduct }} = useProducts();
 
+    const [ scrollbarWidth, setScrollbarWidth ] = useState(0); // todo how to fix this?
+
+    useEffect(() => {
+        const getScrollbarWidth = () => {
+            const outer = document.createElement('div');
+            outer.style.visibility = 'hidden';
+            outer.style.width = '100px';
+            // outer.style.msOverflowStyle = 'scrollbar'; // for Internet Explorer
+            document.body.appendChild(outer);
+            const widthNoScroll = outer.offsetWidth;
+            outer.style.overflow = 'scroll';
+            const inner = document.createElement('div');
+            inner.style.width = '100%';
+            outer.appendChild(inner);
+            const widthWithScroll = inner.offsetWidth;
+            outer.parentNode && outer.parentNode.removeChild(outer);
+
+            const result = widthNoScroll - widthWithScroll;
+
+            setScrollbarWidth(result);
+        };
+
+        getScrollbarWidth();
+
+        window.addEventListener('resize', getScrollbarWidth);
+
+        return () => {
+            window.removeEventListener('resize', getScrollbarWidth);
+        };
+    }, []);
+
     return (
-        <div
-            className = 'relative'
-            ref = { ref }>
-            <Swiper
-                roundLengths
-                className = { S.root }
-                modules = { [ Navigation, Pagination ] }
-                navigation = {{ prevEl: `#${idPrevButton}`, nextEl: `#${idNextButton}` }}
-                pagination = {{ el: '#swiper-pagination', clickable: true }}
-                ref = { refSwiper }
-                slidesPerView = { 1 }
-                style = {{ width: `calc(100vw - var(${CSS_VARIABLES.WRAPPER_LEFT_PADDING}) - var(${CSS_VARIABLES.WRAPPER_LEFT_PADDING}))` }}>
-                {currentProduct?.images.map((image, index) => (
-                    <SwiperSlide key = { image }>
-                        <Image
-                            alt = { `${index} image of the product` }
-                            className = 'w-full'
-                            src = { image }
-                            style = {{ height: `calc(60vh - var(${CSS_VARIABLES.HEADER}))` }}
-                        />
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-            <div
-                className = 'flex justify-center py-[6px]'
-                id = 'swiper-pagination'>
-            </div>
+        <Swiper
+            roundLengths
+            className = { S.root }
+            modules = { [ Navigation, Pagination ] }
+            navigation = {{
+                prevEl: refPrev.current,
+                nextEl: refNext.current,
+            }}
+            pagination = {{ el: refPagination.current, clickable: true }}
+            slidesPerView = { 1 }
+            style = {{ width: `calc(100vw - var(${CSS_VARIABLES.WRAPPER_LEFT_PADDING}) - var(${CSS_VARIABLES.WRAPPER_LEFT_PADDING}) - ${scrollbarWidth}px)` }}>
+            {currentProduct?.images.map((image, index) => (
+                <SwiperSlide key = { image }>
+                    <Image
+                        alt = { `${index} image of the product` }
+                        className = 'w-full'
+                        src = { image }
+                        style = {{ height: `calc(60vh - var(${CSS_VARIABLES.HEADER}))` }}
+                    />
+                </SwiperSlide>
+            ))}
             <Button
                 className = { `${S.button} left-0 translate-y-[-50%]` }
-                id = { idPrevButton }
+                ref = { refPrev }
                 variant = 'default'>
                 <Icons.Arrow className = { `${S.arrow} rotate-180` } />
             </Button>
             <Button
                 className = { `${S.button} right-0` }
-                id = { idNextButton }
+                ref = { refNext }
                 variant = 'default'>
                 <Icons.Arrow className = { `${S.arrow}` } />
             </Button>
-        </div>
+            <div
+                className = 'flex justify-center py-[6px]'
+                ref = { refPagination }>
+            </div>
+        </Swiper>
     );
 };
