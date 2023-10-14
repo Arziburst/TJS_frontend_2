@@ -2,9 +2,6 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-// init
-import { CSS_VARIABLES } from '@/init';
-
 // Assets
 import { SCREENS_NUMBER } from '@/assets';
 
@@ -16,6 +13,7 @@ import { ParamsLowerCase } from '@/view/routes/book';
 
 // Bus
 import { useProducts } from '@/bus/products';
+import { useCart } from '@/bus/cart';
 
 // Components
 import { ErrorBoundary } from '@/view/components';
@@ -45,6 +43,12 @@ const Product: FC<PropTypes> = () => {
 
     // Hooks of Bus
     const { products: { currentProduct }, fetchProduct, setCurrentProduct } = useProducts();
+    const { setProductOfCart } = useCart();
+
+    // Handlers
+    const onClickAddToCartHandler = () => {
+        currentProduct && setProductOfCart(currentProduct._id);
+    };
 
     useEffect(() => {
         if (id) {
@@ -130,7 +134,7 @@ const Product: FC<PropTypes> = () => {
                                 </Link>
                             </div>
                         </div>
-                        <Button>
+                        <Button onClick = { onClickAddToCartHandler }>
                             Add to Cart
                         </Button>
                     </div>

@@ -18,6 +18,7 @@ import { arrayComparison, ls, makeRequest } from '../../../tools/utils';
 // Types
 import * as commonTypes from '../../commonTypes';
 import * as types from './types';
+import { cartActions } from '@/bus/cart/slice';
 
 // Action
 export const fetchProductsAction = createAction(`${sliceName}/FETCH_PRODUCTS_ASYNC`);
@@ -43,15 +44,16 @@ const fetchProducts = (
         const productsIds = result.map(({ _id }) => _id);
         const cart: Array<string> = ls.get(LOCAL_STORAGE.CART) || [];
 
-        // Checkind cart
+        // Checking cart
         if (cart && cart.length !== 0) {
             const { isAllStringsExists, newArray } = arrayComparison(productsIds, cart);
 
             if (!isAllStringsExists) {
                 yield ls.set(LOCAL_STORAGE.CART, newArray);
             }
+            console.log('newArray:', newArray);
 
-            // yield put(setInitialCartState(newArray)); // todo check?
+            yield put(cartActions.resetCart(newArray));
         }
     },
     error: function* (error) {

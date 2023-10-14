@@ -10,12 +10,15 @@ import createSagaMiddleware from 'redux-saga';
 
 const isDev = process.env.NODE_ENV === 'development';
 
+// Middlewares
+import { localStorageMiddleware } from './localStorageMiddleware';
 // MarkerGen sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
 
 const middleware: Middleware[] = [
     // MarkerGen use middleware Saga or Thunk
     sagaMiddleware,
+    localStorageMiddleware,
 ];
 
 isDev && middleware.push(
