@@ -10,10 +10,11 @@ import { LOCAL_STORAGE } from '../../../init';
 import { productsByPaginationFetcher } from '../../../api';
 
 // Slice
+import { cartActions } from '@/bus/cart/slice';
 import { productsActions, sliceName } from '../slice';
 
 // Tools
-import { arrayComparison, ls, makeRequest } from '../../../tools/utils';
+import { ls, makeRequest } from '../../../tools/utils';
 
 // Types
 import * as commonTypes from '../../commonTypes';
@@ -42,18 +43,11 @@ const fetchProductsByPagination = (
         yield put(productsActions.setTotalOfProducts(result.total));
         yield put(productsActions.setTotalShowedOfProducts(result.totalShowed));
 
-        const productsIds = result.data.map(({ _id }) => _id);
-        const cart: Array<string> = ls.get(LOCAL_STORAGE.CART) || [];
+        const cart: Array<string> = ls.get(LOCAL_STORAGE.CART);
 
-        // Checkind cart
-        if (cart && cart.length !== 0) {
-            const { isAllStringsExists, newArray } = arrayComparison(productsIds, cart);
-
-            if (!isAllStringsExists) {
-                yield ls.set(LOCAL_STORAGE.CART, newArray);
-            }
-
-            // yield put(setInitialCartState(newArray)); // todo check?
+        // Checking cart
+        if (cart) {
+            yield put(cartActions.resetCart(cart));
         }
     },
     error: function* (error) {

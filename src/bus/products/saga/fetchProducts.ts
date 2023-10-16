@@ -10,6 +10,7 @@ import { LOCAL_STORAGE } from '../../../init';
 import { productsFetcher } from '../../../api';
 
 // Slice
+import { cartActions } from '@/bus/cart/slice';
 import { productsActions, sliceName } from '../slice';
 
 // Tools
@@ -18,7 +19,6 @@ import { arrayComparison, ls, makeRequest } from '../../../tools/utils';
 // Types
 import * as commonTypes from '../../commonTypes';
 import * as types from './types';
-import { cartActions } from '@/bus/cart/slice';
 
 // Action
 export const fetchProductsAction = createAction(`${sliceName}/FETCH_PRODUCTS_ASYNC`);
@@ -40,21 +40,6 @@ const fetchProducts = (
     },
     success: function* (result) {
         yield put(productsActions.setProducts(result));
-
-        const productsIds = result.map(({ _id }) => _id);
-        const cart: Array<string> = ls.get(LOCAL_STORAGE.CART) || [];
-
-        // Checking cart
-        if (cart && cart.length !== 0) {
-            const { isAllStringsExists, newArray } = arrayComparison(productsIds, cart);
-
-            if (!isAllStringsExists) {
-                yield ls.set(LOCAL_STORAGE.CART, newArray);
-            }
-            console.log('newArray:', newArray);
-
-            yield put(cartActions.resetCart(newArray));
-        }
     },
     error: function* (error) {
         yield put(productsActions.setErrorOfProducts(error));
