@@ -235,9 +235,7 @@ const Shop: FC<PropTypes> = () => {
                 <NotData
                     className = { `flex flex-wrap gap-[14px] justify-center
                     sb:gap-[20px]` }
-                    count = { profile?.role === 'admin' ? 2 : 1 }
-                    isLoading = { isLoadings.fetchProducts }>
-                    {isLoggedIn && profile?.role === 'admin' && (
+                    firstElement = { isLoggedIn && profile?.role === 'admin' && (
                         <div className = { SCardItem.images_container }>
                             <NavLink to = { BOOK.ADD_ITEM }>
                                 <Button
@@ -248,7 +246,8 @@ const Shop: FC<PropTypes> = () => {
                             </NavLink>
 
                         </div>
-                    )}
+                    ) }
+                    isLoading = { isLoadings.fetchProducts }>
                     {products?.map((item) => (
                         <CardItem
                             firstImage = {{
