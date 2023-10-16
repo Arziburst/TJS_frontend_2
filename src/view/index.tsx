@@ -1,6 +1,9 @@
 // Core
 import React, { FC, useEffect, useCallback } from 'react';
 
+// Init
+import { CSS_VARIABLES, LOCAL_STORAGE } from '@/init';
+
 // Assets
 import { SCREENS_NUMBER } from '@/assets';
 
@@ -13,11 +16,12 @@ import '@/assets/images/test.png'; // todo remove when finish
 import { Routes } from './routes';
 
 // Tools
-import { postcssViewportHeightCorrection, setValueToCSSVariable } from '@/tools/utils';
+import { ls, postcssViewportHeightCorrection, setValueToCSSVariable } from '@/tools/utils';
 
 // Bus
 import { useTogglesRedux } from '../bus/client/toggles';
 import { useProfileSaga } from '@/bus/profile/saga';
+import { useCartSaga } from '@/bus/cart/saga';
 
 // Containers
 import { Wrapper } from '@/view/containers';
@@ -30,7 +34,6 @@ import { useCssPropertyValue, useWindowWidth } from '@/tools/hooks';
 
 // Styles
 import '../assets/globalStyles/index.css';
-import { CSS_VARIABLES } from '@/init';
 
 export const App: FC = () => {
     const refWrapper = React.useRef<null | HTMLDivElement>(null);
@@ -44,6 +47,7 @@ export const App: FC = () => {
 
     const { setToggleAction: setTogglerAction } = useTogglesRedux();
     const { fetchAuthenticateProfile } = useProfileSaga();
+    const { fetchCheckCart } = useCartSaga();
 
     const setOnlineStatusHandler = useCallback(() => void setTogglerAction({
         type:  'isOnline',
@@ -56,6 +60,7 @@ export const App: FC = () => {
         setOnlineStatusHandler();
         window.addEventListener('online', setOnlineStatusHandler);
         window.addEventListener('offline', setOnlineStatusHandler);
+        fetchCheckCart(ls.get(LOCAL_STORAGE.CART) || []);
     }, []);
 
     useEffect(() => {

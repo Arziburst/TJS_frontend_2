@@ -1,4 +1,5 @@
 // MarkerGen re-export
+export * from './CartDetails';
 export * from './Pagination';
 export * from './Dialog';
 export * from './Tooltip';

@@ -3,25 +3,21 @@ import { SagaIterator } from '@redux-saga/core';
 import { createAction } from '@reduxjs/toolkit';
 import { put, takeLatest } from 'redux-saga/effects';
 
-// Init
-import { LOCAL_STORAGE } from '../../../init';
-
 // API
 import { productsFetcher } from '../../../api';
 
 // Slice
-import { cartActions } from '@/bus/cart/slice';
 import { productsActions, sliceName } from '../slice';
 
 // Tools
-import { arrayComparison, ls, makeRequest } from '../../../tools/utils';
+import { makeRequest } from '../../../tools/utils';
 
 // Types
 import * as commonTypes from '../../commonTypes';
 import * as types from './types';
 
 // Action
-export const fetchProductsAction = createAction(`${sliceName}/FETCH_PRODUCTS_ASYNC`);
+export const fetchProductsAction = createAction<types.FetchProductsRequest>(`${sliceName}/FETCH_PRODUCTS_ASYNC`);
 
 // Saga
 const fetchProducts = (
@@ -30,7 +26,7 @@ const fetchProducts = (
     callAction,
     fetchOptions: {
         successStatusCode: 200,
-        fetch:             productsFetcher,
+        fetch:             () => productsFetcher(callAction.payload),
     },
     tryStart: function* () {
         yield put(productsActions.setIsLoadingOfProducts({
