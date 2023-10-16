@@ -63,11 +63,10 @@ export const Pagination: FC<PropTypes> = ({
             className = { cn('flex justify-between', className) }>
             <div>
                 <Button
-                    className = { S.arrow }
                     disabled = { value <= 1 }
                     variant = 'default'
                     onClick = { () => setValue(value - 1) }>
-                    <Icons.Arrow className = 'rotate-180' />
+                    <Icons.Arrow className = { `${S.arrow} rotate-180` } />
                 </Button>
             </div>
             {array && width > SCREENS_NUMBER.SB && (
@@ -102,11 +101,10 @@ export const Pagination: FC<PropTypes> = ({
             )}
             <div>
                 <Button
-                    className = { S.arrow }
                     disabled = { value >= maxStep }
                     variant = 'default'
                     onClick = { () => setValue(value + 1) }>
-                    <Icons.Arrow />
+                    <Icons.Arrow className = { S.arrow } />
                 </Button>
             </div>
         </div>

@@ -181,3 +181,9 @@
         transform: translate(-50%, -50%);
     }
 }
+
+/* Swiper */
+:root {
+    --swiper-pagination-color: var(--quaternary);
+
+}

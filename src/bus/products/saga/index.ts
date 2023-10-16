@@ -8,6 +8,7 @@ import { useDispatch } from '../../../tools/hooks';
 // MarkerGen Watchers & Actions
 import { fetchProductsByPaginationAction, watchFetchProductsByPagination } from './fetchProductsByPagination';
 import { fetchProductsByPaginationAtEndAction, watchFetchProductsByPaginationAtEnd } from './fetchProductsByPaginationAtEnd';
+import { fetchProductAction, watchFetchProduct } from './fetchProduct';
 import { fetchProductsAction, watchFetchProducts } from './fetchProducts';
 import { fetchCreateNewProductAction, watchFetchCreateNewProduct } from './fetchCreateNewProduct';
 import { fetchDeleteProductAction, watchFetchDeleteProduct } from './fetchDeleteProduct';
@@ -27,6 +28,7 @@ export const useProductsSaga = () => {
         fetchProductsByPaginationAtEnd: (
             payload: types.FetchProductsByPaginationAtEndRequest,
         ) => dispatch(fetchProductsByPaginationAtEndAction(payload)),
+        fetchProduct:          (payload: types.FetchProductRequest) => dispatch(fetchProductAction(payload)),
         fetchProducts:         () => dispatch(fetchProductsAction()),
         fetchCreateNewProduct: (payload: types.FetchCreateNewProductRequest) => dispatch(
             fetchCreateNewProductAction(payload),
@@ -46,6 +48,7 @@ export function* watchProducts(): SagaIterator {
         // MarkerGen watchers
         call(watchFetchProductsByPagination),
         call(watchFetchProductsByPaginationAtEnd),
+        call(watchFetchProduct),
         call(watchFetchProducts),
         call(watchFetchCreateNewProduct),
         call(watchFetchDeleteProduct),

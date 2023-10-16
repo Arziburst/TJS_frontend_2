@@ -6,3 +6,5 @@ export * from './controlledError';
 export * from './types';
 export * from './postcssViewportHeightCorrection';
 export * from './ls';
+export * from './setValueToCSSVariable';
+export * from './getValueFromCSSVariable';

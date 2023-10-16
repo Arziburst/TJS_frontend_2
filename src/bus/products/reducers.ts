@@ -50,7 +50,7 @@ export const setProduct: types.BaseContact<types.ExtendedProduct> = (state, acti
     };
 };
 
-export const setCurrentProduct: types.BaseContact<types.ExtendedProduct> = (state, action) => ({
+export const setCurrentProduct: types.BaseContact<types.SetCurrentProductAction> = (state, action) => ({
     ...state,
     currentProduct: action.payload,
 });

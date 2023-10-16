@@ -3,56 +3,52 @@ import { SagaIterator } from '@redux-saga/core';
 import { createAction } from '@reduxjs/toolkit';
 import { put, takeLatest } from 'redux-saga/effects';
 
-// Init
-import { LOCAL_STORAGE } from '../../../init';
-
 // API
-import { productsFetcher } from '../../../api';
+import { productFetcher } from '../../../api';
 
 // Slice
-import { cartActions } from '@/bus/cart/slice';
 import { productsActions, sliceName } from '../slice';
 
 // Tools
-import { arrayComparison, ls, makeRequest } from '../../../tools/utils';
+import { makeRequest } from '../../../tools/utils';
 
 // Types
 import * as commonTypes from '../../commonTypes';
 import * as types from './types';
 
 // Action
-export const fetchProductsAction = createAction(`${sliceName}/FETCH_PRODUCTS_ASYNC`);
+export const fetchProductAction = createAction<types.FetchProductRequest>(`${sliceName}/FETCH_PRODUCT_ASYNC`);
 
 // Saga
-const fetchProducts = (
-    callAction: ReturnType<typeof fetchProductsAction>,
-) => makeRequest<types.FetchProductsResponse, commonTypes.Error>({
+const fetchProduct = (
+    callAction: ReturnType<typeof fetchProductAction>,
+) => makeRequest<types.FetchProductResponse, commonTypes.Error>({
     callAction,
     fetchOptions: {
         successStatusCode: 200,
-        fetch:             productsFetcher,
+        fetch:             () => productFetcher(callAction.payload),
     },
     tryStart: function* () {
         yield put(productsActions.setIsLoadingOfProducts({
-            type:  'fetchProducts',
+            type:  'fetchProduct',
             value: true,
         }));
     },
     success: function* (result) {
-        yield put(productsActions.setProducts(result));
+        yield put(productsActions.setCurrentProduct(result));
     },
     error: function* (error) {
         yield put(productsActions.setErrorOfProducts(error));
     },
     finallyEnd: function* () {
         yield put(productsActions.setIsLoadingOfProducts({
-            type:  'fetchProducts',
+            type:  'fetchProduct',
             value: false,
         }));
     },
 });
 
 // Watcher
-export function* watchFetchProducts(): SagaIterator {
-    yield takeLatest(fetchProductsAction.type, fetchProducts);
+export function* watchFetchProduct(): SagaIterator {
+    yield takeLatest(fetchProductAction.type, fetchProduct);
 }

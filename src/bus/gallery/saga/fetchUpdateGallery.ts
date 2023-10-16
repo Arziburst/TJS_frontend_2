@@ -31,7 +31,6 @@ const fetchUpdateGallery = (callAction: ReturnType<typeof fetchUpdateGalleryActi
         fetch:             () => galleryUpdateFetcher(callAction.payload),
     },
     success: function* () {
-        console.log('text');
         yield put(fetchGalleryAction());
     },
 });

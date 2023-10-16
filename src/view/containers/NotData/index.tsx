@@ -29,6 +29,7 @@ interface PropTypes
     asChild?: boolean;
     count?: number;
     isLoading: boolean;
+    firstElement?: React.ReactNode;
 }
 
 
@@ -40,6 +41,7 @@ const NotData = React.forwardRef<HTMLDivElement, PropTypes>(
         count = 1,
         isLoading,
         asChild = false,
+        firstElement,
         ...props
     }, ref) => {
         const Comp = asChild ? Slot : 'div';
@@ -56,8 +58,11 @@ const NotData = React.forwardRef<HTMLDivElement, PropTypes>(
 
         if (childCount < count) {
             return (
-                <div className = { S.root }>
-                    Not Data
+                <div className = 'flex flex-col items-center'>
+                    <div className = { S.root }>
+                        Not Data
+                    </div>
+                    {firstElement}
                 </div>
             );
         }
@@ -67,6 +72,7 @@ const NotData = React.forwardRef<HTMLDivElement, PropTypes>(
                 className = { cn(variants({ variant, className })) }
                 ref = { ref }
                 { ...props }>
+                {firstElement}
                 {children}
             </Comp>
         );

@@ -23,9 +23,9 @@ const linkVariants = cva(
     },
 );
 
-interface PropTypes extends LinkProps, VariantProps<typeof linkVariants> {}
+export interface LinkPropTypes extends LinkProps, VariantProps<typeof linkVariants> {}
 
-export const Link: FC<PropTypes> = ({ children, className, variant, ...props }) => {
+export const Link: FC<LinkPropTypes> = ({ children, className, variant, ...props }) => {
     return (
         <LinkCore
             className = { cn(linkVariants({ variant, className })) }

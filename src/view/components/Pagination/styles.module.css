@@ -3,5 +3,5 @@
 }
 
 .arrow {
-    @apply p-2
+    @apply h-[18px] aspect-square
 }
