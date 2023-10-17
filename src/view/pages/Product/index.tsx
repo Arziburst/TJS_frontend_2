@@ -21,7 +21,7 @@ import { Slider } from './Slider';
 import { ImageProduct } from './ImageProduct';
 
 // Elements
-import { Button, Image, Link } from '@/view/elements';
+import { Button, Link, TitlePage } from '@/view/elements';
 
 // Styles
 import S from './styles.module.css';
@@ -95,14 +95,13 @@ const Product: FC<PropTypes> = () => {
                 sb:w-1/2` }
                 style = {{ minWidth: 0 }}>
                 <div
-                    className = { `${S.sticky} flex flex-col gap-[32px]
-                    sb:sticky sb:justify-between` }
+                    className = { `${S.sticky} flex flex-col
+                        sb:sticky sb:justify-between` }
                     style = {{ minHeight: refDescriptionProduct.current && refDescriptionProduct.current.clientHeight > 0 ? `${refDescriptionProduct.current.clientHeight}px` : 'auto' }}>
                     <div className = 'space-y-[12px]'>
-                        <h2 className = { `text-[40px] leading-[54px] uppercase text-center
-                        sb:text-[56px] sb:leading-[76px] sb:text-left` }>
+                        <TitlePage>
                             {currentProduct?.type}
-                        </h2>
+                        </TitlePage>
                         {width < SCREENS_NUMBER.SB && (
                             <Slider />
                         )}

@@ -8,6 +8,9 @@ import { SCREENS_NUMBER } from '@/assets';
 // Books
 import { BOOK } from '@/view/routes/book';
 
+// Tools
+import { cn } from '@/tools/lib/utils';
+
 // Hooks
 import { useWindowWidth } from '@/tools/hooks';
 
@@ -15,13 +18,18 @@ import { useWindowWidth } from '@/tools/hooks';
 import { useCart } from '@/bus/cart';
 import { useProducts } from '@/bus/products';
 
+// Containers
+import { NotData } from '@/view/containers';
+
 // Components
-import { ErrorBoundary, CartDetails } from '../../components';
+import { ErrorBoundary, CartDetails, CardCart, HorizontalRuleWithTotalPrice } from '../../components';
 
 // Elements
-import { Button } from '@/view/elements';
+import { Button, TitlePage } from '@/view/elements';
 
 // Types
+import { ExtendedProduct } from '@/bus/products/types';
+
 type PropTypes = {
     /* type props here */
 }
@@ -31,12 +39,16 @@ const Cart: FC<PropTypes> = () => {
 
     const [ width ] = useWindowWidth();
 
-    const { fetchProducts } = useProducts();
-    const { cart } = useCart();
+    const { products: { products }, fetchProducts } = useProducts();
+    const { cart, removeProductOfCart } = useCart();
 
     // Handlers
     const onClickContinueToCheckout = () => {
         navigate(BOOK.ORDER_DETAILS);
+    };
+
+    const onClickRemoveHandler = (product: ExtendedProduct) => {
+        removeProductOfCart(product._id);
     };
 
     useEffect(() => {
@@ -46,18 +58,56 @@ const Cart: FC<PropTypes> = () => {
     }, [ cart ]);
 
     return (
-        <div className = 'sb:flex'>
-            <h1>cart</h1>
+        <div>
             {width < SCREENS_NUMBER.SB && (
-                <Button
-                    className = 'capitalize'
-                    onClick = { onClickContinueToCheckout }>
-                    continue to checkout
-                </Button>
+                <TitlePage>cart</TitlePage>
             )}
-            {width > SCREENS_NUMBER.SB && (
-                <CartDetails />
-            )}
+
+            <div className = { `flex flex-col gap-[32px]
+                sb:flex-row sb:gap-10
+                xl:gap-[100px]` }>
+
+                <div className = 'sb:w-1/2'>
+                    <NotData
+                        className = { `flex flex-col gap-[18px]
+                        sm:flex-row sm:justify-center sm:flex-wrap
+                        sb:justify-start` }
+                        count = { 1 }
+                        isLoading = { false }
+                        textIfNotData = 'Your cart is empty'>
+                        {products?.map((product) => (
+                            <CardCart
+                                alt = { `Image of ${product.title }` }
+                                key = { product._id }
+                                product = { product }
+                                src = { product.images[ 0 ] }
+                                variant = 'big'
+                                onClickRemove = { onClickRemoveHandler }
+                            />
+                        ))}
+                    </NotData>
+                    {products && (
+                        <HorizontalRuleWithTotalPrice
+                            price = {
+                                (products && products.length > 0 && products.map((product) => product.price)
+                                    .reduce((accumulator, currentValue) => accumulator + currentValue)) || 0
+                            }
+                            text = 'your order'
+                        />
+                    )}
+                </div>
+
+                {width < SCREENS_NUMBER.SB && (
+                    <Button
+                        className = 'capitalize'
+                        onClick = { onClickContinueToCheckout }>
+                        continue to checkout
+                    </Button>
+                )}
+                {width > SCREENS_NUMBER.SB && (
+                    <CartDetails className = 'sb:w-1/2' />
+                )}
+            </div>
         </div>
     );
 };

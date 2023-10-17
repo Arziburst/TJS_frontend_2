@@ -1,15 +1,20 @@
 // Core
 import React, { FC } from 'react';
 
+// Elements
+import { TitlePage } from '@/view/elements';
+
 // Types
-type PropTypes = {
-    /* type props here */
-}
+interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
 
 export const CartDetails: FC<PropTypes> = ({ ...props }) => {
     return (
         <div { ...props }>
-            Component: CartDetails
+            <TitlePage>cart</TitlePage>
+            <input type = 'text' />
+            <input type = 'text' />
+            <input type = 'text' />
+            <input type = 'text' />
         </div>
     );
 };

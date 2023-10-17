@@ -32,7 +32,7 @@ import { Label } from './Label';
 import { NavItemText } from '@/view/components/Nav/NavItem/NavItemText';
 
 // Elements
-import { Button, NavLink } from '@/view/elements';
+import { Button, NavLink, TitlePage } from '@/view/elements';
 
 // Static
 import {
@@ -149,11 +149,11 @@ const Shop: FC<PropTypes> = () => {
             sb:flex-row sb:gap-20` }>
             <div>
                 {width < SCREENS_NUMBER.SB ? (
-                    <div className = 'flex flex-col gap-12'>
+                    <div className = 'flex flex-col'>
                         {category && (
-                            <h2 className = 'text-[40px] uppercase text-center'>
+                            <TitlePage>
                                 {category}
-                            </h2>
+                            </TitlePage>
                         )}
                         <div className = { `flex gap-4
                             [&>*]:w-1/2

@@ -20,12 +20,12 @@ import * as commonTypes from '../../commonTypes';
 import * as types from './types';
 
 // Action
-export const fetchCheckCartAction = createAction<types.FetchProductRequest>(`${sliceName}/FETCH_CHECK_CART_ASYNC`);
+export const fetchCheckCartAction = createAction<types.FetchCheckCartRequest>(`${sliceName}/FETCH_CHECK_CART_ASYNC`);
 
 // Saga
 const fetchCheckCart = (
     callAction: ReturnType<typeof fetchCheckCartAction>,
-) => makeRequest<types.FetchProductResponse, commonTypes.Error>({
+) => makeRequest<types.FetchCheckCartResponse, commonTypes.Error>({
     callAction,
     fetchOptions: {
         successStatusCode: 200,

@@ -1,4 +1,5 @@
 // MarkerGen re-export
+export * from './TitlePage';
 export * from './Switch';
 export * from './Textarea';
 export * from './Separator';
