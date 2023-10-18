@@ -9,6 +9,7 @@ import { cn } from '@/tools/lib/utils';
 
 // Components
 import { NavItem, NavItemPropTypes } from '@/view/components/Nav/NavItem';
+import { useCart } from '@/bus/cart';
 
 // Types
 interface PropTypes extends Omit<NavItemPropTypes, 'children' | 'to'> {
@@ -16,6 +17,20 @@ interface PropTypes extends Omit<NavItemPropTypes, 'children' | 'to'> {
 }
 
 export const ButtonCart: FC<PropTypes> = ({ className, ...props }) => {
+    const { cart } = useCart();
+
+    const getNumber = () => {
+        if (cart && cart.length > 0) {
+            if (cart.length < 9) {
+                return `(0${cart.length})`;
+            }
+
+            return `(${cart.length})`;
+        }
+
+        return '';
+    };
+
     return (
         <NavItem
             classNameNavItemText = { cn(
@@ -24,20 +39,7 @@ export const ButtonCart: FC<PropTypes> = ({ className, ...props }) => {
             ) }
             to = { BOOK.CART }
             { ...props }>
-            Cart (03)
+            {`Cart ${getNumber()}`}
         </NavItem>
     );
-    // return (
-    //     <NavLink
-    //         className = { cn(
-    //             `text-xs font-secondary font-semibold capitalize
-    //                 sb:text-base sb:text-[15px]`,
-    //             className,
-    //         ) }
-    //         { ...props }
-    //         to = '/cart'
-    //         variant = 'underline'>
-    //         Cart (03)
-    //     </NavLink>
-    // );
 };

@@ -25,6 +25,7 @@ import { Button, Link, TitlePage } from '@/view/elements';
 
 // Styles
 import S from './styles.module.css';
+import { checkIsProductAddedToCart } from './static';
 
 // Types
 type PropTypes = {
@@ -38,12 +39,16 @@ const Product: FC<PropTypes> = () => {
 
     const [ width ] = useWindowWidth();
 
-    // States
-    const [ heightState, setHeightState ] = useState(0);
-
     // Hooks of Bus
     const { products: { currentProduct }, fetchProduct, setCurrentProduct } = useProducts();
-    const { setProductOfCart } = useCart();
+    const { cart, setProductOfCart } = useCart();
+
+    // States
+    const [ heightState, setHeightState ] = useState(0);
+    const [
+        isProductAddedToCartState,
+        setIsProductAddedToCartState,
+    ] = useState(checkIsProductAddedToCart({ cart, id }));
 
     // Handlers
     const onClickAddToCartHandler = () => {
@@ -64,6 +69,10 @@ const Product: FC<PropTypes> = () => {
         const result = refDescriptionProduct.current?.clientHeight; // todo how to fix this? how to get height of element from the ref?
         setHeightState(result || 0);
     }, [ currentProduct ]);
+
+    useEffect(() => {
+        setIsProductAddedToCartState(checkIsProductAddedToCart({ cart, id }));
+    }, [ cart ]);
 
     return (
         <div
@@ -133,8 +142,11 @@ const Product: FC<PropTypes> = () => {
                                 </Link>
                             </div>
                         </div>
-                        <Button onClick = { onClickAddToCartHandler }>
-                            Add to Cart
+                        <Button
+                            disabled = { isProductAddedToCartState }
+                            onClick = { onClickAddToCartHandler }>
+                            {isProductAddedToCartState ? 'Product added to cart' : 'Add to Cart'}
+
                         </Button>
                     </div>
                 </div>

@@ -19,7 +19,7 @@ React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
 
     return (
         <Label
-            className = { cn(error && 'text-destructive', className) }
+            className = { cn(error && 'text-destructive', 'text-2xl tracking-[10%]', className) }
             htmlFor = { formItemId }
             ref = { ref }
             { ...props }

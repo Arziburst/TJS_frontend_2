@@ -8,9 +8,6 @@ import { SCREENS_NUMBER } from '@/assets';
 // Books
 import { BOOK } from '@/view/routes/book';
 
-// Tools
-import { cn } from '@/tools/lib/utils';
-
 // Hooks
 import { useWindowWidth } from '@/tools/hooks';
 

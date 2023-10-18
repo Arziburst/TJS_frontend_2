@@ -32,7 +32,6 @@ const OrderDetails: FC<PropTypes> = () => {
 
     return (
         <div>
-            OrderDetails
             <CartDetails />
         </div>
     );
