@@ -8,9 +8,9 @@ import * as types from './types';
 import * as reducers from './reducers';
 // MarkerGen import extraReducers
 
-const initialState: types.NewPostState = {
-    cities:      null,
-    departments: null,
+export const initialState: types.NewPostState = {
+    cities:     null,
+    warehouses: null,
 };
 
 export const newPostSlice = createSlice<types.NewPostState, typeof reducers>({

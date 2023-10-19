@@ -11,6 +11,10 @@ export type InitialStateToggles = {
     isLoggedIn: boolean,
     isOpenSideBar: boolean,
     isFilterByLowToHigh: null | boolean,
+
+    // fetchers
+    isFetchWarehousesNewPost: boolean;
+    isFetchCitiesNewPost: boolean;
 }
 
 const initialState: InitialStateToggles = {
@@ -18,6 +22,10 @@ const initialState: InitialStateToggles = {
     isLoggedIn:          true, // isAuthenticated
     isOpenSideBar:       false,
     isFilterByLowToHigh: null,
+
+    // fetchers
+    isFetchWarehousesNewPost: false,
+    isFetchCitiesNewPost:     false,
 };
 
 // Types

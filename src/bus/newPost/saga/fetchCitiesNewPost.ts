@@ -4,7 +4,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { put, takeLatest } from 'redux-saga/effects';
 
 // API
-import { getCitiesNewPostCartFetcher } from '../../../api';
+import { getCitiesNewPostFetcher } from '../../../api';
 
 // Slice
 import { newPostActions, sliceName } from '../slice';
@@ -24,12 +24,13 @@ const fetchCitiesNewPost = (
     callAction: ReturnType<typeof fetchCitiesNewPostAction>,
 ) => makeRequest<types.FetchCitiesNewPostResponse, commonTypes.Error>({
     callAction,
+    toggleType:   'isFetchCitiesNewPost',
     fetchOptions: {
         successStatusCode: 200,
-        fetch:             () => getCitiesNewPostCartFetcher(callAction.payload),
+        fetch:             () => getCitiesNewPostFetcher(callAction.payload),
     },
     success: function* (result) {
-        yield put(newPostActions.setCitiesNewPost(result.slice(0, 100)));
+        yield put(newPostActions.setCitiesNewPost(result.slice(0, 100))); //! getCitiesNewPostFetcher >>> Limit doesn't work
     },
 });
 

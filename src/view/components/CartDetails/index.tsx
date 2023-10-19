@@ -1,5 +1,5 @@
 // Core
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -15,6 +15,9 @@ import { Button, FormTitle, Input, Textarea, TitlePage } from '@/view/elements';
 
 // Static
 import { defaultValues, validationForm } from './static';
+import { NotData, ScrollArea } from '@/view/containers';
+import { CityNewPost, WarehouseNewPost } from '@/bus/newPost/types';
+import { useTogglesRedux } from '@/bus/client/toggles';
 
 // Types
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
@@ -25,17 +28,70 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
         defaultValues: defaultValues,
     });
 
-    // const { images } = form.getValues();
-    // form.watch('images');
+    form.watch('city');
+    form.watch('warehouse');
+    const { city, warehouse } = form.getValues();
 
     // Hooks of Bus
-    const { newPost: { cities }, setCitiesNewPost, fetchCitiesNewPost } = useNewPost();
+    const { togglesRedux: { isFetchCitiesNewPost, isFetchWarehousesNewPost }} = useTogglesRedux();
+    const {
+        newPost: { cities, warehouses },
+        fetchCitiesNewPost,
+        fetchWarehousesNewPost,
+    } = useNewPost();
+
+    // State
+    const [ isFirstRenderState, setIsFirstRenderState ] = useState(true);
 
     // Handlers
     const onSubmit = (values: any) => { // todo how to remove any ???
         console.log('text');
     };
 
+    const onClickCityHandler = (city: CityNewPost) => {
+        form.setValue('city', city.Description, { shouldValidate: true });
+    };
+
+    const onClickWarehouseHandler = (warehouse: WarehouseNewPost) => {
+        form.setValue('warehouse', warehouse.Description, { shouldValidate: true });
+    };
+
+    useEffect(() => {
+        if (!isFirstRenderState) {
+            fetchCitiesNewPost(city);
+
+            if (cities && cities.some((citySome) => {
+                return citySome.Description.toLocaleLowerCase() === city.toLocaleLowerCase()
+                    || citySome.DescriptionRu.toLocaleLowerCase() === city.toLocaleLowerCase();
+            })) {
+                form.clearErrors('city');
+            } else {
+                form.setError('city', { message: 'You have to write right city name' });
+            }
+
+            form.setValue('warehouse', defaultValues.warehouse);
+        }
+        isFirstRenderState && setIsFirstRenderState(false);
+    }, [ city ]);
+
+    useEffect(() => {
+        if (!isFirstRenderState) {
+            fetchWarehousesNewPost({
+                cityName: city,
+            });
+
+            if (warehouses && warehouses.some((warehouseSome) => {
+                return warehouseSome.Description.toLocaleLowerCase() === warehouse.toLocaleLowerCase()
+                    || warehouseSome.DescriptionRu.toLocaleLowerCase() === warehouse.toLocaleLowerCase();
+            })) {
+                form.clearErrors('warehouse');
+            } else {
+                form.setError('warehouse', { message: 'You have to write right warehouse name' });
+            }
+        }
+
+        isFirstRenderState && setIsFirstRenderState(false);
+    }, [ warehouse ]);
 
     return (
         <div { ...props }>
@@ -134,12 +190,30 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                                 />
                                             </Form.FormControl>
                                             <Form.FormMessage />
+                                            {cities && form.getFieldState('city').invalid && (
+                                                <ScrollArea
+                                                    className = 'h-[50vh] w-full p-4'
+                                                    propViewport = {{}}>
+                                                    <NotData isLoading = { isFetchCitiesNewPost }>
+                                                        {cities.map((city) => (
+                                                            <Button
+                                                                className = 'flex-col'
+                                                                key = { city.CityID }
+                                                                variant = 'outline'
+                                                                onClick = { () => onClickCityHandler(city) }>
+                                                                <p>UA: <span className = 'text-quaternary'>{city.Description}</span></p>
+                                                                <p>RU: <span className = 'text-quaternary'>{city.DescriptionRu}</span></p>
+                                                            </Button>
+                                                        ))}
+                                                    </NotData>
+                                                </ScrollArea>
+                                            )}
                                         </Form.FormItem>
                                     ) }
                                 />
                                 <Form.FormField
                                     control = { form.control }
-                                    name = 'department'
+                                    name = 'warehouse'
                                     render = { ({ field, fieldState }) => (
                                         <Form.FormItem>
                                             <Form.FormControl>
@@ -150,6 +224,25 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                                 />
                                             </Form.FormControl>
                                             <Form.FormMessage />
+                                            {warehouses && form.getFieldState('warehouse').invalid && (
+                                                <ScrollArea
+                                                    className = 'h-[50vh] w-full p-4'
+                                                    propViewport = {{}}>
+                                                    <NotData isLoading = { isFetchWarehousesNewPost }>
+                                                        {warehouses.map((warehouse) => (
+                                                            <Button
+                                                                className = 'flex-col'
+                                                                key = { warehouse.SiteKey }
+                                                                variant = 'outline'
+                                                                onClick = { () => onClickWarehouseHandler(warehouse) }>
+                                                                <p>UA: <span className = 'text-quaternary'>{warehouse.Description}</span></p>
+                                                                <p>RU: <span className = 'text-quaternary'>{warehouse.DescriptionRu}</span></p>
+
+                                                            </Button>
+                                                        ))}
+                                                    </NotData>
+                                                </ScrollArea>
+                                            )}
                                         </Form.FormItem>
                                     ) }
                                 />

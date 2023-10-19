@@ -22,7 +22,9 @@ export const useNewPost = () => {
 
     return {
         newPost,
-        setCitiesNewPost: (payload: types.NewPostState['cities']) => dispatch(newPostActions.setCitiesNewPost(payload)),
+        setCitiesNewPost:     (payload: types.NewPostState['cities']) => dispatch(newPostActions.setCitiesNewPost(payload)),
+        setWarehousesNewPost: (payload: types.NewPostState['warehouses']) => dispatch(newPostActions.setWarehousesNewPost(payload)),
+        resetNewPost:         () => dispatch(newPostActions.resetNewPost()),
         ...newPostSagas,
     };
 };

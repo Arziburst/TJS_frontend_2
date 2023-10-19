@@ -24,14 +24,20 @@ export type CityNewPost = {
     SpecialCashCheck: number
 }
 
-type Department = unknown; // todo
+export type WarehouseNewPost = {
+    SiteKey: string;
+    Description: string;
+    DescriptionRu: string;
+    Number: string;
+};
 
 // State
-export type CitiesNewPost = Array<CityNewPost>;
+export type CitiesNewPostNewPost = Array<CityNewPost>;
+type WarehousesNewPost = Array<WarehouseNewPost>; // todo
 
 export type NewPostState = {
-    cities: CitiesNewPost | null;
-    departments: Department | null;
+    cities: CitiesNewPostNewPost | null;
+    warehouses: WarehousesNewPost | null;
 }
 
 // Contracts

@@ -14,7 +14,7 @@ export type DefaultValues = {
     phone: string;
     email: string;
     city: string;
-    department: string;
+    warehouse: string;
     comment: string;
 };
 
@@ -27,18 +27,18 @@ export const validationForm = yup.object({
         .matches(VALIDATIONS.PHONE, ERRORS.INVALID_PHONE),
     email: yup.string().required(ERRORS.REQUIRED)
         .email(ERRORS.INVALID_EMAIL),
-    city:       yup.string().required(ERRORS.REQUIRED),
-    department: yup.string().required(ERRORS.REQUIRED),
-    comment:    yup.string().optional(),
+    city:      yup.string().required(ERRORS.REQUIRED),
+    warehouse: yup.string().required(ERRORS.REQUIRED),
+    comment:   yup.string().optional(),
 });
 
 export const defaultValues: DefaultValues = {
-    firstName:  '',
-    lastName:   '',
-    phone:      '',
-    email:      '',
-    city:       '',
-    department: '',
-    comment:    '',
+    firstName: '',
+    lastName:  '',
+    phone:     '',
+    email:     '',
+    city:      '',
+    warehouse: '',
+    comment:   '',
 };
 
