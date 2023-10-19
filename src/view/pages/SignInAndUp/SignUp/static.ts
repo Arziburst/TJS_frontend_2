@@ -2,7 +2,7 @@
 import * as yup from 'yup';
 
 // Init
-import { ERRORS, INPUT_VALIDATION_VALUES } from '@/init/';
+import { ERRORS, INPUT_VALIDATION_VALUES, VALIDATIONS } from '@/init/';
 
 // Types
 type DefaultValues = {
@@ -19,7 +19,7 @@ export const validationForm = yup.object({
     email: yup.string().required(ERRORS.REQUIRED)
         .email(ERRORS.INVALID_EMAIL),
     phone: yup.string().required(ERRORS.REQUIRED)
-        .matches(/^\+\d{2}\d{3}\d{3}\d{2}\d{2}$/, ERRORS.INVALID_PHONE),
+        .matches(VALIDATIONS.PHONE, ERRORS.INVALID_PHONE),
     password: yup.string().required(ERRORS.REQUIRED)
         .min(INPUT_VALIDATION_VALUES.PASSWORD, ERRORS.PASSWORD_MIN_LENGTH),
     passwordAgain: yup.string().required(ERRORS.REQUIRED)

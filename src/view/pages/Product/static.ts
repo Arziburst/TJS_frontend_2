@@ -7,8 +7,6 @@ type CheckIsProductAddedToCart = {
 }
 
 export const checkIsProductAddedToCart = ({ cart, id }: CheckIsProductAddedToCart) => {
-    console.log('checkIsProductAddedToCart => id:', id);
-
     if (cart && id && cart.includes(id)) {
         return true;
     }

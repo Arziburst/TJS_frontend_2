@@ -10,7 +10,6 @@ export const fonts: Fonts = {
         primary:   'TT Ricordi Allegria Trl',
         secondary: 'Raleway',
         tertiary:  '\'Inter\', sans-serif',
-        // quaternary: 'SF Pro Text', // todo need?
     },
 };
 

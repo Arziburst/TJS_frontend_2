@@ -44,7 +44,7 @@ const fetchDeleteProduct = (
         }
     },
     success: function* (result) {
-        yield put(productsActions.setDeleteProduct(result)); // todo need remove ???
+        yield put(productsActions.setDeleteProduct(result));
         yield callAction.payload.navigate(BOOK.SHOP);
         yield toast.success('Product deleted successfully!');
     },

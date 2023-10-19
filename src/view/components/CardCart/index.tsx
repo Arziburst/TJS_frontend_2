@@ -6,7 +6,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/tools/lib/utils';
 
 // Elements
-import { Button, Image, ImagePropTypes } from '@/view/elements';
+import { Button, Image, ImagePropTypes, Link } from '@/view/elements';
 
 // Styles
 const variants = cva(
@@ -27,6 +27,7 @@ const variants = cva(
 
 // Types
 import { ExtendedProduct } from '@/bus/products/types';
+import { BOOK } from '@/view/routes/book';
 
 export interface PropTypes
     extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof variants>, Pick<ImagePropTypes, 'src' | 'alt'> {
@@ -47,24 +48,28 @@ export const CardCart: React.FC<PropTypes> = ({
         <div
             className = { cn(variants({ variant, className })) }
             { ...props }>
-            <Image
-                alt = { alt }
-                className = { cn('rounded-[4px] aspect-square', {
-                    'w-[120px] sm:w-[160px] sb:w-[200px]': variant === 'big',
-                    'w-[80px]':                            variant === 'small',
-                }) }
-                src = { src }
-            />
+            <Link to = { `${BOOK.PRODUCT}/${product._id}` }>
+                <Image
+                    alt = { alt }
+                    className = { cn('rounded-[4px] aspect-square', {
+                        'w-[120px] sm:w-[160px] sb:w-[200px]': variant === 'big',
+                        'w-[80px]':                            variant === 'small',
+                    }) }
+                    src = { src }
+                />
+            </Link>
             <div className = 'grow flex flex-col gap-[8px]'>
-                <h3 className = { cn(
-                    'font-secondary font-bold tracking-[20%]',
-                    {
-                        'text-sm leading-[16px]': variant === 'big',
-                        'text-xs leading-[18px]': variant === 'small',
-                    },
-                ) }>
-                    {product.title}
-                </h3>
+                <Link to = { `${BOOK.PRODUCT}/${product._id}` }>
+                    <h3 className = { cn(
+                        'font-secondary font-bold tracking-[20%]',
+                        {
+                            'text-sm leading-[16px]': variant === 'big',
+                            'text-xs leading-[18px]': variant === 'small',
+                        },
+                    ) }>
+                        {product.title}
+                    </h3>
+                </Link>
                 <div className = { cn('flex justify-between') }>
                     <p className = { cn(
                         'text-sm text-quaternary',
