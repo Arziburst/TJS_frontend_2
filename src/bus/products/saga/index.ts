@@ -29,7 +29,7 @@ export const useProductsSaga = () => {
             payload: types.FetchProductsByPaginationAtEndRequest,
         ) => dispatch(fetchProductsByPaginationAtEndAction(payload)),
         fetchProduct:          (payload: types.FetchProductRequest) => dispatch(fetchProductAction(payload)),
-        fetchProducts:         () => dispatch(fetchProductsAction()),
+        fetchProducts:         (payload: types.FetchProductsRequest) => dispatch(fetchProductsAction(payload)),
         fetchCreateNewProduct: (payload: types.FetchCreateNewProductRequest) => dispatch(
             fetchCreateNewProductAction(payload),
         ),

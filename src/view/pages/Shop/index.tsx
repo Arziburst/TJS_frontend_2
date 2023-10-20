@@ -21,7 +21,6 @@ import { BOOK, ParamsLowerCase } from '@/view/routes/book';
 import { useTogglesRedux } from '@/bus/client/toggles';
 import { useProfile } from '@/bus/profile';
 import { useProducts } from '@/bus/products';
-import { initialState } from '@/bus/products/slice';
 
 // Containers
 import { MoveUnderline, NotData } from '@/view/containers';
@@ -33,7 +32,7 @@ import { Label } from './Label';
 import { NavItemText } from '@/view/components/Nav/NavItem/NavItemText';
 
 // Elements
-import { Button, NavLink } from '@/view/elements';
+import { Button, NavLink, TitlePage } from '@/view/elements';
 
 // Static
 import {
@@ -81,7 +80,7 @@ const Shop: FC<PropTypes> = () => {
     } = useProducts();
 
     // States
-    const [ localPageState, setLocalPageState ] = useState(initialState.page);
+    const [ localPageState, setLocalPageState ] = useState(page);
     const [
         filterByCategoryState,
         setFilterByCategoryState,
@@ -107,7 +106,7 @@ const Shop: FC<PropTypes> = () => {
     };
 
     const onClickShowMoreHandler = () => {
-        const rightPage = localPageState <= 1 ? 2 : localPageState + 1;
+        const rightPage = localPageState + 1;
         setLocalPageState(rightPage);
         fetchProductsByPaginationAtEnd({
             limit:       limit,
@@ -138,19 +137,23 @@ const Shop: FC<PropTypes> = () => {
     }, [ filterByCategoryState ]);
 
     useEffect(() => {
-        setLocalPageState(initialState.page);
+        setLocalPageState(page);
     }, [ category, isFilterByLowToHigh ]);
+
+    useEffect(() => {
+        setLocalPageState(page);
+    }, [ page ]);
 
     return (
         <div className = { `flex flex-col ${S.common_gap} 
             sb:flex-row sb:gap-20` }>
             <div>
                 {width < SCREENS_NUMBER.SB ? (
-                    <div className = 'flex flex-col gap-12'>
+                    <div className = 'flex flex-col'>
                         {category && (
-                            <h2 className = 'text-[40px] uppercase text-center'>
+                            <TitlePage>
                                 {category}
-                            </h2>
+                            </TitlePage>
                         )}
                         <div className = { `flex gap-4
                             [&>*]:w-1/2

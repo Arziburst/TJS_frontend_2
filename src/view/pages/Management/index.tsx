@@ -58,9 +58,8 @@ const Management: FC<PropTypes> = () => {
 
     const { fetchGallery } = useGallery();
     const {
-        products: { currentProduct, products, isLoadings },
-        setCurrentProduct,
-        fetchProducts,
+        products: { currentProduct, isLoadings },
+        fetchProduct,
         fetchCreateNewProduct,
         fetchDeleteProduct,
         fetchEditProduct,
@@ -124,27 +123,21 @@ const Management: FC<PropTypes> = () => {
 
     useEffect(() => {
         fetchGallery();
-        id && fetchProducts(); // todo need to fetch only one product ???!!!!!
+        id && fetchProduct(id);
     }, []);
 
     useEffect(() => {
-        if (products) {
-            const foundCurrentProduct = products.find((product) => product._id === id);
-            if (foundCurrentProduct) {
-                setCurrentProduct(foundCurrentProduct);
-                currentProduct && form.reset({
-                    available:   foundCurrentProduct.available,
-                    description: foundCurrentProduct.description,
-                    discount:    foundCurrentProduct.discount,
-                    images:      foundCurrentProduct.images,
-                    price:       foundCurrentProduct.price,
-                    title:       foundCurrentProduct.title,
-                    type:        foundCurrentProduct.type,
-                    weight:      foundCurrentProduct.weight,
-                });
-            }
-        }
-    }, [ products ]);
+        currentProduct && form.reset({
+            available:   currentProduct.available,
+            description: currentProduct.description,
+            discount:    currentProduct.discount,
+            images:      currentProduct.images,
+            price:       currentProduct.price,
+            title:       currentProduct.title,
+            type:        currentProduct.type,
+            weight:      currentProduct.weight,
+        });
+    }, [ currentProduct ]);
 
     useEffect(() => {
         if (!isModeEdit) {

@@ -1,6 +1,6 @@
 // Core
 import { cn } from '@/tools/lib/utils';
-import React, { FC, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 
 // Types
 export interface ImagePropTypes
@@ -19,14 +19,3 @@ export const Image = forwardRef<HTMLImageElement, ImagePropTypes>(({ src, classN
         />
     );
 });
-
-// export const Image: FC<ImagePropTypes> = ({ src, className, ref, ...props }) => {
-//     return (
-//         <img
-//             className = { cn('block max-w-full h-auto object-cover', className) }
-//             ref = { ref }
-//             src = { src }
-//             { ...props }
-//         />
-//     );
-// };

@@ -52,6 +52,11 @@ export const Private: FC = () => {
                 element = { <Pages.Product /> }
                 path = { BOOK.PRODUCT + PARAMS.ID }
             />
+            <Route
+                element = { <Pages.OrderDetails /> }
+                path = { BOOK.ORDER_DETAILS }
+            />
+
             {/* MarkerGen route */}
             <Route
                 element = {

@@ -22,8 +22,8 @@ export const productFetcher = (_id: types.FetchProductRequest) => {
     });
 };
 
-export const productsFetcher = () => {
-    return fetch(API.PRODUCTS.ROOT, {
+export const productsFetcher = (ids: types.FetchProductsRequest) => {
+    return fetch(API.PRODUCTS.ROOT + `?ids=${JSON.stringify(ids)}`, {
         method:  'GET',
         headers: {
             ...HEADERS,

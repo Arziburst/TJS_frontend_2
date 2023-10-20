@@ -18,8 +18,8 @@ export const use__entityName__(pascalCase)Saga = () => {
 };
 
 export function* watch__entityName__(pascalCase)(): SagaIterator {
-    yield all([call(
+    yield all([
         // MarkerGen watchers
-        watchFetch__entityName__(pascalCase)
-    )]);
+        call(watchFetch__entityName__(pascalCase)),
+    ]);
 }

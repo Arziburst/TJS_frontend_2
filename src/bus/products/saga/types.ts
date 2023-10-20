@@ -8,6 +8,7 @@ export type FetchProductRequest = types.ExtendedProduct['_id'];
 export type FetchProductResponse = types.ExtendedProduct;
 
 // Products
+export type FetchProductsRequest = Array<types.ExtendedProduct['_id']>;
 export type FetchProductsResponse = types.Products;
 
 // Products by pagination

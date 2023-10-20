@@ -30,6 +30,7 @@ interface PropTypes
     count?: number;
     isLoading: boolean;
     firstElement?: React.ReactNode;
+    textIfNotData?: string;
 }
 
 
@@ -42,6 +43,7 @@ const NotData = React.forwardRef<HTMLDivElement, PropTypes>(
         isLoading,
         asChild = false,
         firstElement,
+        textIfNotData,
         ...props
     }, ref) => {
         const Comp = asChild ? Slot : 'div';
@@ -50,7 +52,7 @@ const NotData = React.forwardRef<HTMLDivElement, PropTypes>(
 
         if (isLoading) {
             return (
-                <div className = { S.root }>
+                <div className = { cn(S.root, className) }>
                     Loading...
                 </div>
             );
@@ -58,9 +60,9 @@ const NotData = React.forwardRef<HTMLDivElement, PropTypes>(
 
         if (childCount < count) {
             return (
-                <div className = 'flex flex-col items-center'>
+                <div className = { cn('flex flex-col items-center', className) }>
                     <div className = { S.root }>
-                        Not Data
+                        {textIfNotData || 'Not Data'}
                     </div>
                     {firstElement}
                 </div>

@@ -55,7 +55,7 @@ export const setCurrentProduct: types.BaseContact<types.SetCurrentProductAction>
     currentProduct: action.payload,
 });
 
-export const setDeleteProduct: types.BaseContact<string> = (state, action) => { // todo need remove ???
+export const setDeleteProduct: types.BaseContact<string> = (state, action) => {
     if (state.products) {
         state.products.filter(({ _id }) => _id !== action.payload);
     }

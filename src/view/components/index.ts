@@ -1,4 +1,7 @@
 // MarkerGen re-export
+export * from './HorizontalRuleWithTotalPrice';
+export * from './CardCart';
+export * from './CartDetails';
 export * from './Pagination';
 export * from './Dialog';
 export * from './Tooltip';
