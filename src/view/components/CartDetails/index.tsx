@@ -26,10 +26,9 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
     const form = useForm({
         resolver:      yupResolver(validationForm),
         defaultValues: defaultValues,
+        mode:          'onChange',
     });
 
-    form.watch('city');
-    form.watch('warehouse');
     const { city, warehouse } = form.getValues();
 
     // Hooks of Bus
@@ -48,8 +47,11 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
         console.log('text');
     };
 
-    const onClickCityHandler = (city: CityNewPost) => {
-        form.setValue('city', city.Description, { shouldValidate: true });
+    const onClickCityHandler = (cityParam: CityNewPost) => {
+        form.setValue('city', cityParam.Description, { shouldValidate: true });
+        fetchWarehousesNewPost({
+            cityName: city,
+        });
     };
 
     const onClickWarehouseHandler = (warehouse: WarehouseNewPost) => {
@@ -65,6 +67,9 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                     || citySome.DescriptionRu.toLocaleLowerCase() === city.toLocaleLowerCase();
             })) {
                 form.clearErrors('city');
+                fetchWarehousesNewPost({
+                    cityName: city,
+                });
             } else {
                 form.setError('city', { message: 'You have to write right city name' });
             }

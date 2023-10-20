@@ -2,10 +2,7 @@
 import * as yup from 'yup';
 
 // Init
-import { CATEGORIES_ITEMS, ERRORS, VALIDATIONS } from '@/init/';
-
-// Types
-import { Product } from '@/bus/products/types';
+import { ERRORS, VALIDATIONS } from '@/init/';
 
 // Types
 export type DefaultValues = {
