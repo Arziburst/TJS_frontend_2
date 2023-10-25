@@ -1,5 +1,5 @@
 // Core
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useLayoutEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -18,6 +18,7 @@ import { defaultValues, validationForm } from './static';
 import { NotData, ScrollArea } from '@/view/containers';
 import { CityNewPost, WarehouseNewPost } from '@/bus/newPost/types';
 import { useTogglesRedux } from '@/bus/client/toggles';
+import { useOrders } from '@/bus/orders';
 
 // Types
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
@@ -38,6 +39,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
         fetchCitiesNewPost,
         fetchWarehousesNewPost,
     } = useNewPost();
+    const { orders: { liqPay }, fetchGetDataLiqPayOrder } = useOrders();
 
     // State
     const [ isFirstRenderState, setIsFirstRenderState ] = useState(true);
@@ -98,8 +100,40 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
         isFirstRenderState && setIsFirstRenderState(false);
     }, [ warehouse ]);
 
+    useEffect(() => {
+        fetchGetDataLiqPayOrder({
+            amount:      '1',
+            description: 'description text',
+            order_id:    `order_id_${new Date().getTime()}`, // todo
+            result_url:  process.env.PUBLIC_URL || '',
+            server_url:  process.env.API_URL || '',
+        });
+    }, []);
+
     return (
         <div { ...props }>
+            {liqPay && (
+                <form
+                    acceptCharset = 'utf-8'
+                    action = 'https://www.liqpay.ua/api/3/checkout'
+                    method = 'POST'>
+                    <input
+                        name = 'data'
+                        type = 'hidden'
+                        value = { liqPay.data }
+                    />
+                    <input
+                        name = 'signature'
+                        type = 'hidden'
+                        value = { liqPay.signature }
+                    />
+                    <input
+                        src = '//static.liqpay.ua/buttons/p1ru.radius.png'
+                        type = 'image'
+                    />
+                </form>
+            )}
+
             <TitlePage>cart</TitlePage>
             <Form.Root { ...form }>
                 <form

@@ -18,6 +18,10 @@ export const API = {
         PRODUCT:                (_id: ExtendedProduct['_id']) => `${API_URL}/products/${_id}`,
         INCREMENT_VIEWS:        (_id: ExtendedProduct['_id']) => `${API_URL}/products/incrementViews/${_id}`,
     },
+    ORDERS: {
+        ROOT:    `${API_URL}/orders`,
+        LIQ_PAY: `${API_URL}/orders/liq-pay`,
+    },
     NEW_POST: 'https://api.novaposhta.ua/v2.0/json/',
     CART:     {
         CHECK: `${API_URL}/cart/check`,

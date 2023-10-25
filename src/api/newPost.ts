@@ -1,6 +1,9 @@
 // Config of API
 import { API } from './config';
 
+// Utils
+import { checkIsExistKeyOfEnv } from '@/tools/utils';
+
 // Types
 import * as types from '../bus/newPost/saga/types';
 
@@ -8,7 +11,7 @@ export const getCitiesNewPostFetcher = (payload: types.FetchCitiesNewPostRequest
     return fetch(API.NEW_POST, {
         method: 'POST',
         body:   JSON.stringify({
-            apiKey:           process.env.API_KEY_NEW_POST,
+            apiKey:           checkIsExistKeyOfEnv(process.env.API_KEY_NEW_POST),
             modelName:        'Address',
             calledMethod:     'getCities',
             Page:             '1',
@@ -24,7 +27,7 @@ export const getWarehousesNewPostFetcher = (payload: types.FetchWarehousesNewPos
     return fetch(API.NEW_POST, {
         method: 'POST',
         body:   JSON.stringify({
-            apiKey:           process.env.API_KEY_NEW_POST,
+            apiKey:           checkIsExistKeyOfEnv(process.env.API_KEY_NEW_POST),
             modelName:        'Address',
             calledMethod:     'getWarehouses',
             methodProperties: {
