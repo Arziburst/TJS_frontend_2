@@ -19,7 +19,7 @@ export const useOrdersSaga = () => {
     const dispatch = useDispatch();
 
     return {
-        fetchOrders:             () => void dispatch(fetchOrdersAction(1)),
+        fetchOrders:             () => dispatch(fetchOrdersAction()),
         fetchCreateOrder:        (payload: types.FetchCreateOrderRequest) => dispatch(fetchCreateOrderAction(payload)),
         fetchGetDataLiqPayOrder: (
             payload: types.FetchGetDataLiqPayOrderRequest,

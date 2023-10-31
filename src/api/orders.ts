@@ -4,6 +4,16 @@ import { API, HEADERS } from './config';
 // Types
 import * as types from '../bus/orders/saga/types';
 
+export const getOrdersFetcher = () => {
+    return fetch(API.ORDERS.ROOT, {
+        method:      'GET',
+        credentials: 'include',
+        headers:     {
+            ...HEADERS,
+        },
+    });
+};
+
 export const createOrderFetcher = (body: types.FetchCreateOrderRequest) => {
     return fetch(API.ORDERS.ROOT, {
         method:      'POST',

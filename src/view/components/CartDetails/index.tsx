@@ -360,14 +360,6 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                         80 ₴
                                     </FormTitle>
                                 </div> */}
-                                <div className = 'flex justify-between flex-wrap'>
-                                    <FormTitle className = 'mb-0 sb:mb-0'>
-                                        Tax
-                                    </FormTitle>
-                                    <FormTitle className = 'mb-0 sb:mb-0 text-quaternary'>
-                                        0 ₴
-                                    </FormTitle>
-                                </div>
                             </div>
                             <div className = 'flex justify-between flex-wrap'>
                                 <FormTitle className = 'mb-0 sb:mb-0 text-quaternary'>

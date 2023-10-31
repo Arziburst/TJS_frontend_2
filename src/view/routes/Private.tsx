@@ -65,6 +65,10 @@ export const Private: FC = () => {
                 element = { <Pages.PaymentFail /> }
                 path = { BOOK.PAYMENT_FAIL }
             />
+            <Route
+                element = { <Pages.Orders /> }
+                path = { BOOK.ORDERS }
+            />
             {/* MarkerGen route */}
             <Route
                 element = {
