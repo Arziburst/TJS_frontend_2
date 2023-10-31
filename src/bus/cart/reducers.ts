@@ -24,6 +24,6 @@ export const removeProductOfCart: types.BaseContact<types.ProductOfCart> = (stat
     return state;
 };
 
-export const resetCart: types.BaseContact<types.CartState> = (_, action) => {
+export const resetCart: types.BaseContact<any> = (_, action) => {
     return (action && action.payload) || initialState;
 };

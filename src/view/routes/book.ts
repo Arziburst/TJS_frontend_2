@@ -20,6 +20,8 @@ export enum PARAMS {
 
 export enum BOOK {
     // MarkerGen books
+    PAYMENT_FAIL = '/payment-fail',
+    PAYMENT_SUCCESS = '/payment-success',
     ORDER_DETAILS = '/order-details',
     PRODUCT = '/product',
     ADD_ITEM = '/add-item',

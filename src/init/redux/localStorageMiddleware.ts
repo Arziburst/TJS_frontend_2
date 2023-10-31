@@ -34,6 +34,10 @@ export const localStorageMiddleware: Middleware<{}, RootState> = (store) => (nex
             cart && ls.set(LOCAL_STORAGE.CART, cart.filter((productHash: string) => productHash !== action.payload));
             break;
 
+        case convertNameToAction(reducers.resetCart.name):
+            ls.set(LOCAL_STORAGE.CART, []);
+            break;
+
         default: void 0;
     }
 

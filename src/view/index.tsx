@@ -15,6 +15,9 @@ import '@/assets/images/test.png'; // todo remove when finish
 // Routes
 import { Routes } from './routes';
 
+// Book
+import { BOOK } from '@/view/routes/book';
+
 // Tools
 import { ls, postcssViewportHeightCorrection, setValueToCSSVariable } from '@/tools/utils';
 
@@ -60,7 +63,10 @@ export const App: FC = () => {
         setOnlineStatusHandler();
         window.addEventListener('online', setOnlineStatusHandler);
         window.addEventListener('offline', setOnlineStatusHandler);
-        fetchCheckCart(ls.get(LOCAL_STORAGE.CART) || []);
+
+        if (window.location.pathname !== BOOK.PAYMENT_SUCCESS) {
+            fetchCheckCart(ls.get(LOCAL_STORAGE.CART) || []);
+        }
     }, []);
 
     useEffect(() => {
