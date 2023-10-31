@@ -59,13 +59,11 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
 
     // State
     const [ isFirstRenderState, setIsFirstRenderState ] = useState(true);
+    const [ totalPriceState, setTotalPriceState ] = useState(0);
 
     // Handlers
     const onSubmit = (values: any) => { // todo how to remove any ???
-        console.log('text');
-        if (currentOrder) {
-            console.log('text2');
-
+        if (currentOrder && cart && cart.length > 0) {
             const gotData = form.getValues();
 
             fetchUpdateOrder({
@@ -145,6 +143,11 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
         if (currentOrder) {
             const id = currentOrder._id;
 
+            setTotalPriceState(currentOrder.orderedProducts.reduce(
+                (acc, orderedProducts) => acc + orderedProducts.price,
+                0,
+            ));
+
             fetchGetDataLiqPayOrder({
                 amount:      `${currentOrder.orderedProducts.length + 1}`,
                 description: `Замовлення №${id}`,
@@ -157,6 +160,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
             if (
                 currentOrder && !window.location.href.toLowerCase().includes(LINK_LIQ_PAY)
                 && !window.location.href.toLowerCase().includes(process.env.PUBLIC_URL + BOOK.CART)
+                && !window.location.href.toLowerCase().includes(process.env.PUBLIC_URL + BOOK.ORDER_DETAILS)
             ) {
                 fetchDeleteOrder(currentOrder._id);
             }
@@ -342,17 +346,20 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                         Your Order
                                     </FormTitle>
                                     <FormTitle className = 'text-quaternary'>
-                                        4660 ₴
+                                        {currentOrder ? currentOrder.orderedProducts.reduce(
+                                            (acc, orderedProducts) => acc + orderedProducts.price,
+                                            0,
+                                        ) : 0} ₴
                                     </FormTitle>
                                 </div>
-                                <div className = 'flex justify-between flex-wrap'>
+                                {/* <div className = 'flex justify-between flex-wrap'>
                                     <FormTitle>
                                         Shipping
                                     </FormTitle>
                                     <FormTitle className = 'text-quaternary'>
                                         80 ₴
                                     </FormTitle>
-                                </div>
+                                </div> */}
                                 <div className = 'flex justify-between flex-wrap'>
                                     <FormTitle className = 'mb-0 sb:mb-0'>
                                         Tax
@@ -367,11 +374,11 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                     TOTAL
                                 </FormTitle>
                                 <FormTitle className = 'mb-0 sb:mb-0 text-quaternary'>
-                                    4740 ₴
+                                    {totalPriceState} ₴
                                 </FormTitle>
                             </div>
                         </div>
-                        {form.formState.isValid && liqPay ? (
+                        {form.formState.isValid && cart && cart.length > 0 && liqPay ? (
                             <form
                                 acceptCharset = 'utf-8'
                                 action = { `${LINK_LIQ_PAY}/api/3/checkout` }
