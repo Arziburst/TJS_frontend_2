@@ -3,9 +3,6 @@ import { SagaIterator } from '@redux-saga/core';
 import { createAction } from '@reduxjs/toolkit';
 import { put, takeLatest } from 'redux-saga/effects';
 
-// Init
-import { LOCAL_STORAGE } from '@/init';
-
 // API
 import { checkCartFetcher } from '../../../api';
 
@@ -13,7 +10,7 @@ import { checkCartFetcher } from '../../../api';
 import { cartActions, sliceName } from '../slice';
 
 // Tools
-import { ls, makeRequest } from '../../../tools/utils';
+import { makeRequest } from '../../../tools/utils';
 
 // Types
 import * as commonTypes from '../../commonTypes';
@@ -33,7 +30,6 @@ const fetchCheckCart = (
     },
     success: function* (result) {
         yield put(cartActions.setCart(result));
-        yield ls.set(LOCAL_STORAGE.CART, result);
     },
 });
 

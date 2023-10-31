@@ -1,10 +1,23 @@
 // Core
-import React, { FC, useEffect, useLayoutEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
+// Init
+import { LINK_LIQ_PAY } from '@/init';
+
 // Bus
+import { useTogglesRedux } from '@/bus/client/toggles';
+import { useOrders } from '@/bus/orders';
 import { useNewPost } from '@/bus/newPost';
+import { CityNewPost, WarehouseNewPost } from '@/bus/newPost/types';
+import { useCart } from '@/bus/cart';
+
+// Book
+import { BOOK } from '@/view/routes/book';
+
+// Containers
+import { NotData, ScrollArea } from '@/view/containers';
 
 // Components
 import { Form } from '../Form';
@@ -15,10 +28,6 @@ import { Button, FormTitle, Input, Textarea, TitlePage } from '@/view/elements';
 
 // Static
 import { defaultValues, validationForm } from './static';
-import { NotData, ScrollArea } from '@/view/containers';
-import { CityNewPost, WarehouseNewPost } from '@/bus/newPost/types';
-import { useTogglesRedux } from '@/bus/client/toggles';
-import { useOrders } from '@/bus/orders';
 
 // Types
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
@@ -39,7 +48,14 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
         fetchCitiesNewPost,
         fetchWarehousesNewPost,
     } = useNewPost();
-    const { orders: { liqPay }, fetchGetDataLiqPayOrder } = useOrders();
+    const {
+        orders: { liqPay, currentOrder },
+        fetchGetDataLiqPayOrder,
+        fetchCreateOrder,
+        fetchDeleteOrder,
+        fetchUpdateOrder,
+    } = useOrders();
+    const { cart } = useCart();
 
     // State
     const [ isFirstRenderState, setIsFirstRenderState ] = useState(true);
@@ -47,6 +63,22 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
     // Handlers
     const onSubmit = (values: any) => { // todo how to remove any ???
         console.log('text');
+        if (currentOrder) {
+            console.log('text2');
+
+            const gotData = form.getValues();
+
+            fetchUpdateOrder({
+                _id:       currentOrder._id,
+                firstName: gotData.firstName,
+                lastName:  gotData.lastName,
+                phone:     gotData.phone,
+                email:     gotData.email,
+                city:      gotData.city,
+                warehouse: gotData.warehouse,
+                comment:   gotData.comment,
+            });
+        }
     };
 
     const onClickCityHandler = (cityParam: CityNewPost) => {
@@ -101,39 +133,38 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
     }, [ warehouse ]);
 
     useEffect(() => {
-        fetchGetDataLiqPayOrder({
-            amount:      '1',
-            description: 'description text',
-            order_id:    `order_id_${new Date().getTime()}`, // todo
-            result_url:  process.env.PUBLIC_URL || '',
-            server_url:  process.env.API_URL || '',
-        });
-    }, []);
+        if (cart && cart.length > 0) {
+            fetchCreateOrder({
+                orderedPIDs: cart,
+                phone:       'null',
+            });
+        }
+    }, [ cart ]);
+
+    useEffect(() => {
+        if (currentOrder) {
+            const id = currentOrder._id;
+
+            fetchGetDataLiqPayOrder({
+                amount:      `${currentOrder.orderedProducts.length + 1}`,
+                description: `Замовлення №${id}`,
+                order_id:    id,
+                result_url:  process.env.API_URL + `/orders/change-status?id=${id}` || '',
+            });
+        }
+
+        return () => {
+            if (
+                currentOrder && !window.location.href.toLowerCase().includes(LINK_LIQ_PAY)
+                && !window.location.href.toLowerCase().includes(process.env.PUBLIC_URL + BOOK.CART)
+            ) {
+                fetchDeleteOrder(currentOrder._id);
+            }
+        };
+    }, [ currentOrder ]);
 
     return (
         <div { ...props }>
-            {liqPay && (
-                <form
-                    acceptCharset = 'utf-8'
-                    action = 'https://www.liqpay.ua/api/3/checkout'
-                    method = 'POST'>
-                    <input
-                        name = 'data'
-                        type = 'hidden'
-                        value = { liqPay.data }
-                    />
-                    <input
-                        name = 'signature'
-                        type = 'hidden'
-                        value = { liqPay.signature }
-                    />
-                    <input
-                        src = '//static.liqpay.ua/buttons/p1ru.radius.png'
-                        type = 'image'
-                    />
-                </form>
-            )}
-
             <TitlePage>cart</TitlePage>
             <Form.Root { ...form }>
                 <form
@@ -304,19 +335,6 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                             </ContainerFields>
                         </div>
                         <div>
-                            <FormTitle>
-                                <span className = 'text-quaternary'>3.</span> Payment options
-                            </FormTitle>
-                            <ContainerFields>
-                                <Button variant = 'outline'>
-                                    pay with APPLE
-                                </Button>
-                                <Button variant = 'outline'>
-                                    pay GOOGLE
-                                </Button>
-                            </ContainerFields>
-                        </div>
-                        <div>
                             <div className = { `border-y-2 border-tertiary-100/10 py-[18px] mb-[18px]
                                 sb:py-[32px] sb:mb-[32px]` }>
                                 <div className = 'flex justify-between flex-wrap'>
@@ -353,12 +371,37 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                 </FormTitle>
                             </div>
                         </div>
-                        <Button
-                            className = 'capitalize'
-                            type = 'submit'
-                            variant = 'contain'>
-                            Make Order
-                        </Button>
+                        {form.formState.isValid && liqPay ? (
+                            <form
+                                acceptCharset = 'utf-8'
+                                action = { `${LINK_LIQ_PAY}/api/3/checkout` }
+                                method = 'POST'>
+                                <input
+                                    name = 'data'
+                                    type = 'hidden'
+                                    value = { liqPay.data }
+                                />
+                                <input
+                                    name = 'signature'
+                                    type = 'hidden'
+                                    value = { liqPay.signature }
+                                />
+                                <Button
+                                    className = 'capitalize'
+                                    type = 'submit'
+                                    variant = 'contain'
+                                    onClick = { onSubmit }>
+                                    Make Order
+                                </Button>
+                            </form>
+                        ) : (
+                            <Button
+                                className = 'capitalize'
+                                type = 'submit'
+                                variant = 'contain'>
+                                Make Order
+                            </Button>
+                        )}
                     </div>
                 </form>
             </Form.Root>

@@ -11,14 +11,20 @@ export type OrderedProduct = {
 export type OrderedProducts = Array<OrderedProduct>;
 
 export type Order = {
-    total: number;
+    _id: string;
+    firstName: string;
+    lastName: string;
+    phone?: string;
     email?: string;
+    city?: string;
+    warehouse?: string;
     comment?: string;
+
+    total: number;
     status: number;
-    phone: string;
+    statusPayment: number;
     orderedProducts: OrderedProducts;
     created: Date;
-    _id: string;
 };
 
 export type LiqPay = {
@@ -30,6 +36,7 @@ export type LiqPay = {
 export type Orders = Array<Order>
 export type OrdersState = {
     orders: Orders | null;
+    currentOrder: Order | null;
     liqPay: LiqPay | null;
 }
 

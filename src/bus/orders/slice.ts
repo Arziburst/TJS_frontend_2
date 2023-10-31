@@ -9,8 +9,9 @@ import * as reducers from './reducers';
 // MarkerGen import extraReducers
 
 export const initialState: types.OrdersState = {
-    orders: null,
-    liqPay: null,
+    orders:       null,
+    currentOrder: null,
+    liqPay:       null,
 };
 
 export const ordersSlice = createSlice<types.OrdersState, typeof reducers>({

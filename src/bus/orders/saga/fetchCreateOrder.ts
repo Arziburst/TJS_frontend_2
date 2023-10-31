@@ -25,12 +25,11 @@ const fetchCreateOrder = (
 ) => makeRequest<types.FetchCreateOrderResponse, commonTypes.Error>({
     callAction,
     fetchOptions: {
-        successStatusCode: 200,
+        successStatusCode: 201,
         fetch:             () => createOrderFetcher(callAction.payload),
     },
     success: function* (result) {
-        yield console.log(result);
-        // yield put(ordersActions.setOrders(result));
+        yield put(ordersActions.setCurrentOrder(result));
     },
 });
 

@@ -1,3 +1,12 @@
+.env {
+    APP_NAME=EXAMPLE
+    PUBLIC_URL=http://localhost:3000
+    API_URL=http://localhost:4000
+
+    API_KEY_NEW_POST=c2c034b9e69945c20ede4a147708185f
+}
+
+
 # Welcome to Burst.🔥
 
 <image align="right" width="160px" alt="HTML5" src="https://lh3.googleusercontent.com/pw/AL9nZEXF_kAh3tezMRxnT4GGR3YHoKo5CpSkWtRBD9_HsJ7K_KNqcpjELcsJ1OKdji9fJNIa9GKHXjeuLLshj5t-Y0QJuMn3IVxRCT1iXtm0AeSjD8s2cR1VJOpqRHEXLLZVZRgmJcw59HXUwCb2_dw1L17A=s432-no?authuser=0"/>

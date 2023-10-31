@@ -30,7 +30,7 @@ export const useCart = () => {
          * @param _id - _id of product
          */
         removeProductOfCart: (payload: types.ProductOfCart) => dispatch(cartActions.removeProductOfCart(payload)),
-        resetCart:           (payload: types.CartState) => dispatch(cartActions.resetCart(payload)),
+        resetCart:           (payload?: types.CartState) => dispatch(cartActions.resetCart(payload)),
         ...cartSagas,
     };
 };
