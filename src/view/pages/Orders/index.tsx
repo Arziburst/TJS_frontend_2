@@ -1,5 +1,9 @@
 // Core
 import React, { FC, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+// Book
+import { BOOK } from '@/view/routes/book';
 
 // Bus
 import { useOrders } from '@/bus/orders';
@@ -12,16 +16,20 @@ import { ErrorBoundary } from '../../components';
 import { CardOrder } from './CardOrder';
 
 // Types
+import { Order } from '@/bus/orders/types';
+
 type PropTypes = {
     /* type props here */
 }
 
 const Orders: FC<PropTypes> = () => {
+    const navigate = useNavigate();
+
     const { orders: { orders }, fetchOrders } = useOrders();
 
     // Handlers
-    const onClickCardOrderHandler = () => {
-        console.log('text');
+    const onClickCardOrderHandler = (order: Order) => {
+        navigate(BOOK.ORDER + `/${order._id}`);
     };
 
     useEffect(() => {
@@ -38,7 +46,7 @@ const Orders: FC<PropTypes> = () => {
                     <CardOrder
                         key = { order._id }
                         order = { order }
-                        onClick = { () => onClickCardOrderHandler }
+                        onClickCardOrder = { onClickCardOrderHandler }
                     />
                 ))}
             </NotData>

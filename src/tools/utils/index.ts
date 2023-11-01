@@ -1,3 +1,5 @@
+export * from './returnStylesStatus';
+export * from './transformStatusToString';
 export * from './checkIsExistKeyOfEnv';
 export * from './removeKeysOfObject';
 export * from './arrayComparison';

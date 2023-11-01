@@ -7,6 +7,8 @@ import { BOOK, PARAMS } from './book';
 
 // Pages
 import * as Pages from '../pages';
+
+// Containers
 import { ContainerShop } from '../pages/Shop/router';
 
 export const Public: FC = () => {
@@ -59,10 +61,6 @@ export const Public: FC = () => {
             <Route
                 element = { <Pages.PaymentFail /> }
                 path = { BOOK.PAYMENT_FAIL }
-            />
-            <Route
-                element = { <Pages.Orders /> }
-                path = { BOOK.ORDERS }
             />
             {/* MarkerGen route */}
             <Route

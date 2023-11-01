@@ -10,7 +10,6 @@ import { LINK_LIQ_PAY } from '@/init';
 import { useTogglesRedux } from '@/bus/client/toggles';
 import { useOrders } from '@/bus/orders';
 import { useNewPost } from '@/bus/newPost';
-import { CityNewPost, WarehouseNewPost } from '@/bus/newPost/types';
 import { useCart } from '@/bus/cart';
 
 // Book
@@ -30,6 +29,8 @@ import { Button, FormTitle, Input, Textarea, TitlePage } from '@/view/elements';
 import { defaultValues, validationForm } from './static';
 
 // Types
+import { CityNewPost, WarehouseNewPost } from '@/bus/newPost/types';
+
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
 
 export const CartDetails: FC<PropTypes> = ({ ...props }) => {

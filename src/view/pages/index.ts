@@ -2,6 +2,7 @@
 import { lazy } from 'react';
 
 // MarkerGen pages
+export const Order = lazy(() => import(/* webpackChunkName: "Order" */ './Order'));
 export const Orders = lazy(() => import(/* webpackChunkName: "Orders" */ './Orders'));
 export const PaymentFail = lazy(() => import(/* webpackChunkName: "PaymentFail" */ './PaymentFail'));
 export const PaymentSuccess = lazy(() => import(/* webpackChunkName: "PaymentSuccess" */ './PaymentSuccess'));

@@ -7,6 +7,7 @@ import { useDispatch } from '../../../tools/hooks';
 
 // MarkerGen Watchers & Actions
 import { fetchOrdersAction, watchFetchOrders } from './fetchOrders';
+import { fetchOrderAction, watchFetchOrder } from './fetchOrder';
 import { fetchCreateOrderAction, watchFetchCreateOrder } from './fetchCreateOrder';
 import { fetchGetDataLiqPayOrderAction, watchFetchGetDataLiqPayOrder } from './fetchGetDataLiqPayOrder';
 import { fetchDeleteOrderAction, watchFetchDeleteOrder } from './fetchDeleteOrder';
@@ -20,6 +21,7 @@ export const useOrdersSaga = () => {
 
     return {
         fetchOrders:             () => dispatch(fetchOrdersAction()),
+        fetchOrder:              (payload: types.FetchGetOrderRequest) => dispatch(fetchOrderAction(payload)),
         fetchCreateOrder:        (payload: types.FetchCreateOrderRequest) => dispatch(fetchCreateOrderAction(payload)),
         fetchGetDataLiqPayOrder: (
             payload: types.FetchGetDataLiqPayOrderRequest,
@@ -34,6 +36,7 @@ export function* watchOrders(): SagaIterator {
     yield all([
         // MarkerGen watchers
         call(watchFetchOrders),
+        call(watchFetchOrder),
         call(watchFetchCreateOrder),
         call(watchFetchGetDataLiqPayOrder),
         call(watchFetchDeleteOrder),

@@ -5,6 +5,10 @@ import * as types from '../types';
 // Get Orders
 export type FetchGetOrdersResponse = types.Orders;
 
+// Get Order
+export type FetchGetOrderRequest = string;
+export type FetchGetOrderResponse = types.Order;
+
 // Create Order
 export type FetchCreateOrderRequest = {
     phone?: string;

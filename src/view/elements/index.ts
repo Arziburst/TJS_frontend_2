@@ -1,4 +1,5 @@
 // MarkerGen re-export
+export * from './Badge';
 export * from './TitlePage';
 export * from './Switch';
 export * from './Textarea';

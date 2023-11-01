@@ -87,10 +87,12 @@
     /* Quaternary (Red) */
     --quaternary: #FF614A;
 
-    /* quinary (Green) */
+    /* Quinary (Green) */
     --quinary: #00C853;
     --quinary_100: #00c85388;
 
+    /* Senary (Yellow) */
+    --senary: #FFD600;
 
     /* Border */
     --border: rgba(99, 90, 89, 0.1);
