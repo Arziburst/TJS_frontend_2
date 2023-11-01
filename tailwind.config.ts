@@ -59,6 +59,9 @@ export default {
                     DEFAULT: 'var(--quinary)',
                     100:     'var(--quinary_100)',
                 },
+                senary: {
+                    DEFAULT: 'var(--senary)',
+                },
 
 
                 // todo remove

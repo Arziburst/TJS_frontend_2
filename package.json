@@ -42,6 +42,7 @@
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.0.0",
         "lucide-react": "^0.274.0",
+        "moment": "^2.29.4",
         "nori-store": "^1.0.3",
         "postcss-viewport-height-correction": "^1.1.1",
         "react": "^18.2.0",

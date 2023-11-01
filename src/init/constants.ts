@@ -42,3 +42,10 @@ export enum CSS_VARIABLES {
 export const typesOfImage: Array<string> = [ 'image/png', 'image/jpeg', 'image/gif' ];
 
 export const LINK_LIQ_PAY = 'https://www.liqpay.ua';
+
+export const VALUES_OF_STATUS = [
+    'Canceled',
+    'In processing',
+    'Accepted',
+    'Closed',
+];

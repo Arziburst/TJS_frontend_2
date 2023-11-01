@@ -2,6 +2,13 @@
 // import * as commonTypes from '@/bus/commonTypes';
 import * as types from '../types';
 
+// Get Orders
+export type FetchGetOrdersResponse = types.Orders;
+
+// Get Order
+export type FetchGetOrderRequest = string;
+export type FetchGetOrderResponse = types.Order;
+
 // Create Order
 export type FetchCreateOrderRequest = {
     phone?: string;
@@ -27,6 +34,6 @@ export type FetchGetDataLiqPayOrderResponse = {
 export type FetchDeleteOrderRequest = string;
 export type FetchDeleteOrderResponse = unknown;
 
-// Delete Order
+// Update Order
 export interface FetchUpdateOrderRequest extends Pick<types.Order, '_id'>, Partial<Omit<types.Order, '_id'>> {}
 export type FetchUpdateOrderResponse = unknown;

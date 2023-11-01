@@ -22,8 +22,8 @@ interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDiv
     Pick<LinkPropTypes, 'to'>
 {
     firstImage: ImageOfCardItemPropTypes;
-    secondImage: ImageOfCardItemPropTypes;
-    name: string;
+    secondImage?: ImageOfCardItemPropTypes;
+    name?: string;
     price: number;
     onClickEditItem: () => void;
     role: Profile['role'] | undefined;
@@ -63,22 +63,27 @@ export const CardItem: FC<PropTypes> = ({
                     <div className = { `${S.images_container} relative overflow-hidden` }>
                         <Image
                             alt = { firstImage.alt }
-                            className = { `${S.first_image} w-full h-full` }
+                            className = { cn('w-full h-full', {
+                                [ `${S.first_image}` ]: !!secondImage,
+                            }) }
                             src = { firstImage.src }
                         />
-                        <Image
-                            alt = { secondImage.alt }
-                            className = { `${S.second_image} w-full h-full` }
-                            src = { secondImage.src }
-                        />
-                        bb
+                        {secondImage && (
+                            <Image
+                                alt = { secondImage.alt }
+                                className = { `${S.second_image} w-full h-full` }
+                                src = { secondImage.src }
+                            />
+                        )}
                     </div>
 
                     <div className = 'flex flex-col gap-1'>
-                        <p
-                            className = { S.title }>
-                            {name}
-                        </p>
+                        {name && (
+                            <p
+                                className = { S.title }>
+                                {name}
+                            </p>
+                        )}
                         <span className = { S.price }>
                             {`${price} ₴`}
                         </span>

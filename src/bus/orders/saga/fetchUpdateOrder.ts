@@ -2,6 +2,7 @@
 import { SagaIterator } from '@redux-saga/core';
 import { createAction } from '@reduxjs/toolkit';
 import { takeLatest } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 
 // API
 import { updateOrderFetcher } from '@/api';
@@ -29,7 +30,7 @@ const fetchUpdateOrder = (
         fetch:             () => updateOrderFetcher(callAction.payload),
     },
     success: function* (result) {
-        console.log('result:', result);
+        yield toast.success('Order updated successfully');
     },
 });
 

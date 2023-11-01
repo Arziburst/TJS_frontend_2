@@ -20,8 +20,7 @@ export const API = {
     },
     ORDERS: {
         ROOT:    `${API_URL}/orders`,
-        DELETE:  (_id: string) => `${API_URL}/orders/${_id}`,
-        UPDATE:  (_id: string) => `${API_URL}/orders/${_id}`,
+        ROOT_ID: (_id: string) => `${API_URL}/orders/${_id}`,
         LIQ_PAY: `${API_URL}/orders/liq-pay`,
     },
     NEW_POST: 'https://api.novaposhta.ua/v2.0/json/',

@@ -7,6 +7,8 @@ import { BOOK, PARAMS } from './book';
 
 // Pages
 import * as Pages from '../pages';
+
+// Containers
 import { ContainerShop } from '../pages/Shop/router';
 
 export const Public: FC = () => {

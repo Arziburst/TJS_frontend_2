@@ -10,7 +10,6 @@ import { LINK_LIQ_PAY } from '@/init';
 import { useTogglesRedux } from '@/bus/client/toggles';
 import { useOrders } from '@/bus/orders';
 import { useNewPost } from '@/bus/newPost';
-import { CityNewPost, WarehouseNewPost } from '@/bus/newPost/types';
 import { useCart } from '@/bus/cart';
 
 // Book
@@ -30,6 +29,8 @@ import { Button, FormTitle, Input, Textarea, TitlePage } from '@/view/elements';
 import { defaultValues, validationForm } from './static';
 
 // Types
+import { CityNewPost, WarehouseNewPost } from '@/bus/newPost/types';
+
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
 
 export const CartDetails: FC<PropTypes> = ({ ...props }) => {
@@ -360,14 +361,6 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                         80 ₴
                                     </FormTitle>
                                 </div> */}
-                                <div className = 'flex justify-between flex-wrap'>
-                                    <FormTitle className = 'mb-0 sb:mb-0'>
-                                        Tax
-                                    </FormTitle>
-                                    <FormTitle className = 'mb-0 sb:mb-0 text-quaternary'>
-                                        0 ₴
-                                    </FormTitle>
-                                </div>
                             </div>
                             <div className = 'flex justify-between flex-wrap'>
                                 <FormTitle className = 'mb-0 sb:mb-0 text-quaternary'>
