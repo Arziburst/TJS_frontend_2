@@ -29,18 +29,13 @@ const fetchLoginProfile = (
     callAction: ReturnType<typeof fetchLoginProfileAction>,
 ) => makeRequest<types.FetchLoginProfileResponse, commonTypes.Error>({
     callAction,
+    toggleType:   'isLoadingLoginProfile',
     fetchOptions: {
         successStatusCode: 200,
         fetch:             () => loginProfileFetcher(removeKeysOfObject<types.FetchLoginProfileRequest, 'navigate'>({
             keys:   [ 'navigate' ],
             object: callAction.payload,
         })),
-    },
-    tryStart: function* () {
-        yield put(profileActions.setIsLoadingOfProfile({
-            type:  'profile',
-            value: true,
-        }));
     },
     success: function* (result) {
         yield put(profileActions.setProfile(result));
@@ -50,12 +45,6 @@ const fetchLoginProfile = (
         }));
         toast.success('Success Login!');
         yield callAction.payload.navigate(BOOK.ROOT);
-    },
-    finallyEnd: function* () {
-        yield put(profileActions.setIsLoadingOfProfile({
-            type:  'profile',
-            value: false,
-        }));
     },
 });
 

@@ -43,7 +43,11 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
     const { city, warehouse } = form.getValues();
 
     // Hooks of Bus
-    const { togglesRedux: { isFetchCitiesNewPost, isFetchWarehousesNewPost }} = useTogglesRedux();
+    const { togglesRedux: {
+        isLoadingFetchCitiesNewPost,
+        isLoadingFetchWarehousesNewPost,
+        isLoadingFetchDataLiqPayOrder,
+    }} = useTogglesRedux();
     const {
         newPost: { cities, warehouses },
         fetchCitiesNewPost,
@@ -166,7 +170,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                 fetchDeleteOrder(currentOrder._id);
             }
         };
-    }, [ currentOrder ]);
+    }, [ currentOrder, cart ]);
 
     return (
         <div { ...props }>
@@ -269,7 +273,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                                 <ScrollArea
                                                     className = 'h-[50vh] w-full p-4'
                                                     propViewport = {{}}>
-                                                    <NotData isLoading = { isFetchCitiesNewPost }>
+                                                    <NotData isLoading = { isLoadingFetchCitiesNewPost }>
                                                         {cities.map((city) => (
                                                             <Button
                                                                 className = 'flex-col'
@@ -303,7 +307,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                                 <ScrollArea
                                                     className = 'h-[50vh] w-full p-4'
                                                     propViewport = {{}}>
-                                                    <NotData isLoading = { isFetchWarehousesNewPost }>
+                                                    <NotData isLoading = { isLoadingFetchWarehousesNewPost }>
                                                         {warehouses.map((warehouse) => (
                                                             <Button
                                                                 className = 'flex-col'
@@ -388,6 +392,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                 />
                                 <Button
                                     className = 'capitalize'
+                                    isLoading = { isLoadingFetchDataLiqPayOrder }
                                     type = 'submit'
                                     variant = 'contain'
                                     onClick = { onSubmit }>

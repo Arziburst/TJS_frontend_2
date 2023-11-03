@@ -26,6 +26,7 @@ import { Gallery } from '../types';
 // Saga
 const fetchUpdateGallery = (callAction: ReturnType<typeof fetchUpdateGalleryAction>) => makeRequest<Gallery>({
     callAction,
+    toggleType:   'isLoadingUpdateGallery',
     fetchOptions: {
         successStatusCode: 200,
         fetch:             () => galleryUpdateFetcher(callAction.payload),

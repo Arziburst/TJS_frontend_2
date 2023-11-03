@@ -34,11 +34,7 @@ export const useProducts = () => {
         setEditedProduct: (
             payload: types.ExtendedProduct,
         ) => dispatch(productsActions.setEditedProduct(payload)),
-        setIsLoadingOfProducts: (
-            payload: types.SetIsLoadingOfProductsAction,
-        ) => dispatch(productsActions.setIsLoadingOfProducts(payload)),
-        setErrorOfProducts: (payload: commonTypes.Error) => dispatch(productsActions.setErrorOfProducts(payload)), // todo need???
-        resetProducts:      () => dispatch(productsActions.resetProducts()),
+        resetProducts: () => dispatch(productsActions.resetProducts()),
         ...productsSagas,
     };
 };

@@ -28,6 +28,7 @@ const fetchDeleteProduct = (
     callAction: ReturnType<typeof fetchDeleteProductAction>,
 ) => makeRequest<types.FetchDeleteProductResponse, commonTypes.Error>({
     callAction,
+    toggleType:   'isLoadingDeleteProduct',
     fetchOptions: {
         successStatusCode: 200,
         fetch:             () => deleteProductFetcher(removeKeysOfObject<types.FetchDeleteProductRequest, 'navigate'>({
@@ -35,29 +36,10 @@ const fetchDeleteProduct = (
             object: callAction.payload,
         })),
     },
-    tryStart: function* () {
-        if (callAction.payload) {
-            yield put(productsActions.setIsLoadingOfProducts({
-                type:  'delete',
-                value: true,
-            }));
-        }
-    },
     success: function* (result) {
         yield put(productsActions.setDeleteProduct(result));
         yield callAction.payload.navigate(BOOK.SHOP);
         yield toast.success('Product deleted successfully!');
-    },
-    error: function* (error) {
-        yield put(productsActions.setErrorOfProducts(error));
-    },
-    finallyEnd: function* () {
-        if (callAction.payload) {
-            yield put(productsActions.setIsLoadingOfProducts({
-                type:  'delete',
-                value: false,
-            }));
-        }
     },
 });
 

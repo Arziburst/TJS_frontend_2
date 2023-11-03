@@ -1,9 +1,6 @@
 // Core
 import { createSlice } from '@reduxjs/toolkit';
 
-// Common
-import { commonInitialState } from '../common';
-
 // Types
 import * as types from './types';
 
@@ -11,14 +8,7 @@ import * as types from './types';
 import * as reducers from './reducers';
 // MarkerGen import extraReducers
 
-export const initialState: types.ProfileState = {
-    ...commonInitialState,
-    isLoadings: {
-        profile: false,
-        logout:  false,
-    },
-    profile: null,
-};
+export const initialState: types.ProfileState = null;
 
 export const profileSlice = createSlice<types.ProfileState, typeof reducers>({
     name: 'profile',

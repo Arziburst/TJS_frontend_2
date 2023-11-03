@@ -25,23 +25,18 @@ const fetchLogoutProfile = (
     callAction: ReturnType<typeof fetchLogoutProfileAction>,
 ) => makeRequest<types.FetchLogoutProfileResponse, commonTypes.Error>({
     callAction,
+    toggleType:   'isLoadingLogoutProfile',
     fetchOptions: {
         successStatusCode: 204,
         fetch:             () => logoutProfileFetcher(),
         isNoData:          true,
-    },
-    tryStart: function* () {
-        yield put(profileActions.setIsLoadingOfProfile({
-            type:  'logout',
-            value: true,
-        }));
     },
     success: function* () {
         yield put(togglesActions.toggleCreatorAction({
             type:  'isLoggedIn',
             value: false,
         }));
-        yield put(profileActions.resetProfile()); // setIsLoadingOfProfile >>> false
+        yield put(profileActions.resetProfile());
     },
 });
 

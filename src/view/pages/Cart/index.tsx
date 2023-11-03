@@ -12,6 +12,7 @@ import { BOOK } from '@/view/routes/book';
 import { useWindowWidth } from '@/tools/hooks';
 
 // Bus
+import { useTogglesRedux } from '@/bus/client/toggles';
 import { useCart } from '@/bus/cart';
 import { useProducts } from '@/bus/products';
 
@@ -26,6 +27,7 @@ import { Button, TitlePage } from '@/view/elements';
 
 // Types
 import { ExtendedProduct } from '@/bus/products/types';
+import { cn } from '@/tools/lib/utils';
 
 type PropTypes = {
     /* type props here */
@@ -36,8 +38,9 @@ const Cart: FC<PropTypes> = () => {
 
     const [ width ] = useWindowWidth();
 
+    const { togglesRedux: { isLoadingFetchProduct }} = useTogglesRedux();
     const { products: { products }, fetchProducts } = useProducts();
-    const { cart, removeProductOfCart } = useCart();
+    const { cart, fetchProductCart, removeProductOfCart } = useCart();
 
     // Handlers
     const onClickContinueToCheckout = () => {
@@ -51,6 +54,7 @@ const Cart: FC<PropTypes> = () => {
     useEffect(() => {
         if (cart) {
             fetchProducts(cart);
+            // fetchProductCart(cart);
         }
     }, [ cart ]);
 
@@ -66,11 +70,12 @@ const Cart: FC<PropTypes> = () => {
 
                 <div className = 'sb:w-1/2'>
                     <NotData
-                        className = { `flex flex-col gap-[18px]
+                        className = { cn(`flex flex-col gap-[18px]
                         sm:flex-row sm:justify-center sm:flex-wrap
-                        sb:justify-start` }
-                        count = { 1 }
-                        isLoading = { false }
+                        sb:justify-start`, {
+                            'sb:justify-center': isLoadingFetchProduct,
+                        }) }
+                        isLoading = { isLoadingFetchProduct }
                         textIfNotData = 'Your cart is empty'>
                         {products?.map((product) => (
                             <CardCart

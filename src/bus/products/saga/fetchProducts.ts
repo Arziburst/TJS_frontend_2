@@ -24,27 +24,13 @@ const fetchProducts = (
     callAction: ReturnType<typeof fetchProductsAction>,
 ) => makeRequest<types.FetchProductsResponse, commonTypes.Error>({
     callAction,
+    toggleType:   'isLoadingFetchProducts',
     fetchOptions: {
         successStatusCode: 200,
         fetch:             () => productsFetcher(callAction.payload),
     },
-    tryStart: function* () {
-        yield put(productsActions.setIsLoadingOfProducts({
-            type:  'fetchProducts',
-            value: true,
-        }));
-    },
     success: function* (result) {
         yield put(productsActions.setProducts(result));
-    },
-    error: function* (error) {
-        yield put(productsActions.setErrorOfProducts(error));
-    },
-    finallyEnd: function* () {
-        yield put(productsActions.setIsLoadingOfProducts({
-            type:  'fetchProducts',
-            value: false,
-        }));
     },
 });
 

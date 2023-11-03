@@ -1,9 +1,6 @@
 // Core
 import { CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
-// Types
-import * as commonTypes from '../commonTypes';
-
 // Types of Entities
 export type Profile = {
     email: string;
@@ -13,15 +10,7 @@ export type Profile = {
 }
 
 // State
-export type IsLoadings = 'profile' | 'logout';
-export interface ProfileState extends commonTypes.State<Record<IsLoadings, commonTypes.IsLoading>> {
-    profile: null | Profile
-}
-
-// Actions
-export type SetIsLoadingOfProfileAction = commonTypes.SetIsLoading<IsLoadings>
+export type ProfileState = null | Profile
 
 // Contracts
 export type BaseContact<T = any> = CaseReducer<ProfileState, PayloadAction<T>>
-
-export type SetIsLoadingOfProfileContact = BaseContact<SetIsLoadingOfProfileAction>;

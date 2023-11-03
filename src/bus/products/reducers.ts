@@ -1,9 +1,7 @@
-// Common
-import { setIsLoading } from '../common';
+// Slice
+import { initialState } from './slice';
 
 // Types
-import * as commonTypes from '../commonTypes';
-import { initialState } from './slice';
 import * as types from './types';
 
 export const setProducts: types.BaseContact<types.Products> = (state, action) => ({
@@ -82,12 +80,5 @@ export const setEditedProduct: types.BaseContact<types.ExtendedProduct> = (state
 
     return state;
 };
-
-export const setErrorOfProducts: types.BaseContact<commonTypes.Error> = (state, action) => ({
-    ...state,
-    error: action.payload,
-});
-
-export const setIsLoadingOfProducts: types.SetIsLoadingOfProductsContact = setIsLoading;
 
 export const resetProducts: types.BaseContact<void> = () => initialState;

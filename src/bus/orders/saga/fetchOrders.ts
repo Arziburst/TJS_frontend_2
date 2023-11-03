@@ -24,6 +24,7 @@ const fetchOrders = (
     callAction: ReturnType<typeof fetchOrdersAction>,
 ) => makeRequest<types.FetchGetOrdersResponse, commonTypes.Error>({
     callAction,
+    toggleType:   'isLoadingFetchOrders',
     fetchOptions: {
         successStatusCode: 200,
         fetch:             getOrdersFetcher,

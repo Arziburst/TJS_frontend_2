@@ -19,7 +19,6 @@ import {
 
 // Types
 import { Image as ImageType } from '@/bus/gallery/types';
-import { minLengthImages } from '../static';
 
 type PropTypes = {
     onClickAddItemGalleryToManagementHandler: (event: any, image: ImageType) => void;
@@ -54,7 +53,7 @@ export const ModalAddImages: FC<PropTypes> = ({
             if (gallery) {
                 const Ids = gallery.map((image) => image.public_id);
                 Ids.forEach((id) => {
-                    fetchDeleteItemOfGallery(id); // todo improve delete for all images, a lot of actions!!!!!!!!!!
+                    fetchDeleteItemOfGallery(id);
                 });
             } else {
                 toast.error('Ошибка удаления');
@@ -70,27 +69,23 @@ export const ModalAddImages: FC<PropTypes> = ({
         <Dialog.Root>
             <Dialog.DialogTrigger
                 asChild
-                className = { cn('min-h-[132px]', { 'w-auto p-[20px] aspect-square': selectedImages.length >= minLengthImages }, classNameTrigger) }>
+                className = { cn('min-h-[132px] p-[20px]', { 'w-auto aspect-square': selectedImages.length > 0 }, classNameTrigger) }>
                 <Button variant = 'outline'>
-                    Add images from Gallery
+                    Add images from the Gallery
                 </Button>
             </Dialog.DialogTrigger>
             <Dialog.DialogContent className = 'max-h-screen overflow-x-scroll'>
                 <Dialog.DialogHeader>
-
-                    {/* <Dialog.DialogTitle>Are you sure absolutely sure?</Dialog.DialogTitle> */}
-                    {/* <Dialog.DialogDescription>
-                                        This action cannot be undone. This will permanently delete your account
-                                        and remove your data from our servers.
-                                    </Dialog.DialogDescription> */}
                     <div>
                         <input
                             multiple
                             type = 'file'
                             onChange = { onChangeInputGallery }
                         />
+                        {/* todo Альфа, может плоховато работать!!! */}
                         <Button
                             className = 'w-auto p-2'
+                            title = 'Альфа, может плоховато работать!!!'
                             onClick = { onClickAllItemsGalleryHandler }>
                             Delete all images
                         </Button>

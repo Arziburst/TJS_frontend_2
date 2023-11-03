@@ -12,9 +12,36 @@ export type InitialStateToggles = {
     isOpenSideBar: boolean,
     isFilterByLowToHigh: null | boolean,
 
-    // fetchers
-    isFetchWarehousesNewPost: boolean;
-    isFetchCitiesNewPost: boolean;
+    // Loadings
+    // New Post
+    isLoadingFetchWarehousesNewPost: boolean;
+    isLoadingFetchCitiesNewPost: boolean;
+
+    // Profile
+    isLoadingRegistrationProfile: boolean;
+    isLoadingLoginProfile: boolean;
+    isLoadingLogoutProfile: boolean;
+
+    // Products
+    isLoadingFetchProduct: boolean;
+    isLoadingFetchProducts: boolean;
+    isLoadingCreteProduct: boolean;
+    isLoadingEditProduct: boolean;
+    isLoadingDeleteProduct: boolean;
+    isLoadingFetchProductsByPagination: boolean;
+
+    isLoadingFetchProductsByPaginationAtEnd: boolean;
+
+
+    // Orders
+    isLoadingFetchOrder: boolean;
+    isLoadingFetchOrders: boolean;
+    isLoadingFetchDataLiqPayOrder: boolean;
+
+    // Gallery
+    isLoadingFetchGallery: boolean,
+    isLoadingUpdateGallery: boolean,
+    isLoadingDeleteItemGallery: boolean,
 }
 
 const initialState: InitialStateToggles = {
@@ -23,9 +50,35 @@ const initialState: InitialStateToggles = {
     isOpenSideBar:       false,
     isFilterByLowToHigh: null,
 
-    // fetchers
-    isFetchWarehousesNewPost: false,
-    isFetchCitiesNewPost:     false,
+    // Loadings
+    // New Post
+    isLoadingFetchWarehousesNewPost: false,
+    isLoadingFetchCitiesNewPost:     false,
+
+    // Profile
+    isLoadingRegistrationProfile: false,
+    isLoadingLoginProfile:        false,
+    isLoadingLogoutProfile:       false,
+
+    // Products
+    isLoadingFetchProduct:              false,
+    isLoadingFetchProducts:             false,
+    isLoadingCreteProduct:              false,
+    isLoadingEditProduct:               false,
+    isLoadingDeleteProduct:             false,
+    isLoadingFetchProductsByPagination: false,
+
+    isLoadingFetchProductsByPaginationAtEnd: false,
+
+    // Orders
+    isLoadingFetchOrder:           false,
+    isLoadingFetchOrders:          false,
+    isLoadingFetchDataLiqPayOrder: false,
+
+    // Gallery
+    isLoadingFetchGallery:      false,
+    isLoadingUpdateGallery:     false,
+    isLoadingDeleteItemGallery: false,
 };
 
 // Types

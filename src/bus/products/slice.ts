@@ -1,9 +1,6 @@
 // Core
 import { createSlice } from '@reduxjs/toolkit';
 
-// Common
-import { commonInitialState } from '../common';
-
 // Types
 import * as types from './types';
 
@@ -12,16 +9,6 @@ import * as reducers from './reducers';
 // MarkerGen import extraReducers
 
 export const initialState: types.ProductsState = {
-    ...commonInitialState,
-    isLoadings: {
-        fetchProduct:       false,
-        fetchProducts:      false,
-        fetchProductsAtEnd: false,
-        create:             false,
-        incrementViews:     false,
-        edit:               false,
-        delete:             false,
-    },
     limit:          20,
     page:           1,
     totalShowed:    0,

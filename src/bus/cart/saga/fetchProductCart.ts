@@ -14,7 +14,7 @@ import { fetchProductsAction } from '@/bus/products/saga/fetchProducts';
 import { fetchCheckCartAction } from './fetchCheckCart';
 
 // Tools
-import { ls } from '../../../tools/utils';
+import { ls, makeRequest } from '../../../tools/utils';
 
 // Types
 import * as types from './types';
@@ -22,14 +22,20 @@ import * as types from './types';
 // Action
 export const fetchProductCartAction = createAction<types.FetchProductCartRequest>(`${sliceName}/FETCH_PRODUCT_CART_ASYNC`);
 
+function* returnFunction(callAction: ReturnType<typeof fetchProductCartAction>) {
+    //! todo тут цикл
+
+    console.log('function*returnFunction => callAction:', callAction);
+
+    // yield put(fetchCheckCartAction(callAction.payload));
+    // const cartLocalStore = ls.get(LOCAL_STORAGE.CART) || [];
+    // yield put(fetchProductsAction(cartLocalStore));
+}
+
 // Saga
 const fetchProductCart = (
     callAction: ReturnType<typeof fetchProductCartAction>,
-) => function* () {
-    yield put(fetchCheckCartAction(callAction.payload));
-    const cartLocalStore = ls.get(LOCAL_STORAGE.CART) || [];
-    yield put(fetchProductsAction(cartLocalStore));
-};
+) => returnFunction(callAction);
 
 // Watcher
 export function* watchFetchProductCart(): SagaIterator {
