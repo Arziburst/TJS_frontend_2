@@ -3,7 +3,9 @@ import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
+
 // Bus
+import { useTogglesRedux } from '@/bus/client/toggles';
 import { useProfile } from '@/bus/profile';
 
 // Containers
@@ -31,7 +33,9 @@ export const SignUp: FC<PropTypes> = () => {
         defaultValues,
     });
 
-    const { profile: { isLoadings }, fetchRegistrationProfile } = useProfile();
+    const { togglesRedux: { isLoadingRegistrationProfile }} =  useTogglesRedux();
+
+    const { fetchRegistrationProfile } = useProfile();
 
     const onSubmit = (values: typeof defaultValues) => {
         fetchRegistrationProfile({
@@ -131,7 +135,7 @@ export const SignUp: FC<PropTypes> = () => {
                     ) }
                 />
                 <Button
-                    isLoading = { isLoadings.profile }
+                    isLoading = { isLoadingRegistrationProfile }
                     type = 'submit'
                     variant = 'contain'>
                     Submit

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { BOOK } from '@/view/routes/book';
 
 // Bus
+import { useTogglesRedux } from '@/bus/client/toggles';
 import { useOrders } from '@/bus/orders';
 
 // Containers
@@ -25,6 +26,7 @@ type PropTypes = {
 const Orders: FC<PropTypes> = () => {
     const navigate = useNavigate();
 
+    const { togglesRedux: { isLoadingFetchOrders }} = useTogglesRedux();
     const { orders: { orders }, fetchOrders } = useOrders();
 
     // Handlers
@@ -41,7 +43,7 @@ const Orders: FC<PropTypes> = () => {
             <NotData
                 className = { `flex flex-wrap gap-[14px] justify-center
                     sb:gap-[20px]` }
-                isLoading = { false }>
+                isLoading = { isLoadingFetchOrders }>
                 {orders?.map((order) => (
                     <CardOrder
                         key = { order._id }

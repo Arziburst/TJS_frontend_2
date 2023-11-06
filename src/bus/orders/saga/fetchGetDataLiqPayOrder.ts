@@ -24,6 +24,7 @@ const fetchGetDataLiqPayOrder = (
     callAction: ReturnType<typeof fetchGetDataLiqPayOrderAction>,
 ) => makeRequest<types.FetchGetDataLiqPayOrderResponse, commonTypes.Error>({
     callAction,
+    toggleType:   'isLoadingFetchDataLiqPayOrder',
     fetchOptions: {
         successStatusCode: 200,
         fetch:             () => getDataLiqPayOrderFetcher(callAction.payload),

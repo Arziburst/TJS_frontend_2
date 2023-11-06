@@ -11,6 +11,7 @@ import { CATEGORIES_ITEMS } from '@/init';
 import { cn } from '@/tools/lib/utils';
 
 // Bus
+import { useTogglesRedux } from '@/bus/client/toggles';
 import { useGallery } from '@/bus/gallery';
 import { useProducts } from '@/bus/products';
 
@@ -39,7 +40,7 @@ import {
 import S from './styles.module.css';
 
 // Static
-import { validationForm, defaultValues, minLengthImages } from './static';
+import { validationForm, defaultValues } from './static';
 import { ModalAddImages } from './ModalAddImages';
 
 // Types
@@ -56,9 +57,15 @@ const Management: FC<PropTypes> = () => {
 
     const isModeEdit = !!id;
 
+    const { togglesRedux: {
+        isLoadingCreteProduct,
+        isLoadingEditProduct,
+        isLoadingDeleteProduct,
+    }} = useTogglesRedux();
+
     const { fetchGallery } = useGallery();
     const {
-        products: { currentProduct, isLoadings },
+        products: { currentProduct },
         fetchProduct,
         fetchCreateNewProduct,
         fetchDeleteProduct,
@@ -73,7 +80,7 @@ const Management: FC<PropTypes> = () => {
     const { images } = form.getValues();
     form.watch('images');
 
-    const isValidateInputImages = images.length >= minLengthImages;
+    const isValidateInputImages = images.length > 0;
 
     const onClickAddItemGalleryToManagementHandler = (event: any, image: ImageType) => {
         const oldImages = form.getValues().images;
@@ -307,53 +314,53 @@ const Management: FC<PropTypes> = () => {
                             </Form.FormItem>
                         ) }
                     />
-                    <div
-                        className = { cn('overflow-auto', { 'flex flex-wrap [&_*]:h-[132px] gap-3 max-sb:justify-center': isValidateInputImages }) }
-                        style = {{ gridArea: 'images' }}>
+                    <div style = {{ gridArea: 'images' }}>
                         <Form.FormField
                             control = { form.control }
                             name = 'images'
                             render = { ({ fieldState }) => (
                                 <Form.FormItem>
                                     <Form.FormControl>
-                                        <ModalAddImages
-                                            classNameTrigger = { cn({ 'border-quaternary text-quaternary': fieldState.invalid }) }
-                                            selectedImages = { images }
-                                            onClickAddItemGalleryToManagementHandler = {
-                                                onClickAddItemGalleryToManagementHandler
-                                            }
-                                        />
+                                        <div className = { cn({ 'flex flex-wrap [&_*]:h-[132px] gap-3 max-sb:justify-center': isValidateInputImages }) }>
+                                            <ModalAddImages
+                                                classNameTrigger = { cn({ 'border-quaternary text-quaternary': fieldState.invalid }) }
+                                                selectedImages = { images }
+                                                onClickAddItemGalleryToManagementHandler = {
+                                                    onClickAddItemGalleryToManagementHandler
+                                                }
+                                            />
+                                            {isValidateInputImages && images.map((src) => src && (
+                                                <Button
+                                                    className = { `group w-auto relative border-2 border-transparent overflow-hidden
+                                                        hover:border-quaternary hover:opacity-100
+                                                        after:absolute-center after:w-full after:h-full content-['1'] after:bg-secondary` }
+                                                    key = { src }
+                                                    type = 'button'
+                                                    variant = 'default'
+                                                    onClick = { () => onClickDeleteImageFromProductHandler(src) }>
+                                                    <Icons.DeleteItem
+                                                        className = { `h-[80px] absolute-center stroke-quaternary opacity-0 transition
+                                                            group-hover:opacity-100` }
+                                                        height = '80'
+                                                    />
+                                                    <Image
+                                                        alt = 'Image from the Gallery'
+                                                        className = 'aspect-square'
+                                                        src = { src }
+                                                    />
+                                                </Button>
+                                            ))}
+                                        </div>
                                     </Form.FormControl>
                                     <Form.FormMessage />
                                 </Form.FormItem>
                             ) }
                         />
-                        {isValidateInputImages && images.map((src) => src && (
-                            <Button
-                                className = { `group w-auto relative border-2 border-transparent overflow-hidden
-                                    hover:border-quaternary hover:opacity-100
-                                    after:absolute-center after:w-full after:h-full content-['1'] after:bg-secondary` }
-                                key = { src }
-                                type = 'button'
-                                variant = 'default'
-                                onClick = { () => onClickDeleteImageFromProductHandler(src) }>
-                                <Icons.DeleteItem
-                                    className = { `h-[80px] absolute-center stroke-quaternary opacity-0 transition
-                                    group-hover:opacity-100` }
-                                    height = '80'
-                                />
-                                <Image
-                                    alt = ''
-                                    className = 'aspect-square'
-                                    src = { src }
-                                />
-                            </Button>
-                        ))}
                     </div>
                     {isModeEdit && (
                         <Button
                             className = 'max-w-[300px]'
-                            isLoading = { isLoadings.delete }
+                            isLoading = { isLoadingDeleteProduct }
                             style = {{ gridArea: 'delete' }}
                             type = 'button'
                             variant = 'outline'
@@ -363,7 +370,7 @@ const Management: FC<PropTypes> = () => {
                     )}
                     <Button
                         className = 'max-w-[300px]'
-                        isLoading = { isLoadings.create }
+                        isLoading = { isModeEdit ? isLoadingEditProduct : isLoadingCreteProduct }
                         style = {{ gridArea: 'submit' }}
                         type = 'submit'
                         variant = 'contain'>

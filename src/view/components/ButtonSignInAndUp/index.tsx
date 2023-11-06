@@ -27,8 +27,8 @@ export const ButtonSignInAndUp: FC<PropTypes> = ({
 }) => {
     const navigate = useNavigate();
 
-    const { togglesRedux: { isLoggedIn }, setToggleAction } = useTogglesRedux();
-    const { profile: { profile, isLoadings }, fetchLogoutProfile } = useProfile();
+    const { togglesRedux: { isLoggedIn, isLoadingLogoutProfile }, setToggleAction } = useTogglesRedux();
+    const { profile, fetchLogoutProfile } = useProfile();
 
     const closeSideBar = () => {
         isMobile && setToggleAction({
@@ -68,7 +68,7 @@ export const ButtonSignInAndUp: FC<PropTypes> = ({
                         )}
                         <DropdownMenu.Item
                             propsButton = {{
-                                isLoading: isLoadings.logout,
+                                isLoading: isLoadingLogoutProfile,
                             }}
                             onClick = { onClickLogoutHandler }>
                             Logout

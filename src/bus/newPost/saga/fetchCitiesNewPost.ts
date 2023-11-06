@@ -24,7 +24,7 @@ const fetchCitiesNewPost = (
     callAction: ReturnType<typeof fetchCitiesNewPostAction>,
 ) => makeRequest<types.FetchCitiesNewPostResponse, commonTypes.Error>({
     callAction,
-    toggleType:   'isFetchCitiesNewPost',
+    toggleType:   'isLoadingFetchCitiesNewPost',
     fetchOptions: {
         successStatusCode: 200,
         fetch:             () => getCitiesNewPostFetcher(callAction.payload),

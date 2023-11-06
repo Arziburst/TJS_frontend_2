@@ -1,9 +1,6 @@
 // Core
 import { CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
-// Types
-import * as commonTypes from '../commonTypes';
-
 // Types of Entities
 export type Product = {
     title: string;
@@ -24,8 +21,7 @@ export type ExtendedProduct = Product & {
 export type Products = ExtendedProduct[];
 
 // State
-export type IsLoadings = 'fetchProduct' | 'fetchProducts' | 'fetchProductsAtEnd' | 'incrementViews' | 'edit' | 'delete' | 'create';
-export interface ProductsState extends commonTypes.State<Record<IsLoadings, commonTypes.IsLoading>> {
+export type ProductsState = {
     products: null | Products;
     currentProduct: null | ExtendedProduct;
     total: number;
@@ -35,10 +31,7 @@ export interface ProductsState extends commonTypes.State<Record<IsLoadings, comm
 }
 
 // Actions
-export type SetIsLoadingOfProductsAction = commonTypes.SetIsLoading<IsLoadings>
 export type SetCurrentProductAction = ProductsState['currentProduct']
 
 // Contracts
 export type BaseContact<T = any> = CaseReducer<ProductsState, PayloadAction<T>>;
-
-export type SetIsLoadingOfProductsContact = BaseContact<SetIsLoadingOfProductsAction>;

@@ -29,6 +29,7 @@ const fetchRegistrationProfile = (
     callAction: ReturnType<typeof fetchRegistrationProfileAction>,
 ) => makeRequest<types.FetchRegistrationProfileResponse, commonTypes.Error>({
     callAction,
+    toggleType:   'isLoadingRegistrationProfile',
     fetchOptions: {
         successStatusCode: 200,
         fetch:             () => registrationProfileFetcher(removeKeysOfObject<types.FetchRegistrationProfileRequest, 'navigate'>({
@@ -37,13 +38,7 @@ const fetchRegistrationProfile = (
         })),
     },
     skipAttemptsIfStatusCode: 400,
-    tryStart:                 function* () {
-        yield put(profileActions.setIsLoadingOfProfile({
-            type:  'profile',
-            value: true,
-        }));
-    },
-    success: function* (result) {
+    success:                  function* (result) {
         yield put(profileActions.setProfile(result));
         yield put(togglesActions.toggleCreatorAction({
             type:  'isLoggedIn',
@@ -52,12 +47,6 @@ const fetchRegistrationProfile = (
         toast.success('Success Registration!');
         toast.success('Success Login!');
         yield callAction.payload.navigate(BOOK.ROOT);
-    },
-    finallyEnd: function* () {
-        yield put(profileActions.setIsLoadingOfProfile({
-            type:  'profile',
-            value: false,
-        }));
     },
 });
 

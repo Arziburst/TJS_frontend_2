@@ -24,29 +24,15 @@ const fetchProductsByPagination = (
     callAction: ReturnType<typeof fetchProductsByPaginationAction>,
 ) => makeRequest<types.FetchProductsByPaginationResponse, commonTypes.Error>({
     callAction,
+    toggleType:   'isLoadingFetchProductsByPagination',
     fetchOptions: {
         successStatusCode: 200,
         fetch:             () => productsByPaginationFetcher(callAction.payload),
-    },
-    tryStart: function* () {
-        yield put(productsActions.setIsLoadingOfProducts({
-            type:  'fetchProducts',
-            value: true,
-        }));
     },
     success: function* (result) {
         yield put(productsActions.setProducts(result.data));
         yield put(productsActions.setTotalOfProducts(result.total));
         yield put(productsActions.setTotalShowedOfProducts(result.totalShowed));
-    },
-    error: function* (error) {
-        yield put(productsActions.setErrorOfProducts(error));
-    },
-    finallyEnd: function* () {
-        yield put(productsActions.setIsLoadingOfProducts({
-            type:  'fetchProducts',
-            value: false,
-        }));
     },
 });
 

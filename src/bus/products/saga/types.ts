@@ -43,7 +43,3 @@ export interface FetchEditProductRequest extends Pick<types.ExtendedProduct, '_i
     editedProduct: types.Product;
 }
 export type FetchEditProductResponse = types.ExtendedProduct;
-
-// Increment product
-export type FetchIncrementProductViewsRequest = string;
-export type FetchIncrementProductViewsResponse = types.ExtendedProduct;

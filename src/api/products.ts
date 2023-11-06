@@ -62,14 +62,3 @@ export const editProductFetcher = (payload: types.FetchEditProductRequest) => {
         body: JSON.stringify(payload.editedProduct),
     });
 };
-
-export const incrementProductViewsFetcher = (_id: types.FetchIncrementProductViewsRequest) => {
-    return fetch(API.PRODUCTS.INCREMENT_VIEWS(_id), {
-        method:      'POST',
-        credentials: 'include',
-        headers:     {
-            ...HEADERS,
-        },
-    });
-};
-

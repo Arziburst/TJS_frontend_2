@@ -28,24 +28,13 @@ const fetchDeleteItemGallery = (
     callAction: ReturnType<typeof fetchDeleteItemGalleryAction>,
 ) => makeRequest<Gallery>({
     callAction,
+    toggleType:   'isLoadingDeleteItemGallery',
     fetchOptions: {
         successStatusCode: 200,
         fetch:             () => galleryDeleteItemOfFetcher(callAction.payload),
     },
-    tryStart: function* () {
-        yield put(galleryActions.setIsLoadingOfGallery({
-            type:  'delete',
-            value: callAction.payload,
-        }));
-    },
     success: function* () {
         yield put(fetchGalleryAction());
-    },
-    finallyEnd: function* () {
-        yield put(galleryActions.setIsLoadingOfGallery({
-            type:  'delete',
-            value: false,
-        }));
     },
 });
 

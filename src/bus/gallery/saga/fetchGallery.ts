@@ -21,6 +21,7 @@ import { Gallery } from '../types';
 // Saga
 const fetchGallery = (callAction: ReturnType<typeof fetchGalleryAction>) => makeRequest<Gallery>({
     callAction,
+    toggleType:   'isLoadingFetchGallery',
     fetchOptions: {
         successStatusCode: 200,
         fetch:             () => galleryFetcher(),
@@ -33,12 +34,6 @@ const fetchGallery = (callAction: ReturnType<typeof fetchGalleryAction>) => make
     },
     success: function* (result) {
         yield put(galleryActions.setGallery(result));
-    },
-    finallyEnd: function* () {
-        yield put(galleryActions.setIsLoadingOfGallery({
-            type:  'gallery',
-            value: false,
-        }));
     },
 });
 

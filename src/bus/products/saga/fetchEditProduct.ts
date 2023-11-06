@@ -25,32 +25,14 @@ const fetchEditProduct = (
     callAction: ReturnType<typeof fetchEditProductAction>,
 ) => makeRequest<types.FetchEditProductResponse, commonTypes.Error>({
     callAction,
+    toggleType:   'isLoadingEditProduct',
     fetchOptions: {
         successStatusCode: 200,
         fetch:             () => editProductFetcher(callAction.payload),
     },
-    tryStart: function* () {
-        if (callAction.payload) {
-            yield put(productsActions.setIsLoadingOfProducts({
-                type:  'edit',
-                value: true,
-            }));
-        }
-    },
     success: function* (result) {
         yield put(productsActions.setEditedProduct(result));
         yield toast.success('Product edited successfully!');
-    },
-    error: function* (error) {
-        yield put(productsActions.setErrorOfProducts(error));
-    },
-    finallyEnd: function* () {
-        if (callAction.payload) {
-            yield put(productsActions.setIsLoadingOfProducts({
-                type:  'edit',
-                value: false,
-            }));
-        }
     },
 });
 

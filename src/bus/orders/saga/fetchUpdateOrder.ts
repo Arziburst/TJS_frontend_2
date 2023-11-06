@@ -25,6 +25,7 @@ const fetchUpdateOrder = (
     callAction: ReturnType<typeof fetchUpdateOrderAction>,
 ) => makeRequest<types.FetchUpdateOrderResponse, commonTypes.Error>({
     callAction,
+    toggleType:   'isLoadingDeleteItemGallery',
     fetchOptions: {
         successStatusCode: 200,
         fetch:             () => updateOrderFetcher(callAction.payload),

@@ -63,8 +63,16 @@ const Shop: FC<PropTypes> = () => {
     const [ width ] = useWindowWidth();
 
     // Hooks of Bus
-    const { togglesRedux: { isLoggedIn, isFilterByLowToHigh }, setToggleAction } = useTogglesRedux();
-    const { profile: { profile }} = useProfile();
+    const {
+        togglesRedux: {
+            isLoggedIn,
+            isFilterByLowToHigh,
+            isLoadingFetchProductsByPagination,
+            isLoadingFetchProductsByPaginationAtEnd,
+        },
+        setToggleAction,
+    } = useTogglesRedux();
+    const { profile } = useProfile();
     const {
         products: {
             products,
@@ -72,7 +80,6 @@ const Shop: FC<PropTypes> = () => {
             total,
             totalShowed,
             page,
-            isLoadings,
         },
         setPageOfProducts,
         fetchProductsByPagination,
@@ -250,7 +257,7 @@ const Shop: FC<PropTypes> = () => {
 
                         </div>
                     ) }
-                    isLoading = { isLoadings.fetchProducts }>
+                    isLoading = { isLoadingFetchProductsByPagination }>
                     {products?.map((item) => (
                         <CardItem
                             firstImage = {{
@@ -273,11 +280,15 @@ const Shop: FC<PropTypes> = () => {
                 <div className = { `flex flex-col gap-4 items-center
                     ${S.sb_common_gap}` }>
                     {totalShowed < total && (
-                        <Button
-                            className = 'capitalize max-w-[540px]'
-                            onClick = { onClickShowMoreHandler }>
-                            show more
-                        </Button>
+                        <NotData
+                            className = 'w-full flex justify-center'
+                            isLoading = { isLoadingFetchProductsByPaginationAtEnd }>
+                            <Button
+                                className = 'capitalize max-w-[540px]'
+                                onClick = { onClickShowMoreHandler }>
+                                show more
+                            </Button>
+                        </NotData>
                     )}
                     <p className = { `text-xs font-secondary tracking-[0.24px]
                         sb:text-sm sb:tracking-[0.28px]` }>

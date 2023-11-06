@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 // Bus
 import { useProfile } from '@/bus/profile';
+import { useTogglesRedux } from '@/bus/client/toggles';
 
 // Containers
 import { InputGroup } from '@/view/containers';
@@ -34,7 +35,9 @@ export const SignIn: FC<PropTypes> = () => {
         defaultValues,
     });
 
-    const { profile: { isLoadings }, fetchLoginProfile } = useProfile();
+    const { togglesRedux: { isLoadingLoginProfile }} = useTogglesRedux();
+
+    const { fetchLoginProfile } = useProfile();
 
     const onSubmit = (values: typeof defaultValues) => {
         fetchLoginProfile({
@@ -83,7 +86,7 @@ export const SignIn: FC<PropTypes> = () => {
                     ) }
                 />
                 <Button
-                    isLoading = { isLoadings.profile }
+                    isLoading = { isLoadingLoginProfile }
                     type = 'submit'
                     variant = 'contain'>
                     Submit
