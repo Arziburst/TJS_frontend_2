@@ -82,10 +82,10 @@ const Order: FC<PropTypes> = () => {
         }
     }, [ gotStatus ]);
 
-    if (!isLoadingFetchOrder && !currentOrder) {
+    if (!currentOrder) {
         return (
             <NotData
-                isLoading = { false }
+                isLoading = { isLoadingFetchOrder }
                 textIfNotData = 'Order did not find'
             />
         );
