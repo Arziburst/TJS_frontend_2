@@ -18,6 +18,13 @@ export enum ENUM_CATEGORIES {
     RINGS = 'rings',
 }
 
+export enum STATUS_OF_PRODUCT {
+    CANCELED,
+    IN_PROGRESS,
+    ACCEPTED,
+    CLOSED,
+}
+
 export const CATEGORY_ALL = 'see all';
 export const CATEGORIES_ITEMS = [
     ENUM_CATEGORIES.BROOCH,

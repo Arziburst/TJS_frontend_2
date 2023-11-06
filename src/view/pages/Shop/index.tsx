@@ -260,6 +260,7 @@ const Shop: FC<PropTypes> = () => {
                     isLoading = { isLoadingFetchProductsByPagination }>
                     {products?.map((item) => (
                         <CardItem
+                            available = { item.available }
                             firstImage = {{
                                 src: item.images[ 0 ],
                                 alt: 'First image of item',
