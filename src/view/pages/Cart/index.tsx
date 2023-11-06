@@ -20,7 +20,13 @@ import { useProducts } from '@/bus/products';
 import { NotData } from '@/view/containers';
 
 // Components
-import { ErrorBoundary, CartDetails, CardCart, HorizontalRuleWithTotalPrice } from '../../components';
+import {
+    ErrorBoundary,
+    CartDetails,
+    CardCart,
+    HorizontalRuleWithTotalPrice,
+    CardItem,
+} from '../../components';
 
 // Elements
 import { Button, TitlePage } from '@/view/elements';
@@ -47,8 +53,8 @@ const Cart: FC<PropTypes> = () => {
         navigate(BOOK.ORDER_DETAILS);
     };
 
-    const onClickRemoveHandler = (product: ExtendedProduct) => {
-        removeProductOfCart(product._id);
+    const onClickRemoveProductHandler = (_id: ExtendedProduct['_id']) => {
+        removeProductOfCart(_id);
     };
 
     useEffect(() => {
@@ -78,13 +84,31 @@ const Cart: FC<PropTypes> = () => {
                         isLoading = { isLoadingFetchProduct }
                         textIfNotData = 'Your cart is empty'>
                         {products?.map((product) => (
-                            <CardCart
-                                alt = { `Image of ${product.title }` }
+                            // <CardCart
+                            //     alt = { `Image of ${product.title }` }
+                            //     key = { product._id }
+                            //     product = { product }
+                            //     src = { product.images[ 0 ] }
+                            //     variant = 'big'
+                            //     onClickRemove = { onClickRemoveHandler }
+                            // />
+                            <CardItem
+                                _id = { product._id }
+                                available = { product.available }
+                                firstImage = {{
+                                    src: product.images[ 0 ],
+                                    alt: 'First image of product',
+                                }}
                                 key = { product._id }
-                                product = { product }
-                                src = { product.images[ 0 ] }
-                                variant = 'big'
-                                onClickRemove = { onClickRemoveHandler }
+                                name = { product.title }
+                                price = { product.price }
+                                secondImage = {{
+                                    src: product.images[ 1 ],
+                                    alt: 'Second image of product',
+                                }}
+                                to = { `${BOOK.PRODUCT}/${product._id}` }
+                                variant = 'cart big'
+                                onClickRemoveProduct = { onClickRemoveProductHandler }
                             />
                         ))}
                     </NotData>

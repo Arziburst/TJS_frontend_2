@@ -19,6 +19,7 @@ import S from './styles.module.css';
 
 // Types
 import { Profile } from '@/bus/profile/types';
+import { ExtendedProduct } from '@/bus/products/types';
 
 interface ImageOfCardItemPropTypes extends Pick<ImagePropTypes, 'src' | 'alt'> {
 }
@@ -26,23 +27,29 @@ interface ImageOfCardItemPropTypes extends Pick<ImagePropTypes, 'src' | 'alt'> {
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
     Pick<LinkPropTypes, 'to'>
 {
+    _id: ExtendedProduct['_id'];
     firstImage: ImageOfCardItemPropTypes;
+    price: number;
+    variant?: 'cart big' | 'cart small';
     available?: boolean;
     secondImage?: ImageOfCardItemPropTypes;
     name?: string;
-    price: number;
-    onClickEditItem: () => void;
-    role: Profile['role'] | undefined;
+    onClickEditItem?: () => void;
+    onClickRemoveProduct?: (_id: ExtendedProduct['_id']) => void;
+    role?: Profile['role'];
 }
 
 export const CardItem: FC<PropTypes> = ({
     className,
+    _id,
     firstImage,
+    price,
+    variant,
     available,
     secondImage,
     name,
-    price,
     onClickEditItem,
+    onClickRemoveProduct,
     to,
     role,
     ...props
@@ -58,15 +65,21 @@ export const CardItem: FC<PropTypes> = ({
                 </Button>
             )}
 
-            <Link
-                to = { to }
-                variant = 'none'>
-                <div
-                    className = { cn(`${S.root} flex flex-col gap-1
-                    sb:gap-3`, className) }
-                    { ...props }>
+            <div
+                className = { cn(
+                    `${S.root} flex flex-col gap-1
+                        sb:gap-3`,
+                    {
+                        'max-sm:gap-3 max-sm:flex-row max-sm:w-full': variant,
+                    },
+                    className,
+                ) }
+                { ...props }>
 
 
+                <Link
+                    to = { to }
+                    variant = 'none'>
                     <div className = { `${S.images_container} relative overflow-hidden` }>
                         {!available && (
                             <Badge className = { cn('absolute bottom-[10px] right-[10px] z-[1]', returnStylesStatus(STATUS_OF_PRODUCT.IN_PROGRESS)) }>
@@ -89,21 +102,42 @@ export const CardItem: FC<PropTypes> = ({
                             />
                         )}
                     </div>
+                </Link>
 
-                    <div className = 'flex flex-col gap-1'>
+                <div className = { cn({
+                    'flex justify-between items-end w-full': onClickRemoveProduct,
+                }) }>
+
+                    <div className = 'flex flex-col gap-1 w-full'>
                         {name && (
-                            <p
-                                className = { S.title }>
-                                {name}
-                            </p>
+                            <Link
+                                to = { to }
+                                variant = 'none'>
+                                <p
+                                    className = { S.title }>
+                                    {name}
+                                </p>
+                            </Link>
                         )}
-                        <span className = { S.price }>
-                            {`${price} ₴`}
-                        </span>
+                        <div className = { cn({
+                            'flex flex-wrap justify-between': variant,
+                        }) }>
+                            <span className = { S.price }>
+                                {`${price} ₴`}
+                            </span>
+                            {onClickRemoveProduct && (
+                                <Button
+                                    className = 'w-auto text-xs text-quaternary underline hover:no-underline'
+                                    variant = 'default'
+                                    onClick = { () => onClickRemoveProduct && onClickRemoveProduct(_id) }>
+                                    Remove
+                                </Button>
+                            )}
+                        </div>
                     </div>
-
                 </div>
-            </Link>
+
+            </div>
         </div>
     );
 };

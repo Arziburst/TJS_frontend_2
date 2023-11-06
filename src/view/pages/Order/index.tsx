@@ -102,6 +102,7 @@ const Order: FC<PropTypes> = () => {
                     isLoading = { isLoadingFetchOrder }>
                     {currentOrder?.orderedProducts.map((product) => (
                         <CardItem
+                            _id = { product.pid }
                             firstImage = {{ src: product.image, alt: 'Image of Product' }}
                             key = { product.pid }
                             price = { product.price }

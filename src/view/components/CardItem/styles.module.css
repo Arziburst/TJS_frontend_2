@@ -3,20 +3,16 @@
         sb:w-[200px];
 }
 
-.root:hover .title {
-    @apply text-quaternary;
-}
-
 .images_container {
     @apply w-[164px] h-[154px] rounded 
         sb:w-[200px] sb:h-[200px];
 }
 
-.root:hover .first_image {
+.images_container:hover .first_image {
     @apply opacity-0;
 }
 
-.root:hover .second_image {
+.images_container:hover .second_image {
     @apply opacity-100;
 }
 
@@ -31,6 +27,9 @@
 
 .title {
     @apply text-sm text-[15px] transition duration-500;
+}
+.title:hover {
+    @apply text-quaternary;
 }
 
 .price {

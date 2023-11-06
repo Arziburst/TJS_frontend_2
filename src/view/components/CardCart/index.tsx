@@ -5,6 +5,9 @@ import { cva, type VariantProps } from 'class-variance-authority';
 // Tools
 import { cn } from '@/tools/lib/utils';
 
+// Book
+import { BOOK } from '@/view/routes/book';
+
 // Elements
 import { Button, Image, ImagePropTypes, Link } from '@/view/elements';
 
@@ -27,7 +30,6 @@ const variants = cva(
 
 // Types
 import { ExtendedProduct } from '@/bus/products/types';
-import { BOOK } from '@/view/routes/book';
 
 export interface PropTypes
     extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof variants>, Pick<ImagePropTypes, 'src' | 'alt'> {
