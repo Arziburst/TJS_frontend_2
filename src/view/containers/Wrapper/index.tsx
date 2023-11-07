@@ -1,13 +1,18 @@
 // Core
 import React, { forwardRef } from 'react';
+import { cva } from 'class-variance-authority';
 
 // Tools
 import { cn } from '@/tools/lib/utils';
 
-// Types
-// interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
+export const wrapperVariants = cva(
+    'px-[16px] sm:px-[32px] md:px-[40px] sb:px-[56px] max-w-[2000px] mx-auto',
+);
 
-export const Wrapper = forwardRef<HTMLDivElement, any>(({
+// Types
+interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
+
+export const Wrapper = forwardRef<HTMLDivElement, PropTypes>(({
     children,
     className,
     ...props
@@ -16,7 +21,7 @@ export const Wrapper = forwardRef<HTMLDivElement, any>(({
         <div
             ref = { ref }
             { ...props }
-            className = { cn('px-[16px] sm:px-[32px] md:px-[40px] sb:px-[56px]', className) }>
+            className = { cn(wrapperVariants({ className })) }>
             {children}
         </div>
     );

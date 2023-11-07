@@ -8,9 +8,13 @@ import { CSS_VARIABLES, LOCAL_STORAGE } from '@/init';
 import { SCREENS_NUMBER } from '@/assets';
 
 // Images
-import '@/assets/images/image_category_brooch.png';
 import '@/assets/images/image_category_see_all.png';
-import '@/assets/images/test.png'; // todo remove when finish
+import '@/assets/images/image_category_brooch.png';
+import '@/assets/images/image_category_bestsellers.png';
+import '@/assets/images/image_category_bracelets.png';
+import '@/assets/images/image_category_earrings.png';
+import '@/assets/images/image_category_necklace.png';
+import '@/assets/images/image_category_rings.png';
 
 // Routes
 import { Routes } from './routes';
@@ -27,7 +31,7 @@ import { useProfileSaga } from '@/bus/profile/saga';
 import { useCartSaga } from '@/bus/cart/saga';
 
 // Containers
-import { Wrapper } from '@/view/containers';
+import { Wrapper, wrapperVariants } from '@/view/containers';
 
 // Components
 import { Alert, Footer, Header, SideBar } from '@/view/components';
@@ -90,7 +94,7 @@ export const App: FC = () => {
                 }}>
                     <Header
                         isSetHeightToCssVariable
-                        className = 'fixed inset-x-0'
+                        className = { wrapperVariants({ className: 'fixed inset-x-0' }) }
                         style = { paddingLeftWrapper ? {
                             paddingLeft:  paddingLeftWrapper,
                             paddingRight: paddingLeftWrapper,

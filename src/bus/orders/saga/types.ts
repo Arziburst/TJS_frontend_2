@@ -19,7 +19,7 @@ export type FetchCreateOrderResponse = types.Order;
 
 // Get Data LiqPay Order
 export type FetchGetDataLiqPayOrderRequest = {
-    amount: string;
+    amount: number;
     description: string;
     order_id: string;
     result_url?: string;

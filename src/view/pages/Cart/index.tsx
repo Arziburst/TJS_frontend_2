@@ -17,14 +17,13 @@ import { useCart } from '@/bus/cart';
 import { useProducts } from '@/bus/products';
 
 // Containers
-import { NotData } from '@/view/containers';
+import { ContainerForOrdersAndInformationOfPayment, NotData } from '@/view/containers';
 
 // Components
 import {
     ErrorBoundary,
     CartDetails,
-    CardCart,
-    HorizontalRuleWithTotalPrice,
+    HorizontalRuleWithPrice,
     CardItem,
 } from '../../components';
 
@@ -70,10 +69,7 @@ const Cart: FC<PropTypes> = () => {
                 <TitlePage>cart</TitlePage>
             )}
 
-            <div className = { `flex flex-col gap-[32px]
-                sb:flex-row sb:gap-10
-                xl:gap-[100px]` }>
-
+            <ContainerForOrdersAndInformationOfPayment>
                 <div className = 'sb:w-1/2'>
                     <NotData
                         className = { cn(`flex flex-col gap-[18px]
@@ -84,14 +80,6 @@ const Cart: FC<PropTypes> = () => {
                         isLoading = { isLoadingFetchProduct }
                         textIfNotData = 'Your cart is empty'>
                         {products?.map((product) => (
-                            // <CardCart
-                            //     alt = { `Image of ${product.title }` }
-                            //     key = { product._id }
-                            //     product = { product }
-                            //     src = { product.images[ 0 ] }
-                            //     variant = 'big'
-                            //     onClickRemove = { onClickRemoveHandler }
-                            // />
                             <CardItem
                                 _id = { product._id }
                                 available = { product.available }
@@ -100,12 +88,12 @@ const Cart: FC<PropTypes> = () => {
                                     alt: 'First image of product',
                                 }}
                                 key = { product._id }
-                                name = { product.title }
                                 price = { product.price }
                                 secondImage = {{
                                     src: product.images[ 1 ],
                                     alt: 'Second image of product',
                                 }}
+                                title = { product.title }
                                 to = { `${BOOK.PRODUCT}/${product._id}` }
                                 variant = 'cart big'
                                 onClickRemoveProduct = { onClickRemoveProductHandler }
@@ -113,10 +101,10 @@ const Cart: FC<PropTypes> = () => {
                         ))}
                     </NotData>
                     {products && (
-                        <HorizontalRuleWithTotalPrice
+                        <HorizontalRuleWithPrice
                             price = {
                                 (products && products.length > 0 && products.map((product) => product.price)
-                                    .reduce((accumulator, currentValue) => accumulator + currentValue)) || 0
+                                    .reduce((accumulator, currentValue) => accumulator + currentValue, 0)) || 0
                             }
                             text = 'your order'
                         />
@@ -133,7 +121,7 @@ const Cart: FC<PropTypes> = () => {
                 {width > SCREENS_NUMBER.SB && (
                     <CartDetails className = 'sb:w-1/2' />
                 )}
-            </div>
+            </ContainerForOrdersAndInformationOfPayment>
         </div>
     );
 };

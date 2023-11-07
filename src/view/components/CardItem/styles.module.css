@@ -8,6 +8,11 @@
         sb:w-[200px] sb:h-[200px];
 }
 
+.images_container__small {
+    @apply w-[120px] h-[120px] 
+        sb:w-[100px] sb:h-[100px]
+}
+
 .images_container:hover .first_image {
     @apply opacity-0;
 }

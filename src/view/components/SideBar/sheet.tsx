@@ -12,6 +12,7 @@ import { cn } from '@/tools/lib/utils';
 
 // Components
 import { ButtonCart, Header, Icons, Logo } from '@/view/components';
+import { Wrapper } from '@/view/containers';
 
 const Sheet = SheetPrimitive.Root;
 
@@ -44,7 +45,7 @@ React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
 const sheetVariants = cva(
-    'fixed z-50 flex flex-col bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500',
+    'fixed z-50 flex flex-col bg-background shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500',
     {
         variants: {
             side: {

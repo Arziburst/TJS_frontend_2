@@ -8,7 +8,7 @@ export interface HorizontalRuleWithTotalPricePropTypes extends
     price: number;
 }
 
-export const HorizontalRuleWithTotalPrice: FC<HorizontalRuleWithTotalPricePropTypes> = ({
+export const HorizontalRuleWithPrice: FC<HorizontalRuleWithTotalPricePropTypes> = ({
     text,
     price,
     ...props

@@ -70,10 +70,9 @@ export const Header: FC<PropTypes> = ({
         <header
             { ...props }
             className = { cn(
-                `flex justify-between items-center bg-background z-10
+                `py-4 flex justify-between items-center bg-background z-10
+                    sb:pt-[24px] sb:pb-[12px]
                     sb:items-start sb:gap-x-between-items-of-header`,
-                { 'py-4 sb:pt-[24px] sb:pb-[12px]': isOpen },
-                { '': !isOpen },
                 className,
             ) }
             ref = { refHeader }>

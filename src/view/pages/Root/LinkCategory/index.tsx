@@ -17,12 +17,14 @@ import S from './styles.module.css';
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     category: string;
     numberItems: number;
+    image: string;
 }
 
 export const LinkCategory: FC<PropTypes> = ({
     className,
     category,
     numberItems,
+    image,
     ...props
 }) => {
     return (
@@ -36,7 +38,7 @@ export const LinkCategory: FC<PropTypes> = ({
                 <Image
                     alt = { `Image of category ${category}` }
                     className = 'w-[60px] aspect-[10/8] sb:w-[100px]'
-                    src = 'assets/image_category_brooch.png'
+                    src = { `assets/${image}` }
                 />
                 <p className = { `flex content-start flex-wrap text-[40px] leading-[54px] uppercase
                 max-[420px]:text-3xl

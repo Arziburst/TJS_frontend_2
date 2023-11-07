@@ -5,7 +5,7 @@ import { MutableRefObject, useEffect } from 'react';
 import { SCREENS_NUMBER } from '@/assets';
 
 // Init
-import { CATEGORIES_ITEMS } from '@/init';
+import { ENUM_CATEGORIES } from '@/init';
 
 // Types
 type UseStatic = {
@@ -18,13 +18,40 @@ type MakeJustifySelf = {
     width: number;
 }
 
+export const CATEGORIES_ITEMS_WITH_IMAGES = [
+    {
+        category: ENUM_CATEGORIES.BROOCH,
+        image:    'image_category_brooch.png',
+    },
+    {
+        category: ENUM_CATEGORIES.EARRING,
+        image:    'image_category_earrings.png',
+    },
+    {
+        category: ENUM_CATEGORIES.BESTSELLERS,
+        image:    'image_category_bestsellers.png',
+    },
+    {
+        category: ENUM_CATEGORIES.BRACELETS,
+        image:    'image_category_bracelets.png',
+    },
+    {
+        category: ENUM_CATEGORIES.NECKLACE,
+        image:    'image_category_necklace.png',
+    },
+    {
+        category: ENUM_CATEGORIES.RINGS,
+        image:    'image_category_rings.png',
+    },
+];
+
 export const useStatic = ({
     width,
     refGrid,
 }: UseStatic) => {
     useEffect(() => {
         if (refGrid && refGrid.current) {
-            const CATEGORIES_ITEMS_MAPPED = CATEGORIES_ITEMS.map((_, index) => index); // [0, 1, 2, 3, 4]
+            const CATEGORIES_ITEMS_MAPPED = CATEGORIES_ITEMS_WITH_IMAGES.map((_, index) => index); // [0, 1, 2, 3, 4]
 
             if (width > SCREENS_NUMBER.MD) { // desktop
                 let newArray: number[] = [];

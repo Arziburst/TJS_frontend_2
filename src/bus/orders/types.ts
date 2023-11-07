@@ -4,6 +4,8 @@ import { CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 // Types of Entities
 export type OrderedProduct = {
     pid: string;
+    title: string;
+    available: boolean;
     image: string;
     price: number;
 }
