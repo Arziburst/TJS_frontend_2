@@ -95,7 +95,7 @@ const PaymentSuccess: FC<PropTypes> = () => {
                     {width > SCREENS_NUMBER.SB && getTitlePage()}
                     {/* <p className = 'text-sm font-bold font-secondary tracking-[2.8px] uppercase'>an email receipt including the detail’s about your order has been sent to:</p> */}
                     <Button
-                        className = 'capitalize max-w-[500px]'
+                        className = 'capitalize sb:max-w-[500px]'
                         onClick = { onClickContinueShoppingHandler }>
                         continue shopping
                     </Button>
