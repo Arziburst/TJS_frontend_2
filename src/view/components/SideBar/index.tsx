@@ -1,22 +1,16 @@
 // Core
-import React, { FC, useCallback } from 'react';
+import React, { FC } from 'react';
 
 // UI
 import {
     Sheet,
-    SheetClose,
     SheetContent,
-    SheetDescription,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
 } from '@/view/components/SideBar/sheet';
 
 // Components
-import { Footer, Icons, Nav, SPACE_FOOTER } from '@/view/components';
+import { Footer, Nav, SPACE_FOOTER } from '@/view/components';
 import { useTogglesRedux } from '@/bus/client/toggles';
-import { ScrollArea } from '@/view/containers';
+import { wrapperVariants } from '@/view/containers';
 
 // Types
 export type SideBarPropTypes = {
@@ -24,15 +18,8 @@ export type SideBarPropTypes = {
     variant?: 'open' | 'close';
 }
 
-export const SideBar: FC<SideBarPropTypes> = ({ variant = 'open', ...props }) => {
+export const SideBar: FC<SideBarPropTypes> = ({ ...props }) => {
     const { togglesRedux: { isOpenSideBar }, setToggleAction } = useTogglesRedux();
-
-    const onClickOpenSideBarHandler = () => {
-        setToggleAction({
-            type:  'isOpenSideBar',
-            value: true,
-        });
-    };
 
     const onClickCloseSideBarHandler = () => {
         setToggleAction({
@@ -45,16 +32,8 @@ export const SideBar: FC<SideBarPropTypes> = ({ variant = 'open', ...props }) =>
         <Sheet
             open = { isOpenSideBar }
             { ...props }>
-            {/* <SheetTrigger
-                className = 'aspect-square transition-opacity hover:opacity-70'
-                onClick = { variant === 'open' ? onClickOpenSideBarHandler : onClickCloseSideBarHandler }>
-                {variant === 'open' ? (
-                    <Icons.SideBarOpen />
-                ) : (
-                    <Icons.SideBarClose />
-                )}
-            </SheetTrigger> */}
             <SheetContent
+                className = { wrapperVariants() }
                 onClickCloseSideBar = { onClickCloseSideBarHandler }>
                 <div className = { `flex flex-col space-y-2 grow ${SPACE_FOOTER}` }>
                     <Nav

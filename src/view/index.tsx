@@ -31,7 +31,7 @@ import { useProfileSaga } from '@/bus/profile/saga';
 import { useCartSaga } from '@/bus/cart/saga';
 
 // Containers
-import { Wrapper } from '@/view/containers';
+import { Wrapper, wrapperVariants } from '@/view/containers';
 
 // Components
 import { Alert, Footer, Header, SideBar } from '@/view/components';
@@ -94,7 +94,7 @@ export const App: FC = () => {
                 }}>
                     <Header
                         isSetHeightToCssVariable
-                        className = 'fixed inset-x-0'
+                        className = { wrapperVariants({ className: 'fixed inset-x-0' }) }
                         style = { paddingLeftWrapper ? {
                             paddingLeft:  paddingLeftWrapper,
                             paddingRight: paddingLeftWrapper,
