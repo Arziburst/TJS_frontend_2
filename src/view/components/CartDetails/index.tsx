@@ -11,6 +11,7 @@ import { useTogglesRedux } from '@/bus/client/toggles';
 import { useOrders } from '@/bus/orders';
 import { useNewPost } from '@/bus/newPost';
 import { useCart } from '@/bus/cart';
+import { useProfile } from '@/bus/profile';
 
 // Book
 import { BOOK } from '@/view/routes/book';
@@ -61,6 +62,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
         fetchUpdateOrder,
     } = useOrders();
     const { cart } = useCart();
+    const { profile } = useProfile();
 
     // State
     const [ isFirstRenderState, setIsFirstRenderState ] = useState(true);
@@ -172,6 +174,13 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
             }
         };
     }, [ currentOrder, cart ]);
+
+    useEffect(() => {
+        if (profile) {
+            form.setValue('email', profile.email, { shouldValidate: true });
+            form.setValue('phone', profile.phone, { shouldValidate: true });
+        }
+    }, [ profile ]);
 
     return (
         <div { ...props }>
