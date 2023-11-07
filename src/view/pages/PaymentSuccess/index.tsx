@@ -1,6 +1,6 @@
 // Core
 import React, { FC, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 // Assets
 import { SCREENS_NUMBER } from '@/assets';
@@ -23,7 +23,7 @@ import { ContainerForOrdersAndInformationOfPayment, NotData } from '@/view/conta
 import { CardItem, ErrorBoundary, HorizontalRuleWithPrice } from '../../components';
 
 // Elements
-import { TitlePage } from '@/view/elements';
+import { Button, TitlePage } from '@/view/elements';
 
 // Types
 type PropTypes = {
@@ -31,6 +31,7 @@ type PropTypes = {
 }
 
 const PaymentSuccess: FC<PropTypes> = () => {
+    const navigate = useNavigate();
     const [ searchParams ] = useSearchParams();
     const id = searchParams.get(PARAMS_VALUES.ID);
 
@@ -39,6 +40,10 @@ const PaymentSuccess: FC<PropTypes> = () => {
     const { togglesRedux: { isLoadingFetchOrder }} = useTogglesRedux();
     const { resetCart } = useCart();
     const { orders: { currentOrder }, fetchOrder } = useOrders();
+
+    const onClickContinueShoppingHandler = () => {
+        navigate(BOOK.SHOP);
+    };
 
     useEffect(() => {
         resetCart();
@@ -80,7 +85,7 @@ const PaymentSuccess: FC<PropTypes> = () => {
                             price = {
                                 (currentOrder && currentOrder?.orderedProducts.length > 0
                                     && currentOrder?.orderedProducts.map((product) => product.price)
-                                        .reduce((accumulator, currentValue) => accumulator + currentValue), 0) || 0
+                                        .reduce((accumulator, currentValue) => accumulator + currentValue, 0)) || 0
                             }
                             text = 'grand total'
                         />
@@ -88,6 +93,12 @@ const PaymentSuccess: FC<PropTypes> = () => {
                 </div>
                 <div className = 'sb:w-1/2'>
                     {width > SCREENS_NUMBER.SB && getTitlePage()}
+                    {/* <p className = 'text-sm font-bold font-secondary tracking-[2.8px] uppercase'>an email receipt including the detail’s about your order has been sent to:</p> */}
+                    <Button
+                        className = 'capitalize max-w-[500px]'
+                        onClick = { onClickContinueShoppingHandler }>
+                        continue shopping
+                    </Button>
                 </div>
             </ContainerForOrdersAndInformationOfPayment>
         </div>
