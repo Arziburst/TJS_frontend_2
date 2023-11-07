@@ -2,7 +2,7 @@
 import React, { FC, useRef } from 'react';
 
 // Init
-import { CATEGORIES_ITEMS, ENUM_CATEGORIES } from '@/init';
+import { ENUM_CATEGORIES } from '@/init';
 
 // Tools
 import { useWindowWidth } from '@/tools/hooks';
@@ -18,7 +18,7 @@ import { Image, NavLink } from '@/view/elements';
 import { LinkCategory } from './LinkCategory';
 
 // Static
-import { makeJustifySelf, useStatic } from './static';
+import { CATEGORIES_ITEMS_WITH_IMAGES, makeJustifySelf, useStatic } from './static';
 
 // Styles
 import S from './styles.module.css';
@@ -39,11 +39,12 @@ const Root: FC = () => {
                 className = { `${S.grid} grid gap-3 h-full overflow-hidden` }
                 ref = { refGrid }>
 
-                {CATEGORIES_ITEMS.map((category, index) => (
+                {CATEGORIES_ITEMS_WITH_IMAGES.map((obj, index) => (
                     <LinkCategory
-                        category = { category }
+                        category = { obj.category }
                         className = { `${S.el}` }
-                        key = { category }
+                        image = { obj.image }
+                        key = { obj.category }
                         numberItems = { index + 1 }
                         style = {{
                             gridArea:    `g-${index}`,

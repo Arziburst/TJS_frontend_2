@@ -33,7 +33,7 @@ export type WarehouseNewPost = {
 
 // State
 export type CitiesNewPostNewPost = Array<CityNewPost>;
-type WarehousesNewPost = Array<WarehouseNewPost>; // todo
+type WarehousesNewPost = Array<WarehouseNewPost>;
 
 export type NewPostState = {
     cities: CitiesNewPostNewPost | null;

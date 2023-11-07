@@ -25,8 +25,8 @@ export const validationForm = yup.object({
         .required(ERRORS.REQUIRED),
     discount: yup.number().required(ERRORS.REQUIRED),
     images:   yup.array(yup.string()).min(minLengthImages)
-        .required(ERRORS.REQUIRED), // todo string[]
-    weight:   yup.number().required(ERRORS.REQUIRED),
+        .required(ERRORS.REQUIRED),
+    weight: yup.number().required(ERRORS.REQUIRED),
 });
 
 export const defaultValues: DefaultValues = {

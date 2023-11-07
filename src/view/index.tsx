@@ -8,9 +8,13 @@ import { CSS_VARIABLES, LOCAL_STORAGE } from '@/init';
 import { SCREENS_NUMBER } from '@/assets';
 
 // Images
-import '@/assets/images/image_category_brooch.png';
 import '@/assets/images/image_category_see_all.png';
-import '@/assets/images/test.png'; // todo remove when finish
+import '@/assets/images/image_category_brooch.png';
+import '@/assets/images/image_category_bestsellers.png';
+import '@/assets/images/image_category_bracelets.png';
+import '@/assets/images/image_category_earrings.png';
+import '@/assets/images/image_category_necklace.png';
+import '@/assets/images/image_category_rings.png';
 
 // Routes
 import { Routes } from './routes';

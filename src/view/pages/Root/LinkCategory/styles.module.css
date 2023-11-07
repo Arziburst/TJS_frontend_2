@@ -1,6 +1,6 @@
 
 .root:hover img {
-    @apply brightness-150;
+    @apply brightness-110;
 }
 
 .root p {
