@@ -33,7 +33,7 @@ interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDiv
     variant?: 'cart big' | 'cart small';
     available?: boolean;
     secondImage?: ImageOfCardItemPropTypes;
-    name?: string;
+    title?: string;
     onClickEditItem?: () => void;
     onClickRemoveProduct?: (_id: ExtendedProduct['_id']) => void;
     role?: Profile['role'];
@@ -47,7 +47,7 @@ export const CardItem: FC<PropTypes> = ({
     variant,
     available,
     secondImage,
-    name,
+    title,
     onClickEditItem,
     onClickRemoveProduct,
     to,
@@ -71,17 +71,19 @@ export const CardItem: FC<PropTypes> = ({
                         sb:gap-3`,
                     {
                         'max-sm:gap-3 max-sm:flex-row max-sm:w-full': variant,
+                        'sb:flex-row sb:w-full':                      variant === 'cart small',
                     },
                     className,
                 ) }
                 { ...props }>
 
-
                 <Link
                     to = { to }
                     variant = 'none'>
-                    <div className = { `${S.images_container} relative overflow-hidden` }>
-                        {!available && (
+                    <div className = { cn(`${S.images_container} relative overflow-hidden`, {
+                        [ S.images_container__small ]: variant === 'cart small',
+                    }) }>
+                        {typeof available === 'boolean' && !available && (
                             <Badge className = { cn('absolute bottom-[10px] right-[10px] z-[1]', returnStylesStatus(STATUS_OF_PRODUCT.IN_PROGRESS)) }>
                                 Only order
                             </Badge>
@@ -109,13 +111,13 @@ export const CardItem: FC<PropTypes> = ({
                 }) }>
 
                     <div className = 'flex flex-col gap-1 w-full'>
-                        {name && (
+                        {title && (
                             <Link
                                 to = { to }
                                 variant = 'none'>
                                 <p
                                     className = { S.title }>
-                                    {name}
+                                    {title}
                                 </p>
                             </Link>
                         )}

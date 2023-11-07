@@ -267,13 +267,13 @@ const Shop: FC<PropTypes> = () => {
                                 alt: 'First image of item',
                             }}
                             key = { item._id }
-                            name = { item.title }
                             price = { item.price }
                             role = { profile?.role }
                             secondImage = {{
                                 src: item.images[ 1 ],
                                 alt: 'Second image of item',
                             }}
+                            title = { item.title }
                             to = { `${BOOK.PRODUCT}/${item._id}` }
                             onClickEditItem = { () => onClickEditItemHandler(item._id) }
                         />

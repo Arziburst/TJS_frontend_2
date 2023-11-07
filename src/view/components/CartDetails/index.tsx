@@ -154,7 +154,8 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
             ));
 
             fetchGetDataLiqPayOrder({
-                amount:      `${currentOrder.orderedProducts.length + 1}`,
+                amount: currentOrder.orderedProducts
+                    .reduce((acc, orderedProduct) => acc + orderedProduct.price, 0),
                 description: `Замовлення №${id}`,
                 order_id:    id,
                 result_url:  process.env.API_URL + `/orders/change-status?id=${id}` || '',
