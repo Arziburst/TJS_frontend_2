@@ -26,16 +26,6 @@ export const validationForm = yup.object({
         .email(ERRORS.INVALID_EMAIL),
     city:      yup.string().required(ERRORS.REQUIRED),
     warehouse: yup.string()
-    // warehouse: yup.string().test({
-    //     test: (value) => {
-    //         if (value) {
-    //             return isInteger(value);
-    //         }
-
-    //         return false;
-    //     },
-    //     message: 'You have to write only number of warehouse',
-    // })
         .required(ERRORS.REQUIRED),
     comment: yup.string().optional(),
 });

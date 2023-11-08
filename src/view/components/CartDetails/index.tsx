@@ -99,7 +99,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
         form.clearErrors('city');
         setIsAllowCityState(true);
         fetchWarehousesNewPost({
-            cityName:    city,
+            cityName:    cityParam.Description,
             warehouseId: warehouse,
         });
     };
@@ -146,7 +146,6 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
     //! WAREHOUSE
     useEffect(() => {
         if (!isFirstRenderState) {
-            console.log('useEffect >>> [ warehouse ]', warehouse);
             isAllowCityState && setIsAllowCityState(true);
 
             let isAllowFetchWarehouseStateLocal = isAllowFetchWarehouseState;
@@ -155,17 +154,15 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                 return warehouseFromSome.Description.toLocaleLowerCase() === warehouse.toLocaleLowerCase()
                     || warehouseFromSome.DescriptionRu.toLocaleLowerCase() === warehouse.toLocaleLowerCase();
             })) {
-                console.log('useEffect >>> if >>> wasClickWarehouseState && warehouses && !warehouses.some');
                 setIsAllowFetchWarehouseState(true);
                 isAllowFetchWarehouseStateLocal = true;
                 setWasClickWarehouseState(false);
                 setTimeout(() => {
-                    form.setError('warehouse', { message: 'You have to write number of warehouse' });
+                    form.setError('warehouse', { message: 'You have to write or click to number of warehouse' });
                 }, 1_000);
             }
 
             if (isAllowFetchWarehouseStateLocal) {
-                console.log('useEffect >>> if >>> isAllowFetchWarehouseState');
                 fetchWarehousesNewPost({
                     cityName:    city,
                     warehouseId: warehouse,
@@ -178,19 +175,15 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
 
     useEffect(() => {
         if (!isFirstRenderState) {
-            console.log('useEffect >>> [ warehouseS ]');
             if (isInteger(warehouse)) {
-                console.log('useEffect >>> [ warehouseS ] >>> if >>> isInteger(warehouse)');
                 setIsAllowFetchWarehouseState(true);
                 form.setError('warehouse', { message: 'You have to click your warehouse' });
             } else if (warehouses && warehouses.some((warehouseFromSome) => {
                 return warehouseFromSome.Description.toLocaleLowerCase() === warehouse.toLocaleLowerCase()
                 || warehouseFromSome.DescriptionRu.toLocaleLowerCase() === warehouse.toLocaleLowerCase();
             })) {
-                console.log('useEffect >>> [ warehouseS ] >>> if >>> warehouses && warehouses.some');
                 form.clearErrors('warehouse');
             } else {
-                console.log('useEffect >>> [ warehouseS ] >>> if >>> ELSE');
                 setIsAllowFetchWarehouseState(true);
                 form.setError('warehouse', { message: 'You have to write or click to number of warehouse' });
             }
@@ -378,7 +371,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                                 />
                                             </Form.FormControl>
                                             <Form.FormMessage />
-                                            {(form.getFieldState('warehouse').invalid || isOpenWarehouseState) && (
+                                            {(form.getFieldState('warehouse').invalid || isLoadingFetchWarehousesNewPost || isOpenWarehouseState) && (
                                                 <ScrollArea
                                                     className = 'h-[50vh] w-full p-4'
                                                     propViewport = {{}}>
