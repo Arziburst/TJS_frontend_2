@@ -31,11 +31,11 @@ export const getWarehousesNewPostFetcher = (payload: types.FetchWarehousesNewPos
             modelName:        'Address',
             calledMethod:     'getWarehouses',
             methodProperties: {
-                CityName: payload.cityName,
-                // CityRef:  payload.cityRef,
-                Page:     '1',
-                Limit:    '100',
-                Language: 'UA',
+                CityName:    payload.cityName,
+                Page:        '1',
+                Limit:       '100',
+                Language:    'UA',
+                WarehouseId: payload.warehouseId,
             },
         }),
     });

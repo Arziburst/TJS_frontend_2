@@ -1,3 +1,4 @@
+export * from './isInteger';
 export * from './returnStylesStatus';
 export * from './transformStatusToString';
 export * from './checkIsExistKeyOfEnv';

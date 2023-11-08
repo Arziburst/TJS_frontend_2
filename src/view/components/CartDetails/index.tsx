@@ -1,10 +1,13 @@
 // Core
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useLayoutEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 // Init
 import { LINK_LIQ_PAY } from '@/init';
+
+// Tools
+import { isInteger } from '@/tools/utils';
 
 // Bus
 import { useTogglesRedux } from '@/bus/client/toggles';
@@ -65,8 +68,13 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
     const { profile } = useProfile();
 
     // State
-    const [ isFirstRenderState, setIsFirstRenderState ] = useState(true);
     const [ totalPriceState, setTotalPriceState ] = useState(0);
+    const [ isFirstRenderState, setIsFirstRenderState ] = useState(true);
+
+    const [ isAllowCityState, setIsAllowCityState ] = useState(false);
+    const [ isOpenWarehouseState, setIsOpenWarehouseState ] = useState(false);
+    const [ isAllowFetchWarehouseState, setIsAllowFetchWarehouseState ] = useState(true);
+    const [ wasClickWarehouseState, setWasClickWarehouseState ] = useState(false);
 
     // Handlers
     const onSubmit = (values: any) => { // todo how to remove any ???
@@ -88,55 +96,108 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
 
     const onClickCityHandler = (cityParam: CityNewPost) => {
         form.setValue('city', cityParam.Description, { shouldValidate: true });
+        form.clearErrors('city');
+        setIsAllowCityState(true);
         fetchWarehousesNewPost({
-            cityName: city,
+            cityName:    city,
+            warehouseId: warehouse,
         });
     };
 
     const onClickWarehouseHandler = (warehouse: WarehouseNewPost) => {
+        setIsOpenWarehouseState(false);
+        setIsAllowFetchWarehouseState(false);
+        setWasClickWarehouseState(true);
         form.setValue('warehouse', warehouse.Description, { shouldValidate: true });
+        form.clearErrors('warehouse');
     };
 
+    useEffect(() => {
+        form.watch();
+    }, [ form.watch, form.formState ]);
+
+    //! CITY
     useEffect(() => {
         if (!isFirstRenderState) {
             fetchCitiesNewPost(city);
 
-            if (cities && cities.some((citySome) => {
-                return citySome.Description.toLocaleLowerCase() === city.toLocaleLowerCase()
-                    || citySome.DescriptionRu.toLocaleLowerCase() === city.toLocaleLowerCase();
-            })) {
-                form.clearErrors('city');
-                fetchWarehousesNewPost({
-                    cityName: city,
-                });
-            } else {
-                form.setError('city', { message: 'You have to write right city name' });
-            }
-
             form.setValue('warehouse', defaultValues.warehouse);
         }
-        isFirstRenderState && setIsFirstRenderState(false);
     }, [ city ]);
 
     useEffect(() => {
-        if (!isFirstRenderState) {
-            fetchWarehousesNewPost({
-                cityName: city,
-            });
-
-            if (warehouses && warehouses.some((warehouseSome) => {
-                return warehouseSome.Description.toLocaleLowerCase() === warehouse.toLocaleLowerCase()
-                    || warehouseSome.DescriptionRu.toLocaleLowerCase() === warehouse.toLocaleLowerCase();
+        if (!isFirstRenderState && !isAllowCityState && cities) {
+            if (cities && cities.some((cityFromSome) => {
+                return cityFromSome.Description.toLocaleLowerCase() === city.toLocaleLowerCase()
+                    || cityFromSome.DescriptionRu.toLocaleLowerCase() === city.toLocaleLowerCase();
             })) {
-                form.clearErrors('warehouse');
+                form.clearErrors('city');
+                fetchWarehousesNewPost({
+                    cityName:    city,
+                    warehouseId: warehouse,
+                });
+                form.setError('warehouse', { message: '' });
             } else {
-                form.setError('warehouse', { message: 'You have to write right warehouse name' });
+                form.setError('city', { message: 'You have to write right city and click your city' });
             }
         }
+    }, [ cities ]);
 
-        isFirstRenderState && setIsFirstRenderState(false);
+    //! WAREHOUSE
+    useEffect(() => {
+        if (!isFirstRenderState) {
+            console.log('useEffect >>> [ warehouse ]', warehouse);
+            isAllowCityState && setIsAllowCityState(true);
+
+            let isAllowFetchWarehouseStateLocal = isAllowFetchWarehouseState;
+
+            if (wasClickWarehouseState && warehouses && !warehouses.some((warehouseFromSome) => {
+                return warehouseFromSome.Description.toLocaleLowerCase() === warehouse.toLocaleLowerCase()
+                    || warehouseFromSome.DescriptionRu.toLocaleLowerCase() === warehouse.toLocaleLowerCase();
+            })) {
+                console.log('useEffect >>> if >>> wasClickWarehouseState && warehouses && !warehouses.some');
+                setIsAllowFetchWarehouseState(true);
+                isAllowFetchWarehouseStateLocal = true;
+                setWasClickWarehouseState(false);
+                setTimeout(() => {
+                    form.setError('warehouse', { message: 'You have to write number of warehouse' });
+                }, 1_000);
+            }
+
+            if (isAllowFetchWarehouseStateLocal) {
+                console.log('useEffect >>> if >>> isAllowFetchWarehouseState');
+                fetchWarehousesNewPost({
+                    cityName:    city,
+                    warehouseId: warehouse,
+                });
+            }
+
+            setIsAllowFetchWarehouseState(false);
+        }
     }, [ warehouse ]);
 
+    useEffect(() => {
+        if (!isFirstRenderState) {
+            console.log('useEffect >>> [ warehouseS ]');
+            if (isInteger(warehouse)) {
+                console.log('useEffect >>> [ warehouseS ] >>> if >>> isInteger(warehouse)');
+                setIsAllowFetchWarehouseState(true);
+                form.setError('warehouse', { message: 'You have to click your warehouse' });
+            } else if (warehouses && warehouses.some((warehouseFromSome) => {
+                return warehouseFromSome.Description.toLocaleLowerCase() === warehouse.toLocaleLowerCase()
+                || warehouseFromSome.DescriptionRu.toLocaleLowerCase() === warehouse.toLocaleLowerCase();
+            })) {
+                console.log('useEffect >>> [ warehouseS ] >>> if >>> warehouses && warehouses.some');
+                form.clearErrors('warehouse');
+            } else {
+                console.log('useEffect >>> [ warehouseS ] >>> if >>> ELSE');
+                setIsAllowFetchWarehouseState(true);
+                form.setError('warehouse', { message: 'You have to write or click to number of warehouse' });
+            }
+        }
+    }, [ warehouses ]);
+
+    //! CART
     useEffect(() => {
         if (cart && cart.length > 0) {
             fetchCreateOrder({
@@ -181,6 +242,10 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
             form.setValue('phone', profile.phone, { shouldValidate: true });
         }
     }, [ profile ]);
+
+    useLayoutEffect(() => {
+        isFirstRenderState && setIsFirstRenderState(false);
+    }, []);
 
     return (
         <div { ...props }>
@@ -279,12 +344,12 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                                 />
                                             </Form.FormControl>
                                             <Form.FormMessage />
-                                            {cities && form.getFieldState('city').invalid && (
+                                            {(form.getFieldState('city').invalid || isLoadingFetchCitiesNewPost) && (
                                                 <ScrollArea
                                                     className = 'h-[50vh] w-full p-4'
                                                     propViewport = {{}}>
                                                     <NotData isLoading = { isLoadingFetchCitiesNewPost }>
-                                                        {cities.map((city) => (
+                                                        {cities?.map((city) => (
                                                             <Button
                                                                 className = 'flex-col'
                                                                 key = { city.CityID }
@@ -313,12 +378,12 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                                 />
                                             </Form.FormControl>
                                             <Form.FormMessage />
-                                            {warehouses && form.getFieldState('warehouse').invalid && (
+                                            {(form.getFieldState('warehouse').invalid || isOpenWarehouseState) && (
                                                 <ScrollArea
                                                     className = 'h-[50vh] w-full p-4'
                                                     propViewport = {{}}>
                                                     <NotData isLoading = { isLoadingFetchWarehousesNewPost }>
-                                                        {warehouses.map((warehouse) => (
+                                                        {warehouses?.map((warehouse) => (
                                                             <Button
                                                                 className = 'flex-col'
                                                                 key = { warehouse.SiteKey }
