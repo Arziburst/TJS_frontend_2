@@ -5,6 +5,6 @@ export type FetchCitiesNewPostResponse = any;
 // Fetch Cities New Post
 export type FetchWarehousesNewPostRequest = {
     cityName: string;
-    // cityRef?: string;
+    warehouseId: string;
 };
 export type FetchWarehousesNewPostResponse = any;

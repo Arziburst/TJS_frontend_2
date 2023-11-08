@@ -25,8 +25,9 @@ export const validationForm = yup.object({
     email: yup.string().required(ERRORS.REQUIRED)
         .email(ERRORS.INVALID_EMAIL),
     city:      yup.string().required(ERRORS.REQUIRED),
-    warehouse: yup.string().required(ERRORS.REQUIRED),
-    comment:   yup.string().optional(),
+    warehouse: yup.string()
+        .required(ERRORS.REQUIRED),
+    comment: yup.string().optional(),
 });
 
 export const defaultValues: DefaultValues = {
