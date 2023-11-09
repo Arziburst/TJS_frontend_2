@@ -47,10 +47,6 @@
         justify-items: flex-end;
         gap: 12px;
     }
-    /* .images img[grid-area^="item_3"] {
-        height: 140px !important;
-        border: 1px solid red;
-    } */
     .text {
     }
     .contacts {

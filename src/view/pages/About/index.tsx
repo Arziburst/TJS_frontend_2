@@ -9,7 +9,8 @@ import { CSS_VARIABLES, LINK_EMAIL, LINK_PHONE } from '@/init';
 
 // Tools
 import { useWindowHeight, useWindowWidth } from '@/tools/hooks';
-import { transformLinkEmail, transformLinkPhoneNumber } from '@/tools/utils';
+import { getValueFromCSSVariable, transformLinkEmail, transformLinkPhoneNumber } from '@/tools/utils';
+import { cn } from '@/tools/lib/utils';
 
 // Components
 import { ErrorBoundary } from '../../components';
@@ -23,8 +24,7 @@ import { IMAGES } from './static';
 
 // Styles
 import S from './styles.module.css';
-import { cn } from '@/tools/lib/utils';
-1;
+
 const spaces = {
     xs_pd: 'pb-[18px]',
     sb_pd: 'sb:pb-[32px]',
@@ -55,6 +55,12 @@ const About: FC<PropTypes> = () => {
         if (refTitle.current && refContent.current && refMainImage.current) {
             refContent.current.style.minHeight = `calc(var(--vh, 1vh) * 100 - var(${CSS_VARIABLES.HEADER}, 0px) - ${refTitle.current.clientHeight}px`;
 
+            const heightOfHeader = getValueFromCSSVariable(CSS_VARIABLES.HEADER);
+
+            if (heightOfHeader && typeof heightOfHeader === 'string') {
+                refMainImage.current.style.top = heightOfHeader;
+            }
+
             if (width > SCREENS_NUMBER.SM) {
                 refMainImage.current.style.height = getStringHeight('64px');
             } else {
@@ -83,19 +89,21 @@ const About: FC<PropTypes> = () => {
                 <div>
                     <Image
                         alt = 'Main image of About us page'
-                        className = 'h-full w-full rounded-[8px]'
+                        className = { 'sticky h-full w-full rounded-[8px] min-h-[300px]' }
                         ref = { refMainImage }
                         src = 'assets/image_about_main.png'
                     />
                 </div>
                 <div className = 'flex flex-col'>
-                    <p className = { `text-base leading-[28px] text-quaternary uppercase
-                        sb:text-[32px] sb:leading-[44px]` }>
+                    <p className = { `text-base leading-[28px] text-quaternary uppercase ${spaces.xs_pd}
+                        sb:text-[32px] sb:leading-[44px] ${spaces.sb_pd}` }>
                         love my work and want to bring joy and beauty to our world. <br />
                         Affordable luxury - is my motto!
                     </p>
                     <div className = { `${S.grid} grow` }>
-                        <div className = { S.images }>
+                        <div className = { cn(S.images, {
+                            [ spaces.xs_pd ]: width < SCREENS_NUMBER.SB,
+                        }) }>
                             <div
                                 className = { `${S.container_images} flex flex-wrap justify-between gap-[6px] grow
                                     sm:justify-evenly` }>
@@ -118,8 +126,8 @@ const About: FC<PropTypes> = () => {
                             </div>
                         </div>
                         <p
-                            className = { `${S.text} text-base leading-[28px] uppercase
-                        sb:text-2xl sb:leading-[44px]` }>
+                            className = { `${S.text} text-base leading-[28px] uppercase ${spaces.xs_pd}
+                        sb:text-2xl sb:leading-[44px] ${spaces.sb_pd}` }>
                             I also create custom jewelry. And always take into account the wishes of customers.
                         </p>
                         <div
