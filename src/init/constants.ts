@@ -41,6 +41,9 @@ export const LINK_GOHARD = 'https://gohard.team/';
 
 export const LINK_INSTAGRAM = 'https://www.instagram.com/';
 
+export const LINK_PHONE = 'tel:+38066-830-1029';
+export const LINK_EMAIL = 'mailto:elena-arez@ukr.net';
+
 export enum CSS_VARIABLES {
     HEADER = '--vh_header',
     WRAPPER_LEFT_PADDING = '--wrapper_left_padding',

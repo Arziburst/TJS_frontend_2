@@ -15,6 +15,11 @@ import '@/assets/images/image_category_bracelets.png';
 import '@/assets/images/image_category_earrings.png';
 import '@/assets/images/image_category_necklace.png';
 import '@/assets/images/image_category_rings.png';
+import '@/assets/images/image_about_main.png';
+import '@/assets/images/image_about_1.png';
+import '@/assets/images/image_about_2.png';
+import '@/assets/images/image_about_3.png';
+import '@/assets/images/image_about_4.png';
 
 // Routes
 import { Routes } from './routes';
