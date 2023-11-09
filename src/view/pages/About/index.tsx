@@ -84,9 +84,9 @@ const About: FC<PropTypes> = () => {
             </h3>
             <div
                 className = { `flex flex-col gap-[18px]
-                    sb:[&>*]:w-1/2 sb:flex-row sb:pb-[64px] sb:gap-[24px]` }
+                    sb:flex-row sb:pb-[64px] sb:gap-[24px]` }
                 ref = { refContent }>
-                <div>
+                <div className = 'sb:w-[40%]'>
                     <Image
                         alt = 'Main image of About us page'
                         className = { 'sticky h-full w-full rounded-[8px] min-h-[300px]' }
@@ -94,7 +94,8 @@ const About: FC<PropTypes> = () => {
                         src = 'assets/image_about_main.png'
                     />
                 </div>
-                <div className = 'flex flex-col'>
+                <div className = { `flex flex-col
+                    sb:w-[60%]` }>
                     <p className = { `text-base leading-[28px] text-quaternary uppercase ${spaces.xs_pd}
                         sb:text-[32px] sb:leading-[44px] ${spaces.sb_pd}` }>
                         love my work and want to bring joy and beauty to our world. <br />
