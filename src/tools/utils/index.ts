@@ -1,3 +1,5 @@
+export * from './transformLinkEmail';
+export * from './transformLinkPhoneNumber';
 export * from './isInteger';
 export * from './returnStylesStatus';
 export * from './transformStatusToString';

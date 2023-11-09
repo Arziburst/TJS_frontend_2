@@ -5,10 +5,12 @@ import React, { FC } from 'react';
 import { SCREENS_NUMBER } from '@/assets/themes';
 
 // init
-import { LINK_GOHARD, LINK_INSTAGRAM } from '@/init';
+import { LINK_EMAIL, LINK_GOHARD, LINK_INSTAGRAM, LINK_PHONE } from '@/init';
 
 // Tools
+import { useWindowWidth } from '@/tools/hooks';
 import { cn } from '@/tools/lib/utils';
+import { transformLinkEmail, transformLinkPhoneNumber } from '@/tools/utils';
 
 // Components
 import { Icons, Logo } from '@/view/components';
@@ -18,7 +20,6 @@ import { Link } from '@/view/elements';
 
 // Styles
 import S from './styles.module.css';
-import { useWindowWidth } from '@/tools/hooks';
 
 // Types
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> {
@@ -58,8 +59,8 @@ export const Footer: FC<PropTypes> = ({
                     )}
                     <a
                         className = { S.contact_subtitle }
-                        href = 'tel:+38066-830-1029'>
-                        +38 (066) 830 10 29
+                        href = { LINK_PHONE }>
+                        {transformLinkPhoneNumber(LINK_PHONE)}
                     </a>
                 </div>
                 <div>
@@ -72,9 +73,9 @@ export const Footer: FC<PropTypes> = ({
                         <p className = { S.contact_title }>Email:</p>
                     )}
                     <a
-                        className = { S.contact_subtitle }
-                        href = 'mailto:elena-arez@ukr.net'>
-                        elena-arez@ukr.net
+                        className = { `${S.contact_subtitle} uppercase` }
+                        href = { LINK_EMAIL }>
+                        {transformLinkEmail(LINK_EMAIL)}
                     </a>
                 </div>
             </address>
