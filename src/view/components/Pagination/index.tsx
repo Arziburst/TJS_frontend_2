@@ -1,5 +1,6 @@
 // Core
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Assets
 import { SCREENS_NUMBER } from '@/assets';
@@ -41,6 +42,8 @@ export const Pagination: FC<PropTypes> = ({
     onClickDesktopNumber,
     ...props
 }) => {
+    const { t } = useTranslation();
+
     const [ width ] = useWindowWidth();
 
     const maxStep: number = Array.isArray(array) ? calculateTotalPages({
@@ -95,8 +98,8 @@ export const Pagination: FC<PropTypes> = ({
                 </div>
             )}
             {width < SCREENS_NUMBER.SB && (
-                <p className = { S.text }>
-                    <span className = 'text-quaternary'>{value < 10 ? `0${value}` : value}</span> OF {maxStep < 10 ? `0${maxStep}` : maxStep}
+                <p className = { `${S.text } uppercase` }>
+                    <span className = 'text-quaternary'>{value < 10 ? `0${value}` : value}</span> {t('other.pagination.text')} {maxStep < 10 ? `0${maxStep}` : maxStep}
                 </p>
             )}
             <div>

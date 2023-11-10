@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
+import { TFunction } from 'i18next';
 
 // Bus
 import { useProfile } from '@/bus/profile';
@@ -25,9 +26,12 @@ import { validationForm, defaultValues } from './static';
 // Types
 type PropTypes = {
     /* type props here */
+    t: TFunction;
 }
 
-export const SignIn: FC<PropTypes> = () => {
+export const SignIn: FC<PropTypes> = ({
+    t,
+}) => {
     const navigate = useNavigate();
 
     const form = useForm({
@@ -51,7 +55,7 @@ export const SignIn: FC<PropTypes> = () => {
             <InputGroup
                 onSubmit = { form.handleSubmit(onSubmit) }>
                 <FormTitle className = 'text-center'>
-                    Please enter your authentication information.
+                    {t('pages.signInAndUp.signIn.title')}
                 </FormTitle>
                 <Form.FormField
                     control = { form.control }
@@ -61,7 +65,7 @@ export const SignIn: FC<PropTypes> = () => {
                             <Form.FormControl>
                                 <Input
                                     isValidate = { fieldState.invalid }
-                                    placeholder = 'Email'
+                                    placeholder = { t('pages.other.placeholders.email') }
                                     { ...field }
                                 />
                             </Form.FormControl>
@@ -77,7 +81,7 @@ export const SignIn: FC<PropTypes> = () => {
                             <Form.FormControl>
                                 <Input
                                     isValidate = { fieldState.invalid }
-                                    placeholder = 'Password'
+                                    placeholder = { t('pages.other.placeholders.password') }
                                     { ...field }
                                 />
                             </Form.FormControl>
@@ -89,7 +93,7 @@ export const SignIn: FC<PropTypes> = () => {
                     isLoading = { isLoadingLoginProfile }
                     type = 'submit'
                     variant = 'contain'>
-                    Submit
+                    {t('other.buttons.submit')}
                 </Button>
             </InputGroup>
         </Form.Root>

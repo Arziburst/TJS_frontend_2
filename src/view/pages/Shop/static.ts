@@ -8,8 +8,8 @@ interface SortByPrice extends Pick<InitialStateToggles, 'isFilterByLowToHigh'> {
 
 // Constants
 export enum ENUM_FILTERS_BY_PRICE {
-    LOW_TO_HIGH = 'price (Low to high)',
-    HIGH_TO_LOW = 'price (high to low)',
+    LOW_TO_HIGH = 'lowToHigh',
+    HIGH_TO_LOW = 'highToLow',
 }
 
 export const ARRAY_FILTERS_BY_PRICE = Object.values(ENUM_FILTERS_BY_PRICE);
@@ -42,5 +42,5 @@ export const getValueOfSelectFilterByPrice = (isLowToHigh: InitialStateToggles['
         return ENUM_FILTERS_BY_PRICE.HIGH_TO_LOW;
     }
 
-    return null;
+    return 'init';
 };

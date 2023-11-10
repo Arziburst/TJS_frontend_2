@@ -1,7 +1,56 @@
 {
+    "categories": {
+        "see-all": "See all",
+        "brooch": "Brooch",
+        "earring": "Earring",
+        "bestsellers": "Bestsellers",
+        "bracelets": "Bracelets",
+        "necklace": "Necklace",
+        "rings": "Rings"
+    },
+    "filtersByPrice": {
+        "init": "select filter",
+        "lowToHigh": "price (low to high)",
+        "highToLow": "price (high to low)"
+    },
     "pages": {
         "root": {
-            "text": "is a store of fashionable and stylish jewelry, which the author-designer brings to life."
+            "text": "is a store of fashionable and stylish jewelry, which the author-designer brings to life.",
+            "seeAll": "See all",
+            "altImage": "Image see all",
+            "linkAltImage": "Image of category"
+        },
+        "shop": {
+            "titleFilterShopBy": "Shop by",
+            "titleFilterByPrice": "",
+            "firstAltOfCard": "First image of product",
+            "secondAltOfCard": "Second image of product",
+            "buttonShowMore": "Show more",
+            "textShowed": "Showed",
+            "textFrom": "from",
+            "textProducts": "products"
+        },
+        "signInAndUp": {
+            "signIn": {
+                "title": "Please enter your authentication information."
+            },
+            "signUp": {
+                "title": "Please enter your registration information."
+            }
+        }
+    },
+    "other": {
+        "pagination": {
+            "text": "of"
+        },
+        "placeholders": {
+            "email": "Email",
+            "password": "Password",
+            "passwordAgain": "Password again",
+            "phone": "Phone"
+        },
+        "buttons": {
+            "submit": "Submit"
         }
     }
 }

@@ -53,6 +53,7 @@ const Root: FC = () => {
                             gridArea:    `g-${index}`,
                             justifySelf: makeJustifySelf({ index, width }),
                         }}
+                        t = { t }
                     />
                 ))}
 
@@ -71,10 +72,10 @@ const Root: FC = () => {
                         className = 'text-sm font-secondary font-semibold capitalize'
                         to = { `${BOOK.SHOP}/${ENUM_CATEGORIES.ALL}` }
                         variant = 'underline'>
-                        see all
+                        {t('pages.root.seeAll')}
                     </NavLink>
                     <Image
-                        alt = 'Image see all'
+                        alt = { t('pages.root.altImage') }
                         className = { `w-[60px] aspect-[10/8]
                             sb:w-[100px]` }
                         src = 'assets/image_category_see_all.png'

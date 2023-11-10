@@ -1,5 +1,6 @@
 // Core
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { ErrorBoundary, Tabs } from '../../components';
@@ -17,6 +18,8 @@ enum TABS_VALUES {
 }
 
 const SignInAndUp: FC<PropTypes> = () => {
+    const { t } = useTranslation();
+
     return (
         <div className = 'flex justify-center'>
             <Tabs.Root
@@ -29,12 +32,12 @@ const SignInAndUp: FC<PropTypes> = () => {
                 <Tabs.Content
                     className = 'w-full'
                     value = { TABS_VALUES.IN }>
-                    <SignIn />
+                    <SignIn t = { t } />
                 </Tabs.Content>
                 <Tabs.Content
                     className = 'w-full'
                     value = { TABS_VALUES.UP }>
-                    <SignUp />
+                    <SignUp t = { t } />
                 </Tabs.Content>
             </Tabs.Root>
 
