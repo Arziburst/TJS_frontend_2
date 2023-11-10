@@ -1,13 +1,12 @@
 // Core
 import React, { FC } from 'react';
-import { useTranslation } from 'react-i18next';
 
 // Assets
 import { SCREENS_NUMBER } from '@/assets';
 
 // Tools
 import { cn } from '@/tools/lib/utils';
-import { useWindowWidth } from '@/tools/hooks';
+import { useCustomTranslation, useWindowWidth } from '@/tools/hooks';
 
 // Elements
 import { Button } from '@/view/elements';
@@ -42,7 +41,7 @@ export const Pagination: FC<PropTypes> = ({
     onClickDesktopNumber,
     ...props
 }) => {
-    const { t } = useTranslation();
+    const { t } = useCustomTranslation();
 
     const [ width ] = useWindowWidth();
 

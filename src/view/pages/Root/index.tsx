@@ -1,12 +1,11 @@
 // Core
 import React, { FC, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 
 // Init
 import { ENUM_CATEGORIES } from '@/init';
 
 // Tools
-import { useWindowWidth } from '@/tools/hooks';
+import { useCustomTranslation, useWindowWidth } from '@/tools/hooks';
 
 // Book
 import { BOOK } from '@/view/routes/book';
@@ -28,7 +27,7 @@ const Root: FC = () => {
     const refRoot = useRef<null | HTMLDivElement>(null);
     const refGrid = useRef<null | HTMLDivElement>(null);
 
-    const { t } = useTranslation();
+    const { t } = useCustomTranslation();
 
     const [ width ] = useWindowWidth();
 

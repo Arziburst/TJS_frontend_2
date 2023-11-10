@@ -1,3 +1,4 @@
+export * from './useCustomTranslation';
 export * from './useSelector';
 export * from './useDispatch';
 export * from './useWindowHeight';

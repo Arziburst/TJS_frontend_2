@@ -1,7 +1,6 @@
 // Core
 import React, { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 
 // Assets
 import { SCREENS_NUMBER } from '@/assets';
@@ -13,7 +12,7 @@ import { cn } from '@/tools/lib/utils';
 import { CATEGORIES_ITEMS, ENUM_CATEGORIES } from '@/init';
 
 // Hooks
-import { useWindowWidth } from '@/tools/hooks';
+import { useCustomTranslation, useWindowWidth } from '@/tools/hooks';
 
 // Book
 import { BOOK, ParamsLowerCase } from '@/view/routes/book';
@@ -59,7 +58,7 @@ const S = {
 const Shop: FC<PropTypes> = () => {
     const { category } = useParams<Pick<ParamsLowerCase, 'category'>>();
 
-    const { t } = useTranslation();
+    const { t } = useCustomTranslation();
 
     const navigate = useNavigate();
 

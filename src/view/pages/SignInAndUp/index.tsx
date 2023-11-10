@@ -1,6 +1,8 @@
 // Core
 import React, { FC } from 'react';
-import { useTranslation } from 'react-i18next';
+
+// Tools
+import { useCustomTranslation } from '@/tools/hooks';
 
 // Components
 import { ErrorBoundary, Tabs } from '../../components';
@@ -18,7 +20,7 @@ enum TABS_VALUES {
 }
 
 const SignInAndUp: FC<PropTypes> = () => {
-    const { t } = useTranslation();
+    const { t } = useCustomTranslation();
 
     return (
         <div className = 'flex justify-center'>
