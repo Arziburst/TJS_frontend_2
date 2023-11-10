@@ -1,5 +1,6 @@
 // Core
 import React, { FC, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Init
 import { ENUM_CATEGORIES } from '@/init';
@@ -26,6 +27,8 @@ import S from './styles.module.css';
 const Root: FC = () => {
     const refRoot = useRef<null | HTMLDivElement>(null);
     const refGrid = useRef<null | HTMLDivElement>(null);
+
+    const { t } = useTranslation();
 
     const [ width ] = useWindowWidth();
 
@@ -61,7 +64,7 @@ const Root: FC = () => {
                     sb:max-w-[680px] sb:gap-5` }>
                     <span className = 'text-quaternary'>
                         TJStore
-                    </span> is a store of fashionable and stylish jewelry, which the author-designer brings to life.
+                    </span> {t('pages.root.text')}
                 </p>
                 <div className = 'flex gap-6 justify-end items-center'>
                     <NavLink

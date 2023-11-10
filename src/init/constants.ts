@@ -6,6 +6,7 @@ export const APP_NAME = process.env.APP_NAME || 'burst-template';
 
 export enum LOCAL_STORAGE {
     CART = 'cart',
+    LANGUAGE = 'language',
 }
 
 export enum ENUM_CATEGORIES {
