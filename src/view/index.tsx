@@ -29,6 +29,7 @@ import { BOOK } from '@/view/routes/book';
 
 // Tools
 import { ls, postcssViewportHeightCorrection, setValueToCSSVariable } from '@/tools/utils';
+import { useCssPropertyValue, useCustomTranslation, useWindowWidth } from '@/tools/hooks';
 
 // Bus
 import { useTogglesRedux } from '../bus/client/toggles';
@@ -41,9 +42,6 @@ import { Wrapper, wrapperVariants } from '@/view/containers';
 // Components
 import { Alert, Footer, Header, SideBar } from '@/view/components';
 
-// Tools
-import { useCssPropertyValue, useWindowWidth } from '@/tools/hooks';
-
 // Styles
 import '../assets/globalStyles/index.css';
 
@@ -54,6 +52,8 @@ export const App: FC = () => {
         ref:      refWrapper,
         property: 'padding-left',
     });
+
+    const { t, i18n } = useCustomTranslation();
 
     const [ width ] = useWindowWidth();
 
@@ -88,7 +88,11 @@ export const App: FC = () => {
     return (
         <div>
             {width < SCREENS_NUMBER.SB && (
-                <SideBar variant = { 'close' } />
+                <SideBar
+                    i18n = { i18n }
+                    t = { t }
+                    variant = { 'close' }
+                />
             )}
             <Alert />
             <Wrapper
@@ -100,15 +104,17 @@ export const App: FC = () => {
                     <Header
                         isSetHeightToCssVariable
                         className = { wrapperVariants({ className: 'fixed inset-x-0' }) }
+                        i18n = { i18n }
                         style = { paddingLeftWrapper ? {
                             paddingLeft:  paddingLeftWrapper,
                             paddingRight: paddingLeftWrapper,
                         } : {} }
+                        t = { t }
                         variant = 'open'
                     />
                 </div>
                 <Routes />
-                <Footer />
+                <Footer t = { t } />
             </Wrapper>
         </div>
     );

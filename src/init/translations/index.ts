@@ -10,6 +10,9 @@ import translationRu from './configs/ru.json';
 // Constants
 import { LOCAL_STORAGE } from '../constants';
 
+// Tools
+import { ls } from '@/tools/utils';
+
 const resources = {
     en: {
         translation: translationEn,
@@ -22,7 +25,7 @@ const resources = {
     },
 };
 
-const initialLng = localStorage.getItem(LOCAL_STORAGE.LANGUAGE) || navigator.language;
+const initialLng = ls.get(LOCAL_STORAGE.LANGUAGE) || navigator.language.slice(0, 2);
 
 void use(initReactI18next).init({
     resources,

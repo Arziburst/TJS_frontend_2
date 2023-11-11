@@ -1,5 +1,6 @@
 // Core
 import React, { FC } from 'react';
+import { TFunction } from 'i18next';
 
 // Book
 import { BOOK } from '@/view/routes/book';
@@ -13,10 +14,10 @@ import { useCart } from '@/bus/cart';
 
 // Types
 interface PropTypes extends Omit<NavItemPropTypes, 'children' | 'to'> {
-    /* type props here */
+    t: TFunction;
 }
 
-export const ButtonCart: FC<PropTypes> = ({ className, ...props }) => {
+export const ButtonCart: FC<PropTypes> = ({ className, t, ...props }) => {
     const { cart } = useCart();
 
     const getNumber = () => {
@@ -39,7 +40,7 @@ export const ButtonCart: FC<PropTypes> = ({ className, ...props }) => {
             ) }
             to = { BOOK.CART }
             { ...props }>
-            {`Cart ${getNumber()}`}
+            {`${t('pages.cart.root')} ${getNumber()}`}
         </NavItem>
     );
 };

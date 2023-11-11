@@ -9,7 +9,7 @@ import { SCREENS_NUMBER } from '@/assets';
 import { BOOK } from '@/view/routes/book';
 
 // Hooks
-import { useWindowWidth } from '@/tools/hooks';
+import { useCustomTranslation, useWindowWidth } from '@/tools/hooks';
 
 // Bus
 import { useTogglesRedux } from '@/bus/client/toggles';
@@ -43,6 +43,8 @@ const Cart: FC<PropTypes> = () => {
 
     const [ width ] = useWindowWidth();
 
+    const { t } = useCustomTranslation();
+
     const { togglesRedux: { isLoadingFetchProduct }} = useTogglesRedux();
     const { products: { products }, fetchProducts } = useProducts();
     const { cart, fetchProductCart, removeProductOfCart } = useCart();
@@ -66,7 +68,7 @@ const Cart: FC<PropTypes> = () => {
     return (
         <div>
             {width < SCREENS_NUMBER.SB && (
-                <TitlePage>cart</TitlePage>
+                <TitlePage>{t('pages.cart.title')}</TitlePage>
             )}
 
             <ContainerForOrdersAndInformationOfPayment>
@@ -78,21 +80,23 @@ const Cart: FC<PropTypes> = () => {
                             'sb:justify-center': isLoadingFetchProduct,
                         }) }
                         isLoading = { isLoadingFetchProduct }
-                        textIfNotData = 'Your cart is empty'>
+                        t = { t }
+                        textIfNotData = { t('pages.cart.textIfNotData') }>
                         {products?.map((product) => (
                             <CardItem
                                 _id = { product._id }
                                 available = { product.available }
                                 firstImage = {{
                                     src: product.images[ 0 ],
-                                    alt: 'First image of product',
+                                    alt: t('cards.product.firstAltImageOfCard'),
                                 }}
                                 key = { product._id }
                                 price = { product.price }
                                 secondImage = {{
                                     src: product.images[ 1 ],
-                                    alt: 'Second image of product',
+                                    alt: t('cards.product.secondAltImageOfCard'),
                                 }}
+                                t = { t }
                                 title = { product.title }
                                 to = { `${BOOK.PRODUCT}/${product._id}` }
                                 variant = 'cart big'
@@ -106,7 +110,7 @@ const Cart: FC<PropTypes> = () => {
                                 (products && products.length > 0 && products.map((product) => product.price)
                                     .reduce((accumulator, currentValue) => accumulator + currentValue, 0)) || 0
                             }
-                            text = 'your order'
+                            text = { t('pages.cart.yourOrder') }
                         />
                     )}
                 </div>
@@ -115,7 +119,7 @@ const Cart: FC<PropTypes> = () => {
                     <Button
                         className = 'capitalize'
                         onClick = { onClickContinueToCheckout }>
-                        continue to checkout
+                        {t('pages.cart.continueToCheckout')}
                     </Button>
                 )}
                 {width > SCREENS_NUMBER.SB && (

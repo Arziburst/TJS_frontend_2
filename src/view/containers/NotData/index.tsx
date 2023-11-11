@@ -2,6 +2,7 @@
 import React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { VariantProps, cva } from 'class-variance-authority';
+import { TFunction } from 'i18next';
 
 // Tools
 import { cn } from '@/tools/lib/utils';
@@ -26,6 +27,7 @@ import S from './styles.module.css';
 // Types
 interface PropTypes
     extends React.AllHTMLAttributes<HTMLDivElement>, VariantProps<typeof variants> {
+    t: TFunction;
     asChild?: boolean;
     count?: number;
     isLoading: boolean;
@@ -39,6 +41,7 @@ const NotData = React.forwardRef<HTMLDivElement, PropTypes>(
         children,
         className,
         variant,
+        t,
         count = 1,
         isLoading,
         asChild = false,
@@ -62,7 +65,7 @@ const NotData = React.forwardRef<HTMLDivElement, PropTypes>(
             return (
                 <div className = { cn('flex flex-col items-center', className) }>
                     <div className = { S.root }>
-                        {textIfNotData || 'Not Data'}
+                        {textIfNotData || t('components.notData') }
                     </div>
                     {firstElement}
                 </div>

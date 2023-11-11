@@ -11,6 +11,7 @@ import { LINK_EMAIL, LINK_GOHARD, LINK_INSTAGRAM, LINK_PHONE } from '@/init';
 import { useWindowWidth } from '@/tools/hooks';
 import { cn } from '@/tools/lib/utils';
 import { transformLinkEmail, transformLinkPhoneNumber } from '@/tools/utils';
+import { TFunction } from 'i18next';
 
 // Components
 import { Icons, Logo } from '@/view/components';
@@ -23,13 +24,14 @@ import S from './styles.module.css';
 
 // Types
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> {
-    /* type props here */
+    t: TFunction;
 }
 
 export const SPACE_FOOTER = 'mt-6';
 
 export const Footer: FC<PropTypes> = ({
     className,
+    t,
     ...props
 }) => {
     const [ width ] = useWindowWidth();
@@ -50,12 +52,11 @@ export const Footer: FC<PropTypes> = ({
                 </h2>
             )}
             <address className = { `${S.footer_address} flex justify-evenly items-end gap-4 flex-wrap not-italic text-quaternary
-               
                 sb:justify-center sb:items-center
                 xl:gap-8` }>
                 <div>
                     {width < SCREENS_NUMBER.SB && (
-                        <p className = { S.contact_title }>Phone:</p>
+                        <p className = { S.contact_title }>{t('components.footer.textPhone')}:</p>
                     )}
                     <a
                         className = { S.contact_subtitle }
@@ -70,7 +71,7 @@ export const Footer: FC<PropTypes> = ({
                 </div>
                 <div>
                     {width < SCREENS_NUMBER.SB && (
-                        <p className = { S.contact_title }>Email:</p>
+                        <p className = { S.contact_title }>{t('components.footer.textEmail')}:</p>
                     )}
                     <a
                         className = { `${S.contact_subtitle} uppercase` }
@@ -80,10 +81,13 @@ export const Footer: FC<PropTypes> = ({
                 </div>
             </address>
             <div className = { `${S.footer_description_1}` }>
-                <p className = { S.contact_small }>Trend Jewelry Store 2023. All Rights Reserved</p>
+                <p className = { S.contact_small }>
+                    Trend Jewelry Store 2023. All Rights Reserved
+                </p>
             </div>
             <div className = { `${S.footer_description_2}` }>
-                <p className = { S.contact_small }>Developed by
+                <p className = { S.contact_small }>
+                    Developed by
                     <Link
                         className = 'font-bold underline'
                         to = { LINK_GOHARD }>

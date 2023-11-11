@@ -262,22 +262,24 @@ const Shop: FC<PropTypes> = () => {
 
                         </div>
                     ) }
-                    isLoading = { isLoadingFetchProductsByPagination }>
+                    isLoading = { isLoadingFetchProductsByPagination }
+                    t = { t }>
                     {products?.map((item) => (
                         <CardItem
                             _id = { item._id }
                             available = { item.available }
                             firstImage = {{
                                 src: item.images[ 0 ],
-                                alt: t('pages.shop.firstAltOfCard'),
+                                alt: t('cards.product.firstAltImageOfCard'),
                             }}
                             key = { item._id }
                             price = { item.price }
                             role = { profile?.role }
                             secondImage = {{
                                 src: item.images[ 1 ],
-                                alt: t('pages.shop.secondAltOfCard'),
+                                alt: t('cards.product.secondAltImageOfCard'),
                             }}
+                            t = { t }
                             title = { item.title }
                             to = { `${BOOK.PRODUCT}/${item._id}` }
                             onClickEditItem = { () => onClickEditItemHandler(item._id) }
@@ -289,7 +291,8 @@ const Shop: FC<PropTypes> = () => {
                     {totalShowed < total && (
                         <NotData
                             className = 'w-full flex justify-center'
-                            isLoading = { isLoadingFetchProductsByPaginationAtEnd }>
+                            isLoading = { isLoadingFetchProductsByPaginationAtEnd }
+                            t = { t }>
                             <Button
                                 className = 'capitalize max-w-[540px]'
                                 onClick = { onClickShowMoreHandler }>

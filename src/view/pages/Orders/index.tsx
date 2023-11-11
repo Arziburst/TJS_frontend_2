@@ -2,6 +2,9 @@
 import React, { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// Tools
+import { useCustomTranslation } from '@/tools/hooks';
+
 // Book
 import { BOOK } from '@/view/routes/book';
 
@@ -26,6 +29,8 @@ type PropTypes = {
 const Orders: FC<PropTypes> = () => {
     const navigate = useNavigate();
 
+    const { t } = useCustomTranslation();
+
     const { togglesRedux: { isLoadingFetchOrders }} = useTogglesRedux();
     const { orders: { orders }, fetchOrders } = useOrders();
 
@@ -43,11 +48,13 @@ const Orders: FC<PropTypes> = () => {
             <NotData
                 className = { `flex flex-wrap gap-[14px] justify-center
                     sb:gap-[20px]` }
-                isLoading = { isLoadingFetchOrders }>
+                isLoading = { isLoadingFetchOrders }
+                t = { t }>
                 {orders?.map((order) => (
                     <CardOrder
                         key = { order._id }
                         order = { order }
+                        t = { t }
                         onClickCardOrder = { onClickCardOrderHandler }
                     />
                 ))}

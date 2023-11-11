@@ -1,6 +1,7 @@
 // Core
 import React, { FC } from 'react';
 import moment from 'moment';
+import { TFunction } from 'i18next';
 
 // Utils
 import { cn } from '@/tools/lib/utils';
@@ -14,11 +15,13 @@ import { Order } from '@/bus/orders/types';
 
 type PropTypes = {
     order: Order;
+    t: TFunction;
     onClickCardOrder: (order: Order) => void;
 }
 
 export const CardOrder: FC<PropTypes> = ({
     order,
+    t,
     onClickCardOrder,
     ...props
 }) => {
@@ -41,7 +44,7 @@ export const CardOrder: FC<PropTypes> = ({
             onClick = { onClickCardOrderHandler }>
             {order.orderedProducts.map((product, index, array) => (
                 <Image
-                    alt = { 'Image of Order' }
+                    alt = { t('altImages.numberProduct', { index }) }
                     className = { 'w-full' }
                     key = { product.pid }
                     src = { product.image }
@@ -53,7 +56,7 @@ export const CardOrder: FC<PropTypes> = ({
                     {parsedCreated}
                 </Badge>
                 <Badge className = { cn(returnStylesStatus(order.status)) }>
-                    {transformStatusToString(order.status)}
+                    {t(`cards.order.status.${transformStatusToString(order.status) }`)}
                 </Badge>
             </div>
             <Badge className = 'absolute right-[10px] bottom-[10px]'>

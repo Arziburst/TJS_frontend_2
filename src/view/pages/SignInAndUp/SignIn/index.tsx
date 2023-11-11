@@ -5,6 +5,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import { TFunction } from 'i18next';
 
+// Init
+import { INPUT_VALIDATION_VALUES } from '@/init';
+
 // Bus
 import { useProfile } from '@/bus/profile';
 import { useTogglesRedux } from '@/bus/client/toggles';
@@ -65,11 +68,11 @@ export const SignIn: FC<PropTypes> = ({
                             <Form.FormControl>
                                 <Input
                                     isValidate = { fieldState.invalid }
-                                    placeholder = { t('pages.other.placeholders.email') }
+                                    placeholder = { t('placeholders.email') }
                                     { ...field }
                                 />
                             </Form.FormControl>
-                            <Form.FormMessage />
+                            <Form.FormMessage t = { t } />
                         </Form.FormItem>
                     ) }
                 />
@@ -81,11 +84,14 @@ export const SignIn: FC<PropTypes> = ({
                             <Form.FormControl>
                                 <Input
                                     isValidate = { fieldState.invalid }
-                                    placeholder = { t('pages.other.placeholders.password') }
+                                    placeholder = { t('placeholders.password') }
                                     { ...field }
                                 />
                             </Form.FormControl>
-                            <Form.FormMessage />
+                            <Form.FormMessage
+                                options = {{ password: INPUT_VALIDATION_VALUES.PASSWORD }}
+                                t = { t }
+                            />
                         </Form.FormItem>
                     ) }
                 />
@@ -93,7 +99,7 @@ export const SignIn: FC<PropTypes> = ({
                     isLoading = { isLoadingLoginProfile }
                     type = 'submit'
                     variant = 'contain'>
-                    {t('other.buttons.submit')}
+                    {t('buttons.submit')}
                 </Button>
             </InputGroup>
         </Form.Root>

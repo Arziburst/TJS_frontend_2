@@ -1,5 +1,6 @@
 // Core
 import React, { FC, useEffect, useRef } from 'react';
+import { TFunction, i18n } from 'i18next';
 
 // Init
 import { CSS_VARIABLES } from '@/init';
@@ -29,15 +30,20 @@ import {
 // Types
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>, SideBarPropTypes {
     isSetHeightToCssVariable?: boolean;
+    t: TFunction;
+    i18n: i18n;
 }
 
 export const Header: FC<PropTypes> = ({
     variant,
     isSetHeightToCssVariable,
+    t,
+    i18n,
     className,
     ...props
 }) => {
     const refHeader = useRef<null | HTMLElement>(null);
+
 
     const [ width ] = useWindowWidth();
 
@@ -92,7 +98,11 @@ export const Header: FC<PropTypes> = ({
                         className = 'whitespace-nowrap'
                         variant = 'desktop'
                     />
-                    <Nav variant = 'desktop' />
+                    <Nav
+                        i18n = { i18n }
+                        t = { t }
+                        variant = 'desktop'
+                    />
                 </>
             )}
             {isSB && (
@@ -104,12 +114,14 @@ export const Header: FC<PropTypes> = ({
             <ul className = 'flex flex-col items-end self-stretch'>
                 <ButtonCart
                     className = 'whitespace-nowrap'
+                    t = { t }
                     onClick = { onClickCloseSideBarHandler }
                 />
                 {isOpen && !isSB && (
                     <ButtonSignInAndUp
                         className = 'whitespace-nowrap'
                         isMobile = { false }
+                        t = { t }
                         onClick = { onClickCloseSideBarHandler }
                     />
                 )}

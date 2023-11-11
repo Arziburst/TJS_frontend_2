@@ -9,6 +9,7 @@ import { CATEGORIES_ITEMS } from '@/init';
 
 // Tools
 import { cn } from '@/tools/lib/utils';
+import { useCustomTranslation } from '@/tools/hooks';
 
 // Bus
 import { useTogglesRedux } from '@/bus/client/toggles';
@@ -54,6 +55,8 @@ const Management: FC<PropTypes> = () => {
     const { id } = useParams<PARAMS_VALUES.ID>();
     const navigate = useNavigate();
     const location = useLocation();
+
+    const { t } = useCustomTranslation();
 
     const isModeEdit = !!id;
 
@@ -156,7 +159,7 @@ const Management: FC<PropTypes> = () => {
         <div>
             <Form.Root { ...form }>
                 <FormTitle className = 'text-center'>
-                    Please enter product information.
+                    {t('pages.management.title')}
                 </FormTitle>
                 <form
                     className = { S.grid }
@@ -167,16 +170,16 @@ const Management: FC<PropTypes> = () => {
                         render = { ({ field, fieldState }) => (
                             <Form.FormItem style = {{ gridArea: field.name }}>
                                 <Form.FormLabel>
-                                    Enter title:
+                                    {t('pages.management.labelTitle')}:
                                 </Form.FormLabel>
                                 <Form.FormControl>
                                     <Input
                                         isValidate = { fieldState.invalid }
-                                        placeholder = 'Enter some data...'
+                                        placeholder = { t('placeholders.someData') }
                                         { ...field }
                                     />
                                 </Form.FormControl>
-                                <Form.FormMessage />
+                                <Form.FormMessage t = { t } />
                             </Form.FormItem>
                         ) }
                     />
@@ -186,7 +189,7 @@ const Management: FC<PropTypes> = () => {
                         render = { ({ field }) => (
                             <Form.FormItem style = {{ gridArea: field.name }}>
                                 <Form.FormLabel>
-                                    Choose the correct type for the product:
+                                    {t('pages.management.labelType')}:
                                 </Form.FormLabel>
                                 <Select.Root
                                     defaultValue = { field.value }
@@ -214,7 +217,7 @@ const Management: FC<PropTypes> = () => {
                                         ))}
                                     </Select.SelectContent>
                                 </Select.Root>
-                                <Form.FormMessage />
+                                <Form.FormMessage t = { t } />
                             </Form.FormItem>
                         ) }
                     />
@@ -224,16 +227,16 @@ const Management: FC<PropTypes> = () => {
                         render = { ({ field, fieldState }) => (
                             <Form.FormItem style = {{ gridArea: field.name }}>
                                 <Form.FormLabel>
-                                    Enter description:
+                                    {t('pages.management.labelDescription')}:
                                 </Form.FormLabel>
                                 <Form.FormControl>
                                     <Textarea
                                         { ...field }
                                         isValidate = { fieldState.invalid }
-                                        placeholder = 'Enter some data...'
+                                        placeholder = { t('placeholders.someData') }
                                     />
                                 </Form.FormControl>
-                                <Form.FormMessage />
+                                <Form.FormMessage t = { t } />
                             </Form.FormItem>
                         ) }
                     />
@@ -243,17 +246,17 @@ const Management: FC<PropTypes> = () => {
                         render = { ({ field, fieldState }) => (
                             <Form.FormItem style = {{ gridArea: field.name }}>
                                 <Form.FormLabel>
-                                    Enter the product weight in grams:
+                                    {t('pages.management.labelWeight')}:
                                 </Form.FormLabel>
                                 <Form.FormControl>
                                     <Input
                                         isValidate = { fieldState.invalid }
-                                        placeholder = 'Enter some data...'
+                                        placeholder = { t('placeholders.someData') }
                                         type = 'number'
                                         { ...field }
                                     />
                                 </Form.FormControl>
-                                <Form.FormMessage />
+                                <Form.FormMessage t = { t } />
                             </Form.FormItem>
                         ) }
                     />
@@ -263,17 +266,17 @@ const Management: FC<PropTypes> = () => {
                         render = { ({ field, fieldState }) => (
                             <Form.FormItem style = {{ gridArea: field.name }}>
                                 <Form.FormLabel>
-                                    Enter product price in UAH/₴:
+                                    {t('pages.management.labelPrice')}:
                                 </Form.FormLabel>
                                 <Form.FormControl>
                                     <Input
                                         isValidate = { fieldState.invalid }
-                                        placeholder = 'Enter some data...'
+                                        placeholder = { t('placeholders.someData') }
                                         type = 'number'
                                         { ...field }
                                     />
                                 </Form.FormControl>
-                                <Form.FormMessage />
+                                <Form.FormMessage t = { t } />
                             </Form.FormItem>
                         ) }
                     />
@@ -283,17 +286,18 @@ const Management: FC<PropTypes> = () => {
                         render = { ({ field, fieldState }) => (
                             <Form.FormItem style = {{ gridArea: field.name }}>
                                 <Form.FormLabel>
+                                    {/* todo remove discount (front-end and server) */}
                                     Enter discount %:
                                 </Form.FormLabel>
                                 <Form.FormControl>
                                     <Input
                                         isValidate = { fieldState.invalid }
-                                        placeholder = 'Enter some data...'
+                                        placeholder = { t('placeholders.someData') }
                                         type = 'number'
                                         { ...field }
                                     />
                                 </Form.FormControl>
-                                <Form.FormMessage />
+                                <Form.FormMessage t = { t } />
                             </Form.FormItem>
                         ) }
                     />
@@ -303,14 +307,14 @@ const Management: FC<PropTypes> = () => {
                         render = { ({ field }) => (
                             <Form.FormItem style = {{ gridArea: field.name }}>
                                 <Form.FormLabel className = 'block'>
-                                    Product available:
+                                    {t('pages.management.labelAvailable')}
                                 </Form.FormLabel>
                                 <Switch
                                     checked = { field.value }
                                     onCheckedChange = { field.onChange }>
-                                    {field.value ? 'Availability' : 'Non-availability'}
+                                    {field.value ? t('pages.management.availability') : t('pages.management.nonAvailability')}
                                 </Switch>
-                                <Form.FormMessage />
+                                <Form.FormMessage t = { t } />
                             </Form.FormItem>
                         ) }
                     />
@@ -325,6 +329,7 @@ const Management: FC<PropTypes> = () => {
                                             <ModalAddImages
                                                 classNameTrigger = { cn({ 'border-quaternary text-quaternary': fieldState.invalid }) }
                                                 selectedImages = { images }
+                                                t = { t }
                                                 onClickAddItemGalleryToManagementHandler = {
                                                     onClickAddItemGalleryToManagementHandler
                                                 }
@@ -344,7 +349,7 @@ const Management: FC<PropTypes> = () => {
                                                         height = '80'
                                                     />
                                                     <Image
-                                                        alt = 'Image from the Gallery'
+                                                        alt = { t('pages.management.altImageFromGallery') }
                                                         className = 'aspect-square'
                                                         src = { src }
                                                     />
@@ -352,7 +357,7 @@ const Management: FC<PropTypes> = () => {
                                             ))}
                                         </div>
                                     </Form.FormControl>
-                                    <Form.FormMessage />
+                                    <Form.FormMessage t = { t } />
                                 </Form.FormItem>
                             ) }
                         />
@@ -365,7 +370,7 @@ const Management: FC<PropTypes> = () => {
                             type = 'button'
                             variant = 'outline'
                             onClick = { () => onClickDeleteItemHandler(currentProduct?._id) }>
-                            Delete
+                            {t('buttons.remove')}
                         </Button>
                     )}
                     <Button
@@ -374,7 +379,7 @@ const Management: FC<PropTypes> = () => {
                         style = {{ gridArea: 'submit' }}
                         type = 'submit'
                         variant = 'contain'>
-                        {isModeEdit ? 'Edit' : 'Create'}
+                        {isModeEdit ? t('buttons.edit') : t('buttons.create')}
                     </Button>
                 </form>
             </Form.Root>

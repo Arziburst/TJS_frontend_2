@@ -1,5 +1,6 @@
 // Core
 import React, { FC, useRef } from 'react';
+import { TFunction } from 'i18next';
 
 // Init
 import { CSS_VARIABLES } from '@/init';
@@ -29,10 +30,12 @@ import S from './styles.module.css';
 
 // Types
 type PropTypes = {
-    /* type props here */
+    t: TFunction;
 }
 
-export const Slider: FC<PropTypes> = () => {
+export const Slider: FC<PropTypes> = ({
+    t,
+}) => {
     const refPrev = useRef<null | HTMLButtonElement>(null);
     const refNext = useRef<null | HTMLButtonElement>(null);
 
@@ -54,7 +57,7 @@ export const Slider: FC<PropTypes> = () => {
             {currentProduct?.images.map((image, index) => (
                 <SwiperSlide key = { image }>
                     <Image
-                        alt = { `${index} image of the product` }
+                        alt = { t('altImages.numberProduct', { index }) }
                         className = 'w-full'
                         src = { image }
                         style = {{ height: `calc(60vh - var(${CSS_VARIABLES.HEADER}))` }}

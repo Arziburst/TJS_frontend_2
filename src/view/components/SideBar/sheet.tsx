@@ -3,16 +3,13 @@ import * as React from 'react';
 import * as SheetPrimitive from '@radix-ui/react-dialog';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { X } from 'lucide-react'; // todo npm un lucide-react ????
-
-// Book
-import { BOOK } from '@/view/routes/book';
+import { i18n, TFunction } from 'i18next';
 
 // Tools
 import { cn } from '@/tools/lib/utils';
 
 // Components
-import { ButtonCart, Header, Icons, Logo } from '@/view/components';
-import { Wrapper } from '@/view/containers';
+import { Header } from '@/view/components';
 
 const Sheet = SheetPrimitive.Root;
 
@@ -66,13 +63,15 @@ const sheetVariants = cva(
 interface SheetContentProps
     extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
     VariantProps<typeof sheetVariants> {
+    t: TFunction;
+    i18n: i18n;
     onClickCloseSideBar: () => void;
 }
 
 const SheetContent = React.forwardRef<
 React.ElementRef<typeof SheetPrimitive.Content>,
 SheetContentProps
->(({ side = 'left', className, children, onClickCloseSideBar, ...props }, ref) => {
+>(({ t, i18n, side = 'left', className, children, onClickCloseSideBar, ...props }, ref) => {
     return (
         <SheetPortal>
             <SheetOverlay onClick = { onClickCloseSideBar } />
@@ -80,7 +79,11 @@ SheetContentProps
                 className = { cn(sheetVariants({ side }), className, 'w-full overflow-y-auto') }
                 ref = { ref }
                 { ...props }>
-                <Header variant = 'close' />
+                <Header
+                    i18n = { i18n }
+                    t = { t }
+                    variant = 'close'
+                />
                 {children}
             </SheetPrimitive.Content>
         </SheetPortal>

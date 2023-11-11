@@ -8,6 +8,7 @@ import { LINK_LIQ_PAY } from '@/init';
 
 // Tools
 import { isInteger } from '@/tools/utils';
+import { useCustomTranslation } from '@/tools/hooks';
 
 // Bus
 import { useTogglesRedux } from '@/bus/client/toggles';
@@ -45,6 +46,8 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
     });
 
     const { city, warehouse } = form.getValues();
+
+    const { t } = useCustomTranslation();
 
     // Hooks of Bus
     const { togglesRedux: {
@@ -158,7 +161,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                 isAllowFetchWarehouseStateLocal = true;
                 setWasClickWarehouseState(false);
                 setTimeout(() => {
-                    form.setError('warehouse', { message: 'You have to write or click to number of warehouse' });
+                    form.setError('warehouse', { message: t('errors.clickRightCity') });
                 }, 1_000);
             }
 
@@ -177,7 +180,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
         if (!isFirstRenderState) {
             if (isInteger(warehouse)) {
                 setIsAllowFetchWarehouseState(true);
-                form.setError('warehouse', { message: 'You have to click your warehouse' });
+                form.setError('warehouse', { message: t('errors.clickRightWarehouse') });
             } else if (warehouses && warehouses.some((warehouseFromSome) => {
                 return warehouseFromSome.Description.toLocaleLowerCase() === warehouse.toLocaleLowerCase()
                 || warehouseFromSome.DescriptionRu.toLocaleLowerCase() === warehouse.toLocaleLowerCase();
@@ -185,7 +188,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                 form.clearErrors('warehouse');
             } else {
                 setIsAllowFetchWarehouseState(true);
-                form.setError('warehouse', { message: 'You have to write or click to number of warehouse' });
+                form.setError('warehouse', { message: t('errors.clickNumberWarehouse') });
             }
         }
     }, [ warehouses ]);
@@ -242,7 +245,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
 
     return (
         <div { ...props }>
-            <TitlePage>cart</TitlePage>
+            <TitlePage>{t('pages.orderDetails.title')}</TitlePage>
             <Form.Root { ...form }>
                 <form
                     onSubmit = { form.handleSubmit(onSubmit) }>
@@ -250,7 +253,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                         sb:gap-[48px]` }>
                         <div>
                             <FormTitle>
-                                <span className = 'text-quaternary'>1.</span> Contact Details
+                                <span className = 'text-quaternary'>1.</span> {t('pages.orderDetails.firstTitleForm')}
                             </FormTitle>
                             <ContainerFields>
                                 <Form.FormField
@@ -261,11 +264,11 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                             <Form.FormControl>
                                                 <Input
                                                     isValidate = { fieldState.invalid }
-                                                    placeholder = 'First Name'
+                                                    placeholder = { t('placeholders.firstName') }
                                                     { ...field }
                                                 />
                                             </Form.FormControl>
-                                            <Form.FormMessage />
+                                            <Form.FormMessage t = { t } />
                                         </Form.FormItem>
                                     ) }
                                 />
@@ -277,11 +280,11 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                             <Form.FormControl>
                                                 <Input
                                                     isValidate = { fieldState.invalid }
-                                                    placeholder = 'Last Name'
+                                                    placeholder = { t('placeholders.lastName') }
                                                     { ...field }
                                                 />
                                             </Form.FormControl>
-                                            <Form.FormMessage />
+                                            <Form.FormMessage t = { t } />
                                         </Form.FormItem>
                                     ) }
                                 />
@@ -293,11 +296,11 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                             <Form.FormControl>
                                                 <Input
                                                     isValidate = { fieldState.invalid }
-                                                    placeholder = 'Phone'
+                                                    placeholder = { t('placeholders.phone') }
                                                     { ...field }
                                                 />
                                             </Form.FormControl>
-                                            <Form.FormMessage />
+                                            <Form.FormMessage t = { t } />
                                         </Form.FormItem>
                                     ) }
                                 />
@@ -309,11 +312,11 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                             <Form.FormControl>
                                                 <Input
                                                     isValidate = { fieldState.invalid }
-                                                    placeholder = 'Email'
+                                                    placeholder = { t('placeholders.email') }
                                                     { ...field }
                                                 />
                                             </Form.FormControl>
-                                            <Form.FormMessage />
+                                            <Form.FormMessage t = { t } />
                                         </Form.FormItem>
                                     ) }
                                 />
@@ -321,7 +324,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                         </div>
                         <div>
                             <FormTitle>
-                                <span className = 'text-quaternary'>2.</span> Shipping details
+                                <span className = 'text-quaternary'>2.</span> {t('pages.orderDetails.secondTitleForm')}
                             </FormTitle>
                             <ContainerFields>
                                 <Form.FormField
@@ -332,16 +335,18 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                             <Form.FormControl>
                                                 <Input
                                                     isValidate = { fieldState.invalid }
-                                                    placeholder = 'City'
+                                                    placeholder = { t('placeholders.city') }
                                                     { ...field }
                                                 />
                                             </Form.FormControl>
-                                            <Form.FormMessage />
+                                            <Form.FormMessage t = { t } />
                                             {(form.getFieldState('city').invalid || isLoadingFetchCitiesNewPost) && (
                                                 <ScrollArea
                                                     className = 'h-[50vh] w-full p-4'
                                                     propViewport = {{}}>
-                                                    <NotData isLoading = { isLoadingFetchCitiesNewPost }>
+                                                    <NotData
+                                                        isLoading = { isLoadingFetchCitiesNewPost }
+                                                        t = { t }>
                                                         {cities?.map((city) => (
                                                             <Button
                                                                 className = 'flex-col'
@@ -366,16 +371,18 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                             <Form.FormControl>
                                                 <Input
                                                     isValidate = { fieldState.invalid }
-                                                    placeholder = 'Choose post office'
+                                                    placeholder = { t('placeholders.choosePostOffice') }
                                                     { ...field }
                                                 />
                                             </Form.FormControl>
-                                            <Form.FormMessage />
+                                            <Form.FormMessage t = { t } />
                                             {(form.getFieldState('warehouse').invalid || isLoadingFetchWarehousesNewPost || isOpenWarehouseState) && (
                                                 <ScrollArea
                                                     className = 'h-[50vh] w-full p-4'
                                                     propViewport = {{}}>
-                                                    <NotData isLoading = { isLoadingFetchWarehousesNewPost }>
+                                                    <NotData
+                                                        isLoading = { isLoadingFetchWarehousesNewPost }
+                                                        t = { t }>
                                                         {warehouses?.map((warehouse) => (
                                                             <Button
                                                                 className = 'flex-col'
@@ -402,10 +409,10 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                                 <Textarea
                                                     { ...field }
                                                     isValidate = { fieldState.invalid }
-                                                    placeholder = 'Information that can help fulfill an order'
+                                                    placeholder = { t('placeholders.comment') }
                                                 />
                                             </Form.FormControl>
-                                            <Form.FormMessage />
+                                            <Form.FormMessage t = { t } />
                                         </Form.FormItem>
                                     ) }
                                 />
@@ -416,7 +423,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                 sb:py-[32px] sb:mb-[32px]` }>
                                 <div className = 'flex justify-between flex-wrap'>
                                     <FormTitle>
-                                        Your Order
+                                        {t('pages.orderDetails.yourOrder')}
                                     </FormTitle>
                                     <FormTitle className = 'text-quaternary'>
                                         {currentOrder ? currentOrder.orderedProducts.reduce(
@@ -435,8 +442,8 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                 </div> */}
                             </div>
                             <div className = 'flex justify-between flex-wrap'>
-                                <FormTitle className = 'mb-0 sb:mb-0 text-quaternary'>
-                                    TOTAL
+                                <FormTitle className = 'mb-0 sb:mb-0 text-quaternary uppercase'>
+                                    {t('pages.common.total')}
                                 </FormTitle>
                                 <FormTitle className = 'mb-0 sb:mb-0 text-quaternary'>
                                     {totalPriceState} ₴
@@ -464,7 +471,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                     type = 'submit'
                                     variant = 'contain'
                                     onClick = { onSubmit }>
-                                    Make Order
+                                    {t('pages.orderDetails.buttonMakeOrder')}
                                 </Button>
                             </form>
                         ) : (
@@ -472,7 +479,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                 className = 'capitalize'
                                 type = 'submit'
                                 variant = 'contain'>
-                                Make Order
+                                {t('pages.orderDetails.buttonMakeOrder')}
                             </Button>
                         )}
                     </div>

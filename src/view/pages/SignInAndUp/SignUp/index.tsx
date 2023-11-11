@@ -5,6 +5,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import { TFunction } from 'i18next';
 
+// Init
+import { INPUT_VALIDATION_VALUES } from '@/init';
+
 // Bus
 import { useTogglesRedux } from '@/bus/client/toggles';
 import { useProfile } from '@/bus/profile';
@@ -65,11 +68,14 @@ export const SignUp: FC<PropTypes> = ({
                             <Form.FormControl>
                                 <Input
                                     isValidate = { fieldState.invalid }
-                                    placeholder = { t('other.placeholders.nameAndSurname') }
+                                    placeholder = { t('placeholders.nameAndSurname') }
                                     { ...field }
                                 />
                             </Form.FormControl>
-                            <Form.FormMessage />
+                            <Form.FormMessage
+                                options = {{ name: INPUT_VALIDATION_VALUES.NAME }}
+                                t = { t }
+                            />
                         </Form.FormItem>
                     ) }
                 />
@@ -81,11 +87,11 @@ export const SignUp: FC<PropTypes> = ({
                             <Form.FormControl>
                                 <Input
                                     isValidate = { fieldState.invalid }
-                                    placeholder = { t('other.placeholders.email') }
+                                    placeholder = { t('placeholders.email') }
                                     { ...field }
                                 />
                             </Form.FormControl>
-                            <Form.FormMessage />
+                            <Form.FormMessage t = { t } />
                         </Form.FormItem>
                     ) }
                 />
@@ -97,11 +103,11 @@ export const SignUp: FC<PropTypes> = ({
                             <Form.FormControl>
                                 <Input
                                     isValidate = { fieldState.invalid }
-                                    placeholder = { t('other.placeholders.phone') }
+                                    placeholder = { t('placeholders.phone') }
                                     { ...field }
                                 />
                             </Form.FormControl>
-                            <Form.FormMessage />
+                            <Form.FormMessage t = { t } />
                         </Form.FormItem>
                     ) }
                 />
@@ -113,11 +119,11 @@ export const SignUp: FC<PropTypes> = ({
                             <Form.FormControl>
                                 <Input
                                     isValidate = { fieldState.invalid }
-                                    placeholder = { t('other.placeholders.password') }
+                                    placeholder = { t('placeholders.password') }
                                     { ...field }
                                 />
                             </Form.FormControl>
-                            <Form.FormMessage />
+                            <Form.FormMessage t = { t } />
                         </Form.FormItem>
                     ) }
                 />
@@ -129,11 +135,11 @@ export const SignUp: FC<PropTypes> = ({
                             <Form.FormControl>
                                 <Input
                                     isValidate = { fieldState.invalid }
-                                    placeholder = { t('other.placeholders.passwordAgain') }
+                                    placeholder = { t('placeholders.passwordAgain') }
                                     { ...field }
                                 />
                             </Form.FormControl>
-                            <Form.FormMessage />
+                            <Form.FormMessage t = { t } />
                         </Form.FormItem>
                     ) }
                 />
@@ -141,7 +147,7 @@ export const SignUp: FC<PropTypes> = ({
                     isLoading = { isLoadingRegistrationProfile }
                     type = 'submit'
                     variant = 'contain'>
-                    {t('other.buttons.submit')}
+                    {t('buttons.submit')}
                 </Button>
             </InputGroup>
         </Form.Root>
