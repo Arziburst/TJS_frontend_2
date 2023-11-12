@@ -1,0 +1,1 @@
+import { fetch__sagaName__(pascalCase)Action, watchFetch__sagaName__(pascalCase) } from './fetch__sagaName__(pascalCase)';

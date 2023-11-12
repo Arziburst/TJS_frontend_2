@@ -5,14 +5,85 @@ import { useDispatch } from 'react-redux';
 // Tools
 import { useSelector } from '../../../tools/hooks';
 
-const initialState = {
-    isOnline:   navigator.onLine,
-    isLoggedIn: false,
+// Types
+export type InitialStateToggles = {
+    isOnline: boolean,
+    isLoggedIn: boolean,
+    isOpenSideBar: boolean,
+    isFilterByLowToHigh: null | boolean,
+
+    // Loadings
+    // New Post
+    isLoadingFetchWarehousesNewPost: boolean;
+    isLoadingFetchCitiesNewPost: boolean;
+
+    // Profile
+    isLoadingRegistrationProfile: boolean;
+    isLoadingLoginProfile: boolean;
+    isLoadingLogoutProfile: boolean;
+
+    // Products
+    isLoadingFetchProduct: boolean;
+    isLoadingFetchProducts: boolean;
+    isLoadingCreteProduct: boolean;
+    isLoadingEditProduct: boolean;
+    isLoadingDeleteProduct: boolean;
+    isLoadingFetchProductsByPagination: boolean;
+
+    isLoadingFetchProductsByPaginationAtEnd: boolean;
+
+
+    // Orders
+    isLoadingFetchOrder: boolean;
+    isLoadingFetchOrders: boolean;
+    isLoadingFetchDataLiqPayOrder: boolean;
+
+    // Gallery
+    isLoadingFetchGallery: boolean,
+    isLoadingUpdateGallery: boolean,
+    isLoadingDeleteItemGallery: boolean,
+}
+
+const initialState: InitialStateToggles = {
+    isOnline:            navigator.onLine,
+    isLoggedIn:          true, // isAuthenticated
+    isOpenSideBar:       false,
+    isFilterByLowToHigh: null,
+
+    // Loadings
+    // New Post
+    isLoadingFetchWarehousesNewPost: false,
+    isLoadingFetchCitiesNewPost:     false,
+
+    // Profile
+    isLoadingRegistrationProfile: false,
+    isLoadingLoginProfile:        false,
+    isLoadingLogoutProfile:       false,
+
+    // Products
+    isLoadingFetchProduct:              false,
+    isLoadingFetchProducts:             false,
+    isLoadingCreteProduct:              false,
+    isLoadingEditProduct:               false,
+    isLoadingDeleteProduct:             false,
+    isLoadingFetchProductsByPagination: false,
+
+    isLoadingFetchProductsByPaginationAtEnd: false,
+
+    // Orders
+    isLoadingFetchOrder:           false,
+    isLoadingFetchOrders:          false,
+    isLoadingFetchDataLiqPayOrder: false,
+
+    // Gallery
+    isLoadingFetchGallery:      false,
+    isLoadingUpdateGallery:     false,
+    isLoadingDeleteItemGallery: false,
 };
 
 // Types
 export type TogglesKeys = keyof typeof initialState;
-type Options = { type: TogglesKeys, value: boolean };
+type Options = { type: TogglesKeys, value: boolean | null };
 
 // Slice
 export const togglesSlice = createSlice({
@@ -28,7 +99,7 @@ export const togglesSlice = createSlice({
 });
 
 // Interfaces
-const togglesActions = togglesSlice.actions;
+export const togglesActions = togglesSlice.actions;
 export default togglesSlice.reducer;
 
 export const useTogglesRedux = () => {

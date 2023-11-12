@@ -1,1 +1,1 @@
-export const __pageName__(constantCase) = '/__pageName__(kebabCase)';
+__pageName__(constantCase) = '/__pageName__(kebabCase)',

@@ -10,6 +10,9 @@ import { store as reduxStore } from './init';
 // View
 import { App } from './view';
 
+// Translations
+import '@/init/translations';
+
 const Root = () => {
     return (
         <ReduxProvider store = { reduxStore }>

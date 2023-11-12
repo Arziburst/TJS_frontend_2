@@ -35,7 +35,7 @@ CLIGen([
         ],
     },
     {
-        name:      'Saga: ./src/bus/__entityName__/saga',
+        name:      'Init Saga: ./src/bus/__entityName__/saga',
         templates: [
             {
                 stringsReplacers: '__entityName__',
@@ -110,6 +110,34 @@ CLIGen([
                         markerTemplate: './scripts/generate/templates/saga/.genignore/runRootSaga.ts',
                         pathToMarker:   './src/init/redux/index.ts',
                         onceInsert:     true,
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        name:      'Add new Saga: ./src/bus/__entityName__/saga',
+        templates: [
+            {
+                stringsReplacers: [ '__entityName__', '__sagaName__' ],
+                pathToTemplate:   './scripts/generate/templates/addNewSaga',
+                outputPath:       './src/bus/__entityName__/saga',
+                markers:          [
+                    {
+                        pattern:        '// MarkerGen Watchers & Actions',
+                        markerTemplate: './scripts/generate/templates/addNewSaga/.genignore/importSaga.ts',
+                        pathToMarker:   './src/bus/__entityName__/saga/index.ts',
+                    },
+                    {
+                        pattern:        '// MarkerGen function',
+                        markerTemplate: './scripts/generate/templates/addNewSaga/.genignore/function.ts',
+                        pathToMarker:   './src/bus/__entityName__/saga/index.ts',
+                        genDirection:   'before',
+                    },
+                    {
+                        pattern:        '// MarkerGen watchers',
+                        markerTemplate: './scripts/generate/templates/addNewSaga/.genignore/callWatcher.ts',
+                        pathToMarker:   './src/bus/__entityName__/saga/index.ts',
                     },
                 ],
             },

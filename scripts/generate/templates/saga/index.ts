@@ -5,7 +5,7 @@ import { all, call } from 'redux-saga/effects';
 // Tools
 import { useDispatch } from '../../../tools/hooks';
 
-// Watchers & Actions
+// MarkerGen Watchers & Actions
 import { fetch__entityName__(pascalCase)Action, watchFetch__entityName__(pascalCase) } from './fetch__entityName__(pascalCase)';
 
 export const use__entityName__(pascalCase)Saga = () => {
@@ -13,9 +13,13 @@ export const use__entityName__(pascalCase)Saga = () => {
 
     return {
         fetch__entityName__(pascalCase): () => void dispatch(fetch__entityName__(pascalCase)Action(1)),
-    };
+    // MarkerGen function
+};
 };
 
 export function* watch__entityName__(pascalCase)(): SagaIterator {
-    yield all([ call(watchFetch__entityName__(pascalCase)) ]);
+    yield all([
+        // MarkerGen watchers
+        call(watchFetch__entityName__(pascalCase)),
+    ]);
 }

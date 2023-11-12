@@ -1,21 +1,15 @@
 // Core
 import React, { FC } from 'react';
-import styled from 'styled-components';
 
 // Types
 type PropTypes = {
     /* type props here */
 }
 
-// Styles
-const Container = styled.div<PropTypes>`
-    /* styles here */
-`;
-
-export const __elementName__(pascalCase): FC<PropTypes> = () => {
+export const __elementName__(pascalCase): FC<PropTypes> = ({ ...props }) => {
     return (
-        <Container>
+        <div {...props}>
             Element: __elementName__(pascalCase)
-        </Container>
+        </div>
     );
 };

@@ -1,6 +1,7 @@
 // Core
 import { Action } from '@reduxjs/toolkit';
 import { put, call } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 
 // Redux
 import { TogglesKeys } from '../../bus/client/toggles';
@@ -15,12 +16,16 @@ import { customFetch } from './customFetch';
 export type FetchOptions = {
     fetch: () => ReturnType<typeof fetch>;
     successStatusCode?: number;
+    isNoData?: boolean;
 }
 
 type OptionsType<SuccessData, ErrorData> = {
     fetchOptions: FetchOptions;
     callAction?: Action<any>;
     toggleType?: TogglesKeys;
+    // -------------------------------------------------
+    skipAttemptsIfStatusCode?: number;
+    skipAlertIfStatusCode?: number;
     // -------------------------------------------------
     tryStart?: Function;
     success?: (successData: SuccessData) => void;
@@ -34,8 +39,14 @@ type OptionsType<SuccessData, ErrorData> = {
     finallyEnd?: Function;
 };
 
+const defaultNumberOfAttempts = 2;
+
+const numberOfAttempts = { value: defaultNumberOfAttempts }; // todo how to improve?!
+
 export function* makeRequest<SuccessData, ErrorData = {}>(options: OptionsType<SuccessData, ErrorData>) {
     const {
+        skipAttemptsIfStatusCode = 0,
+        skipAlertIfStatusCode = 0,
         fetchOptions,
         callAction,
         toggleType,
@@ -58,14 +69,13 @@ export function* makeRequest<SuccessData, ErrorData = {}>(options: OptionsType<S
             }));
         }
 
-        const result: SuccessData = yield call(() => customFetch(fetchOptions));
-
+        const result: { data: SuccessData } = yield call(() => customFetch(fetchOptions));
         if (success) {
-            yield success(result);
+            yield success(result.data);
         }
 
         if (tryEnd) {
-            yield tryEnd(result);
+            yield tryEnd(result.data);
         }
 
         return result;
@@ -80,8 +90,16 @@ export function* makeRequest<SuccessData, ErrorData = {}>(options: OptionsType<S
             yield error(errorData);
         }
 
-        if (callAction) {
+        if (errorData.statusCode !== skipAttemptsIfStatusCode && callAction && numberOfAttempts.value > 0) {
+            yield numberOfAttempts.value -= 1;
             yield put(callAction);
+        } else {
+            yield numberOfAttempts.value = defaultNumberOfAttempts;
+        }
+
+        if (skipAlertIfStatusCode !== errorData.statusCode && errorData.message) {
+            yield toast.error(errorData.message);
+            yield console.error(errorData);
         }
 
         if (catchEnd) {
