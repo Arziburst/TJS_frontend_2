@@ -1,5 +1,6 @@
 // Core
 import React, { FC } from 'react';
+import { TFunction } from 'i18next';
 
 // Components
 import { Select as SelectCore } from '@/view/components';
@@ -12,6 +13,8 @@ export type SelectShopPropTypes = {
     showValue: null | string;
     items: string[];
     setValue: (value: string) => void;
+    tString: string;
+    t: TFunction;
     placeholder?: string;
     onClick?: (item: string) => void;
 }
@@ -22,6 +25,8 @@ export const Select: FC<SelectShopPropTypes> = ({
     showValue,
     items,
     setValue,
+    tString,
+    t,
     placeholder,
     onClick,
 }) => {
@@ -39,7 +44,7 @@ export const Select: FC<SelectShopPropTypes> = ({
                     variant = 'ghost'>
                     <SelectCore.SelectValue
                         aria-label = { value || '' }
-                        className = 'text=[15px]'>
+                        className = 'text-[15px]'>
                         {showValue || placeholder}
                     </SelectCore.SelectValue>
                 </SelectCore.SelectTrigger>
@@ -50,7 +55,7 @@ export const Select: FC<SelectShopPropTypes> = ({
                             key = { item }
                             value = { item }
                             onClick = { () => onClick && onClick(item) }>
-                            {item}
+                            {t(`${tString}.${item}`)}
                         </SelectCore.SelectItem>
                     ))}
                 </SelectCore.SelectContent>

@@ -1,5 +1,6 @@
 // Core
 import React, { FC } from 'react';
+import { TFunction } from 'i18next';
 
 // Init
 import { STATUS_OF_PRODUCT } from '@/init';
@@ -27,6 +28,7 @@ interface ImageOfCardItemPropTypes extends Pick<ImagePropTypes, 'src' | 'alt'> {
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
     Pick<LinkPropTypes, 'to'>
 {
+    t: TFunction;
     _id: ExtendedProduct['_id'];
     firstImage: ImageOfCardItemPropTypes;
     price: number;
@@ -41,6 +43,7 @@ interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDiv
 
 export const CardItem: FC<PropTypes> = ({
     className,
+    t,
     _id,
     firstImage,
     price,
@@ -85,7 +88,7 @@ export const CardItem: FC<PropTypes> = ({
                     }) }>
                         {typeof available === 'boolean' && !available && (
                             <Badge className = { cn('absolute bottom-[10px] right-[10px] z-[1]', returnStylesStatus(STATUS_OF_PRODUCT.IN_PROGRESS)) }>
-                                Only order
+                                {t('cards.product.onlyOrder')}
                             </Badge>
                         )}
 
@@ -132,7 +135,7 @@ export const CardItem: FC<PropTypes> = ({
                                     className = 'w-auto text-xs text-quaternary underline hover:no-underline'
                                     variant = 'default'
                                     onClick = { () => onClickRemoveProduct && onClickRemoveProduct(_id) }>
-                                    Remove
+                                    {t('buttons.remove')}
                                 </Button>
                             )}
                         </div>

@@ -6,6 +6,7 @@ export const APP_NAME = process.env.APP_NAME || 'burst-template';
 
 export enum LOCAL_STORAGE {
     CART = 'cart',
+    LANGUAGE = 'language',
 }
 
 export enum ENUM_CATEGORIES {
@@ -54,8 +55,8 @@ export const typesOfImage: Array<string> = [ 'image/png', 'image/jpeg', 'image/g
 export const LINK_LIQ_PAY = 'https://www.liqpay.ua';
 
 export const VALUES_OF_STATUS = [
-    'Canceled',
-    'In processing',
-    'Accepted',
-    'Closed',
+    'canceled',
+    'inProcessing',
+    'accepted',
+    'closed',
 ];

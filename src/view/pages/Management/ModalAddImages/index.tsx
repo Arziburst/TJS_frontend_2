@@ -1,6 +1,7 @@
 // Core
 import React, { FC, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { TFunction } from 'i18next';
 
 // Tools
 import { cn } from '@/tools/lib/utils';
@@ -21,12 +22,14 @@ import {
 import { Image as ImageType } from '@/bus/gallery/types';
 
 type PropTypes = {
+    t: TFunction;
     onClickAddItemGalleryToManagementHandler: (event: any, image: ImageType) => void;
     selectedImages: (string | undefined)[];
     classNameTrigger?: string;
 }
 
 export const ModalAddImages: FC<PropTypes> = ({
+    t,
     onClickAddItemGalleryToManagementHandler,
     selectedImages,
     classNameTrigger,
@@ -40,7 +43,7 @@ export const ModalAddImages: FC<PropTypes> = ({
 
     const onClickDeleteItemGalleryHandler = (event: any, image: ImageType) => {
         // eslint-disable-next-line no-alert
-        const isConfirmed = window.confirm('ПОДТВЕРДИТЕ ПОЛНОЕ УДАЛЕНИЕ!');
+        const isConfirmed = window.confirm(t('pages.management.confirmCompleteDeletion'));
         if (isConfirmed) {
             fetchDeleteItemOfGallery(image.public_id);
         }
@@ -48,7 +51,7 @@ export const ModalAddImages: FC<PropTypes> = ({
 
     const onClickAllItemsGalleryHandler = () => {
         // eslint-disable-next-line no-alert
-        const isConfirmed = window.confirm('ПОДТВЕРДИТЕ ПОЛНОЕ УДАЛЕНИЕ!');
+        const isConfirmed = window.confirm(t('pages.management.confirmCompleteDeletion'));
         if (isConfirmed) {
             if (gallery) {
                 const Ids = gallery.map((image) => image.public_id);
@@ -56,7 +59,7 @@ export const ModalAddImages: FC<PropTypes> = ({
                     fetchDeleteItemOfGallery(id);
                 });
             } else {
-                toast.error('Ошибка удаления');
+                toast.error(t('pages.management.uninstallError'));
             }
         }
     };
@@ -71,7 +74,7 @@ export const ModalAddImages: FC<PropTypes> = ({
                 asChild
                 className = { cn('min-h-[132px] p-[20px]', { 'w-auto aspect-square': selectedImages.length > 0 }, classNameTrigger) }>
                 <Button variant = 'outline'>
-                    Add images from the Gallery
+                    {t('pages.management.buttonAddImageFromGallery')}
                 </Button>
             </Dialog.DialogTrigger>
             <Dialog.DialogContent className = 'max-h-screen overflow-x-scroll'>
@@ -87,7 +90,7 @@ export const ModalAddImages: FC<PropTypes> = ({
                             className = 'w-auto p-2'
                             title = 'Альфа, может плоховато работать!!!'
                             onClick = { onClickAllItemsGalleryHandler }>
-                            Delete all images
+                            {t('pages.management.buttonDeleteAllImages')}
                         </Button>
                     </div>
                 </Dialog.DialogHeader>
@@ -104,7 +107,7 @@ export const ModalAddImages: FC<PropTypes> = ({
                                     onClick = {
                                         (event: any) => onClickDeleteItemGalleryHandler(event, image)
                                     }>
-                                    remove
+                                    {t('buttons.remove')}
                                 </Button>
                                 <Button
                                     className = { cn('w-auto border-2 border-transparent', { 'border-quinary': selectedImages.includes(image.imageUrl) }) }
@@ -113,7 +116,7 @@ export const ModalAddImages: FC<PropTypes> = ({
                                         (event: any) => onClickAddItemGalleryToManagementHandler(event, image)
                                     }>
                                     <Image
-                                        alt = { `Image by URL ${image.imageUrl}` }
+                                        alt = { t('altImages.imageByURL', { url: image.imageUrl }) }
                                         className = 'h-24 aspect-square'
                                         src = { image.imageUrl }
                                     />

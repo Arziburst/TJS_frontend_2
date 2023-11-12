@@ -1,6 +1,7 @@
 // Core
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { TFunction } from 'i18next';
 
 // Book
 import { BOOK } from '@/view/routes/book';
@@ -16,12 +17,13 @@ import { Avatar } from '../Avatar';
 
 // Types
 interface PropTypes extends Omit<NavItemPropTypes, 'children' | 'to'> {
-    /* type props here */
     isMobile: boolean;
+    t: TFunction;
 }
 
 export const ButtonSignInAndUp: FC<PropTypes> = ({
     className,
+    t,
     isMobile,
     ...props
 }) => {
@@ -53,16 +55,16 @@ export const ButtonSignInAndUp: FC<PropTypes> = ({
                     </DropdownMenu.Trigger>
                     <DropdownMenu.Content side = { isMobile ? 'top' : 'right' }>
                         <DropdownMenu.Label>
-                            Settings
+                            {t('components.header.textSettings')}
                         </DropdownMenu.Label>
                         <DropdownMenu.Separator />
                         {profile?.role === 'admin' && (
                             <>
                                 <DropdownMenu.Item onClick = { () => navigate(BOOK.ADD_ITEM) }>
-                                    Add item
+                                    {t('components.header.buttonAddProduct')}
                                 </DropdownMenu.Item>
                                 <DropdownMenu.Item onClick = { () => navigate(BOOK.ORDERS) }>
-                                    Orders
+                                    {t('components.header.buttonOrders')}
                                 </DropdownMenu.Item>
                             </>
                         )}
@@ -71,7 +73,7 @@ export const ButtonSignInAndUp: FC<PropTypes> = ({
                                 isLoading: isLoadingLogoutProfile,
                             }}
                             onClick = { onClickLogoutHandler }>
-                            Logout
+                            {t('components.header.buttonLogout')}
                         </DropdownMenu.Item>
                     </DropdownMenu.Content>
                 </DropdownMenu.Root>
@@ -85,7 +87,7 @@ export const ButtonSignInAndUp: FC<PropTypes> = ({
             to = { BOOK.SIGN_IN_AND_UP }
             onClick = { () => closeSideBar() }
             { ...props }>
-            Sign In & Up
+            {t('pages.signInAndUp.root')}
         </NavItem>
     );
 };

@@ -10,7 +10,7 @@ export const OrderDetails = lazy(() => import(/* webpackChunkName: "OrderDetails
 export const Product = lazy(() => import(/* webpackChunkName: "Product" */ './Product'));
 export const Management = lazy(() => import(/* webpackChunkName: "Management" */ './Management'));
 export const SignInAndUp = lazy(() => import(/* webpackChunkName: "SignInAndUp" */ './SignInAndUp'));
-export const About = lazy(() => import(/* webpackChunkName: "About" */ './About'));
+export const AboutUs = lazy(() => import(/* webpackChunkName: "AboutUs" */ './AboutUs'));
 export const Contacts = lazy(() => import(/* webpackChunkName: "Contacts" */ './Contacts'));
 export const Cart = lazy(() => import(/* webpackChunkName: "Cart" */ './Cart'));
 export const Shop = lazy(() => import(/* webpackChunkName: "Shop" */ './Shop'));

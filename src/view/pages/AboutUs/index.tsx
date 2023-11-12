@@ -8,7 +8,7 @@ import { SCREENS_NUMBER } from '@/assets';
 import { CSS_VARIABLES, LINK_EMAIL, LINK_PHONE } from '@/init';
 
 // Tools
-import { useWindowHeight, useWindowWidth } from '@/tools/hooks';
+import { useCustomTranslation, useWindowHeight, useWindowWidth } from '@/tools/hooks';
 import { getValueFromCSSVariable, transformLinkEmail, transformLinkPhoneNumber } from '@/tools/utils';
 import { cn } from '@/tools/lib/utils';
 
@@ -35,10 +35,12 @@ type PropTypes = {
     /* type props here */
 }
 
-const About: FC<PropTypes> = () => {
+const AboutUs: FC<PropTypes> = () => {
     const refTitle = useRef<null | HTMLHeadingElement>(null);
     const refContent = useRef<null | HTMLDivElement>(null);
     const refMainImage = useRef<null | HTMLImageElement>(null);
+
+    const { t } = useCustomTranslation();
 
     const [ width ] = useWindowWidth();
     const [ height ] = useWindowHeight();
@@ -80,7 +82,7 @@ const About: FC<PropTypes> = () => {
                 className = { `text-base uppercase leading-[28px] ${spaces.xs_pd}
                     sb:text-[32px] sb:leading-[44px] ${spaces.sb_pd}` }
                 ref = { refTitle }>
-                My name is Elena , I follow the news and trends, have extensive experience working with jewelry.
+                {t('pages.aboutUs.firstTitle')}
             </h3>
             <div
                 className = { `flex flex-col gap-[18px]
@@ -88,7 +90,7 @@ const About: FC<PropTypes> = () => {
                 ref = { refContent }>
                 <div className = 'sb:w-[40%]'>
                     <Image
-                        alt = 'Main image of About us page'
+                        alt = { t('pages.aboutUs.mainAltImage') }
                         className = { 'sticky h-full w-full rounded-[8px] min-h-[300px]' }
                         ref = { refMainImage }
                         src = 'assets/image_about_main.png'
@@ -98,8 +100,8 @@ const About: FC<PropTypes> = () => {
                     sb:w-[60%]` }>
                     <p className = { `text-base leading-[28px] text-quaternary uppercase ${spaces.xs_pd}
                         sb:text-[32px] sb:leading-[44px] ${spaces.sb_pd}` }>
-                        love my work and want to bring joy and beauty to our world. <br />
-                        Affordable luxury - is my motto!
+                        {t('pages.aboutUs.firstPartOfSecondTitle')} <br />
+                        {t('pages.aboutUs.secondPartOfSecondTitle')}
                     </p>
                     <div className = { `${S.grid} grow` }>
                         <div className = { cn(S.images, {
@@ -110,7 +112,7 @@ const About: FC<PropTypes> = () => {
                                     sm:justify-evenly` }>
                                 {IMAGES.map((src, index) => (
                                     <Image
-                                        alt = 'Image product of About us page'
+                                        alt = { t('altImages.product') }
                                         className = { cn(`rounded-[3px] w-[80px]
                                             sb:w-[100px]`,
                                         {
@@ -128,8 +130,8 @@ const About: FC<PropTypes> = () => {
                         </div>
                         <p
                             className = { `${S.text} text-base leading-[28px] uppercase ${spaces.xs_pd}
-                        sb:text-2xl sb:leading-[44px] ${spaces.sb_pd}` }>
-                            I also create custom jewelry. And always take into account the wishes of customers.
+                                sb:text-2xl sb:leading-[44px] ${spaces.sb_pd}` }>
+                            {t('pages.aboutUs.text')}
                         </p>
                         <div
                             className = { `${S.contacts} flex flex-wrap justify-around gap-[20px]
@@ -137,12 +139,12 @@ const About: FC<PropTypes> = () => {
                             <ContactInfo
                                 link = { LINK_PHONE }
                                 linkText = { transformLinkPhoneNumber(LINK_PHONE) }
-                                title = 'Phone'
+                                title = { t('pages.aboutUs.phone') }
                             />
                             <ContactInfo
                                 link = { LINK_EMAIL }
                                 linkText = { transformLinkEmail(LINK_EMAIL) }
-                                title = 'Email'
+                                title = { t('pages.aboutUs.email') }
                             />
                         </div>
                     </div>
@@ -154,6 +156,6 @@ const About: FC<PropTypes> = () => {
 
 export default () => (
     <ErrorBoundary>
-        <About />
+        <AboutUs />
     </ErrorBoundary>
 );

@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { SCREENS_NUMBER } from '@/assets';
 
 // Tools
-import { useWindowWidth } from '@/tools/hooks';
+import { useCustomTranslation, useWindowWidth } from '@/tools/hooks';
 
 // Book
 import { ParamsLowerCase } from '@/view/routes/book';
@@ -25,6 +25,8 @@ import { Button, Link, TitlePage } from '@/view/elements';
 
 // Styles
 import S from './styles.module.css';
+
+// Static
 import { checkIsProductAddedToCart } from './static';
 
 // Types
@@ -36,6 +38,8 @@ const Product: FC<PropTypes> = () => {
     const refDescriptionProduct = useRef<null | HTMLDivElement>(null);
 
     const { id } = useParams<Pick<ParamsLowerCase, 'id'>>();
+
+    const { t } = useCustomTranslation();
 
     const [ width ] = useWindowWidth();
 
@@ -85,6 +89,7 @@ const Product: FC<PropTypes> = () => {
                             <ImageProduct
                                 index = { 1 }
                                 src = { currentProduct.images[ 0 ] }
+                                t = { t }
                             />
                         )}
                     </div>
@@ -95,6 +100,7 @@ const Product: FC<PropTypes> = () => {
                                 index = { index + 2 }
                                 key = { src }
                                 src = { src }
+                                t = { t }
                             />
                         ))}
                 </div>
@@ -108,11 +114,13 @@ const Product: FC<PropTypes> = () => {
                         sb:sticky sb:justify-between` }
                     style = {{ minHeight: refDescriptionProduct.current && refDescriptionProduct.current.clientHeight > 0 ? `${refDescriptionProduct.current.clientHeight}px` : 'auto' }}>
                     <div className = 'space-y-[12px]'>
-                        <TitlePage>
-                            {currentProduct?.type}
-                        </TitlePage>
+                        {currentProduct?.type && (
+                            <TitlePage>
+                                {t(`categories.${currentProduct?.type}`)}
+                            </TitlePage>
+                        )}
                         {width < SCREENS_NUMBER.SB && (
-                            <Slider />
+                            <Slider t = { t } />
                         )}
                     </div>
                     <div className = 'space-y-[32px] sb:space-y-[48px]'>
@@ -138,15 +146,14 @@ const Product: FC<PropTypes> = () => {
                                     className = { `font-secondary text-xs font-semibold tracking-[10%] text-quaternary underline transition
                                         hover:no-underline` }
                                     to = '/'>
-                                    Size Guide
+                                    {t('pages.product.link')}
                                 </Link>
                             </div>
                         </div>
                         <Button
                             disabled = { isProductAddedToCartState }
                             onClick = { onClickAddToCartHandler }>
-                            {isProductAddedToCartState ? 'Product added to cart' : 'Add to Cart'}
-
+                            {isProductAddedToCartState ? t('pages.product.buttonProductAddedToCart') : t('pages.product.buttonAddToCart')}
                         </Button>
                     </div>
                 </div>

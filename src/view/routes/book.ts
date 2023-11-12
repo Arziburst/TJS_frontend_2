@@ -30,7 +30,7 @@ export enum BOOK {
     EDIT_ITEM = '/edit-item',
     MANAGEMENT = '/management',
     SIGN_IN_AND_UP = '/sign-in-and-up',
-    ABOUT = '/about',
+    ABOUT_US = '/about-us',
     CONTACTS = '/contacts',
     CART = '/cart',
     SHOP = '/shop',

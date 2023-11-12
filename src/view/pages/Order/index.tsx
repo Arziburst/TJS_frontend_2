@@ -11,6 +11,9 @@ import { VALUES_OF_STATUS } from '@/init';
 import { cn } from '@/tools/lib/utils';
 import { returnStylesStatus, transformStatusToString } from '@/tools/utils';
 
+// Hooks
+import { useCustomTranslation } from '@/tools/hooks';
+
 // Book
 import { BOOK, ParamsLowerCase } from '@/view/routes/book';
 
@@ -41,6 +44,8 @@ type PropTypes = {
 const Order: FC<PropTypes> = () => {
     const navigate = useNavigate();
     const { id } = useParams<Pick<ParamsLowerCase, 'id'>>();
+
+    const { t } = useCustomTranslation();
 
     const { togglesRedux: { isLoadingFetchOrder }} = useTogglesRedux();
 
@@ -86,7 +91,8 @@ const Order: FC<PropTypes> = () => {
         return (
             <NotData
                 isLoading = { isLoadingFetchOrder }
-                textIfNotData = 'Order did not find'
+                t = { t }
+                textIfNotData = { t('pages.order.textIfNotData') }
             />
         );
     }
@@ -95,18 +101,21 @@ const Order: FC<PropTypes> = () => {
         <div>
             <NotData
                 className = 'flex flex-col gap-[24px]'
-                isLoading = { isLoadingFetchOrder }>
+                isLoading = { isLoadingFetchOrder }
+                t = { t }>
                 <NotData
                     className = { `flex flex-wrap gap-[14px] justify-center
                         sb:gap-[20px]` }
-                    isLoading = { isLoadingFetchOrder }>
+                    isLoading = { isLoadingFetchOrder }
+                    t = { t }>
                     {currentOrder?.orderedProducts.map((product) => (
                         <CardItem
                             _id = { product.pid }
-                            firstImage = {{ src: product.image, alt: 'Image of Product' }}
+                            firstImage = {{ src: product.image, alt: t('altImages.product') }}
                             key = { product.pid }
                             price = { product.price }
                             role = { profile?.role }
+                            t = { t }
                             to = { `${BOOK.PRODUCT}/${product.pid}` }
                             onClickEditItem = { () => onClickEditItemHandler(product.pid) }
                         />
@@ -115,20 +124,20 @@ const Order: FC<PropTypes> = () => {
                 <p
                     className = { `text-center text-lg
                         sb:text-2xl` }>
-                    Total: <span className = 'text-quaternary'>{`${currentOrder?.orderedProducts.reduce((acc, product) => acc + product.price, 0) } ₴`}</span>
+                    {t('pages.common.total')}: <span className = 'text-quaternary'>{`${currentOrder?.orderedProducts.reduce((acc, product) => acc + product.price, 0) } ₴`}</span>
                 </p>
                 <div className = 'text-center space-y-[18px]'>
                     <FormTitle>
-                        Information about order
+                        {t('pages.order.firstTitle')}
                     </FormTitle>
-                    <p>Email: {currentOrder?.email}</p>
-                    <p>Phone: {currentOrder?.phone}</p>
-                    <p>Comment: {currentOrder?.comment}</p>
+                    <p>{t('pages.order.email')}: {currentOrder?.email}</p>
+                    <p>{t('pages.order.phone')}: {currentOrder?.phone}</p>
+                    <p>{t('pages.order.comment')}: {currentOrder?.comment}</p>
                 </div>
                 <div className = 'flex flex-col items-center'>
                     <Form.Root { ...form }>
                         <FormTitle className = 'text-center'>
-                            Please enter product information.
+                            {t('pages.order.secondTitle')}
                         </FormTitle>
                         <form>
                             <Form.FormField
@@ -137,7 +146,7 @@ const Order: FC<PropTypes> = () => {
                                 render = { ({ field }) => (
                                     <Form.FormItem>
                                         <Form.FormLabel>
-                                            Choose the correct type for the product:
+                                            {t('pages.order.label')}:
                                         </Form.FormLabel>
                                         <Select.Root
                                             defaultValue = { gotStatus }
@@ -149,7 +158,7 @@ const Order: FC<PropTypes> = () => {
                                                     variant = 'outline'>
                                                     <Select.SelectValue>
                                                         <span className = 'capitalize'>
-                                                            {transformStatusToString(Number(field.value))}
+                                                            {t(`cards.order.status.${transformStatusToString(Number(field.value))}`)}
                                                         </span>
                                                     </Select.SelectValue>
                                                 </Select.SelectTrigger>
@@ -163,13 +172,13 @@ const Order: FC<PropTypes> = () => {
                                                             key = { index }
                                                             value = { String(index) }
                                                             variant = 'contain'>
-                                                            {transformStatusToString(index)}
+                                                            {t(`cards.order.status.${transformStatusToString(index)}`)}
                                                         </Select.SelectItem>
                                                     );
                                                 })}
                                             </Select.SelectContent>
                                         </Select.Root>
-                                        <Form.FormMessage />
+                                        <Form.FormMessage t = { t } />
                                     </Form.FormItem>
                                 ) }
                             />

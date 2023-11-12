@@ -1,5 +1,6 @@
 // Core
 import React, { FC } from 'react';
+import { TFunction } from 'i18next';
 
 // Book
 import { BOOK } from '@/view/routes/book';
@@ -18,6 +19,7 @@ interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDiv
     category: string;
     numberItems: number;
     image: string;
+    t: TFunction;
 }
 
 export const LinkCategory: FC<PropTypes> = ({
@@ -25,6 +27,7 @@ export const LinkCategory: FC<PropTypes> = ({
     category,
     numberItems,
     image,
+    t,
     ...props
 }) => {
     return (
@@ -36,7 +39,7 @@ export const LinkCategory: FC<PropTypes> = ({
                 to = { `${BOOK.SHOP}/${category}` }
                 variant = 'none'>
                 <Image
-                    alt = { `Image of category ${category}` }
+                    alt = { t('pages.root.linkAltImage') }
                     className = 'w-[60px] aspect-[10/8] sb:w-[100px]'
                     src = { `assets/${image}` }
                 />
@@ -44,7 +47,7 @@ export const LinkCategory: FC<PropTypes> = ({
                 max-[420px]:text-3xl
                 max-[350px]:text-xl
                 ` }>
-                    {category}
+                    {t(`categories.${category}`)}
                     <span className = 'text-base font-secondary text-quaternary'>
                         {`(${numberItems < 10 ? `0${numberItems}` : numberItems})`}
                     </span>

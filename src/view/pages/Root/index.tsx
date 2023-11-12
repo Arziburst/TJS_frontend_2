@@ -5,7 +5,7 @@ import React, { FC, useRef } from 'react';
 import { ENUM_CATEGORIES } from '@/init';
 
 // Tools
-import { useWindowWidth } from '@/tools/hooks';
+import { useCustomTranslation, useWindowWidth } from '@/tools/hooks';
 
 // Book
 import { BOOK } from '@/view/routes/book';
@@ -26,6 +26,8 @@ import S from './styles.module.css';
 const Root: FC = () => {
     const refRoot = useRef<null | HTMLDivElement>(null);
     const refGrid = useRef<null | HTMLDivElement>(null);
+
+    const { t } = useCustomTranslation();
 
     const [ width ] = useWindowWidth();
 
@@ -50,6 +52,7 @@ const Root: FC = () => {
                             gridArea:    `g-${index}`,
                             justifySelf: makeJustifySelf({ index, width }),
                         }}
+                        t = { t }
                     />
                 ))}
 
@@ -61,17 +64,17 @@ const Root: FC = () => {
                     sb:max-w-[680px] sb:gap-5` }>
                     <span className = 'text-quaternary'>
                         TJStore
-                    </span> is a store of fashionable and stylish jewelry, which the author-designer brings to life.
+                    </span> {t('pages.root.text')}
                 </p>
                 <div className = 'flex gap-6 justify-end items-center'>
                     <NavLink
                         className = 'text-sm font-secondary font-semibold capitalize'
                         to = { `${BOOK.SHOP}/${ENUM_CATEGORIES.ALL}` }
                         variant = 'underline'>
-                        see all
+                        {t('pages.root.seeAll')}
                     </NavLink>
                     <Image
-                        alt = 'Image see all'
+                        alt = { t('pages.root.altImage') }
                         className = { `w-[60px] aspect-[10/8]
                             sb:w-[100px]` }
                         src = 'assets/image_category_see_all.png'

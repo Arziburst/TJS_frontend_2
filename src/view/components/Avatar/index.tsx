@@ -56,7 +56,6 @@ PropTypes
 
     return (
         <Root
-            // className = { cn(className, { 'border-2 border-secondary-100': !src }) }
             className = { cn(avatarVariants({ variant, className }), { 'border-2 border-secondary-100': !src }) }
             ref = { ref }
             { ...props }>

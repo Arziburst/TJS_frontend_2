@@ -1,8 +1,9 @@
 // Core
 import React, { FC } from 'react';
+import { TFunction, i18n } from 'i18next';
 
 // Init
-import { CATEGORIES_ITEMS, LANGUAGES } from '@/init';
+import { CATEGORIES_ITEMS, LANGUAGES, LOCAL_STORAGE } from '@/init';
 
 // BOOK
 import { BOOK } from '@/view/routes/book';
@@ -15,7 +16,7 @@ import { NavItem } from './NavItem';
 import { NavItemText } from './NavItem/NavItemText';
 
 // Elements
-import { NavLink } from '@/view/elements';
+import { Button, NavLink } from '@/view/elements';
 
 // UI
 import { ButtonSignInAndUp, Select } from '@/view/components';
@@ -25,16 +26,21 @@ import { NAV_LEFT, NAV_RIGHT } from './static';
 
 // Styles
 import S from './styles.module.css';
+import { ls, transformPathToTranslation } from '@/tools/utils';
 
 // Types
 interface NavPropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> {
     variant: 'mobile' | 'desktop';
+    t: TFunction;
+    i18n: i18n;
     onClickCloseSideBar?: () => void;
 }
 
 export const Nav: FC<NavPropTypes> = ({
-    variant,
     className,
+    variant,
+    t,
+    i18n,
     onClickCloseSideBar,
     ...props
 }) => {
@@ -42,6 +48,11 @@ export const Nav: FC<NavPropTypes> = ({
 
     const onClickCloseSidebarHandler = () => {
         onClickCloseSideBar && onClickCloseSideBar();
+    };
+
+    const onClickLanguageHandler = (language: typeof LANGUAGES[number]) => {
+        ls.set(LOCAL_STORAGE.LANGUAGE, language);
+        i18n.changeLanguage(language);
     };
 
     const listPageRightNav = () => NAV_RIGHT.map((navItem) => (
@@ -54,7 +65,7 @@ export const Nav: FC<NavPropTypes> = ({
             key = { navItem }
             to = { navItem }
             onClickCloseSidebarHandler = { onClickCloseSidebarHandler }>
-            {navItem.replace('/', '')}
+            {t(`pages.${transformPathToTranslation(navItem)}.root`)}
         </NavItem>
     ));
 
@@ -79,7 +90,7 @@ export const Nav: FC<NavPropTypes> = ({
                                 key = { navItem }
                                 to = { navItem }
                                 onClickCloseSidebarHandler = { onClickCloseSidebarHandler }>
-                                {navItem.replace('/', '')}
+                                {t(`pages.${transformPathToTranslation(navItem)}.root`)}
                             </NavItem>
                         ))}
                         {isMobile && (
@@ -123,16 +134,18 @@ export const Nav: FC<NavPropTypes> = ({
                 {isMobile && (
                     <li className = { 'text-center' }>
                         <NavItemText>
-                            language
+                            {t('components.nav.language')}
                         </NavItemText>
                         <ul className = { 'flex justify-evenly' }>
                             {LANGUAGES.map((language) => (
                                 <li key = { language }>
-                                    <NavLink to = { `/${language}` }>
+                                    <Button
+                                        variant = 'default'
+                                        onClick = { () => onClickLanguageHandler(language) }>
                                         <span className = 'text-base font-secondary font-semibold uppercase'>
                                             {language}
                                         </span>
-                                    </NavLink>
+                                    </Button>
                                 </li>
                             ))}
                         </ul>
@@ -142,16 +155,17 @@ export const Nav: FC<NavPropTypes> = ({
                     <ButtonSignInAndUp
                         isMobile
                         className = 'flex justify-center'
+                        t = { t }
                     />
                 )}
             </ul>
             {!isMobile && (
                 <div>
-                    <Select.Root>
+                    <Select.Root onValueChange = { onClickLanguageHandler }>
                         <Select.SelectTrigger
                             variant = 'ghost'>
                             <Select.SelectValue
-                                placeholder = 'EN'
+                                placeholder = { i18n.language.toUpperCase() }
                             />
                         </Select.SelectTrigger>
                         <Select.SelectContent variant = 'ghost'>

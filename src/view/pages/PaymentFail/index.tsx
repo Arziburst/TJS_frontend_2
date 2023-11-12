@@ -1,8 +1,8 @@
 // Core
 import React, { FC } from 'react';
 
-// Bus
-// import {} from '../../../bus/'
+// Tools
+import { useCustomTranslation } from '@/tools/hooks';
 
 // Components
 import { ErrorBoundary } from '../../components';
@@ -13,9 +13,13 @@ type PropTypes = {
 }
 
 const PaymentFail: FC<PropTypes> = () => {
+    const { t } = useCustomTranslation();
+
     return (
-        <div>
-            Page: PaymentFail
+        <div className = 'flex justify-center items-center'>
+            <h1>
+                {t('pages.paymentFail.title')}
+            </h1>
         </div>
     );
 };

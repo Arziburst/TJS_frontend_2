@@ -6,7 +6,7 @@ import { SCREENS_NUMBER } from '@/assets';
 
 // Tools
 import { cn } from '@/tools/lib/utils';
-import { useWindowWidth } from '@/tools/hooks';
+import { useCustomTranslation, useWindowWidth } from '@/tools/hooks';
 
 // Elements
 import { Button } from '@/view/elements';
@@ -41,6 +41,8 @@ export const Pagination: FC<PropTypes> = ({
     onClickDesktopNumber,
     ...props
 }) => {
+    const { t } = useCustomTranslation();
+
     const [ width ] = useWindowWidth();
 
     const maxStep: number = Array.isArray(array) ? calculateTotalPages({
@@ -95,8 +97,8 @@ export const Pagination: FC<PropTypes> = ({
                 </div>
             )}
             {width < SCREENS_NUMBER.SB && (
-                <p className = { S.text }>
-                    <span className = 'text-quaternary'>{value < 10 ? `0${value}` : value}</span> OF {maxStep < 10 ? `0${maxStep}` : maxStep}
+                <p className = { `${S.text } uppercase` }>
+                    <span className = 'text-quaternary'>{value < 10 ? `0${value}` : value}</span> {t('other.pagination.text')} {maxStep < 10 ? `0${maxStep}` : maxStep}
                 </p>
             )}
             <div>

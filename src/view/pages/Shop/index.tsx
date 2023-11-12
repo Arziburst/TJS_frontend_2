@@ -12,7 +12,7 @@ import { cn } from '@/tools/lib/utils';
 import { CATEGORIES_ITEMS, ENUM_CATEGORIES } from '@/init';
 
 // Hooks
-import { useWindowWidth } from '@/tools/hooks';
+import { useCustomTranslation, useWindowWidth } from '@/tools/hooks';
 
 // Book
 import { BOOK, ParamsLowerCase } from '@/view/routes/book';
@@ -57,6 +57,8 @@ const S = {
 
 const Shop: FC<PropTypes> = () => {
     const { category } = useParams<Pick<ParamsLowerCase, 'category'>>();
+
+    const { t } = useCustomTranslation();
 
     const navigate = useNavigate();
 
@@ -159,7 +161,7 @@ const Shop: FC<PropTypes> = () => {
                     <div className = 'flex flex-col'>
                         {category && (
                             <TitlePage>
-                                {category}
+                                {t(`categories.${category}`)}
                             </TitlePage>
                         )}
                         <div className = { `flex gap-4
@@ -170,15 +172,18 @@ const Shop: FC<PropTypes> = () => {
                                 items = { [ ENUM_CATEGORIES.ALL, ...CATEGORIES_ITEMS ] }
                                 label = 'Shop by'
                                 setValue = { setFilterByCategoryState }
-                                showValue = { filterByCategoryState }
+                                showValue = { t(`categories.${filterByCategoryState}`) }
+                                t = { t }
+                                tString = 'categories'
                                 value = { filterByCategoryState }
                             />
                             <Select
                                 items = { ARRAY_FILTERS_BY_PRICE }
                                 label = 'Filter by'
-                                placeholder = 'select filter'
                                 setValue = { onClickItemsOfSelectFilterByPriceHandler }
-                                showValue = { getValueOfSelectFilterByPrice(isFilterByLowToHigh) }
+                                showValue = { t(`filtersByPrice.${getValueOfSelectFilterByPrice(isFilterByLowToHigh) }`) }
+                                t = { t }
+                                tString = 'filtersByPrice'
                                 value = { getValueOfSelectFilterByPrice(isFilterByLowToHigh) }
                             />
                         </div>
@@ -188,7 +193,7 @@ const Shop: FC<PropTypes> = () => {
                         <ul className = 'flex flex-col gap-5'>
                             <li>
                                 <Label className = 'capitalize'>
-                                    Shop by
+                                    {t('pages.shop.titleFilterShopBy')}
                                 </Label>
                             </li>
                             {[ ENUM_CATEGORIES.ALL, ...CATEGORIES_ITEMS ].map((item) => (
@@ -202,7 +207,7 @@ const Shop: FC<PropTypes> = () => {
                                             to = { `${BOOK.SHOP}/${item === ENUM_CATEGORIES.ALL ? '' : item}` }
                                             variant = 'default'>
                                             <NavItemText className = 'text-[15px]'>
-                                                {item.replace('-', ' ')}
+                                                {t(`categories.${item}`)}
                                             </NavItemText>
                                         </NavLink>
                                     </MoveUnderline>
@@ -212,7 +217,7 @@ const Shop: FC<PropTypes> = () => {
                         <ul className = 'flex flex-col gap-5'>
                             <li>
                                 <Label className = 'capitalize'>
-                                    filter by
+                                    {t('pages.shop.titleFilterByPrice')}
                                 </Label>
                             </li>
                             {ARRAY_FILTERS_BY_PRICE.map((str, index) => (
@@ -231,7 +236,7 @@ const Shop: FC<PropTypes> = () => {
                                                 type:  'isFilterByLowToHigh',
                                                 value: str === ENUM_FILTERS_BY_PRICE.LOW_TO_HIGH,
                                             }) }>
-                                            {str}
+                                            {t(`filtersByPrice.${str}`)}
                                         </Button>
                                     </MoveUnderline>
                                 </li>
@@ -257,22 +262,24 @@ const Shop: FC<PropTypes> = () => {
 
                         </div>
                     ) }
-                    isLoading = { isLoadingFetchProductsByPagination }>
+                    isLoading = { isLoadingFetchProductsByPagination }
+                    t = { t }>
                     {products?.map((item) => (
                         <CardItem
                             _id = { item._id }
                             available = { item.available }
                             firstImage = {{
                                 src: item.images[ 0 ],
-                                alt: 'First image of item',
+                                alt: t('cards.product.firstAltImageOfCard'),
                             }}
                             key = { item._id }
                             price = { item.price }
                             role = { profile?.role }
                             secondImage = {{
                                 src: item.images[ 1 ],
-                                alt: 'Second image of item',
+                                alt: t('cards.product.secondAltImageOfCard'),
                             }}
+                            t = { t }
                             title = { item.title }
                             to = { `${BOOK.PRODUCT}/${item._id}` }
                             onClickEditItem = { () => onClickEditItemHandler(item._id) }
@@ -284,25 +291,26 @@ const Shop: FC<PropTypes> = () => {
                     {totalShowed < total && (
                         <NotData
                             className = 'w-full flex justify-center'
-                            isLoading = { isLoadingFetchProductsByPaginationAtEnd }>
+                            isLoading = { isLoadingFetchProductsByPaginationAtEnd }
+                            t = { t }>
                             <Button
                                 className = 'capitalize max-w-[540px]'
                                 onClick = { onClickShowMoreHandler }>
-                                show more
+                                {t('pages.shop.buttonShowMore')}
                             </Button>
                         </NotData>
                     )}
                     <p className = { `text-xs font-secondary tracking-[0.24px]
                         sb:text-sm sb:tracking-[0.28px]` }>
-                        Showed
+                        {t('pages.shop.textShowed')}
                         <span className = { S.semibold }>
                             {` ${totalShowed} `}
                         </span>
-                        from
+                        {t('pages.shop.textFrom')}
                         <span className = { S.semibold }>
                             {' ' + total + ' '}
                         </span>
-                        products
+                        {t('pages.shop.textProducts')}
                     </p>
                     <Pagination
                         array = { products }

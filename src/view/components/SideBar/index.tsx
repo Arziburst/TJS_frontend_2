@@ -1,5 +1,6 @@
 // Core
 import React, { FC } from 'react';
+import { TFunction, i18n } from 'i18next';
 
 // UI
 import {
@@ -14,11 +15,16 @@ import { wrapperVariants } from '@/view/containers';
 
 // Types
 export type SideBarPropTypes = {
-    /* type props here */
+    t: TFunction;
+    i18n: i18n;
     variant?: 'open' | 'close';
 }
 
-export const SideBar: FC<SideBarPropTypes> = ({ ...props }) => {
+export const SideBar: FC<SideBarPropTypes> = ({
+    t,
+    i18n,
+    ...props
+}) => {
     const { togglesRedux: { isOpenSideBar }, setToggleAction } = useTogglesRedux();
 
     const onClickCloseSideBarHandler = () => {
@@ -34,15 +40,19 @@ export const SideBar: FC<SideBarPropTypes> = ({ ...props }) => {
             { ...props }>
             <SheetContent
                 className = { wrapperVariants() }
+                i18n = { i18n }
+                t = { t }
                 onClickCloseSideBar = { onClickCloseSideBarHandler }>
                 <div className = { `flex flex-col space-y-2 grow ${SPACE_FOOTER}` }>
                     <Nav
+                        i18n = { i18n }
+                        t = { t }
                         variant = 'mobile'
                         onClickCloseSideBar = { onClickCloseSideBarHandler }
                     />
                 </div>
                 <div>
-                    <Footer />
+                    <Footer t = { t } />
                 </div>
             </SheetContent>
         </Sheet>

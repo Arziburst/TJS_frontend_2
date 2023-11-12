@@ -6,7 +6,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { SCREENS_NUMBER } from '@/assets';
 
 // Tools
-import { useWindowWidth } from '@/tools/hooks';
+import { useCustomTranslation, useWindowWidth } from '@/tools/hooks';
 
 // Bus
 import { useTogglesRedux } from '@/bus/client/toggles';
@@ -37,6 +37,8 @@ const PaymentSuccess: FC<PropTypes> = () => {
 
     const [ width ] = useWindowWidth();
 
+    const { t } = useCustomTranslation();
+
     const { togglesRedux: { isLoadingFetchOrder }} = useTogglesRedux();
     const { resetCart } = useCart();
     const { orders: { currentOrder }, fetchOrder } = useOrders();
@@ -55,7 +57,7 @@ const PaymentSuccess: FC<PropTypes> = () => {
         }
     }, [ id ]);
 
-    const getTitlePage = () => (<TitlePage>order success</TitlePage>);
+    const getTitlePage = () => (<TitlePage>{t('pages.paymentSuccess.title')}</TitlePage>);
 
     return (
         <div>
@@ -67,14 +69,16 @@ const PaymentSuccess: FC<PropTypes> = () => {
                             className = { `flex flex-col gap-[18px] flex-wrap
                                 sm:flex-row sm:justify-center
                                 sb:gap-[24px] sb:flex-col sb:justify-start` }
-                            isLoading = { isLoadingFetchOrder }>
+                            isLoading = { isLoadingFetchOrder }
+                            t = { t }>
                             {currentOrder?.orderedProducts.map((product) => (
                                 <CardItem
                                     _id = { product.pid }
                                     available = { product.available }
-                                    firstImage = {{ src: product.image, alt: 'Image of Product' }}
+                                    firstImage = {{ src: product.image, alt: t('altImages.product') }}
                                     key = { product.pid }
                                     price = { product.price }
+                                    t = { t }
                                     title = { product.title }
                                     to = { `${BOOK.PRODUCT}/${product.pid}` }
                                     variant = 'cart small'
@@ -87,7 +91,7 @@ const PaymentSuccess: FC<PropTypes> = () => {
                                     && currentOrder?.orderedProducts.map((product) => product.price)
                                         .reduce((accumulator, currentValue) => accumulator + currentValue, 0)) || 0
                             }
-                            text = 'grand total'
+                            text = { t('pages.paymentSuccess.grandTotal') }
                         />
                     </div>
                 </div>
@@ -97,7 +101,7 @@ const PaymentSuccess: FC<PropTypes> = () => {
                     <Button
                         className = 'capitalize sb:max-w-[500px]'
                         onClick = { onClickContinueShoppingHandler }>
-                        continue shopping
+                        {t('pages.paymentSuccess.buttonContinueShopping')}
                     </Button>
                 </div>
             </ContainerForOrdersAndInformationOfPayment>
