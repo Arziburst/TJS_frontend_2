@@ -9,4 +9,5 @@ export enum ERRORS {
     INVALID_PHONE = 'errors.invalidPhone',
     NAME_MIN_LENGTH = 'errors.nameMinLength',
     PASSWORD_MIN_LENGTH = 'errors.passwordMinLength',
+    FIELD_MUST_HAVE_AT_LEAST = 'errors.fieldMustHaveAtLeast',
 }

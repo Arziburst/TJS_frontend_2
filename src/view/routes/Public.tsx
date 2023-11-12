@@ -39,8 +39,8 @@ export const Public: FC = () => {
                 path = { BOOK.CONTACTS }
             />
             <Route
-                element = { <Pages.About /> }
-                path = { BOOK.ABOUT }
+                element = { <Pages.AboutUs /> }
+                path = { BOOK.ABOUT_US }
             />
             <Route
                 element = { <Pages.SignInAndUp /> }

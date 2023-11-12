@@ -35,7 +35,7 @@ type PropTypes = {
     /* type props here */
 }
 
-const About: FC<PropTypes> = () => {
+const AboutUs: FC<PropTypes> = () => {
     const refTitle = useRef<null | HTMLHeadingElement>(null);
     const refContent = useRef<null | HTMLDivElement>(null);
     const refMainImage = useRef<null | HTMLImageElement>(null);
@@ -82,7 +82,7 @@ const About: FC<PropTypes> = () => {
                 className = { `text-base uppercase leading-[28px] ${spaces.xs_pd}
                     sb:text-[32px] sb:leading-[44px] ${spaces.sb_pd}` }
                 ref = { refTitle }>
-                {t('pages.about.firstTitle')}
+                {t('pages.aboutUs.firstTitle')}
             </h3>
             <div
                 className = { `flex flex-col gap-[18px]
@@ -90,7 +90,7 @@ const About: FC<PropTypes> = () => {
                 ref = { refContent }>
                 <div className = 'sb:w-[40%]'>
                     <Image
-                        alt = { t('pages.about.mainAltImage') }
+                        alt = { t('pages.aboutUs.mainAltImage') }
                         className = { 'sticky h-full w-full rounded-[8px] min-h-[300px]' }
                         ref = { refMainImage }
                         src = 'assets/image_about_main.png'
@@ -100,8 +100,8 @@ const About: FC<PropTypes> = () => {
                     sb:w-[60%]` }>
                     <p className = { `text-base leading-[28px] text-quaternary uppercase ${spaces.xs_pd}
                         sb:text-[32px] sb:leading-[44px] ${spaces.sb_pd}` }>
-                        {t('pages.about.firstPartOfSecondTitle')} <br />
-                        {t('pages.about.secondPartOfSecondTitle')}
+                        {t('pages.aboutUs.firstPartOfSecondTitle')} <br />
+                        {t('pages.aboutUs.secondPartOfSecondTitle')}
                     </p>
                     <div className = { `${S.grid} grow` }>
                         <div className = { cn(S.images, {
@@ -131,7 +131,7 @@ const About: FC<PropTypes> = () => {
                         <p
                             className = { `${S.text} text-base leading-[28px] uppercase ${spaces.xs_pd}
                                 sb:text-2xl sb:leading-[44px] ${spaces.sb_pd}` }>
-                            {t('pages.about.text')}
+                            {t('pages.aboutUs.text')}
                         </p>
                         <div
                             className = { `${S.contacts} flex flex-wrap justify-around gap-[20px]
@@ -139,12 +139,12 @@ const About: FC<PropTypes> = () => {
                             <ContactInfo
                                 link = { LINK_PHONE }
                                 linkText = { transformLinkPhoneNumber(LINK_PHONE) }
-                                title = { t('pages.about.phone') }
+                                title = { t('pages.aboutUs.phone') }
                             />
                             <ContactInfo
                                 link = { LINK_EMAIL }
                                 linkText = { transformLinkEmail(LINK_EMAIL) }
-                                title = { t('pages.about.email') }
+                                title = { t('pages.aboutUs.email') }
                             />
                         </div>
                     </div>
@@ -156,6 +156,6 @@ const About: FC<PropTypes> = () => {
 
 export default () => (
     <ErrorBoundary>
-        <About />
+        <AboutUs />
     </ErrorBoundary>
 );

@@ -26,7 +26,7 @@ import { NAV_LEFT, NAV_RIGHT } from './static';
 
 // Styles
 import S from './styles.module.css';
-import { ls } from '@/tools/utils';
+import { ls, transformPathToTranslation } from '@/tools/utils';
 
 // Types
 interface NavPropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> {
@@ -65,7 +65,7 @@ export const Nav: FC<NavPropTypes> = ({
             key = { navItem }
             to = { navItem }
             onClickCloseSidebarHandler = { onClickCloseSidebarHandler }>
-            {navItem.replace('/', '')}
+            {t(`pages.${transformPathToTranslation(navItem)}.root`)}
         </NavItem>
     ));
 
@@ -90,7 +90,7 @@ export const Nav: FC<NavPropTypes> = ({
                                 key = { navItem }
                                 to = { navItem }
                                 onClickCloseSidebarHandler = { onClickCloseSidebarHandler }>
-                                {navItem.replace('/', '')}
+                                {t(`pages.${transformPathToTranslation(navItem)}.root`)}
                             </NavItem>
                         ))}
                         {isMobile && (

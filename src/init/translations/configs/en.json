@@ -17,9 +17,13 @@
         "common": {
             "total": "Total"
         },
-        "about": {
+        "contacts": {
+            "root": "Contacts"
+        },
+        "aboutUs": {
+            "root": "About us",
             "firstTitle": "My name is Elena , I follow the news and trends, have extensive experience working with jewelry.",
-            "mainAltImage": "Main image of About us page",
+            "mainAltImage": "Main image of \"About us\" page",
             "firstPartOfSecondTitle": "love my work and want to bring joy and beauty to our world.",
             "secondPartOfSecondTitle": "Affordable luxury - is my motto!",
             "text": "I also create custom jewelry. And always take into account the wishes of customers.",
@@ -43,7 +47,7 @@
             "labelAvailable": "Product available",
             "availability": "Availability",
             "nonAvailability": "Non-availability",
-            "confirmCompleteDeletion": "confirm complete deletion!",
+            "confirmCompleteDeletion": "Confirm complete deletion!",
             "uninstallError": "Uninstall error",
             "buttonAddImageFromGallery": "Add images from the Gallery",
             "buttonDeleteAllImages": "Delete all images",
@@ -51,7 +55,6 @@
         },
         "order": {
             "textIfNotData": "Order did not find",
-            "total": "Total:",
             "firstTitle": "Information about order.",
             "email": "Email",
             "phone": "Phone",
@@ -67,7 +70,7 @@
             "buttonMakeOrder": "Make Order"
         },
         "paymentFail": {
-            "title": "The payment was fail!"
+            "title": "The payment failed!"
         },
         "paymentSuccess": {
             "title": "Order success",
@@ -76,7 +79,7 @@
         },
         "product": {
             "link": "Size Guide",
-            "buttonProductAddedToCart": "Product added to cart",
+            "buttonProductAddedToCart": "The product added to the cart",
             "buttonAddToCart": "Add to Cart"
         },
         "root": {
@@ -86,6 +89,7 @@
             "linkAltImage": "Image of category"
         },
         "shop": {
+            "root": "Shop",
             "titleFilterShopBy": "Shop by",
             "titleFilterByPrice": "Filter by",
             "buttonShowMore": "Show more",
@@ -105,7 +109,6 @@
     },
     "components": {
         "header": {
-            "cart": "cart",
             "textSettings": "Settings",
             "buttonAddProduct": "Add product",
             "buttonOrders": "Orders",
@@ -129,7 +132,8 @@
         "invalidEmail": "Invalid email format",
         "invalidPhone": "Invalid phone number format. For example +380946826242",
         "nameMinLength": "Name must be at least {{ name }} characters long",
-        "passwordMinLength": "Password must be at least {{ password }} characters long"
+        "passwordMinLength": "Password must be at least {{ password }} characters long",
+        "fieldMustHaveAtLeast": "The field must have at least {{ index }} items"
     },
     "cards": {
         "product": {
@@ -160,7 +164,7 @@
         "choosePostOffice": "Choose post office",
         "comment": "Information that can help fulfill an order",
         "city": "City",
-        "someData": "'Enter some data...'"
+        "someData": "Enter some data..."
     },
     "buttons": {
         "submit": "Submit",
@@ -171,7 +175,7 @@
     "altImages": {
         "product": "Image of Product",
         "numberProduct": "{{ index }} image of the product",
-        "imageByURL": "Image by URL {{ url }}"
+        "imageByURL": "Image by URL-adress {{ url }}"
     },
     "common": {
         "test": "test"
