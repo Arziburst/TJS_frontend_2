@@ -29,11 +29,6 @@ const buttonVariants = cva(
                     hover:text-background hover:bg-secondary-100 hover:opacity-100
                     focus-visible:text-background focus-visible:bg-secondary-100 hover:opacity-100
                     sb:text-base`,
-                // underline: `border-b-2
-                //     hover:border-red-900`,
-                // ghost: 'hover:bg-accent hover:text-accent-foreground',
-                // link: `text-primary underline-offset-4
-                //     hover:underline`,
             },
         },
         defaultVariants: {
