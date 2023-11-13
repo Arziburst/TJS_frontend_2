@@ -143,7 +143,6 @@ const Management: FC<PropTypes> = () => {
         currentProduct && form.reset({
             available:   currentProduct.available,
             description: currentProduct.description,
-            discount:    currentProduct.discount,
             images:      currentProduct.images,
             price:       currentProduct.price,
             title:       currentProduct.title,
@@ -270,27 +269,6 @@ const Management: FC<PropTypes> = () => {
                             <Form.FormItem style = {{ gridArea: field.name }}>
                                 <Form.FormLabel>
                                     {t('pages.management.labelPrice')}:
-                                </Form.FormLabel>
-                                <Form.FormControl>
-                                    <Input
-                                        isValidate = { fieldState.invalid }
-                                        placeholder = { t('placeholders.someData') }
-                                        type = 'number'
-                                        { ...field }
-                                    />
-                                </Form.FormControl>
-                                <Form.FormMessage t = { t } />
-                            </Form.FormItem>
-                        ) }
-                    />
-                    <Form.FormField
-                        control = { form.control }
-                        name = 'discount'
-                        render = { ({ field, fieldState }) => (
-                            <Form.FormItem style = {{ gridArea: field.name }}>
-                                <Form.FormLabel>
-                                    {/* todo remove discount (front-end and server) */}
-                                    Enter discount %:
                                 </Form.FormLabel>
                                 <Form.FormControl>
                                     <Input

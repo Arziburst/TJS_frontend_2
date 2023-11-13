@@ -8,7 +8,6 @@ export type Product = {
     type: string;
     available: boolean;
     price: number;
-    discount: number;
     images: string[];
     weight: number;
 };

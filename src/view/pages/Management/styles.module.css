@@ -9,7 +9,6 @@
         "description"
         "weight"
         "price"
-        "discount"
         "images"
         "available"
         "delete"
@@ -22,8 +21,8 @@
         grid-template-rows: auto;
         grid-template-areas: 
             "title type"
-            "description weight"
-            "price discount"
+            "description description"
+            "weight price"
             "images available"
             "delete delete"
             "submit submit";
