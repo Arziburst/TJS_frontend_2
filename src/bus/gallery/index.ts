@@ -30,10 +30,7 @@ export const useGallery = () => {
 
     return {
         gallery,
-        setGallery:            (payload: types.Gallery) => dispatch(galleryActions.setGallery(payload)),
-        setIsLoadingOfGallery: (payload: types.SetIsLoadingOfGalleryAction) => dispatch(
-            galleryActions.setIsLoadingOfGallery(payload),
-        ),
+        setGallery:           (payload: types.Gallery) => dispatch(galleryActions.setGallery(payload)),
         onChangeInputGallery: (event: React.ChangeEvent<HTMLInputElement> | any) => { // todo remove any
             const errors: Array<string> = [];
             let formData = new FormData();

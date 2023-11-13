@@ -64,6 +64,9 @@ const Management: FC<PropTypes> = () => {
         isLoadingCreteProduct,
         isLoadingEditProduct,
         isLoadingDeleteProduct,
+        isLoadingFetchGallery,
+        isLoadingDeleteItemGallery,
+        isLoadingUpdateGallery,
     }} = useTogglesRedux();
 
     const { fetchGallery } = useGallery();
@@ -328,6 +331,11 @@ const Management: FC<PropTypes> = () => {
                                         <div className = { cn({ 'flex flex-wrap [&_*]:h-[132px] gap-3 max-sb:justify-center': isValidateInputImages }) }>
                                             <ModalAddImages
                                                 classNameTrigger = { cn({ 'border-quaternary text-quaternary': fieldState.invalid }) }
+                                                isLoading = {
+                                                    isLoadingDeleteItemGallery
+                                                        || isLoadingFetchGallery
+                                                        || isLoadingUpdateGallery
+                                                }
                                                 selectedImages = { images }
                                                 t = { t }
                                                 onClickAddItemGalleryToManagementHandler = {

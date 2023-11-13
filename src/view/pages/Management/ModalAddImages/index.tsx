@@ -22,6 +22,7 @@ import {
 import { Image as ImageType } from '@/bus/gallery/types';
 
 type PropTypes = {
+    isLoading: boolean;
     t: TFunction;
     onClickAddItemGalleryToManagementHandler: (event: any, image: ImageType) => void;
     selectedImages: (string | undefined)[];
@@ -29,13 +30,14 @@ type PropTypes = {
 }
 
 export const ModalAddImages: FC<PropTypes> = ({
+    isLoading,
     t,
     onClickAddItemGalleryToManagementHandler,
     selectedImages,
     classNameTrigger,
 }) => {
     const {
-        gallery: { gallery, isLoadings },
+        gallery: { gallery },
         onChangeInputGallery,
         fetchGallery,
         fetchDeleteItemOfGallery,
@@ -77,7 +79,7 @@ export const ModalAddImages: FC<PropTypes> = ({
                     {t('pages.management.buttonAddImageFromGallery')}
                 </Button>
             </Dialog.DialogTrigger>
-            <Dialog.DialogContent className = 'max-h-screen overflow-x-scroll'>
+            <Dialog.DialogContent className = 'max-h-screen overflow-x-auto'>
                 <Dialog.DialogHeader>
                     <div>
                         <input
@@ -102,7 +104,7 @@ export const ModalAddImages: FC<PropTypes> = ({
                                 key = { image.public_id }>
                                 <Button
                                     className = 'w-auto'
-                                    isLoading = { image.public_id === isLoadings.delete }
+                                    isLoading = { isLoading }
                                     variant = 'outline'
                                     onClick = {
                                         (event: any) => onClickDeleteItemGalleryHandler(event, image)
