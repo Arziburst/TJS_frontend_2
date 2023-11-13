@@ -47,7 +47,7 @@ export const ButtonSignInAndUp: FC<PropTypes> = ({
     if (isLoggedIn) {
         return (
             <li className = { className }>
-                <DropdownMenu.Root modal = { false }>
+                <DropdownMenu.Root modal>
                     <DropdownMenu.Trigger asChild>
                         <Avatar
                             fallback = { profile ? profile.name.slice(0, 2) : 'XX' }
