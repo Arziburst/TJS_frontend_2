@@ -7,6 +7,13 @@ export const APP_NAME = process.env.APP_NAME || 'burst-template';
 export enum LOCAL_STORAGE {
     CART = 'cart',
     LANGUAGE = 'language',
+    IS_AGREES_TO_USE_COOKIES = 'isAgreesToUseCookies',
+}
+
+export enum CSS_VARIABLES {
+    HEADER = '--vh_header',
+    WRAPPER_LEFT_PADDING = '--wrapper_left_padding',
+    VH_COOKIE_CONSENT_BANNER = '--vh_cookie_consent_banner',
 }
 
 export enum ENUM_CATEGORIES {
@@ -44,11 +51,6 @@ export const LINK_INSTAGRAM = 'https://www.instagram.com/';
 
 export const LINK_PHONE = 'tel:+38066-830-1029';
 export const LINK_EMAIL = 'mailto:elena-arez@ukr.net';
-
-export enum CSS_VARIABLES {
-    HEADER = '--vh_header',
-    WRAPPER_LEFT_PADDING = '--wrapper_left_padding',
-}
 
 export const typesOfImage: Array<string> = [ 'image/png', 'image/jpeg', 'image/gif' ];
 

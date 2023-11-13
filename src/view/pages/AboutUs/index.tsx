@@ -8,7 +8,7 @@ import { SCREENS_NUMBER } from '@/assets';
 import { CSS_VARIABLES, LINK_EMAIL, LINK_PHONE } from '@/init';
 
 // Tools
-import { useCustomTranslation, useWindowHeight, useWindowWidth } from '@/tools/hooks';
+import { useCustomTranslation, useWindowWidth } from '@/tools/hooks';
 import { getValueFromCSSVariable, transformLinkEmail, transformLinkPhoneNumber } from '@/tools/utils';
 import { cn } from '@/tools/lib/utils';
 
@@ -43,11 +43,10 @@ const AboutUs: FC<PropTypes> = () => {
     const { t } = useCustomTranslation();
 
     const [ width ] = useWindowWidth();
-    const [ height ] = useWindowHeight();
 
     const getStringHeight = (str: string = '0px') => {
         if (refTitle.current) {
-            return `calc(var(--vh, 1vh) * 100 - var(${CSS_VARIABLES.HEADER}, 0px) - ${refTitle.current.clientHeight}px - ${str})`;
+            return `calc(var(--vh, 1vh) * 100 - var(${CSS_VARIABLES.HEADER}, 0px) - ${refTitle.current.clientHeight}px - var(${CSS_VARIABLES.VH_COOKIE_CONSENT_BANNER}, 0px) - ${str})`;
         }
 
         return 'auto';
@@ -55,7 +54,7 @@ const AboutUs: FC<PropTypes> = () => {
 
     const onResizeHandler = () => {
         if (refTitle.current && refContent.current && refMainImage.current) {
-            refContent.current.style.minHeight = `calc(var(--vh, 1vh) * 100 - var(${CSS_VARIABLES.HEADER}, 0px) - ${refTitle.current.clientHeight}px`;
+            refContent.current.style.minHeight = `calc(calc(var(--vh, 1vh) * 100) - var(${CSS_VARIABLES.HEADER}, 0px) - ${refTitle.current.clientHeight}px - var(${CSS_VARIABLES.VH_COOKIE_CONSENT_BANNER}, 0px))`;
 
             const heightOfHeader = getValueFromCSSVariable(CSS_VARIABLES.HEADER);
 
@@ -73,7 +72,7 @@ const AboutUs: FC<PropTypes> = () => {
 
     useLayoutEffect(() => {
         onResizeHandler();
-    }, [ height, width ]);
+    }, [ width ]);
 
 
     return (
@@ -119,6 +118,7 @@ const AboutUs: FC<PropTypes> = () => {
                                             'self-center': width > SCREENS_NUMBER.SB && index === 1,
                                             'self-end':    width > SCREENS_NUMBER.SB && (index === 3 || index === 2),
                                         }) }
+                                        key = { src }
                                         src = { `assets/${src}` }
                                         style = {{
                                             gridArea: `item_${index}`,

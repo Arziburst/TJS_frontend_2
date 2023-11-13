@@ -17,7 +17,7 @@ const PaymentFail: FC<PropTypes> = () => {
 
     return (
         <div className = 'flex justify-center items-center'>
-            <h1>
+            <h1 className = 'text-3xl'>
                 {t('pages.paymentFail.title')}
             </h1>
         </div>

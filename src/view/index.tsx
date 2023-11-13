@@ -40,7 +40,7 @@ import { useCartSaga } from '@/bus/cart/saga';
 import { Wrapper, wrapperVariants } from '@/view/containers';
 
 // Components
-import { Alert, Footer, Header, SideBar } from '@/view/components';
+import { Alert, CookieConsentBanner, Footer, Header, SideBar } from '@/view/components';
 
 // Styles
 import '../assets/globalStyles/index.css';
@@ -116,6 +116,10 @@ export const App: FC = () => {
                 <Routes />
                 <Footer t = { t } />
             </Wrapper>
+            <CookieConsentBanner
+                t = { t }
+                width = { width }
+            />
         </div>
     );
 };
