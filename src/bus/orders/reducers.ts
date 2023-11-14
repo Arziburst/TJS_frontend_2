@@ -11,17 +11,10 @@ export const setOrders: types.BaseContact<types.Orders> = (state, action) => {
     };
 };
 
-export const setCurrentOrder: types.BaseContact<types.Order> = (state, action) => {
+export const setCurrentOrder: types.BaseContact<types.Order | null> = (state, action) => {
     return {
         ...state,
         currentOrder: action.payload,
-    };
-};
-
-export const setDataLiqPayOrders: types.BaseContact<types.OrdersState['liqPay']> = (state, action) => {
-    return {
-        ...state,
-        liqPay: action.payload,
     };
 };
 

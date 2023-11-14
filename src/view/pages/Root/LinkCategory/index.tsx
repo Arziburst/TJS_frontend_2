@@ -41,7 +41,7 @@ export const LinkCategory: FC<PropTypes> = ({
                 <Image
                     alt = { t('pages.root.linkAltImage') }
                     className = 'w-[60px] aspect-[10/8] sb:w-[100px]'
-                    src = { `assets/${image}` }
+                    src = { image }
                 />
                 <p className = { `flex content-start flex-wrap text-[40px] leading-[54px] uppercase
                 max-[420px]:text-3xl

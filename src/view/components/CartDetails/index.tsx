@@ -1,16 +1,15 @@
 // Core
 import React, { FC, useEffect, useLayoutEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
-// Init
-import { LINK_LIQ_PAY } from '@/init';
 
 // Tools
 import { isInteger } from '@/tools/utils';
 import { useCustomTranslation } from '@/tools/hooks';
 
 // Bus
+import { useProducts } from '@/bus/products';
 import { useTogglesRedux } from '@/bus/client/toggles';
 import { useOrders } from '@/bus/orders';
 import { useNewPost } from '@/bus/newPost';
@@ -39,6 +38,8 @@ import { CityNewPost, WarehouseNewPost } from '@/bus/newPost/types';
 interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
 
 export const CartDetails: FC<PropTypes> = ({ ...props }) => {
+    const navigate = useNavigate();
+
     const form = useForm({
         resolver:      yupResolver(validationForm),
         defaultValues: defaultValues,
@@ -51,9 +52,9 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
 
     // Hooks of Bus
     const { togglesRedux: {
+        isLoadingFetchCreateOrder,
         isLoadingFetchCitiesNewPost,
         isLoadingFetchWarehousesNewPost,
-        isLoadingFetchDataLiqPayOrder,
     }} = useTogglesRedux();
     const {
         newPost: { cities, warehouses },
@@ -61,14 +62,12 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
         fetchWarehousesNewPost,
     } = useNewPost();
     const {
-        orders: { liqPay, currentOrder },
-        fetchGetDataLiqPayOrder,
         fetchCreateOrder,
-        fetchDeleteOrder,
         fetchUpdateOrder,
     } = useOrders();
     const { cart } = useCart();
     const { profile } = useProfile();
+    const { products: { products }} = useProducts();
 
     // State
     const [ totalPriceState, setTotalPriceState ] = useState(0);
@@ -81,18 +80,20 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
 
     // Handlers
     const onSubmit = (values: any) => { // todo how to remove any ???
-        if (currentOrder && cart && cart.length > 0) {
+        if (cart && cart.length > 0) {
+            console.log('onSubmit => cart:', cart);
             const gotData = form.getValues();
 
-            fetchUpdateOrder({
-                _id:       currentOrder._id,
-                firstName: gotData.firstName,
-                lastName:  gotData.lastName,
-                phone:     gotData.phone,
-                email:     gotData.email,
-                city:      gotData.city,
-                warehouse: gotData.warehouse,
-                comment:   gotData.comment,
+            fetchCreateOrder({
+                orderedPIDs: cart,
+                firstName:   gotData.firstName,
+                lastName:    gotData.lastName,
+                phone:       gotData.phone,
+                email:       gotData.email,
+                city:        gotData.city,
+                warehouse:   gotData.warehouse,
+                comment:     gotData.comment,
+                navigate,
             });
         }
     };
@@ -139,9 +140,9 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                     cityName:    city,
                     warehouseId: warehouse,
                 });
-                form.setError('warehouse', { message: '' });
+                form.setError('warehouse', { message: 'errors.clickNumberWarehouse' });
             } else {
-                form.setError('city', { message: 'You have to write right city and click your city' });
+                form.setError('city', { message: 'errors.clickRightCity' });
             }
         }
     }, [ cities ]);
@@ -161,7 +162,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                 isAllowFetchWarehouseStateLocal = true;
                 setWasClickWarehouseState(false);
                 setTimeout(() => {
-                    form.setError('warehouse', { message: t('errors.clickRightCity') });
+                    form.setError('warehouse', { message: 'errors.clickRightCity' });
                 }, 1_000);
             }
 
@@ -180,7 +181,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
         if (!isFirstRenderState) {
             if (isInteger(warehouse)) {
                 setIsAllowFetchWarehouseState(true);
-                form.setError('warehouse', { message: t('errors.clickRightWarehouse') });
+                form.setError('warehouse', { message: 'errors.clickRightWarehouse' });
             } else if (warehouses && warehouses.some((warehouseFromSome) => {
                 return warehouseFromSome.Description.toLocaleLowerCase() === warehouse.toLocaleLowerCase()
                 || warehouseFromSome.DescriptionRu.toLocaleLowerCase() === warehouse.toLocaleLowerCase();
@@ -188,49 +189,20 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                 form.clearErrors('warehouse');
             } else {
                 setIsAllowFetchWarehouseState(true);
-                form.setError('warehouse', { message: t('errors.clickNumberWarehouse') });
+                form.setError('warehouse', { message: 'errors.clickNumberWarehouse' });
             }
         }
     }, [ warehouses ]);
 
     //! CART
     useEffect(() => {
-        if (cart && cart.length > 0) {
-            fetchCreateOrder({
-                orderedPIDs: cart,
-                phone:       'null',
-            });
-        }
-    }, [ cart ]);
-
-    useEffect(() => {
-        if (currentOrder) {
-            const id = currentOrder._id;
-
-            setTotalPriceState(currentOrder.orderedProducts.reduce(
-                (acc, orderedProducts) => acc + orderedProducts.price,
+        if (products) {
+            setTotalPriceState(products.reduce(
+                (acc, product) => acc + product.price,
                 0,
             ));
-
-            fetchGetDataLiqPayOrder({
-                amount: currentOrder.orderedProducts
-                    .reduce((acc, orderedProduct) => acc + orderedProduct.price, 0),
-                description: `Замовлення №${id}`,
-                order_id:    id,
-                result_url:  process.env.API_URL + `/orders/change-status?id=${id}` || '',
-            });
         }
-
-        return () => {
-            if (
-                currentOrder && !window.location.href.toLowerCase().includes(LINK_LIQ_PAY)
-                && !window.location.href.toLowerCase().includes(process.env.PUBLIC_URL + BOOK.CART)
-                && !window.location.href.toLowerCase().includes(process.env.PUBLIC_URL + BOOK.ORDER_DETAILS)
-            ) {
-                fetchDeleteOrder(currentOrder._id);
-            }
-        };
-    }, [ currentOrder, cart ]);
+    }, [ products, cart ]);
 
     useEffect(() => {
         if (profile) {
@@ -419,7 +391,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                             </ContainerFields>
                         </div>
                         <div>
-                            <div className = { `border-y-2 border-tertiary-100/10 py-[18px] mb-[18px]
+                            {/* <div className = { `border-y-2 border-tertiary-100/10 py-[18px] mb-[18px]
                                 sb:py-[32px] sb:mb-[32px]` }>
                                 <div className = 'flex justify-between flex-wrap'>
                                     <FormTitle>
@@ -432,15 +404,15 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                         ) : 0} ₴
                                     </FormTitle>
                                 </div>
-                                {/* <div className = 'flex justify-between flex-wrap'>
+                                <div className = 'flex justify-between flex-wrap'>
                                     <FormTitle>
                                         Shipping
                                     </FormTitle>
                                     <FormTitle className = 'text-quaternary'>
                                         80 ₴
                                     </FormTitle>
-                                </div> */}
-                            </div>
+                                </div>
+                            </div> */}
                             <div className = 'flex justify-between flex-wrap'>
                                 <FormTitle className = 'mb-0 sb:mb-0 text-quaternary uppercase'>
                                     {t('pages.common.total')}
@@ -450,38 +422,13 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                 </FormTitle>
                             </div>
                         </div>
-                        {form.formState.isValid && cart && cart.length > 0 && liqPay ? (
-                            <form
-                                acceptCharset = 'utf-8'
-                                action = { `${LINK_LIQ_PAY}/api/3/checkout` }
-                                method = 'POST'>
-                                <input
-                                    name = 'data'
-                                    type = 'hidden'
-                                    value = { liqPay.data }
-                                />
-                                <input
-                                    name = 'signature'
-                                    type = 'hidden'
-                                    value = { liqPay.signature }
-                                />
-                                <Button
-                                    className = 'capitalize'
-                                    isLoading = { isLoadingFetchDataLiqPayOrder }
-                                    type = 'submit'
-                                    variant = 'contain'
-                                    onClick = { onSubmit }>
-                                    {t('pages.orderDetails.buttonMakeOrder')}
-                                </Button>
-                            </form>
-                        ) : (
-                            <Button
-                                className = 'capitalize'
-                                type = 'submit'
-                                variant = 'contain'>
-                                {t('pages.orderDetails.buttonMakeOrder')}
-                            </Button>
-                        )}
+                        <Button
+                            className = 'capitalize'
+                            isLoading = { isLoadingFetchCreateOrder }
+                            type = 'submit'
+                            variant = 'contain'>
+                            {t('pages.orderDetails.buttonMakeOrder')}
+                        </Button>
                     </div>
                 </form>
             </Form.Root>

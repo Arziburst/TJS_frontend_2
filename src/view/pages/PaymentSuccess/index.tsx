@@ -41,7 +41,7 @@ const PaymentSuccess: FC<PropTypes> = () => {
 
     const { togglesRedux: { isLoadingFetchOrder }} = useTogglesRedux();
     const { resetCart } = useCart();
-    const { orders: { currentOrder }, fetchOrder } = useOrders();
+    const { orders: { currentOrder }, setCurrentOrder, fetchOrder } = useOrders();
 
     const onClickContinueShoppingHandler = () => {
         navigate(BOOK.SHOP);
@@ -49,6 +49,10 @@ const PaymentSuccess: FC<PropTypes> = () => {
 
     useEffect(() => {
         resetCart();
+
+        return () => {
+            setCurrentOrder(null);
+        };
     }, []);
 
     useEffect(() => {

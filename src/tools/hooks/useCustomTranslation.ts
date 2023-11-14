@@ -16,7 +16,8 @@ export const useCustomTranslation = (
 
         if (process.env.NODE_ENV === 'development') {
             if (!result || (result && result.length < 1) || result === params[ 0 ]) {
-                throw new Error(`${useCustomTranslation.name}: translation for "${params[ 0 ]}" not found!`);
+                // throw new Error(`${useCustomTranslation.name}: translation for "${params[ 0 ]}" not found!`);
+                console.error(`${useCustomTranslation.name}: translation for "${params[ 0 ]}" not found!`);
             }
         }
 

@@ -6,11 +6,14 @@ import { put, takeLatest } from 'redux-saga/effects';
 // API
 import { createOrderFetcher } from '@/api';
 
+// Book
+import { BOOK } from '@/view/routes/book';
+
 // Slice
 import { ordersActions, sliceName } from '../slice';
 
 // Tools
-import { makeRequest } from '../../../tools/utils';
+import { makeRequest, removeKeysOfObject } from '../../../tools/utils';
 
 // Types
 import * as commonTypes from '../../commonTypes';
@@ -24,12 +27,20 @@ const fetchCreateOrder = (
     callAction: ReturnType<typeof fetchCreateOrderAction>,
 ) => makeRequest<types.FetchCreateOrderResponse, commonTypes.Error>({
     callAction,
+    toggleType:   'isLoadingFetchCreateOrder',
     fetchOptions: {
         successStatusCode: 201,
-        fetch:             () => createOrderFetcher(callAction.payload),
+        fetch:             () => createOrderFetcher(removeKeysOfObject<types.FetchCreateOrderRequest, 'navigate'>({
+            keys:   [ 'navigate' ],
+            object: callAction.payload,
+        })),
     },
     success: function* (result) {
         yield put(ordersActions.setCurrentOrder(result));
+        yield callAction.payload.navigate(BOOK.PAYMENT_SUCCESS);
+    },
+    error: function* () {
+        yield callAction.payload.navigate(BOOK.PAYMENT_FAIL);
     },
 });
 
