@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 // Tools
 import { isInteger } from '@/tools/utils';
-import { useCustomTranslation } from '@/tools/hooks';
+import { useCustomTranslation, useDebounceCallback } from '@/tools/hooks';
 
 // Bus
 import { useProducts } from '@/bus/products';
@@ -15,9 +15,6 @@ import { useOrders } from '@/bus/orders';
 import { useNewPost } from '@/bus/newPost';
 import { useCart } from '@/bus/cart';
 import { useProfile } from '@/bus/profile';
-
-// Book
-import { BOOK } from '@/view/routes/book';
 
 // Containers
 import { NotData, ScrollArea } from '@/view/containers';
@@ -50,12 +47,17 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
 
     const { t } = useCustomTranslation();
 
+    const [ debounceCallbackCity ] = useDebounceCallback();
+    const [ debounceCallbackWarehouse ] = useDebounceCallback();
+
     // Hooks of Bus
-    const { togglesRedux: {
-        isLoadingFetchCreateOrder,
-        isLoadingFetchCitiesNewPost,
-        isLoadingFetchWarehousesNewPost,
-    }} = useTogglesRedux();
+    const {
+        togglesRedux: {
+            isLoadingFetchCreateOrder,
+            isLoadingFetchCitiesNewPost,
+            isLoadingFetchWarehousesNewPost,
+        },
+    } = useTogglesRedux();
     const {
         newPost: { cities, warehouses },
         fetchCitiesNewPost,
@@ -63,7 +65,6 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
     } = useNewPost();
     const {
         fetchCreateOrder,
-        fetchUpdateOrder,
     } = useOrders();
     const { cart } = useCart();
     const { profile } = useProfile();
@@ -123,9 +124,11 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
     //! CITY
     useEffect(() => {
         if (!isFirstRenderState) {
-            fetchCitiesNewPost(city);
-
             form.setValue('warehouse', defaultValues.warehouse);
+
+            debounceCallbackCity(() => {
+                fetchCitiesNewPost(city);
+            });
         }
     }, [ city ]);
 
@@ -167,9 +170,11 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
             }
 
             if (isAllowFetchWarehouseStateLocal) {
-                fetchWarehousesNewPost({
-                    cityName:    city,
-                    warehouseId: warehouse,
+                debounceCallbackWarehouse(() => {
+                    fetchWarehousesNewPost({
+                        cityName:    city,
+                        warehouseId: warehouse,
+                    });
                 });
             }
 

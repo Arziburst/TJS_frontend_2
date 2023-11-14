@@ -30,15 +30,7 @@ export const validationForm = yup.object({
     comment: yup.string().optional(),
 });
 
-export const defaultValues: DefaultValues = process.env.NODE_ENV === 'development' ? {
-    firstName: 'Вася',
-    lastName:  'Пупкин',
-    phone:     '+380946826242',
-    email:     'test.email@gmail.com',
-    city:      'запоріжжя',
-    warehouse: 'Відділення №2: вул. Карпенка-Карого, 58',
-    comment:   'тест ккккк',
-} : {
+export const defaultValues: DefaultValues = {
     firstName: '',
     lastName:  '',
     phone:     '',
@@ -47,4 +39,3 @@ export const defaultValues: DefaultValues = process.env.NODE_ENV === 'developmen
     warehouse: '',
     comment:   '',
 };
-
