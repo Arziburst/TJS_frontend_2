@@ -89,7 +89,7 @@ export const SignIn: FC<PropTypes> = ({
                                 />
                             </Form.FormControl>
                             <Form.FormMessage
-                                options = {{ password: INPUT_VALIDATION_VALUES.PASSWORD }}
+                                options = {{ index: INPUT_VALIDATION_VALUES.PASSWORD }}
                                 t = { t }
                             />
                         </Form.FormItem>
