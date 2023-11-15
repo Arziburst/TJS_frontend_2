@@ -103,7 +103,7 @@ export const CardItem: FC<PropTypes> = ({
                             <Image
                                 alt = { secondImage.alt }
                                 className = { `${S.second_image} w-full h-full` }
-                                src = { secondImage.src }
+                                src = { secondImage.src || firstImage.src }
                             />
                         )}
                     </div>
