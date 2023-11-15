@@ -24,19 +24,8 @@ export const getOrderFetcher = (payload: types.FetchGetOrderRequest) => {
     });
 };
 
-export const createOrderFetcher = (body: types.FetchCreateOrderRequest) => {
+export const createOrderFetcher = (body: Omit<types.FetchCreateOrderRequest, 'navigate'>) => {
     return fetch(API.ORDERS.ROOT, {
-        method:      'POST',
-        credentials: 'include',
-        headers:     {
-            ...HEADERS,
-        },
-        body: JSON.stringify(body),
-    });
-};
-
-export const getDataLiqPayOrderFetcher = (body: types.FetchGetDataLiqPayOrderRequest) => {
-    return fetch(API.ORDERS.LIQ_PAY, {
         method:      'POST',
         credentials: 'include',
         headers:     {

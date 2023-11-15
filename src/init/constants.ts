@@ -54,8 +54,6 @@ export const LINK_EMAIL = 'mailto:elena-arez@ukr.net';
 
 export const typesOfImage: Array<string> = [ 'image/png', 'image/jpeg', 'image/gif' ];
 
-export const LINK_LIQ_PAY = 'https://www.liqpay.ua';
-
 export const VALUES_OF_STATUS = [
     'canceled',
     'inProcessing',

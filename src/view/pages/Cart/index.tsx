@@ -47,7 +47,7 @@ const Cart: FC<PropTypes> = () => {
 
     const { togglesRedux: { isLoadingFetchProduct }} = useTogglesRedux();
     const { products: { products }, fetchProducts } = useProducts();
-    const { cart, fetchProductCart, removeProductOfCart } = useCart();
+    const { cart, removeProductOfCart } = useCart();
 
     // Handlers
     const onClickContinueToCheckout = () => {
@@ -61,7 +61,6 @@ const Cart: FC<PropTypes> = () => {
     useEffect(() => {
         if (cart) {
             fetchProducts(cart);
-            // fetchProductCart(cart);
         }
     }, [ cart ]);
 

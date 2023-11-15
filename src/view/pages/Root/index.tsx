@@ -1,6 +1,9 @@
 // Core
 import React, { FC, useRef } from 'react';
 
+// Images
+import image_category_see_all from '@/assets/images/image_category_see_all.png';
+
 // Init
 import { ENUM_CATEGORIES } from '@/init';
 
@@ -77,7 +80,7 @@ const Root: FC = () => {
                         alt = { t('pages.root.altImage') }
                         className = { `w-[60px] aspect-[10/8]
                             sb:w-[100px]` }
-                        src = 'assets/image_category_see_all.png'
+                        src = { image_category_see_all }
                     />
                 </div>
             </div>

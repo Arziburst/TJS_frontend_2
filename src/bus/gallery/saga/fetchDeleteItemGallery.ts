@@ -7,7 +7,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 import { galleryDeleteItemOfFetcher } from '../../../api';
 
 // Slice
-import { galleryActions, sliceName } from '../slice';
+import { sliceName } from '../slice';
 
 // Tools
 import { makeRequest } from '../../../tools/utils';

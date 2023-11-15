@@ -4,6 +4,9 @@ import React, { FC, useLayoutEffect, useRef } from 'react';
 // Assets
 import { SCREENS_NUMBER } from '@/assets';
 
+// Images
+import image_about_main from '@/assets/images/image_about_main.png';
+
 // Init
 import { CSS_VARIABLES, LINK_EMAIL, LINK_PHONE } from '@/init';
 
@@ -92,7 +95,7 @@ const AboutUs: FC<PropTypes> = () => {
                         alt = { t('pages.aboutUs.mainAltImage') }
                         className = { 'sticky h-full w-full rounded-[8px] min-h-[300px]' }
                         ref = { refMainImage }
-                        src = 'assets/image_about_main.png'
+                        src = { image_about_main }
                     />
                 </div>
                 <div className = { `flex flex-col
@@ -119,7 +122,7 @@ const AboutUs: FC<PropTypes> = () => {
                                             'self-end':    width > SCREENS_NUMBER.SB && (index === 3 || index === 2),
                                         }) }
                                         key = { src }
-                                        src = { `assets/${src}` }
+                                        src = { src }
                                         style = {{
                                             gridArea: `item_${index}`,
                                             height:   width < SCREENS_NUMBER.SB ? '64px' : index === 3 ? '140px' : '80px',

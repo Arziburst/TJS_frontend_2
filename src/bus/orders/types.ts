@@ -24,14 +24,8 @@ export type Order = {
 
     total: number;
     status: number;
-    statusPayment: number;
     orderedProducts: OrderedProducts;
     created: Date;
-};
-
-export type LiqPay = {
-    data: string;
-    signature: string;
 };
 
 // State
@@ -39,7 +33,6 @@ export type Orders = Array<Order>
 export type OrdersState = {
     orders: Orders | null;
     currentOrder: Order | null;
-    liqPay: LiqPay | null;
 }
 
 // Contracts

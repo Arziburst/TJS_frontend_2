@@ -135,8 +135,9 @@
         "required": "This field is required",
         "invalidEmail": "Invalid email format",
         "invalidPhone": "Invalid phone number format. For example +380946826242",
-        "nameMinLength": "Name must be at least {{ name }} characters long",
-        "passwordMinLength": "Password must be at least {{ password }} characters long",
+        "nameMinLength": "Name must be at least {{ index }} characters long",
+        "priceMinLength": "The price must be at least {{ index }} UAH.",
+        "passwordMinLength": "Password must be at least {{ index }} characters long",
         "fieldMustHaveAtLeast": "The field must have at least {{ index }} items"
     },
     "cards": {

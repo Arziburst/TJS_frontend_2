@@ -41,7 +41,7 @@ import {
 import S from './styles.module.css';
 
 // Static
-import { validationForm, defaultValues, minLengthImages } from './static';
+import { validationForm, defaultValues, minLengthImages, minPrice } from './static';
 import { ModalAddImages } from './ModalAddImages';
 
 // Types
@@ -278,7 +278,10 @@ const Management: FC<PropTypes> = () => {
                                         { ...field }
                                     />
                                 </Form.FormControl>
-                                <Form.FormMessage t = { t } />
+                                <Form.FormMessage
+                                    options = {{ index: minPrice }}
+                                    t = { t }
+                                />
                             </Form.FormItem>
                         ) }
                     />
