@@ -32,7 +32,7 @@ export const CATEGORIES_ITEMS_WITH_IMAGES = [
         image:    image_category_brooch,
     },
     {
-        category: ENUM_CATEGORIES.EARRING,
+        category: ENUM_CATEGORIES.EARRINGS,
         image:    image_category_earrings,
     },
     {

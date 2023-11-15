@@ -56,7 +56,7 @@ const S = {
 };
 
 const Shop: FC<PropTypes> = () => {
-    const { category } = useParams<Pick<ParamsLowerCase, 'category'>>();
+    const { category: categoryFromURL } = useParams<Pick<ParamsLowerCase, 'category'>>();
 
     const { t } = useCustomTranslation();
 
@@ -93,7 +93,7 @@ const Shop: FC<PropTypes> = () => {
     const [
         filterByCategoryState,
         setFilterByCategoryState,
-    ] = useState<string>(category || ENUM_CATEGORIES.ALL); // for Select category
+    ] = useState<string>(categoryFromURL || ENUM_CATEGORIES.ALL); // for Select category
 
     // Handlers
     const onClickEditItemHandler = (id: string) => {
@@ -119,7 +119,7 @@ const Shop: FC<PropTypes> = () => {
         setLocalPageState(rightPage);
         fetchProductsByPaginationAtEnd({
             limit:       limit,
-            type:        category || ENUM_CATEGORIES.ALL,
+            type:        categoryFromURL || ENUM_CATEGORIES.ALL,
             page:        rightPage,
             isLowToHigh: isFilterByLowToHigh,
         });
@@ -127,14 +127,14 @@ const Shop: FC<PropTypes> = () => {
 
     // init
     useEffect(() => {
-        setFilterByCategoryState(category || ENUM_CATEGORIES.ALL);
+        setFilterByCategoryState(categoryFromURL || ENUM_CATEGORIES.ALL);
         fetchProductsByPagination({
             limit,
-            type:        category || ENUM_CATEGORIES.ALL,
+            type:        categoryFromURL || ENUM_CATEGORIES.ALL,
             page,
             isLowToHigh: isFilterByLowToHigh,
         });
-    }, [ category, limit, page, isFilterByLowToHigh ]);
+    }, [ categoryFromURL, limit, page, isFilterByLowToHigh ]);
 
     // step 1 // Select // navigate another category
     useEffect(() => {
@@ -147,7 +147,7 @@ const Shop: FC<PropTypes> = () => {
 
     useEffect(() => {
         setLocalPageState(page);
-    }, [ category, isFilterByLowToHigh ]);
+    }, [ categoryFromURL, isFilterByLowToHigh ]);
 
     useEffect(() => {
         setLocalPageState(page);
@@ -159,9 +159,9 @@ const Shop: FC<PropTypes> = () => {
             <div>
                 {width < SCREENS_NUMBER.SB ? (
                     <div className = 'flex flex-col'>
-                        {category && (
+                        {categoryFromURL && (
                             <TitlePage>
-                                {t(`categories.${category}`)}
+                                {t(`categories.${categoryFromURL}`)}
                             </TitlePage>
                         )}
                         <div className = { `flex gap-4

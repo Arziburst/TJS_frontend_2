@@ -1,3 +1,4 @@
+export * from './transformToCapitalize';
 export * from './transformPathToTranslation';
 export * from './transformLinkEmail';
 export * from './transformLinkPhoneNumber';
