@@ -8,9 +8,12 @@ import * as types from './types';
 import * as reducers from './reducers';
 // MarkerGen import extraReducers
 
+export const initialLimitOfProducts = 20;
+export const initialPageOfProducts = 1;
+
 export const initialState: types.ProductsState = {
-    limit:          20,
-    page:           1,
+    limit:          initialLimitOfProducts,
+    page:           initialPageOfProducts,
     totalShowed:    0,
     total:          0,
     products:       null,

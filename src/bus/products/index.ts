@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from '../../tools/hooks'; /* Typed selector 
 import { productsActions } from './slice';
 
 // Types
-import * as commonTypes from '../commonTypes';
 import * as types from './types';
 
 // MarkerGen middleware

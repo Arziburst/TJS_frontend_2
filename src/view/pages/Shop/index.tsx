@@ -43,6 +43,7 @@ import {
 
 // Styles
 import SCardItem from '@/view/components/CardItem/styles.module.css';
+import { initialLimitOfProducts, initialPageOfProducts } from '@/bus/products/slice';
 
 // Types
 type PropTypes = {
@@ -83,6 +84,7 @@ const Shop: FC<PropTypes> = () => {
             totalShowed,
             page,
         },
+        setLimitOfProducts,
         setPageOfProducts,
         fetchProductsByPagination,
         fetchProductsByPaginationAtEnd,
@@ -98,6 +100,12 @@ const Shop: FC<PropTypes> = () => {
     // Handlers
     const onClickEditItemHandler = (id: string) => {
         navigate(`${BOOK.PRODUCT}/${id}${BOOK.MANAGEMENT}`);
+    };
+
+    const onClickChangeCategoryHandler = (categoryString: string) => {
+        setLimitOfProducts(initialLimitOfProducts);
+        setPageOfProducts(initialPageOfProducts);
+        navigate(`${BOOK.SHOP}/${categoryString}`);
     };
 
     const onClickItemsOfSelectFilterByPriceHandler = (item: string) => {
@@ -171,7 +179,7 @@ const Shop: FC<PropTypes> = () => {
                             <Select
                                 items = { [ ENUM_CATEGORIES.ALL, ...CATEGORIES_ITEMS ] }
                                 label = 'Shop by'
-                                setValue = { setFilterByCategoryState }
+                                setValue = { onClickChangeCategoryHandler }
                                 showValue = { t(`categories.${filterByCategoryState}`) }
                                 t = { t }
                                 tString = 'categories'
@@ -205,7 +213,8 @@ const Shop: FC<PropTypes> = () => {
                                         variant = 'skipFirstLine'>
                                         <NavLink
                                             to = { `${BOOK.SHOP}/${item === ENUM_CATEGORIES.ALL ? '' : item}` }
-                                            variant = 'default'>
+                                            variant = 'default'
+                                            onClick = { () => onClickChangeCategoryHandler(item) }>
                                             <NavItemText className = 'text-[15px]'>
                                                 {t(`categories.${item}`)}
                                             </NavItemText>
