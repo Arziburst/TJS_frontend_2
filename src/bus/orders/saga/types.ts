@@ -1,5 +1,5 @@
 // Types
-// import * as commonTypes from '@/bus/commonTypes';
+import { NavigateFunction } from 'react-router';
 import * as types from '../types';
 
 // Get Orders
@@ -10,25 +10,11 @@ export type FetchGetOrderRequest = string;
 export type FetchGetOrderResponse = types.Order;
 
 // Create Order
-export type FetchCreateOrderRequest = {
-    phone?: string;
-    comment?: string;
+export interface FetchCreateOrderRequest extends Required<Pick<types.Order, 'firstName' | 'lastName' | 'phone' | 'email' | 'city' | 'warehouse'>>, Pick<types.Order, 'comment'> {
     orderedPIDs: Array<string>;
-};
+    navigate: NavigateFunction;
+}
 export type FetchCreateOrderResponse = types.Order;
-
-// Get Data LiqPay Order
-export type FetchGetDataLiqPayOrderRequest = {
-    amount: number;
-    description: string;
-    order_id: string;
-    result_url?: string;
-    server_url?: string;
-};
-export type FetchGetDataLiqPayOrderResponse = {
-    data: string;
-    signature: string;
-};
 
 // Delete Order
 export type FetchDeleteOrderRequest = string;

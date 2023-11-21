@@ -43,6 +43,7 @@ import {
 
 // Styles
 import SCardItem from '@/view/components/CardItem/styles.module.css';
+import { initialLimitOfProducts, initialPageOfProducts } from '@/bus/products/slice';
 
 // Types
 type PropTypes = {
@@ -56,7 +57,7 @@ const S = {
 };
 
 const Shop: FC<PropTypes> = () => {
-    const { category } = useParams<Pick<ParamsLowerCase, 'category'>>();
+    const { category: categoryFromURL } = useParams<Pick<ParamsLowerCase, 'category'>>();
 
     const { t } = useCustomTranslation();
 
@@ -83,6 +84,7 @@ const Shop: FC<PropTypes> = () => {
             totalShowed,
             page,
         },
+        setLimitOfProducts,
         setPageOfProducts,
         fetchProductsByPagination,
         fetchProductsByPaginationAtEnd,
@@ -93,11 +95,17 @@ const Shop: FC<PropTypes> = () => {
     const [
         filterByCategoryState,
         setFilterByCategoryState,
-    ] = useState<string>(category || ENUM_CATEGORIES.ALL); // for Select category
+    ] = useState<string>(categoryFromURL || ENUM_CATEGORIES.ALL); // for Select category
 
     // Handlers
     const onClickEditItemHandler = (id: string) => {
         navigate(`${BOOK.PRODUCT}/${id}${BOOK.MANAGEMENT}`);
+    };
+
+    const onClickChangeCategoryHandler = (categoryString: string) => {
+        setLimitOfProducts(initialLimitOfProducts);
+        setPageOfProducts(initialPageOfProducts);
+        navigate(`${BOOK.SHOP}/${categoryString}`);
     };
 
     const onClickItemsOfSelectFilterByPriceHandler = (item: string) => {
@@ -119,7 +127,7 @@ const Shop: FC<PropTypes> = () => {
         setLocalPageState(rightPage);
         fetchProductsByPaginationAtEnd({
             limit:       limit,
-            type:        category || ENUM_CATEGORIES.ALL,
+            type:        categoryFromURL || ENUM_CATEGORIES.ALL,
             page:        rightPage,
             isLowToHigh: isFilterByLowToHigh,
         });
@@ -127,14 +135,14 @@ const Shop: FC<PropTypes> = () => {
 
     // init
     useEffect(() => {
-        setFilterByCategoryState(category || ENUM_CATEGORIES.ALL);
+        setFilterByCategoryState(categoryFromURL || ENUM_CATEGORIES.ALL);
         fetchProductsByPagination({
             limit,
-            type:        category || ENUM_CATEGORIES.ALL,
+            type:        categoryFromURL || ENUM_CATEGORIES.ALL,
             page,
             isLowToHigh: isFilterByLowToHigh,
         });
-    }, [ category, limit, page, isFilterByLowToHigh ]);
+    }, [ categoryFromURL, limit, page, isFilterByLowToHigh ]);
 
     // step 1 // Select // navigate another category
     useEffect(() => {
@@ -147,7 +155,7 @@ const Shop: FC<PropTypes> = () => {
 
     useEffect(() => {
         setLocalPageState(page);
-    }, [ category, isFilterByLowToHigh ]);
+    }, [ categoryFromURL, isFilterByLowToHigh ]);
 
     useEffect(() => {
         setLocalPageState(page);
@@ -159,9 +167,9 @@ const Shop: FC<PropTypes> = () => {
             <div>
                 {width < SCREENS_NUMBER.SB ? (
                     <div className = 'flex flex-col'>
-                        {category && (
+                        {categoryFromURL && (
                             <TitlePage>
-                                {t(`categories.${category}`)}
+                                {t(`categories.${categoryFromURL}`)}
                             </TitlePage>
                         )}
                         <div className = { `flex gap-4
@@ -171,7 +179,7 @@ const Shop: FC<PropTypes> = () => {
                             <Select
                                 items = { [ ENUM_CATEGORIES.ALL, ...CATEGORIES_ITEMS ] }
                                 label = 'Shop by'
-                                setValue = { setFilterByCategoryState }
+                                setValue = { onClickChangeCategoryHandler }
                                 showValue = { t(`categories.${filterByCategoryState}`) }
                                 t = { t }
                                 tString = 'categories'
@@ -205,7 +213,8 @@ const Shop: FC<PropTypes> = () => {
                                         variant = 'skipFirstLine'>
                                         <NavLink
                                             to = { `${BOOK.SHOP}/${item === ENUM_CATEGORIES.ALL ? '' : item}` }
-                                            variant = 'default'>
+                                            variant = 'default'
+                                            onClick = { () => onClickChangeCategoryHandler(item) }>
                                             <NavItemText className = 'text-[15px]'>
                                                 {t(`categories.${item}`)}
                                             </NavItemText>

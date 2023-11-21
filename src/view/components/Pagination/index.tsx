@@ -98,7 +98,7 @@ export const Pagination: FC<PropTypes> = ({
             )}
             {width < SCREENS_NUMBER.SB && (
                 <p className = { `${S.text } uppercase` }>
-                    <span className = 'text-quaternary'>{value < 10 ? `0${value}` : value}</span> {t('other.pagination.text')} {maxStep < 10 ? `0${maxStep}` : maxStep}
+                    <span className = 'text-quaternary'>{value < 10 ? `0${value}` : value}</span> {t('pagination.text')} {maxStep < 10 ? `0${maxStep}` : maxStep}
                 </p>
             )}
             <div>

@@ -1,9 +1,6 @@
 // Core
 import { createSlice } from '@reduxjs/toolkit';
 
-// Common
-import { commonInitialState } from '../common';
-
 // Types
 import * as types from './types';
 
@@ -12,11 +9,6 @@ import * as reducers from './reducers';
 // MarkerGen import extraReducers
 
 const initialState: types.GalleryState = {
-    ...commonInitialState,
-    isLoadings: {
-        gallery: false,
-        delete:  false,
-    },
     gallery: null,
 };
 

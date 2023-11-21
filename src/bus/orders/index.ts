@@ -19,10 +19,9 @@ export const useOrders = () => {
 
     return {
         orders,
-        setOrders:           (payload: types.Orders) => dispatch(ordersActions.setOrders(payload)),
-        setCurrentOrder:     (payload: types.Order) => dispatch(ordersActions.setCurrentOrder(payload)),
-        setDataLiqPayOrders: (payload: types.OrdersState['liqPay']) => dispatch(ordersActions.setDataLiqPayOrders(payload)),
-        reset:               () => dispatch(ordersActions.reset()),
+        setOrders:       (payload: types.Orders) => dispatch(ordersActions.setOrders(payload)),
+        setCurrentOrder: (payload: types.Order | null) => dispatch(ordersActions.setCurrentOrder(payload)),
+        reset:           () => dispatch(ordersActions.reset()),
         ...ordersSagas,
     };
 };

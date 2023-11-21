@@ -7,20 +7,6 @@ import { CSS_VARIABLES, LOCAL_STORAGE } from '@/init';
 // Assets
 import { SCREENS_NUMBER } from '@/assets';
 
-// Images
-import '@/assets/images/image_category_see_all.png';
-import '@/assets/images/image_category_brooch.png';
-import '@/assets/images/image_category_bestsellers.png';
-import '@/assets/images/image_category_bracelets.png';
-import '@/assets/images/image_category_earrings.png';
-import '@/assets/images/image_category_necklace.png';
-import '@/assets/images/image_category_rings.png';
-import '@/assets/images/image_about_main.png';
-import '@/assets/images/image_about_1.png';
-import '@/assets/images/image_about_2.png';
-import '@/assets/images/image_about_3.png';
-import '@/assets/images/image_about_4.png';
-
 // Routes
 import { Routes } from './routes';
 
@@ -40,7 +26,7 @@ import { useCartSaga } from '@/bus/cart/saga';
 import { Wrapper, wrapperVariants } from '@/view/containers';
 
 // Components
-import { Alert, Footer, Header, SideBar } from '@/view/components';
+import { Alert, CookieConsentBanner, Footer, Header, SideBar } from '@/view/components';
 
 // Styles
 import '../assets/globalStyles/index.css';
@@ -116,6 +102,10 @@ export const App: FC = () => {
                 <Routes />
                 <Footer t = { t } />
             </Wrapper>
+            <CookieConsentBanner
+                t = { t }
+                width = { width }
+            />
         </div>
     );
 };

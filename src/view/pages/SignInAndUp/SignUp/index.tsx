@@ -73,7 +73,7 @@ export const SignUp: FC<PropTypes> = ({
                                 />
                             </Form.FormControl>
                             <Form.FormMessage
-                                options = {{ name: INPUT_VALIDATION_VALUES.NAME }}
+                                options = {{ index: INPUT_VALIDATION_VALUES.NAME }}
                                 t = { t }
                             />
                         </Form.FormItem>
@@ -123,7 +123,10 @@ export const SignUp: FC<PropTypes> = ({
                                     { ...field }
                                 />
                             </Form.FormControl>
-                            <Form.FormMessage t = { t } />
+                            <Form.FormMessage
+                                options = {{ index: INPUT_VALIDATION_VALUES.PASSWORD }}
+                                t = { t }
+                            />
                         </Form.FormItem>
                     ) }
                 />

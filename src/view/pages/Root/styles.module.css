@@ -1,6 +1,6 @@
 .root {
-    min-height: calc(var(--vh, 1vh) * 100 - var(--vh_header));
-    min-height: calc(100svh - var(--vh_header));
+    min-height: calc(var(--vh, 1vh) * 100 - var(--vh_header) - var(--vh_cookie_consent_banner));
+    min-height: calc(100svh - var(--vh_header) - var(--vh_cookie_consent_banner));
 }
 
 .el {

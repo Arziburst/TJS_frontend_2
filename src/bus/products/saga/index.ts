@@ -16,6 +16,7 @@ import { fetchEditProductAction, watchFetchEditProduct } from './fetchEditProduc
 
 // Types
 import * as types from './types';
+import { transformToCapitalize } from '@/tools/utils';
 
 export const useProductsSaga = () => {
     const dispatch = useDispatch();
@@ -23,10 +24,16 @@ export const useProductsSaga = () => {
     return {
         fetchProductsByPagination: (
             payload: types.FetchProductsByPaginationRequest,
-        ) => dispatch(fetchProductsByPaginationAction(payload)),
+        ) => dispatch(fetchProductsByPaginationAction({
+            ...payload,
+            type: transformToCapitalize(payload.type),
+        })),
         fetchProductsByPaginationAtEnd: (
             payload: types.FetchProductsByPaginationAtEndRequest,
-        ) => dispatch(fetchProductsByPaginationAtEndAction(payload)),
+        ) => dispatch(fetchProductsByPaginationAtEndAction({
+            ...payload,
+            type: transformToCapitalize(payload.type),
+        })),
         fetchProduct:          (payload: types.FetchProductRequest) => dispatch(fetchProductAction(payload)),
         fetchProducts:         (payload: types.FetchProductsRequest) => dispatch(fetchProductsAction(payload)),
         fetchCreateNewProduct: (payload: types.FetchCreateNewProductRequest) => dispatch(

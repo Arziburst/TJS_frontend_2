@@ -3,6 +3,7 @@ import React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { VariantProps, cva } from 'class-variance-authority';
 import { TFunction } from 'i18next';
+import { Loader2 } from 'lucide-react';
 
 // Tools
 import { cn } from '@/tools/lib/utils';
@@ -56,7 +57,7 @@ const NotData = React.forwardRef<HTMLDivElement, PropTypes>(
         if (isLoading) {
             return (
                 <div className = { cn(S.root, className) }>
-                    Loading...
+                    <Loader2 className = 'mr-2 h-[100px] w-[100px] animate-spin stroke-quaternary' />
                 </div>
             );
         }

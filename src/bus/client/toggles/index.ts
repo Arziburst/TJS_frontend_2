@@ -34,9 +34,9 @@ export type InitialStateToggles = {
 
 
     // Orders
+    isLoadingFetchCreateOrder: boolean;
     isLoadingFetchOrder: boolean;
     isLoadingFetchOrders: boolean;
-    isLoadingFetchDataLiqPayOrder: boolean;
 
     // Gallery
     isLoadingFetchGallery: boolean,
@@ -71,9 +71,9 @@ const initialState: InitialStateToggles = {
     isLoadingFetchProductsByPaginationAtEnd: false,
 
     // Orders
-    isLoadingFetchOrder:           false,
-    isLoadingFetchOrders:          false,
-    isLoadingFetchDataLiqPayOrder: false,
+    isLoadingFetchCreateOrder: false,
+    isLoadingFetchOrder:       false,
+    isLoadingFetchOrders:      false,
 
     // Gallery
     isLoadingFetchGallery:      false,

@@ -39,4 +39,3 @@ export const defaultValues: DefaultValues = {
     warehouse: '',
     comment:   '',
 };
-

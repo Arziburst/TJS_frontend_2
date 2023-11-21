@@ -26,12 +26,6 @@ const fetchGallery = (callAction: ReturnType<typeof fetchGalleryAction>) => make
         successStatusCode: 200,
         fetch:             () => galleryFetcher(),
     },
-    tryStart: function* () {
-        yield put(galleryActions.setIsLoadingOfGallery({
-            type:  'gallery',
-            value: true,
-        }));
-    },
     success: function* (result) {
         yield put(galleryActions.setGallery(result));
     },

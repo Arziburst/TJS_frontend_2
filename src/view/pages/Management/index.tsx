@@ -41,7 +41,7 @@ import {
 import S from './styles.module.css';
 
 // Static
-import { validationForm, defaultValues, minLengthImages } from './static';
+import { validationForm, defaultValues, minLengthImages, minPrice } from './static';
 import { ModalAddImages } from './ModalAddImages';
 
 // Types
@@ -64,6 +64,9 @@ const Management: FC<PropTypes> = () => {
         isLoadingCreteProduct,
         isLoadingEditProduct,
         isLoadingDeleteProduct,
+        isLoadingFetchGallery,
+        isLoadingDeleteItemGallery,
+        isLoadingUpdateGallery,
     }} = useTogglesRedux();
 
     const { fetchGallery } = useGallery();
@@ -140,7 +143,6 @@ const Management: FC<PropTypes> = () => {
         currentProduct && form.reset({
             available:   currentProduct.available,
             description: currentProduct.description,
-            discount:    currentProduct.discount,
             images:      currentProduct.images,
             price:       currentProduct.price,
             title:       currentProduct.title,
@@ -276,28 +278,10 @@ const Management: FC<PropTypes> = () => {
                                         { ...field }
                                     />
                                 </Form.FormControl>
-                                <Form.FormMessage t = { t } />
-                            </Form.FormItem>
-                        ) }
-                    />
-                    <Form.FormField
-                        control = { form.control }
-                        name = 'discount'
-                        render = { ({ field, fieldState }) => (
-                            <Form.FormItem style = {{ gridArea: field.name }}>
-                                <Form.FormLabel>
-                                    {/* todo remove discount (front-end and server) */}
-                                    Enter discount %:
-                                </Form.FormLabel>
-                                <Form.FormControl>
-                                    <Input
-                                        isValidate = { fieldState.invalid }
-                                        placeholder = { t('placeholders.someData') }
-                                        type = 'number'
-                                        { ...field }
-                                    />
-                                </Form.FormControl>
-                                <Form.FormMessage t = { t } />
+                                <Form.FormMessage
+                                    options = {{ index: minPrice }}
+                                    t = { t }
+                                />
                             </Form.FormItem>
                         ) }
                     />
@@ -328,6 +312,11 @@ const Management: FC<PropTypes> = () => {
                                         <div className = { cn({ 'flex flex-wrap [&_*]:h-[132px] gap-3 max-sb:justify-center': isValidateInputImages }) }>
                                             <ModalAddImages
                                                 classNameTrigger = { cn({ 'border-quaternary text-quaternary': fieldState.invalid }) }
+                                                isLoading = {
+                                                    isLoadingDeleteItemGallery
+                                                        || isLoadingFetchGallery
+                                                        || isLoadingUpdateGallery
+                                                }
                                                 selectedImages = { images }
                                                 t = { t }
                                                 onClickAddItemGalleryToManagementHandler = {

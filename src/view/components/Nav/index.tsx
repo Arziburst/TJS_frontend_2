@@ -142,7 +142,10 @@ export const Nav: FC<NavPropTypes> = ({
                                     <Button
                                         variant = 'default'
                                         onClick = { () => onClickLanguageHandler(language) }>
-                                        <span className = 'text-base font-secondary font-semibold uppercase'>
+                                        <span className = { cn(
+                                            'text-base font-secondary font-semibold uppercase',
+                                            { 'text-quaternary': i18n.language === language },
+                                        ) }>
                                             {language}
                                         </span>
                                     </Button>
@@ -171,6 +174,9 @@ export const Nav: FC<NavPropTypes> = ({
                         <Select.SelectContent variant = 'ghost'>
                             {LANGUAGES.map((language) => (
                                 <Select.SelectItem
+                                    className = { cn('', {
+                                        'text-quaternary': i18n.language === language,
+                                    }) }
                                     key = { language }
                                     value = { language }>
                                     {language.toUpperCase()}
