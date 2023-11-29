@@ -67,6 +67,7 @@ export const SignUp: FC<PropTypes> = ({
                         <Form.FormItem>
                             <Form.FormControl>
                                 <Input
+                                    autoCapitalize = 'off'
                                     isValidate = { fieldState.invalid }
                                     placeholder = { t('placeholders.nameAndSurname') }
                                     { ...field }
@@ -86,6 +87,7 @@ export const SignUp: FC<PropTypes> = ({
                         <Form.FormItem>
                             <Form.FormControl>
                                 <Input
+                                    autoCapitalize = 'off'
                                     isValidate = { fieldState.invalid }
                                     placeholder = { t('placeholders.email') }
                                     { ...field }
@@ -102,6 +104,7 @@ export const SignUp: FC<PropTypes> = ({
                         <Form.FormItem>
                             <Form.FormControl>
                                 <Input
+                                    autoCapitalize = 'off'
                                     isValidate = { fieldState.invalid }
                                     placeholder = { t('placeholders.phone') }
                                     { ...field }
@@ -118,6 +121,7 @@ export const SignUp: FC<PropTypes> = ({
                         <Form.FormItem>
                             <Form.FormControl>
                                 <Input
+                                    autoCapitalize = 'off'
                                     isValidate = { fieldState.invalid }
                                     placeholder = { t('placeholders.password') }
                                     { ...field }
@@ -137,6 +141,7 @@ export const SignUp: FC<PropTypes> = ({
                         <Form.FormItem>
                             <Form.FormControl>
                                 <Input
+                                    autoCapitalize = 'off'
                                     isValidate = { fieldState.invalid }
                                     placeholder = { t('placeholders.passwordAgain') }
                                     { ...field }

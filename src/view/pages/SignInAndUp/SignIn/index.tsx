@@ -67,6 +67,7 @@ export const SignIn: FC<PropTypes> = ({
                         <Form.FormItem>
                             <Form.FormControl>
                                 <Input
+                                    autoCapitalize = 'off'
                                     isValidate = { fieldState.invalid }
                                     placeholder = { t('placeholders.email') }
                                     { ...field }
@@ -83,6 +84,7 @@ export const SignIn: FC<PropTypes> = ({
                         <Form.FormItem>
                             <Form.FormControl>
                                 <Input
+                                    autoCapitalize = 'off'
                                     isValidate = { fieldState.invalid }
                                     placeholder = { t('placeholders.password') }
                                     { ...field }
