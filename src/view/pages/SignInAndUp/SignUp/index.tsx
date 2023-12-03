@@ -67,7 +67,7 @@ export const SignUp: FC<PropTypes> = ({
                         <Form.FormItem>
                             <Form.FormControl>
                                 <Input
-                                    autoCapitalize = 'off'
+                                    autoCapitalize = 'words'
                                     isValidate = { fieldState.invalid }
                                     placeholder = { t('placeholders.nameAndSurname') }
                                     { ...field }

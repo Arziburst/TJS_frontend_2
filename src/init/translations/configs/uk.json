@@ -100,9 +100,11 @@
         "signInAndUp": {
             "root": "Увійти або Зареєструватися",
             "signIn": {
+                "root": "Увійти",
                 "title": "Будь ласка, введіть дані для автентифікації."
             },
             "signUp": {
+                "root": "Зареєструватися",
                 "title": "Будь ласка, введіть вашу реєстраційну інформацію."
             }
         }
@@ -161,7 +163,7 @@
     "placeholders": {
         "firstName": "Ім'я",
         "lastName": "Прізвище",
-        "nameAndSurname": "Name and Surname",
+        "nameAndSurname": "Ім'я та Прізвище",
         "email": "Ел. Пошта",
         "phone": "Телефон",
         "password": "Пароль",
@@ -181,8 +183,5 @@
         "product": "Зображення продукту",
         "numberProduct": "{{ index }} зображення товару",
         "imageByURL": "Зображення за URL-адресою {{url}}"
-    },
-    "common": {
-        "test": "test"
     }
 }

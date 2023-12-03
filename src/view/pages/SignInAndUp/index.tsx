@@ -15,8 +15,8 @@ type PropTypes = {
 }
 
 enum TABS_VALUES {
-    IN = 'Sign In',
-    UP = 'Sign Up',
+    IN = 'signIn',
+    UP = 'signUp',
 }
 
 const SignInAndUp: FC<PropTypes> = () => {
@@ -28,8 +28,12 @@ const SignInAndUp: FC<PropTypes> = () => {
                 className = 'max-w-[400px]'
                 defaultValue = { TABS_VALUES.IN }>
                 <Tabs.List>
-                    <Tabs.Trigger value = { TABS_VALUES.IN }>{TABS_VALUES.IN}</Tabs.Trigger>
-                    <Tabs.Trigger value = { TABS_VALUES.UP }>{TABS_VALUES.UP}</Tabs.Trigger>
+                    <Tabs.Trigger value = { TABS_VALUES.IN }>
+                        {t(`pages.signInAndUp.${TABS_VALUES.IN}.root`)}
+                    </Tabs.Trigger>
+                    <Tabs.Trigger value = { TABS_VALUES.UP }>
+                        {t(`pages.signInAndUp.${TABS_VALUES.UP}.root`)}
+                    </Tabs.Trigger>
                 </Tabs.List>
                 <Tabs.Content
                     className = 'w-full'

@@ -100,9 +100,11 @@
         "signInAndUp": {
             "root": "Sign In & Up",
             "signIn": {
+                "root": "Sign In",
                 "title": "Please enter your authentication information."
             },
             "signUp": {
+                "root": "Sign Up",
                 "title": "Please enter your registration information."
             }
         }
@@ -181,8 +183,5 @@
         "product": "Image of Product",
         "numberProduct": "{{ index }} image of the product",
         "imageByURL": "Image by URL-adress {{ url }}"
-    },
-    "common": {
-        "test": "test"
     }
 }

@@ -29,6 +29,7 @@ const compiler = webpack(getDevConfig());
             port:               choosenPort,
             historyApiFallback: true,
             hot:                false,
+            host:               '0.0.0.0',
             onListening:        () => {
                 openBrowser(`http://${HOST}:${choosenPort}`);
             },
