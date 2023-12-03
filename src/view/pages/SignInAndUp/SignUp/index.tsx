@@ -124,6 +124,7 @@ export const SignUp: FC<PropTypes> = ({
                                     autoCapitalize = 'off'
                                     isValidate = { fieldState.invalid }
                                     placeholder = { t('placeholders.password') }
+                                    type = 'password'
                                     { ...field }
                                 />
                             </Form.FormControl>
@@ -144,6 +145,7 @@ export const SignUp: FC<PropTypes> = ({
                                     autoCapitalize = 'off'
                                     isValidate = { fieldState.invalid }
                                     placeholder = { t('placeholders.passwordAgain') }
+                                    type = 'password'
                                     { ...field }
                                 />
                             </Form.FormControl>

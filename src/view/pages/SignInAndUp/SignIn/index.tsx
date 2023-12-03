@@ -87,6 +87,7 @@ export const SignIn: FC<PropTypes> = ({
                                     autoCapitalize = 'off'
                                     isValidate = { fieldState.invalid }
                                     placeholder = { t('placeholders.password') }
+                                    type = 'password'
                                     { ...field }
                                 />
                             </Form.FormControl>
