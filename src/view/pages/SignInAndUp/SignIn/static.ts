@@ -18,7 +18,7 @@ export const validationForm = yup.object({
 });
 
 export const defaultValues: DefaultValues = process.env.NODE_ENV === 'development' ? {
-    email:    '',
+    email:    'email@gmail.com',
     password: '12345678',
 } : {
     email:    '',
