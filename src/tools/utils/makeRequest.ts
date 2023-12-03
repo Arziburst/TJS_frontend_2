@@ -39,10 +39,6 @@ type OptionsType<SuccessData, ErrorData> = {
     finallyEnd?: Function;
 };
 
-const defaultNumberOfAttempts = 2;
-
-const numberOfAttempts = { value: defaultNumberOfAttempts }; // todo how to improve?!
-
 export function* makeRequest<SuccessData, ErrorData = {}>(options: OptionsType<SuccessData, ErrorData>) {
     const {
         skipAttemptsIfStatusCode = 0,
@@ -90,11 +86,8 @@ export function* makeRequest<SuccessData, ErrorData = {}>(options: OptionsType<S
             yield error(errorData);
         }
 
-        if (errorData.statusCode !== skipAttemptsIfStatusCode && callAction && numberOfAttempts.value > 0) {
-            yield numberOfAttempts.value -= 1;
+        if (callAction && errorData.statusCode !== skipAttemptsIfStatusCode) {
             yield put(callAction);
-        } else {
-            yield numberOfAttempts.value = defaultNumberOfAttempts;
         }
 
         if (skipAlertIfStatusCode !== errorData.statusCode && errorData.message) {
