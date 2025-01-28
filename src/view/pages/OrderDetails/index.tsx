@@ -22,13 +22,13 @@ type PropTypes = {
 const OrderDetails: FC<PropTypes> = () => {
     const navigate = useNavigate();
 
-    const [ width ] = useWindowWidth();
+    const [width] = useWindowWidth();
 
     useEffect(() => {
         if (width > SCREENS_NUMBER.SB) {
             navigate(BOOK.CART);
         }
-    }, [ width ]);
+    }, [width]);
 
     return (
         <div>
@@ -37,8 +37,12 @@ const OrderDetails: FC<PropTypes> = () => {
     );
 };
 
-export default () => (
+const OrderDetailsWithErrorBoundary: FC = () => (
     <ErrorBoundary>
         <OrderDetails />
     </ErrorBoundary>
 );
+
+OrderDetailsWithErrorBoundary.displayName = 'OrderDetailsWithErrorBoundary';
+
+export default OrderDetailsWithErrorBoundary;

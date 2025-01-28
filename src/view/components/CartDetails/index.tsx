@@ -32,23 +32,23 @@ import { defaultValues, validationForm } from './static';
 // Types
 import { CityNewPost, WarehouseNewPost } from '@/bus/newPost/types';
 
-interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
+interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> { }
 
 export const CartDetails: FC<PropTypes> = ({ ...props }) => {
     const navigate = useNavigate();
 
     const form = useForm({
-        resolver:      yupResolver(validationForm),
+        resolver: yupResolver(validationForm),
         defaultValues: defaultValues,
-        mode:          'onChange',
+        mode: 'onChange',
     });
 
     const { city, warehouse } = form.getValues();
 
     const { t } = useCustomTranslation();
 
-    const [ debounceCallbackCity ] = useDebounceCallback();
-    const [ debounceCallbackWarehouse ] = useDebounceCallback();
+    const [debounceCallbackCity] = useDebounceCallback();
+    const [debounceCallbackWarehouse] = useDebounceCallback();
 
     // Hooks of Bus
     const {
@@ -68,32 +68,31 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
     } = useOrders();
     const { cart } = useCart();
     const { profile } = useProfile();
-    const { products: { products }} = useProducts();
+    const { products: { products } } = useProducts();
 
     // State
-    const [ totalPriceState, setTotalPriceState ] = useState(0);
-    const [ isFirstRenderState, setIsFirstRenderState ] = useState(true);
+    const [totalPriceState, setTotalPriceState] = useState(0);
+    const [isFirstRenderState, setIsFirstRenderState] = useState(true);
 
-    const [ isAllowCityState, setIsAllowCityState ] = useState(false);
-    const [ isOpenWarehouseState, setIsOpenWarehouseState ] = useState(false);
-    const [ isAllowFetchWarehouseState, setIsAllowFetchWarehouseState ] = useState(true);
-    const [ wasClickWarehouseState, setWasClickWarehouseState ] = useState(false);
+    const [isAllowCityState, setIsAllowCityState] = useState(false);
+    const [isOpenWarehouseState, setIsOpenWarehouseState] = useState(false);
+    const [isAllowFetchWarehouseState, setIsAllowFetchWarehouseState] = useState(true);
+    const [wasClickWarehouseState, setWasClickWarehouseState] = useState(false);
 
     // Handlers
-    const onSubmit = (values: any) => { // todo how to remove any ???
+    const onSubmit = () => {
         if (cart && cart.length > 0) {
-            console.log('onSubmit => cart:', cart);
             const gotData = form.getValues();
 
             fetchCreateOrder({
                 orderedPIDs: cart,
-                firstName:   gotData.firstName,
-                lastName:    gotData.lastName,
-                phone:       gotData.phone,
-                email:       gotData.email,
-                city:        gotData.city,
-                warehouse:   gotData.warehouse,
-                comment:     gotData.comment,
+                firstName: gotData.firstName,
+                lastName: gotData.lastName,
+                phone: gotData.phone,
+                email: gotData.email,
+                city: gotData.city,
+                warehouse: gotData.warehouse,
+                comment: gotData.comment,
                 navigate,
             });
         }
@@ -104,7 +103,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
         form.clearErrors('city');
         setIsAllowCityState(true);
         fetchWarehousesNewPost({
-            cityName:    cityParam.Description,
+            cityName: cityParam.Description,
             warehouseId: warehouse,
         });
     };
@@ -119,7 +118,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
 
     useEffect(() => {
         form.watch();
-    }, [ form.watch, form.formState ]);
+    }, [form.watch, form.formState]);
 
     //! CITY
     useEffect(() => {
@@ -130,7 +129,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                 fetchCitiesNewPost(city);
             });
         }
-    }, [ city ]);
+    }, [city]);
 
     useEffect(() => {
         if (!isFirstRenderState && !isAllowCityState && cities) {
@@ -140,7 +139,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
             })) {
                 form.clearErrors('city');
                 fetchWarehousesNewPost({
-                    cityName:    city,
+                    cityName: city,
                     warehouseId: warehouse,
                 });
                 form.setError('warehouse', { message: 'errors.clickNumberWarehouse' });
@@ -148,7 +147,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                 form.setError('city', { message: 'errors.clickRightCity' });
             }
         }
-    }, [ cities ]);
+    }, [cities]);
 
     //! WAREHOUSE
     useEffect(() => {
@@ -172,7 +171,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
             if (isAllowFetchWarehouseStateLocal) {
                 debounceCallbackWarehouse(() => {
                     fetchWarehousesNewPost({
-                        cityName:    city,
+                        cityName: city,
                         warehouseId: warehouse,
                     });
                 });
@@ -180,7 +179,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
 
             setIsAllowFetchWarehouseState(false);
         }
-    }, [ warehouse ]);
+    }, [warehouse]);
 
     useEffect(() => {
         if (!isFirstRenderState) {
@@ -189,7 +188,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                 form.setError('warehouse', { message: 'errors.clickRightWarehouse' });
             } else if (warehouses && warehouses.some((warehouseFromSome) => {
                 return warehouseFromSome.Description.toLocaleLowerCase() === warehouse.toLocaleLowerCase()
-                || warehouseFromSome.DescriptionRu.toLocaleLowerCase() === warehouse.toLocaleLowerCase();
+                    || warehouseFromSome.DescriptionRu.toLocaleLowerCase() === warehouse.toLocaleLowerCase();
             })) {
                 form.clearErrors('warehouse');
             } else {
@@ -197,7 +196,7 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                 form.setError('warehouse', { message: 'errors.clickNumberWarehouse' });
             }
         }
-    }, [ warehouses ]);
+    }, [warehouses]);
 
     //! CART
     useEffect(() => {
@@ -207,167 +206,167 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                 0,
             ));
         }
-    }, [ products, cart ]);
+    }, [products, cart]);
 
     useEffect(() => {
         if (profile) {
             form.setValue('email', profile.email, { shouldValidate: true });
             form.setValue('phone', profile.phone, { shouldValidate: true });
         }
-    }, [ profile ]);
+    }, [profile]);
 
     useLayoutEffect(() => {
         isFirstRenderState && setIsFirstRenderState(false);
     }, []);
 
     return (
-        <div { ...props }>
+        <div {...props}>
             <TitlePage>{t('pages.orderDetails.title')}</TitlePage>
-            <Form.Root { ...form }>
+            <Form.Root {...form}>
                 <form
-                    onSubmit = { form.handleSubmit(onSubmit) }>
-                    <div className = { `flex flex-col gap-[34px]
+                    onSubmit={form.handleSubmit(onSubmit)}>
+                    <div className={`flex flex-col gap-[34px]
                         sb:gap-[48px]` }>
                         <div>
                             <FormTitle>
-                                <span className = 'text-quaternary'>1.</span> {t('pages.orderDetails.firstTitleForm')}
+                                <span className='text-quaternary'>1.</span> {t('pages.orderDetails.firstTitleForm')}
                             </FormTitle>
                             <ContainerFields>
                                 <Form.FormField
-                                    control = { form.control }
-                                    name = 'firstName'
-                                    render = { ({ field, fieldState }) => (
+                                    control={form.control}
+                                    name='firstName'
+                                    render={({ field, fieldState }) => (
                                         <Form.FormItem>
                                             <Form.FormControl>
                                                 <Input
-                                                    isValidate = { fieldState.invalid }
-                                                    placeholder = { t('placeholders.firstName') }
-                                                    { ...field }
+                                                    isValidate={fieldState.invalid}
+                                                    placeholder={t('placeholders.firstName')}
+                                                    {...field}
                                                 />
                                             </Form.FormControl>
-                                            <Form.FormMessage t = { t } />
+                                            <Form.FormMessage t={t} />
                                         </Form.FormItem>
-                                    ) }
+                                    )}
                                 />
                                 <Form.FormField
-                                    control = { form.control }
-                                    name = 'lastName'
-                                    render = { ({ field, fieldState }) => (
+                                    control={form.control}
+                                    name='lastName'
+                                    render={({ field, fieldState }) => (
                                         <Form.FormItem>
                                             <Form.FormControl>
                                                 <Input
-                                                    isValidate = { fieldState.invalid }
-                                                    placeholder = { t('placeholders.lastName') }
-                                                    { ...field }
+                                                    isValidate={fieldState.invalid}
+                                                    placeholder={t('placeholders.lastName')}
+                                                    {...field}
                                                 />
                                             </Form.FormControl>
-                                            <Form.FormMessage t = { t } />
+                                            <Form.FormMessage t={t} />
                                         </Form.FormItem>
-                                    ) }
+                                    )}
                                 />
                                 <Form.FormField
-                                    control = { form.control }
-                                    name = 'phone'
-                                    render = { ({ field, fieldState }) => (
+                                    control={form.control}
+                                    name='phone'
+                                    render={({ field, fieldState }) => (
                                         <Form.FormItem>
                                             <Form.FormControl>
                                                 <Input
-                                                    isValidate = { fieldState.invalid }
-                                                    placeholder = { t('placeholders.phone') }
-                                                    { ...field }
+                                                    isValidate={fieldState.invalid}
+                                                    placeholder={t('placeholders.phone')}
+                                                    {...field}
                                                 />
                                             </Form.FormControl>
-                                            <Form.FormMessage t = { t } />
+                                            <Form.FormMessage t={t} />
                                         </Form.FormItem>
-                                    ) }
+                                    )}
                                 />
                                 <Form.FormField
-                                    control = { form.control }
-                                    name = 'email'
-                                    render = { ({ field, fieldState }) => (
+                                    control={form.control}
+                                    name='email'
+                                    render={({ field, fieldState }) => (
                                         <Form.FormItem>
                                             <Form.FormControl>
                                                 <Input
-                                                    isValidate = { fieldState.invalid }
-                                                    placeholder = { t('placeholders.email') }
-                                                    { ...field }
+                                                    isValidate={fieldState.invalid}
+                                                    placeholder={t('placeholders.email')}
+                                                    {...field}
                                                 />
                                             </Form.FormControl>
-                                            <Form.FormMessage t = { t } />
+                                            <Form.FormMessage t={t} />
                                         </Form.FormItem>
-                                    ) }
+                                    )}
                                 />
                             </ContainerFields>
                         </div>
                         <div>
                             <FormTitle>
-                                <span className = 'text-quaternary'>2.</span> {t('pages.orderDetails.secondTitleForm')}
+                                <span className='text-quaternary'>2.</span> {t('pages.orderDetails.secondTitleForm')}
                             </FormTitle>
                             <ContainerFields>
                                 <Form.FormField
-                                    control = { form.control }
-                                    name = 'city'
-                                    render = { ({ field, fieldState }) => (
+                                    control={form.control}
+                                    name='city'
+                                    render={({ field, fieldState }) => (
                                         <Form.FormItem>
                                             <Form.FormControl>
                                                 <Input
-                                                    isValidate = { fieldState.invalid }
-                                                    placeholder = { t('placeholders.city') }
-                                                    { ...field }
+                                                    isValidate={fieldState.invalid}
+                                                    placeholder={t('placeholders.city')}
+                                                    {...field}
                                                 />
                                             </Form.FormControl>
-                                            <Form.FormMessage t = { t } />
+                                            <Form.FormMessage t={t} />
                                             {(form.getFieldState('city').invalid || isLoadingFetchCitiesNewPost) && (
                                                 <ScrollArea
-                                                    className = 'h-[50vh] w-full p-4'
-                                                    propViewport = {{}}>
+                                                    className='h-[50vh] w-full p-4'
+                                                    propViewport={{}}>
                                                     <NotData
-                                                        isLoading = { isLoadingFetchCitiesNewPost }
-                                                        t = { t }>
+                                                        isLoading={isLoadingFetchCitiesNewPost}
+                                                        t={t}>
                                                         {cities?.map((city) => (
                                                             <Button
-                                                                className = 'flex-col'
-                                                                key = { city.CityID }
-                                                                variant = 'outline'
-                                                                onClick = { () => onClickCityHandler(city) }>
-                                                                <p>UA: <span className = 'text-quaternary'>{city.Description}</span></p>
-                                                                <p>RU: <span className = 'text-quaternary'>{city.DescriptionRu}</span></p>
+                                                                className='flex-col'
+                                                                key={city.CityID}
+                                                                variant='outline'
+                                                                onClick={() => onClickCityHandler(city)}>
+                                                                <p>UA: <span className='text-quaternary'>{city.Description}</span></p>
+                                                                <p>RU: <span className='text-quaternary'>{city.DescriptionRu}</span></p>
                                                             </Button>
                                                         ))}
                                                     </NotData>
                                                 </ScrollArea>
                                             )}
                                         </Form.FormItem>
-                                    ) }
+                                    )}
                                 />
                                 <Form.FormField
-                                    control = { form.control }
-                                    name = 'warehouse'
-                                    render = { ({ field, fieldState }) => (
+                                    control={form.control}
+                                    name='warehouse'
+                                    render={({ field, fieldState }) => (
                                         <Form.FormItem>
                                             <Form.FormControl>
                                                 <Input
-                                                    isValidate = { fieldState.invalid }
-                                                    placeholder = { t('placeholders.choosePostOffice') }
-                                                    { ...field }
+                                                    isValidate={fieldState.invalid}
+                                                    placeholder={t('placeholders.choosePostOffice')}
+                                                    {...field}
                                                 />
                                             </Form.FormControl>
-                                            <Form.FormMessage t = { t } />
+                                            <Form.FormMessage t={t} />
                                             {(form.getFieldState('warehouse').invalid || isLoadingFetchWarehousesNewPost || isOpenWarehouseState) && (
                                                 <ScrollArea
-                                                    className = 'h-[50vh] w-full p-4'
-                                                    propViewport = {{}}>
+                                                    className='h-[50vh] w-full p-4'
+                                                    propViewport={{}}>
                                                     <NotData
-                                                        isLoading = { isLoadingFetchWarehousesNewPost }
-                                                        t = { t }>
+                                                        isLoading={isLoadingFetchWarehousesNewPost}
+                                                        t={t}>
                                                         {warehouses?.map((warehouse) => (
                                                             <Button
-                                                                className = 'flex-col'
-                                                                key = { warehouse.SiteKey }
-                                                                variant = 'outline'
-                                                                onClick = { () => onClickWarehouseHandler(warehouse) }>
-                                                                <p>UA: <span className = 'text-quaternary'>{warehouse.Description}</span></p>
-                                                                <p>RU: <span className = 'text-quaternary'>{warehouse.DescriptionRu}</span></p>
+                                                                className='flex-col'
+                                                                key={warehouse.SiteKey}
+                                                                variant='outline'
+                                                                onClick={() => onClickWarehouseHandler(warehouse)}>
+                                                                <p>UA: <span className='text-quaternary'>{warehouse.Description}</span></p>
+                                                                <p>RU: <span className='text-quaternary'>{warehouse.DescriptionRu}</span></p>
 
                                                             </Button>
                                                         ))}
@@ -375,23 +374,23 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                                 </ScrollArea>
                                             )}
                                         </Form.FormItem>
-                                    ) }
+                                    )}
                                 />
                                 <Form.FormField
-                                    control = { form.control }
-                                    name = 'comment'
-                                    render = { ({ field, fieldState }) => (
+                                    control={form.control}
+                                    name='comment'
+                                    render={({ field, fieldState }) => (
                                         <Form.FormItem>
                                             <Form.FormControl>
                                                 <Textarea
-                                                    { ...field }
-                                                    isValidate = { fieldState.invalid }
-                                                    placeholder = { t('placeholders.comment') }
+                                                    {...field}
+                                                    isValidate={fieldState.invalid}
+                                                    placeholder={t('placeholders.comment')}
                                                 />
                                             </Form.FormControl>
-                                            <Form.FormMessage t = { t } />
+                                            <Form.FormMessage t={t} />
                                         </Form.FormItem>
-                                    ) }
+                                    )}
                                 />
                             </ContainerFields>
                         </div>
@@ -418,20 +417,20 @@ export const CartDetails: FC<PropTypes> = ({ ...props }) => {
                                     </FormTitle>
                                 </div>
                             </div> */}
-                            <div className = 'flex justify-between flex-wrap'>
-                                <FormTitle className = 'mb-0 sb:mb-0 text-quaternary uppercase'>
+                            <div className='flex justify-between flex-wrap'>
+                                <FormTitle className='mb-0 sb:mb-0 text-quaternary uppercase'>
                                     {t('pages.common.total')}
                                 </FormTitle>
-                                <FormTitle className = 'mb-0 sb:mb-0 text-quaternary'>
+                                <FormTitle className='mb-0 sb:mb-0 text-quaternary'>
                                     {totalPriceState} ₴
                                 </FormTitle>
                             </div>
                         </div>
                         <Button
-                            className = 'capitalize'
-                            isLoading = { isLoadingFetchCreateOrder }
-                            type = 'submit'
-                            variant = 'contain'>
+                            className='capitalize'
+                            isLoading={isLoadingFetchCreateOrder}
+                            type='submit'
+                            variant='contain'>
                             {t('pages.orderDetails.buttonMakeOrder')}
                         </Button>
                     </div>

@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 // Core
 import React from 'react';
 import { Slot } from '@radix-ui/react-slot';
@@ -38,9 +39,9 @@ const MoveUnderline = React.forwardRef<HTMLSpanElement, PropTypes>(
 
         return (
             <Comp
-                className = { cn(moveUnderlineVariants({ variant, className })) }
-                ref = { ref }
-                { ...props }>
+                className={cn(moveUnderlineVariants({ variant, className }))}
+                ref={ref}
+                {...props}>
                 {children}
             </Comp>
         );

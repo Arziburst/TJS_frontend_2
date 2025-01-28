@@ -22,7 +22,8 @@
         "gen:ui": "npx shadcn-ui@latest add",
         "analyze": "webpack-bundle-analyzer \"./build/stats.json\"",
         "serve": "serve \"./build\" -s",
-        "clean": "rm -rf node_modules"
+        "clean": "rm -rf node_modules",
+        "lint": "npx eslint --config \".eslintrc.yaml\" --fix \"./src/**/*.{ts,tsx,js,jsx}\""
     },
     "dependencies": {
         "@hookform/resolvers": "^3.3.1",
@@ -88,6 +89,7 @@
         "detect-port-alt": "1.1.6",
         "dotenv": "^16.3.1",
         "eslint": "^8.48.0",
+        "eslint-config-prettier": "^10.0.1",
         "eslint-plugin-babel": "^5.3.1",
         "eslint-plugin-import": "^2.28.1",
         "eslint-plugin-jest": "^27.2.3",

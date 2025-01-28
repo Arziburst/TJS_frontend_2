@@ -3,11 +3,11 @@ import React, { Component, FC } from 'react';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 // Types
-type State =  {
+type State = {
     error: Error | null;
 }
 
-type PropChildren ={
+type PropChildren = {
     children: React.ReactNode;
 }
 
@@ -30,7 +30,7 @@ class ErrorBoundaryClass extends Component<PropTypes, State> {
         return error ? (
             <section>
                 <div>Error component</div>
-                <button onClick = { () => navigation(-1) }>Go Back</button>
+                <button onClick={() => navigation(-1)}>Go Back</button>
             </section>
         ) : children;
     }
@@ -40,9 +40,8 @@ export const ErrorBoundary: FC<PropChildren> = ({ children }) => {
     const navigation = useNavigate();
 
     return (
-        <ErrorBoundaryClass
-            children = { children }
-            navigation = { navigation }
-        />
+        <ErrorBoundaryClass navigation={navigation}>
+            {children}
+        </ErrorBoundaryClass>
     );
 };

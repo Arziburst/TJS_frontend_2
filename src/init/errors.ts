@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-duplicate-enum-values */
 export enum INPUT_VALIDATION_VALUES {
     NAME = 4,
     PASSWORD = 4,

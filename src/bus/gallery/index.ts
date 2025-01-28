@@ -33,7 +33,7 @@ export const useGallery = () => {
         setGallery:           (payload: types.Gallery) => dispatch(galleryActions.setGallery(payload)),
         onChangeInputGallery: (event: React.ChangeEvent<HTMLInputElement> | any) => { // todo remove any
             const errors: Array<string> = [];
-            let formData = new FormData();
+            const formData = new FormData();
             const files = Array.from(event.target.files);
 
             files.forEach((file: any, i) => {

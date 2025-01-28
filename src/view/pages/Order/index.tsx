@@ -47,15 +47,15 @@ const Order: FC<PropTypes> = () => {
 
     const { t } = useCustomTranslation();
 
-    const { togglesRedux: { isLoadingFetchOrder }} = useTogglesRedux();
+    const { togglesRedux: { isLoadingFetchOrder } } = useTogglesRedux();
 
     const { profile } = useProfile();
     const { orders: { currentOrder }, fetchOrder, fetchUpdateOrder } = useOrders();
 
-    const [ isFirstRenderState, setIsFirstRenderState ] = useState(true);
+    const [isFirstRenderState, setIsFirstRenderState] = useState(true);
 
     const form = useForm({
-        resolver:      yupResolver(validationForm),
+        resolver: yupResolver(validationForm),
         defaultValues: currentOrder ? { status: String(currentOrder.status) } : defaultValues,
     });
 
@@ -72,27 +72,27 @@ const Order: FC<PropTypes> = () => {
 
     useEffect(() => {
         currentOrder && form.setValue('status', String(currentOrder.status));
-    }, [ currentOrder ]);
+    }, [currentOrder]);
 
     useEffect(() => {
         if (currentOrder && gotStatus && gotStatus.length > 0) {
             if (!isFirstRenderState) {
                 fetchUpdateOrder({
-                    _id:    currentOrder._id,
+                    _id: currentOrder._id,
                     status: Number(gotStatus),
                 });
             } else {
                 setIsFirstRenderState(false);
             }
         }
-    }, [ gotStatus ]);
+    }, [gotStatus]);
 
     if (!currentOrder) {
         return (
             <NotData
-                isLoading = { isLoadingFetchOrder }
-                t = { t }
-                textIfNotData = { t('pages.order.textIfNotData') }
+                isLoading={isLoadingFetchOrder}
+                t={t}
+                textIfNotData={t('pages.order.textIfNotData')}
             />
         );
     }
@@ -100,33 +100,33 @@ const Order: FC<PropTypes> = () => {
     return (
         <div>
             <NotData
-                className = 'flex flex-col gap-[24px]'
-                isLoading = { isLoadingFetchOrder }
-                t = { t }>
+                className='flex flex-col gap-[24px]'
+                isLoading={isLoadingFetchOrder}
+                t={t}>
                 <NotData
-                    className = { `flex flex-wrap gap-[14px] justify-center
+                    className={`flex flex-wrap gap-[14px] justify-center
                         sb:gap-[20px]` }
-                    isLoading = { isLoadingFetchOrder }
-                    t = { t }>
+                    isLoading={isLoadingFetchOrder}
+                    t={t}>
                     {currentOrder?.orderedProducts.map((product) => (
                         <CardItem
-                            _id = { product.pid }
-                            firstImage = {{ src: product.image, alt: t('altImages.product') }}
-                            key = { product.pid }
-                            price = { product.price }
-                            role = { profile?.role }
-                            t = { t }
-                            to = { `${BOOK.PRODUCT}/${product.pid}` }
-                            onClickEditItem = { () => onClickEditItemHandler(product.pid) }
+                            _id={product.pid}
+                            firstImage={{ src: product.image, alt: t('altImages.product') }}
+                            key={product.pid}
+                            price={product.price}
+                            role={profile?.role}
+                            t={t}
+                            to={`${BOOK.PRODUCT}/${product.pid}`}
+                            onClickEditItem={() => onClickEditItemHandler(product.pid)}
                         />
                     ))}
                 </NotData>
                 <p
-                    className = { `text-center text-lg
+                    className={`text-center text-lg
                         sb:text-2xl` }>
-                    {t('pages.common.total')}: <span className = 'text-quaternary'>{`${currentOrder?.orderedProducts.reduce((acc, product) => acc + product.price, 0) } ₴`}</span>
+                    {t('pages.common.total')}: <span className='text-quaternary'>{`${currentOrder?.orderedProducts.reduce((acc, product) => acc + product.price, 0)} ₴`}</span>
                 </p>
-                <div className = 'text-center space-y-[18px]'>
+                <div className='text-center space-y-[18px]'>
                     <FormTitle>
                         {t('pages.order.firstTitle')}
                     </FormTitle>
@@ -134,53 +134,53 @@ const Order: FC<PropTypes> = () => {
                     <p>{t('pages.order.phone')}: {currentOrder?.phone}</p>
                     <p>{t('pages.order.comment')}: {currentOrder?.comment}</p>
                 </div>
-                <div className = 'flex flex-col items-center'>
-                    <Form.Root { ...form }>
-                        <FormTitle className = 'text-center'>
+                <div className='flex flex-col items-center'>
+                    <Form.Root {...form}>
+                        <FormTitle className='text-center'>
                             {t('pages.order.secondTitle')}
                         </FormTitle>
                         <form>
                             <Form.FormField
-                                control = { form.control }
-                                name = 'status'
-                                render = { ({ field }) => (
+                                control={form.control}
+                                name='status'
+                                render={({ field }) => (
                                     <Form.FormItem>
                                         <Form.FormLabel>
                                             {t('pages.order.label')}:
                                         </Form.FormLabel>
                                         <Select.Root
-                                            defaultValue = { gotStatus }
-                                            onValueChange = { field.onChange }>
+                                            defaultValue={gotStatus}
+                                            onValueChange={field.onChange}>
                                             <Form.FormControl>
                                                 <Select.SelectTrigger
                                                     isArrow
-                                                    className = { cn(returnStylesStatus(Number(field.value))) }
-                                                    variant = 'outline'>
+                                                    className={cn(returnStylesStatus(Number(field.value)))}
+                                                    variant='outline'>
                                                     <Select.SelectValue>
-                                                        <span className = 'capitalize'>
+                                                        <span className='capitalize'>
                                                             {t(`cards.order.status.${transformStatusToString(Number(field.value))}`)}
                                                         </span>
                                                     </Select.SelectValue>
                                                 </Select.SelectTrigger>
                                             </Form.FormControl>
                                             <Select.SelectContent
-                                                variant = 'shadow'>
+                                                variant='shadow'>
                                                 {VALUES_OF_STATUS.map((valueOfStatus, index) => {
                                                     return (
                                                         <Select.SelectItem
-                                                            className = 'capitalize'
-                                                            key = { index }
-                                                            value = { String(index) }
-                                                            variant = 'contain'>
+                                                            className='capitalize'
+                                                            key={index}
+                                                            value={String(index)}
+                                                            variant='contain'>
                                                             {t(`cards.order.status.${transformStatusToString(index)}`)}
                                                         </Select.SelectItem>
                                                     );
                                                 })}
                                             </Select.SelectContent>
                                         </Select.Root>
-                                        <Form.FormMessage t = { t } />
+                                        <Form.FormMessage t={t} />
                                     </Form.FormItem>
-                                ) }
+                                )}
                             />
                         </form>
                     </Form.Root>
@@ -190,8 +190,12 @@ const Order: FC<PropTypes> = () => {
     );
 };
 
-export default () => (
+const OrderWithErrorBoundary: FC = () => (
     <ErrorBoundary>
         <Order />
     </ErrorBoundary>
 );
+
+OrderWithErrorBoundary.displayName = 'OrderWithErrorBoundary';
+
+export default OrderWithErrorBoundary;

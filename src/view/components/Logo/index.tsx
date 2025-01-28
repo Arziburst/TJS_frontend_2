@@ -1,9 +1,9 @@
 // Core
-import React, { FC, forwardRef } from 'react';
+import React, { FC } from 'react';
 import { LinkProps } from 'react-router-dom';
 
 // Tools
-import { clsx, cn } from '@/tools/lib/utils';
+import { cn } from '@/tools/lib/utils';
 
 // Book
 import { BOOK } from '@/view/routes/book';
@@ -21,7 +21,7 @@ export const Logo: FC<PropTypes> = ({ variant, className, ...props }) => {
 
     return (
         <Link
-            className = { cn(
+            className={cn(
                 [
                     `uppercase text-sm font-secondary font-bold text-secondary-100
                     hover:opacity-70`,
@@ -29,32 +29,10 @@ export const Logo: FC<PropTypes> = ({ variant, className, ...props }) => {
                 { 'text-xs': isMobile },
                 { 'text-sm': !isMobile },
                 className,
-            ) }
-            { ...props }
-            to = { BOOK.ROOT }>
+            )}
+            {...props}
+            to={BOOK.ROOT}>
             {isMobile ? 'TJS' : 'Trend Jewelry Store'}
         </Link>
     );
 };
-
-// export const Logo: FC<any> = forwardRef(({ variant, ...props }, forwardRefProp) => {
-//     const isMobile = variant === 'mobile';
-
-//     return (
-//         <Link
-//             className = { cn(
-//                 [
-//                     `uppercase text-sm font-secondary text-secondary-100
-//                     hover:opacity-70`,
-//                 ],
-//                 { 'text-xs': isMobile },
-//                 { 'text-sm': !isMobile },
-//             ) }
-//             { ...props }
-//             ref = { forwardRefProp }
-//             to = { BOOK.SHOP }>
-//             {/* to = { BOOK.ROOT }> */}
-//             {isMobile ? 'TJS' : 'Trend Jewelry Store'}
-//         </Link>
-//     );
-// });

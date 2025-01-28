@@ -1,13 +1,11 @@
 // Core
 import { Action } from '@reduxjs/toolkit';
 import { put, call } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 
 // Redux
-import { TogglesKeys } from '../../bus/client/toggles';
-
 // Action
-import { toggleCreatorAction } from '../../bus/client/toggles';
+import { TogglesKeys, toggleCreatorAction } from '../../bus/client/toggles';
 
 // Tools
 import { customFetch } from './customFetch';
@@ -27,7 +25,7 @@ type OptionsType<SuccessData, ErrorData> = {
     skipAttemptsIfStatusCode?: number;
     skipAlertIfStatusCode?: number;
     // -------------------------------------------------
-    tryStart?: Function;
+    tryStart?: () => void;
     success?: (successData: SuccessData) => void;
     tryEnd?: (successData: SuccessData) => void;
     // -------------------------------------------------
@@ -35,14 +33,14 @@ type OptionsType<SuccessData, ErrorData> = {
     error?: (errorData: ErrorData) => void;
     catchEnd?: (errorData: ErrorData) => void;
     // -------------------------------------------------
-    finallyStart?: Function;
-    finallyEnd?: Function;
+    finallyStart?: () => void;
+    finallyEnd?: () => void;
 };
 
-export function* makeRequest<SuccessData, ErrorData = {}>(options: OptionsType<SuccessData, ErrorData>) {
+export function* makeRequest<SuccessData, ErrorData = unknown>(options: OptionsType<SuccessData, ErrorData>) {
     const {
-        skipAttemptsIfStatusCode = 0,
-        skipAlertIfStatusCode = 0,
+        // skipAttemptsIfStatusCode = 0,
+        // skipAlertIfStatusCode = 0,
         fetchOptions,
         callAction,
         toggleType,
@@ -86,14 +84,14 @@ export function* makeRequest<SuccessData, ErrorData = {}>(options: OptionsType<S
             yield error(errorData);
         }
 
-        if (callAction && errorData.statusCode !== skipAttemptsIfStatusCode) {
-            yield put(callAction);
+        if (callAction && errorData.statusCode !== fetchOptions.successStatusCode) {
+        //     yield put(callAction);
         }
 
-        if (skipAlertIfStatusCode !== errorData.statusCode && errorData.message) {
-            yield toast.error(errorData.data.message);
-            yield console.error(errorData.data.message);
-        }
+        // if (skipAlertIfStatusCode !== errorData.statusCode && errorData.message) {
+        //     yield toast.error(errorData.data.message);
+        //     yield console.error(errorData.data.message);
+        // }
 
         if (catchEnd) {
             yield catchEnd(errorData);

@@ -45,7 +45,7 @@ const AboutUs: FC<PropTypes> = () => {
 
     const { t } = useCustomTranslation();
 
-    const [ width ] = useWindowWidth();
+    const [width] = useWindowWidth();
 
     const getStringHeight = (str: string = '0px') => {
         if (refTitle.current) {
@@ -75,79 +75,79 @@ const AboutUs: FC<PropTypes> = () => {
 
     useLayoutEffect(() => {
         onResizeHandler();
-    }, [ width ]);
+    }, [width]);
 
 
     return (
-        <div className = { S.root }>
+        <div className={S.root}>
             <h3
-                className = { `text-base uppercase leading-[28px] ${spaces.xs_pd}
-                    sb:text-[32px] sb:leading-[44px] ${spaces.sb_pd}` }
-                ref = { refTitle }>
+                className={`text-base uppercase leading-[28px] ${spaces.xs_pd}
+                    sb:text-[32px] sb:leading-[44px] ${spaces.sb_pd}`}
+                ref={refTitle}>
                 {t('pages.aboutUs.firstTitle')}
             </h3>
             <div
-                className = { `flex flex-col gap-[18px]
+                className={`flex flex-col gap-[18px]
                     sb:flex-row sb:pb-[64px] sb:gap-[24px]` }
-                ref = { refContent }>
-                <div className = 'sb:w-[40%]'>
+                ref={refContent}>
+                <div className='sb:w-[40%]'>
                     <Image
-                        alt = { t('pages.aboutUs.mainAltImage') }
-                        className = { 'sticky h-full w-full rounded-[8px] min-h-[300px]' }
-                        ref = { refMainImage }
-                        src = { image_about_main }
+                        alt={t('pages.aboutUs.mainAltImage')}
+                        className={'sticky h-full w-full rounded-[8px] min-h-[300px]'}
+                        ref={refMainImage}
+                        src={image_about_main}
                     />
                 </div>
-                <div className = { `flex flex-col
+                <div className={`flex flex-col
                     sb:w-[60%]` }>
-                    <p className = { `text-base leading-[28px] text-quaternary uppercase ${spaces.xs_pd}
-                        sb:text-[32px] sb:leading-[44px] ${spaces.sb_pd}` }>
+                    <p className={`text-base leading-[28px] text-quaternary uppercase ${spaces.xs_pd}
+                        sb:text-[32px] sb:leading-[44px] ${spaces.sb_pd}`}>
                         {t('pages.aboutUs.firstPartOfSecondTitle')} <br />
                         {t('pages.aboutUs.secondPartOfSecondTitle')}
                     </p>
-                    <div className = { `${S.grid} grow` }>
-                        <div className = { cn(S.images, {
-                            [ spaces.xs_pd ]: width < SCREENS_NUMBER.SB,
-                        }) }>
+                    <div className={`${S.grid} grow`}>
+                        <div className={cn(S.images, {
+                            [spaces.xs_pd]: width < SCREENS_NUMBER.SB,
+                        })}>
                             <div
-                                className = { `${S.container_images} flex flex-wrap justify-between gap-[6px] grow
+                                className={`${S.container_images} flex flex-wrap justify-between gap-[6px] grow
                                     sm:justify-evenly` }>
                                 {IMAGES.map((src, index) => (
                                     <Image
-                                        alt = { t('altImages.product') }
-                                        className = { cn(`rounded-[3px] w-[80px]
+                                        alt={t('altImages.product')}
+                                        className={cn(`rounded-[3px] w-[80px]
                                             sb:w-[100px]`,
                                         {
                                             'self-center': width > SCREENS_NUMBER.SB && index === 1,
-                                            'self-end':    width > SCREENS_NUMBER.SB && (index === 3 || index === 2),
-                                        }) }
-                                        key = { src }
-                                        src = { src }
-                                        style = {{
+                                            'self-end': width > SCREENS_NUMBER.SB && (index === 3 || index === 2),
+                                        })}
+                                        key={src}
+                                        src={src}
+                                        style={{
                                             gridArea: `item_${index}`,
-                                            height:   width < SCREENS_NUMBER.SB ? '64px' : index === 3 ? '140px' : '80px',
+                                            height: width < SCREENS_NUMBER.SB ? '64px' : index === 3 ? '140px' : '80px',
                                         }}
                                     />
                                 ))}
                             </div>
                         </div>
                         <p
-                            className = { `${S.text} text-base leading-[28px] uppercase ${spaces.xs_pd}
-                                sb:text-2xl sb:leading-[44px] ${spaces.sb_pd}` }>
+                            className={`${S.text} text-base leading-[28px] uppercase ${spaces.xs_pd}
+                                sb:text-2xl sb:leading-[44px] ${spaces.sb_pd}`}>
                             {t('pages.aboutUs.text')}
                         </p>
                         <div
-                            className = { `${S.contacts} flex flex-wrap justify-around gap-[20px]
+                            className={`${S.contacts} flex flex-wrap justify-around gap-[20px]
                             sb:flex-col sb:gap-[12px]` }>
                             <ContactInfo
-                                link = { LINK_PHONE }
-                                linkText = { transformLinkPhoneNumber(LINK_PHONE) }
-                                title = { t('pages.aboutUs.phone') }
+                                link={LINK_PHONE}
+                                linkText={transformLinkPhoneNumber(LINK_PHONE)}
+                                title={t('pages.aboutUs.phone')}
                             />
                             <ContactInfo
-                                link = { LINK_EMAIL }
-                                linkText = { transformLinkEmail(LINK_EMAIL) }
-                                title = { t('pages.aboutUs.email') }
+                                link={LINK_EMAIL}
+                                linkText={transformLinkEmail(LINK_EMAIL)}
+                                title={t('pages.aboutUs.email')}
                             />
                         </div>
                     </div>
@@ -157,8 +157,12 @@ const AboutUs: FC<PropTypes> = () => {
     );
 };
 
-export default () => (
+const AboutUsWithErrorBoundary: FC = () => (
     <ErrorBoundary>
         <AboutUs />
     </ErrorBoundary>
 );
+
+AboutUsWithErrorBoundary.displayName = 'AboutUsWithErrorBoundary';
+
+export default AboutUsWithErrorBoundary;

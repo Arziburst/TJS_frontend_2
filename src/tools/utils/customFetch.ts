@@ -5,7 +5,7 @@ import { ControlledError } from './controlledError';
 // Types
 import { FetchOptions } from './makeRequest';
 
-export const customFetch = async <SuccessData, ErrorData = {}>(fetchOptions: FetchOptions) => {
+export const customFetch = async <SuccessData, ErrorData = unknown>(fetchOptions: FetchOptions) => {
     const response = await fetchOptions.fetch();
 
     if (fetchOptions.successStatusCode && (response.status !== fetchOptions.successStatusCode)) {

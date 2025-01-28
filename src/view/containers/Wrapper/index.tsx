@@ -10,19 +10,23 @@ export const wrapperVariants = cva(
 );
 
 // Types
-interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
+interface PropTypes extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> { }
 
-export const Wrapper = forwardRef<HTMLDivElement, PropTypes>(({
+const WrapperComponent = forwardRef<HTMLDivElement, PropTypes>(({
     children,
     className,
     ...props
 }, ref) => {
     return (
         <div
-            ref = { ref }
-            { ...props }
-            className = { cn(wrapperVariants({ className })) }>
+            ref={ref}
+            {...props}
+            className={cn(wrapperVariants({ className }))}>
             {children}
         </div>
     );
 });
+
+WrapperComponent.displayName = 'Wrapper';
+
+export const Wrapper = WrapperComponent;

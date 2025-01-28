@@ -16,7 +16,7 @@ type PropTypes = {
     t: TFunction;
 }
 
-export const ImageProduct = forwardRef<HTMLImageElement, PropTypes>(({
+const ImageProduct = forwardRef<HTMLImageElement, PropTypes>(({
     index,
     src,
     t,
@@ -24,12 +24,16 @@ export const ImageProduct = forwardRef<HTMLImageElement, PropTypes>(({
 ref) => {
     return (
         <Image
-            { ...props }
-            alt = { t('altImages.numberProduct', { index }) }
-            className = { `${S.img} aspect-square w-full rounded-[8px]` }
-            ref = { ref }
-            src = { src }
+            {...props}
+            alt={t('altImages.numberProduct', { index })}
+            className={`${S.img} aspect-square w-full rounded-[8px]`}
+            ref={ref}
+            src={src}
         />
     );
 });
+
+ImageProduct.displayName = 'ImageProduct';
+
+export { ImageProduct };
 

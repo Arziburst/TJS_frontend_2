@@ -16,16 +16,20 @@ const PaymentFail: FC<PropTypes> = () => {
     const { t } = useCustomTranslation();
 
     return (
-        <div className = 'flex justify-center items-center'>
-            <h1 className = 'text-3xl'>
+        <div className='flex justify-center items-center'>
+            <h1 className='text-3xl'>
                 {t('pages.paymentFail.title')}
             </h1>
         </div>
     );
 };
 
-export default () => (
+const PaymentFailWithBoundary: FC = () => (
     <ErrorBoundary>
         <PaymentFail />
     </ErrorBoundary>
 );
+
+PaymentFailWithBoundary.displayName = 'PaymentFailWithBoundary';
+
+export default PaymentFailWithBoundary;

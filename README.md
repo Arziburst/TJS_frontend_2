@@ -1,7 +1,7 @@
 .env {
     APP_NAME=EXAMPLE
     PUBLIC_URL=http://localhost:3000
-    API_URL=http://localhost:4000
+    API_URL=http://localhost:5000
 
     API_KEY_NEW_POST=c2c034b9e69945c20ede4a147708185f
 }
@@ -74,7 +74,7 @@ You may need to add code below to your `settings.json` in VSCode
 ## Deploy
 
 ```sh
-npm run build                            /* generate lightweight bundle */
-docker build -t [dokerId]/[imageName] .  /* create docker image based on build */
-docker push [dokerId]/[imageName]        /* push docker image to dockerHub */
+npm run build                                        /* generate lightweight bundle */
+docker build -t arziburst/tjstore-frontend:latest .  /* create docker image based on build */
+docker push arziburst/tjstore-frontend:latest        /* push docker image to dockerHub */
 ```

@@ -30,7 +30,7 @@ const fetchUpdateOrder = (
         successStatusCode: 200,
         fetch:             () => updateOrderFetcher(callAction.payload),
     },
-    success: function* (result) {
+    success: function* () {
         yield toast.success('Order updated successfully');
     },
 });

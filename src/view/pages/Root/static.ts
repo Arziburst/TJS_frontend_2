@@ -62,7 +62,7 @@ export const useStatic = ({
             const CATEGORIES_ITEMS_MAPPED = CATEGORIES_ITEMS_WITH_IMAGES.map((_, index) => index); // [0, 1, 2, 3, 4]
 
             if (width > SCREENS_NUMBER.MD) { // desktop
-                let newArray: number[] = [];
+                const newArray: number[] = [];
 
 
                 CATEGORIES_ITEMS_MAPPED.forEach((item, index) => { // [0, 1,
@@ -98,7 +98,7 @@ export const useStatic = ({
                 refGrid.current.style.gridTemplate = result;
                 refGrid.current.style.justifyContent = 'normal';
             } else { // mobile
-                let outputArray: string[] = [];
+                const outputArray: string[] = [];
                 CATEGORIES_ITEMS_MAPPED.forEach((number) => {
                     outputArray.push(`g-${number}`);
                 });

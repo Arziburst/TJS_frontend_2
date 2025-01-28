@@ -1,5 +1,5 @@
 // Network
-export const API_URL = process.env.API_URL || 'http://localhost:4000';
+export const API_URL = process.env.API_URL || 'http://localhost:5000';
 
 // Local
 export const APP_NAME = process.env.APP_NAME || 'burst-template';
@@ -44,9 +44,9 @@ export const CATEGORIES_ITEMS = [
 
 export const LANGUAGES = [ 'en', 'ua', 'ru' ];
 
-export const LINK_GOHARD = 'https://gohard.team/';
+export const LINK_ARZIBURST = 'https://github.com/Arziburst';
 
-export const LINK_INSTAGRAM = 'https://www.instagram.com/';
+export const LINK_INSTAGRAM = 'https://www.instagram.com/trend_jewelry_store08/';
 
 export const LINK_PHONE = 'tel:+38066-830-1029';
 export const LINK_EMAIL = 'mailto:elena-arez@ukr.net';

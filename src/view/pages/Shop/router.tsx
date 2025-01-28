@@ -19,7 +19,7 @@ export const ContainerShop: FC<PropTypes> = () => {
         return () => {
             resetProducts();
             setToggleAction({
-                type:  'isFilterByLowToHigh',
+                type: 'isFilterByLowToHigh',
                 value: null,
             });
         };

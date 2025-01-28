@@ -31,7 +31,7 @@ const Orders: FC<PropTypes> = () => {
 
     const { t } = useCustomTranslation();
 
-    const { togglesRedux: { isLoadingFetchOrders }} = useTogglesRedux();
+    const { togglesRedux: { isLoadingFetchOrders } } = useTogglesRedux();
     const { orders: { orders }, fetchOrders } = useOrders();
 
     // Handlers
@@ -46,16 +46,16 @@ const Orders: FC<PropTypes> = () => {
     return (
         <div>
             <NotData
-                className = { `flex flex-wrap gap-[14px] justify-center
+                className={`flex flex-wrap gap-[14px] justify-center
                     sb:gap-[20px]` }
-                isLoading = { isLoadingFetchOrders }
-                t = { t }>
+                isLoading={isLoadingFetchOrders}
+                t={t}>
                 {orders?.map((order) => (
                     <CardOrder
-                        key = { order._id }
-                        order = { order }
-                        t = { t }
-                        onClickCardOrder = { onClickCardOrderHandler }
+                        key={order._id}
+                        order={order}
+                        t={t}
+                        onClickCardOrder={onClickCardOrderHandler}
                     />
                 ))}
             </NotData>
@@ -63,8 +63,12 @@ const Orders: FC<PropTypes> = () => {
     );
 };
 
-export default () => (
+const OrdersWithErrorBoundary: FC = () => (
     <ErrorBoundary>
         <Orders />
     </ErrorBoundary>
 );
+
+OrdersWithErrorBoundary.displayName = 'OrdersWithErrorBoundary';
+
+export default OrdersWithErrorBoundary;

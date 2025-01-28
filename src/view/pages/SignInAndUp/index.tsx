@@ -23,27 +23,27 @@ const SignInAndUp: FC<PropTypes> = () => {
     const { t } = useCustomTranslation();
 
     return (
-        <div className = 'flex justify-center'>
+        <div className='flex justify-center'>
             <Tabs.Root
-                className = 'max-w-[400px]'
-                defaultValue = { TABS_VALUES.IN }>
+                className='max-w-[400px]'
+                defaultValue={TABS_VALUES.IN}>
                 <Tabs.List>
-                    <Tabs.Trigger value = { TABS_VALUES.IN }>
+                    <Tabs.Trigger value={TABS_VALUES.IN}>
                         {t(`pages.signInAndUp.${TABS_VALUES.IN}.root`)}
                     </Tabs.Trigger>
-                    <Tabs.Trigger value = { TABS_VALUES.UP }>
+                    <Tabs.Trigger value={TABS_VALUES.UP}>
                         {t(`pages.signInAndUp.${TABS_VALUES.UP}.root`)}
                     </Tabs.Trigger>
                 </Tabs.List>
                 <Tabs.Content
-                    className = 'w-full'
-                    value = { TABS_VALUES.IN }>
-                    <SignIn t = { t } />
+                    className='w-full'
+                    value={TABS_VALUES.IN}>
+                    <SignIn t={t} />
                 </Tabs.Content>
                 <Tabs.Content
-                    className = 'w-full'
-                    value = { TABS_VALUES.UP }>
-                    <SignUp t = { t } />
+                    className='w-full'
+                    value={TABS_VALUES.UP}>
+                    <SignUp t={t} />
                 </Tabs.Content>
             </Tabs.Root>
 
@@ -51,8 +51,12 @@ const SignInAndUp: FC<PropTypes> = () => {
     );
 };
 
-export default () => (
+const SignInAndUpWithErrorBoundary: FC = () => (
     <ErrorBoundary>
         <SignInAndUp />
     </ErrorBoundary>
 );
+
+SignInAndUpWithErrorBoundary.displayName = 'SignInAndUpWithErrorBoundary';
+
+export default SignInAndUpWithErrorBoundary;

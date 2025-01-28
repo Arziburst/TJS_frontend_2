@@ -41,11 +41,11 @@ type PropTypes = {
 const Cart: FC<PropTypes> = () => {
     const navigate = useNavigate();
 
-    const [ width ] = useWindowWidth();
+    const [width] = useWindowWidth();
 
     const { t } = useCustomTranslation();
 
-    const { togglesRedux: { isLoadingFetchProduct }} = useTogglesRedux();
+    const { togglesRedux: { isLoadingFetchProduct } } = useTogglesRedux();
     const { products: { products }, fetchProducts } = useProducts();
     const { cart, removeProductOfCart } = useCart();
 
@@ -62,7 +62,7 @@ const Cart: FC<PropTypes> = () => {
         if (cart) {
             fetchProducts(cart);
         }
-    }, [ cart ]);
+    }, [cart]);
 
     return (
         <div>
@@ -71,66 +71,70 @@ const Cart: FC<PropTypes> = () => {
             )}
 
             <ContainerForOrdersAndInformationOfPayment>
-                <div className = 'sb:w-1/2'>
+                <div className='sb:w-1/2'>
                     <NotData
-                        className = { cn(`flex flex-col gap-[18px]
+                        className={cn(`flex flex-col gap-[18px]
                         sm:flex-row sm:justify-center sm:flex-wrap
                         sb:justify-start`, {
                             'sb:justify-center': isLoadingFetchProduct,
-                        }) }
-                        isLoading = { isLoadingFetchProduct }
-                        t = { t }
-                        textIfNotData = { t('pages.cart.textIfNotData') }>
+                        })}
+                        isLoading={isLoadingFetchProduct}
+                        t={t}
+                        textIfNotData={t('pages.cart.textIfNotData')}>
                         {products?.map((product) => (
                             <CardItem
-                                _id = { product._id }
-                                available = { product.available }
-                                firstImage = {{
-                                    src: product.images[ 0 ],
+                                _id={product._id}
+                                available={product.available}
+                                firstImage={{
+                                    src: product.images[0],
                                     alt: t('cards.product.firstAltImageOfCard'),
                                 }}
-                                key = { product._id }
-                                price = { product.price }
-                                secondImage = {{
-                                    src: product.images[ 1 ],
+                                key={product._id}
+                                price={product.price}
+                                secondImage={{
+                                    src: product.images[1],
                                     alt: t('cards.product.secondAltImageOfCard'),
                                 }}
-                                t = { t }
-                                title = { product.title }
-                                to = { `${BOOK.PRODUCT}/${product._id}` }
-                                variant = 'cart big'
-                                onClickRemoveProduct = { onClickRemoveProductHandler }
+                                t={t}
+                                title={product.title}
+                                to={`${BOOK.PRODUCT}/${product._id}`}
+                                variant='cart big'
+                                onClickRemoveProduct={onClickRemoveProductHandler}
                             />
                         ))}
                     </NotData>
                     {products && (
                         <HorizontalRuleWithPrice
-                            price = {
+                            price={
                                 (products && products.length > 0 && products.map((product) => product.price)
                                     .reduce((accumulator, currentValue) => accumulator + currentValue, 0)) || 0
                             }
-                            text = { t('pages.cart.yourOrder') }
+                            text={t('pages.cart.yourOrder')}
                         />
                     )}
                 </div>
 
                 {width < SCREENS_NUMBER.SB && (
                     <Button
-                        className = 'capitalize'
-                        onClick = { onClickContinueToCheckout }>
+                        className='capitalize'
+                        onClick={onClickContinueToCheckout}>
                         {t('pages.cart.continueToCheckout')}
                     </Button>
                 )}
                 {width > SCREENS_NUMBER.SB && (
-                    <CartDetails className = 'sb:w-1/2' />
+                    <CartDetails className='sb:w-1/2' />
                 )}
             </ContainerForOrdersAndInformationOfPayment>
         </div>
     );
 };
 
-export default () => (
+const CartWithErrorBoundary: FC = () => (
     <ErrorBoundary>
         <Cart />
     </ErrorBoundary>
 );
+
+CartWithErrorBoundary.displayName = 'CartWithErrorBoundary';
+
+export default CartWithErrorBoundary;

@@ -29,16 +29,15 @@ const avatarVariants = cva(
 
 // Types
 interface PropTypes extends
-    React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>, VariantProps<typeof avatarVariants>
-{
+    React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>, VariantProps<typeof avatarVariants> {
     src?: string;
     alt?: string;
     fallback: string;
 }
 
 export const Avatar = React.forwardRef<
-React.ElementRef<typeof AvatarPrimitive.Root>,
-PropTypes
+    React.ElementRef<typeof AvatarPrimitive.Root>,
+    PropTypes
 >(({
     className,
     variant,
@@ -56,12 +55,12 @@ PropTypes
 
     return (
         <Root
-            className = { cn(avatarVariants({ variant, className }), { 'border-2 border-secondary-100': !src }) }
-            ref = { ref }
-            { ...props }>
+            className={cn(avatarVariants({ variant, className }), { 'border-2 border-secondary-100': !src })}
+            ref={ref}
+            {...props}>
             <Image
-                alt = { alt }
-                src = { src }
+                alt={alt}
+                src={src}
             />
             <Fallback>
                 {fallback}
@@ -69,3 +68,5 @@ PropTypes
         </Root>
     );
 });
+
+Avatar.displayName = 'Avatar';

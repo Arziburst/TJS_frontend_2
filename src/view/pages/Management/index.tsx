@@ -67,7 +67,7 @@ const Management: FC<PropTypes> = () => {
         isLoadingFetchGallery,
         isLoadingDeleteItemGallery,
         isLoadingUpdateGallery,
-    }} = useTogglesRedux();
+    } } = useTogglesRedux();
 
     const { fetchGallery } = useGallery();
     const {
@@ -79,7 +79,7 @@ const Management: FC<PropTypes> = () => {
     } = useProducts();
 
     const form = useForm({
-        resolver:      yupResolver(validationForm),
+        resolver: yupResolver(validationForm),
         defaultValues: isModeEdit ? currentProduct || defaultValues : defaultValues,
     });
 
@@ -92,7 +92,7 @@ const Management: FC<PropTypes> = () => {
         const oldImages = form.getValues().images;
 
         if (!oldImages.includes(image.imageUrl)) {
-            const result = oldImages.length > 0 ? [ ...oldImages, image.imageUrl ] : [ image.imageUrl ];
+            const result = oldImages.length > 0 ? [...oldImages, image.imageUrl] : [image.imageUrl];
             form.setValue('images', result, { shouldDirty: true, shouldTouch: true, shouldValidate: true });
 
             return;
@@ -121,7 +121,7 @@ const Management: FC<PropTypes> = () => {
     const onSubmit = (values: any) => { // todo how to remove any ???
         if (isModeEdit && currentProduct) {
             fetchEditProduct({
-                _id:           currentProduct._id,
+                _id: currentProduct._id,
                 editedProduct: values,
             });
 
@@ -141,236 +141,236 @@ const Management: FC<PropTypes> = () => {
 
     useEffect(() => {
         currentProduct && form.reset({
-            available:   currentProduct.available,
+            available: currentProduct.available,
             description: currentProduct.description,
-            images:      currentProduct.images,
-            price:       currentProduct.price,
-            title:       currentProduct.title,
-            type:        currentProduct.type,
-            weight:      currentProduct.weight,
+            images: currentProduct.images,
+            price: currentProduct.price,
+            title: currentProduct.title,
+            type: currentProduct.type,
+            weight: currentProduct.weight,
         });
-    }, [ currentProduct ]);
+    }, [currentProduct]);
 
     useEffect(() => {
         if (!isModeEdit) {
             form.reset(defaultValues);
         }
-    }, [ location ]);
+    }, [location]);
 
     return (
         <div>
-            <Form.Root { ...form }>
-                <FormTitle className = 'text-center'>
+            <Form.Root {...form}>
+                <FormTitle className='text-center'>
                     {t('pages.management.title')}
                 </FormTitle>
                 <form
-                    className = { S.grid }
-                    onSubmit = { form.handleSubmit(onSubmit) }>
+                    className={S.grid}
+                    onSubmit={form.handleSubmit(onSubmit)}>
                     <Form.FormField
-                        control = { form.control }
-                        name = 'title'
-                        render = { ({ field, fieldState }) => (
-                            <Form.FormItem style = {{ gridArea: field.name }}>
+                        control={form.control}
+                        name='title'
+                        render={({ field, fieldState }) => (
+                            <Form.FormItem style={{ gridArea: field.name }}>
                                 <Form.FormLabel>
                                     {t('pages.management.labelTitle')}:
                                 </Form.FormLabel>
                                 <Form.FormControl>
                                     <Input
-                                        isValidate = { fieldState.invalid }
-                                        placeholder = { t('placeholders.someData') }
-                                        { ...field }
+                                        isValidate={fieldState.invalid}
+                                        placeholder={t('placeholders.someData')}
+                                        {...field}
                                     />
                                 </Form.FormControl>
-                                <Form.FormMessage t = { t } />
+                                <Form.FormMessage t={t} />
                             </Form.FormItem>
-                        ) }
+                        )}
                     />
                     <Form.FormField
-                        control = { form.control }
-                        name = 'type'
-                        render = { ({ field }) => (
-                            <Form.FormItem style = {{ gridArea: field.name }}>
+                        control={form.control}
+                        name='type'
+                        render={({ field }) => (
+                            <Form.FormItem style={{ gridArea: field.name }}>
                                 <Form.FormLabel>
                                     {t('pages.management.labelType')}:
                                 </Form.FormLabel>
                                 <Select.Root
-                                    defaultValue = { field.value }
-                                    onValueChange = { field.onChange }>
+                                    defaultValue={field.value}
+                                    onValueChange={field.onChange}>
                                     <Form.FormControl>
                                         <Select.SelectTrigger
-                                            variant = 'outline'>
+                                            variant='outline'>
                                             <Select.SelectValue>
-                                                <span className = 'capitalize'>
+                                                <span className='capitalize'>
                                                     {field.value}
                                                 </span>
                                             </Select.SelectValue>
                                         </Select.SelectTrigger>
                                     </Form.FormControl>
                                     <Select.SelectContent
-                                        variant = 'shadow'>
+                                        variant='shadow'>
                                         {CATEGORIES_ITEMS.map((item) => (
                                             <Select.SelectItem
-                                                className = 'capitalize'
-                                                key = { item }
-                                                value = { item }
-                                                variant = 'contain'>
+                                                className='capitalize'
+                                                key={item}
+                                                value={item}
+                                                variant='contain'>
                                                 {item}
                                             </Select.SelectItem>
                                         ))}
                                     </Select.SelectContent>
                                 </Select.Root>
-                                <Form.FormMessage t = { t } />
+                                <Form.FormMessage t={t} />
                             </Form.FormItem>
-                        ) }
+                        )}
                     />
                     <Form.FormField
-                        control = { form.control }
-                        name = 'description'
-                        render = { ({ field, fieldState }) => (
-                            <Form.FormItem style = {{ gridArea: field.name }}>
+                        control={form.control}
+                        name='description'
+                        render={({ field, fieldState }) => (
+                            <Form.FormItem style={{ gridArea: field.name }}>
                                 <Form.FormLabel>
                                     {t('pages.management.labelDescription')}:
                                 </Form.FormLabel>
                                 <Form.FormControl>
                                     <Textarea
-                                        { ...field }
-                                        isValidate = { fieldState.invalid }
-                                        placeholder = { t('placeholders.someData') }
+                                        {...field}
+                                        isValidate={fieldState.invalid}
+                                        placeholder={t('placeholders.someData')}
                                     />
                                 </Form.FormControl>
-                                <Form.FormMessage t = { t } />
+                                <Form.FormMessage t={t} />
                             </Form.FormItem>
-                        ) }
+                        )}
                     />
                     <Form.FormField
-                        control = { form.control }
-                        name = 'weight'
-                        render = { ({ field, fieldState }) => (
-                            <Form.FormItem style = {{ gridArea: field.name }}>
+                        control={form.control}
+                        name='weight'
+                        render={({ field, fieldState }) => (
+                            <Form.FormItem style={{ gridArea: field.name }}>
                                 <Form.FormLabel>
                                     {t('pages.management.labelWeight')}:
                                 </Form.FormLabel>
                                 <Form.FormControl>
                                     <Input
-                                        isValidate = { fieldState.invalid }
-                                        placeholder = { t('placeholders.someData') }
-                                        type = 'number'
-                                        { ...field }
+                                        isValidate={fieldState.invalid}
+                                        placeholder={t('placeholders.someData')}
+                                        type='number'
+                                        {...field}
                                     />
                                 </Form.FormControl>
-                                <Form.FormMessage t = { t } />
+                                <Form.FormMessage t={t} />
                             </Form.FormItem>
-                        ) }
+                        )}
                     />
                     <Form.FormField
-                        control = { form.control }
-                        name = 'price'
-                        render = { ({ field, fieldState }) => (
-                            <Form.FormItem style = {{ gridArea: field.name }}>
+                        control={form.control}
+                        name='price'
+                        render={({ field, fieldState }) => (
+                            <Form.FormItem style={{ gridArea: field.name }}>
                                 <Form.FormLabel>
                                     {t('pages.management.labelPrice')}:
                                 </Form.FormLabel>
                                 <Form.FormControl>
                                     <Input
-                                        isValidate = { fieldState.invalid }
-                                        placeholder = { t('placeholders.someData') }
-                                        type = 'number'
-                                        { ...field }
+                                        isValidate={fieldState.invalid}
+                                        placeholder={t('placeholders.someData')}
+                                        type='number'
+                                        {...field}
                                     />
                                 </Form.FormControl>
                                 <Form.FormMessage
-                                    options = {{ index: minPrice }}
-                                    t = { t }
+                                    options={{ index: minPrice }}
+                                    t={t}
                                 />
                             </Form.FormItem>
-                        ) }
+                        )}
                     />
                     <Form.FormField
-                        control = { form.control }
-                        name = 'available'
-                        render = { ({ field }) => (
-                            <Form.FormItem style = {{ gridArea: field.name }}>
-                                <Form.FormLabel className = 'block'>
+                        control={form.control}
+                        name='available'
+                        render={({ field }) => (
+                            <Form.FormItem style={{ gridArea: field.name }}>
+                                <Form.FormLabel className='block'>
                                     {t('pages.management.labelAvailable')}
                                 </Form.FormLabel>
                                 <Switch
-                                    checked = { field.value }
-                                    onCheckedChange = { field.onChange }>
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}>
                                     {field.value ? t('pages.management.availability') : t('pages.management.nonAvailability')}
                                 </Switch>
-                                <Form.FormMessage t = { t } />
+                                <Form.FormMessage t={t} />
                             </Form.FormItem>
-                        ) }
+                        )}
                     />
-                    <div style = {{ gridArea: 'images' }}>
+                    <div style={{ gridArea: 'images' }}>
                         <Form.FormField
-                            control = { form.control }
-                            name = 'images'
-                            render = { ({ fieldState }) => (
+                            control={form.control}
+                            name='images'
+                            render={({ fieldState }) => (
                                 <Form.FormItem>
                                     <Form.FormControl>
-                                        <div className = { cn({ 'flex flex-wrap [&_*]:h-[132px] gap-3 max-sb:justify-center': isValidateInputImages }) }>
+                                        <div className={cn({ 'flex flex-wrap [&_*]:h-[132px] gap-3 max-sb:justify-center': isValidateInputImages })}>
                                             <ModalAddImages
-                                                classNameTrigger = { cn({ 'border-quaternary text-quaternary': fieldState.invalid }) }
-                                                isLoading = {
+                                                classNameTrigger={cn({ 'border-quaternary text-quaternary': fieldState.invalid })}
+                                                isLoading={
                                                     isLoadingDeleteItemGallery
-                                                        || isLoadingFetchGallery
-                                                        || isLoadingUpdateGallery
+                                                    || isLoadingFetchGallery
+                                                    || isLoadingUpdateGallery
                                                 }
-                                                selectedImages = { images }
-                                                t = { t }
-                                                onClickAddItemGalleryToManagementHandler = {
+                                                selectedImages={images}
+                                                t={t}
+                                                onClickAddItemGalleryToManagementHandler={
                                                     onClickAddItemGalleryToManagementHandler
                                                 }
                                             />
                                             {isValidateInputImages && images.map((src) => src && (
                                                 <Button
-                                                    className = { `group w-auto relative border-2 border-transparent overflow-hidden
+                                                    className={`group w-auto relative border-2 border-transparent overflow-hidden
                                                         hover:border-quaternary hover:opacity-100
                                                         after:absolute-center after:w-full after:h-full content-['1'] after:bg-secondary` }
-                                                    key = { src }
-                                                    type = 'button'
-                                                    variant = 'default'
-                                                    onClick = { () => onClickDeleteImageFromProductHandler(src) }>
+                                                    key={src}
+                                                    type='button'
+                                                    variant='default'
+                                                    onClick={() => onClickDeleteImageFromProductHandler(src)}>
                                                     <Icons.DeleteItem
-                                                        className = { `h-[80px] absolute-center stroke-quaternary opacity-0 transition
+                                                        className={`h-[80px] absolute-center stroke-quaternary opacity-0 transition
                                                             group-hover:opacity-100` }
-                                                        height = '80'
+                                                        height='80'
                                                     />
                                                     <Image
-                                                        alt = { t('pages.management.altImageFromGallery') }
-                                                        className = 'aspect-square'
-                                                        src = { src }
+                                                        alt={t('pages.management.altImageFromGallery')}
+                                                        className='aspect-square'
+                                                        src={src}
                                                     />
                                                 </Button>
                                             ))}
                                         </div>
                                     </Form.FormControl>
                                     <Form.FormMessage
-                                        options = {{ index: minLengthImages }}
-                                        t = { t }
+                                        options={{ index: minLengthImages }}
+                                        t={t}
                                     />
                                 </Form.FormItem>
-                            ) }
+                            )}
                         />
                     </div>
                     {isModeEdit && (
                         <Button
-                            className = 'max-w-[300px]'
-                            isLoading = { isLoadingDeleteProduct }
-                            style = {{ gridArea: 'delete' }}
-                            type = 'button'
-                            variant = 'outline'
-                            onClick = { () => onClickDeleteItemHandler(currentProduct?._id) }>
+                            className='max-w-[300px]'
+                            isLoading={isLoadingDeleteProduct}
+                            style={{ gridArea: 'delete' }}
+                            type='button'
+                            variant='outline'
+                            onClick={() => onClickDeleteItemHandler(currentProduct?._id)}>
                             {t('buttons.remove')}
                         </Button>
                     )}
                     <Button
-                        className = 'max-w-[300px]'
-                        isLoading = { isModeEdit ? isLoadingEditProduct : isLoadingCreteProduct }
-                        style = {{ gridArea: 'submit' }}
-                        type = 'submit'
-                        variant = 'contain'>
+                        className='max-w-[300px]'
+                        isLoading={isModeEdit ? isLoadingEditProduct : isLoadingCreteProduct}
+                        style={{ gridArea: 'submit' }}
+                        type='submit'
+                        variant='contain'>
                         {isModeEdit ? t('buttons.edit') : t('buttons.create')}
                     </Button>
                 </form>
@@ -379,8 +379,12 @@ const Management: FC<PropTypes> = () => {
     );
 };
 
-export default () => (
+const ManagementPage: FC = () => (
     <ErrorBoundary>
         <Management />
     </ErrorBoundary>
 );
+
+ManagementPage.displayName = 'ManagementPage';
+
+export default ManagementPage;

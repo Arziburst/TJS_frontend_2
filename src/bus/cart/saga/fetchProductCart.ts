@@ -1,20 +1,20 @@
 // Core
 import { SagaIterator } from '@redux-saga/core';
 import { createAction } from '@reduxjs/toolkit';
-import { put, takeLatest } from 'redux-saga/effects';
+import { /* put, */ takeLatest } from 'redux-saga/effects';
 
 // Init
-import { LOCAL_STORAGE } from '@/init';
+// import { LOCAL_STORAGE } from '@/init';
 
 // Slice
 import { sliceName } from '../slice';
 
 // Saga Actions
-import { fetchProductsAction } from '@/bus/products/saga/fetchProducts';
-import { fetchCheckCartAction } from './fetchCheckCart';
+// import { fetchProductsAction } from '@/bus/products/saga/fetchProducts';
+// import { fetchCheckCartAction } from './fetchCheckCart';
 
 // Tools
-import { ls, makeRequest } from '../../../tools/utils';
+// import { ls, makeRequest } from '../../../tools/utils';
 
 // Types
 import * as types from './types';
@@ -25,7 +25,7 @@ export const fetchProductCartAction = createAction<types.FetchProductCartRequest
 function* returnFunction(callAction: ReturnType<typeof fetchProductCartAction>) {
     //! todo тут цикл
 
-    console.log('function*returnFunction => callAction:', callAction);
+    yield console.log('function*returnFunction => callAction:', callAction);
 
     // yield put(fetchCheckCartAction(callAction.payload));
     // const cartLocalStore = ls.get(LOCAL_STORAGE.CART) || [];

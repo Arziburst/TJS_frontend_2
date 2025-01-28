@@ -37,10 +37,19 @@ export const useProductsSaga = () => {
         fetchProduct:          (payload: types.FetchProductRequest) => dispatch(fetchProductAction(payload)),
         fetchProducts:         (payload: types.FetchProductsRequest) => dispatch(fetchProductsAction(payload)),
         fetchCreateNewProduct: (payload: types.FetchCreateNewProductRequest) => dispatch(
-            fetchCreateNewProductAction(payload),
+            fetchCreateNewProductAction({
+                ...payload,
+                type: transformToCapitalize(payload.type),
+            }),
         ),
         fetchDeleteProduct: (_id: types.FetchDeleteProductRequest) => dispatch(fetchDeleteProductAction(_id)),
-        fetchEditProduct:   (payload: types.FetchEditProductRequest) => dispatch(fetchEditProductAction(payload)),
+        fetchEditProduct:   (payload: types.FetchEditProductRequest) => dispatch(fetchEditProductAction({
+            ...payload,
+            editedProduct: {
+                ...payload.editedProduct,
+                type: transformToCapitalize(payload.editedProduct.type),
+            },
+        })),
         // MarkerGen function
     };
 };

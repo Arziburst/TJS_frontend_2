@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 export const transformLinkPhoneNumber = (input: string) => {
     if (!input.includes('tel:+')) {
         throw new Error(`${transformLinkPhoneNumber.name}: the phone number must start with \'tel:+\'`);
