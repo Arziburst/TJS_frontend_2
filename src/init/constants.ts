@@ -20,7 +20,6 @@ export enum ENUM_CATEGORIES {
     ALL = 'see-all',
     BROOCH = 'brooch',
     EARRINGS = 'earrings',
-    BESTSELLERS = 'bestsellers',
     BRACELETS = 'bracelets',
     NECKLACE = 'necklace',
     RINGS = 'rings',
@@ -34,12 +33,11 @@ export enum STATUS_OF_PRODUCT {
 }
 
 export const CATEGORIES_ITEMS = [
-    ENUM_CATEGORIES.BROOCH,
     ENUM_CATEGORIES.EARRINGS,
-    ENUM_CATEGORIES.BESTSELLERS,
-    ENUM_CATEGORIES.BRACELETS,
     ENUM_CATEGORIES.NECKLACE,
+    ENUM_CATEGORIES.BRACELETS,
     ENUM_CATEGORIES.RINGS,
+    ENUM_CATEGORIES.BROOCH,
 ];
 
 export const LANGUAGES = [ 'en', 'ua', 'ru' ];

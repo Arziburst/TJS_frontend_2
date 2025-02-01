@@ -17,7 +17,7 @@ import { useGallery } from '@/bus/gallery';
 import { useProducts } from '@/bus/products';
 
 // Book
-import { PARAMS_VALUES } from '@/view/routes/book';
+import { BOOK, PARAMS_VALUES } from '@/view/routes/book';
 
 // Components
 import {
@@ -102,6 +102,11 @@ const Management: FC<PropTypes> = () => {
     };
 
     const onClickDeleteItemHandler = (_id?: string) => {
+        const isConfirmed = window.confirm(t('pages.management.confirmCompleteDeletion'));
+        if (!isConfirmed) return;
+        const isConfirmedTwice = window.confirm(t('pages.management.confirmCompleteDeletionTwice'));
+        if (!isConfirmedTwice) return;
+
         if (_id) {
             fetchDeleteProduct({
                 _id,
@@ -117,8 +122,7 @@ const Management: FC<PropTypes> = () => {
         }
     };
 
-    // const onSubmit = (values: typeof defaultValues) => {
-    const onSubmit = (values: any) => { // todo how to remove any ???
+    const onSubmit = (values: any) => {
         if (isModeEdit && currentProduct) {
             fetchEditProduct({
                 _id: currentProduct._id,
@@ -130,7 +134,9 @@ const Management: FC<PropTypes> = () => {
 
         fetchCreateNewProduct({
             ...values,
-            reset: form.reset,
+            reset: () => {
+                navigate(`${BOOK.SHOP}/${values.type}`);
+            },
         });
     };
 
@@ -201,7 +207,7 @@ const Management: FC<PropTypes> = () => {
                                             variant='outline'>
                                             <Select.SelectValue>
                                                 <span className='capitalize'>
-                                                    {field.value}
+                                                    {t(`categories.${String(field.value).toLocaleLowerCase()}`)}
                                                 </span>
                                             </Select.SelectValue>
                                         </Select.SelectTrigger>
@@ -214,7 +220,7 @@ const Management: FC<PropTypes> = () => {
                                                 key={item}
                                                 value={item}
                                                 variant='contain'>
-                                                {item}
+                                                {t(`categories.${item}`)}
                                             </Select.SelectItem>
                                         ))}
                                     </Select.SelectContent>
@@ -354,25 +360,35 @@ const Management: FC<PropTypes> = () => {
                             )}
                         />
                     </div>
-                    {isModeEdit && (
+                    <div className="flex  gap-4">
                         <Button
                             className='max-w-[300px]'
-                            isLoading={isLoadingDeleteProduct}
-                            style={{ gridArea: 'delete' }}
-                            type='button'
-                            variant='outline'
-                            onClick={() => onClickDeleteItemHandler(currentProduct?._id)}>
-                            {t('buttons.remove')}
+                            isLoading={isModeEdit ? isLoadingEditProduct : isLoadingCreteProduct}
+                            style={{ gridArea: 'submit' }}
+                            type='submit'
+                            variant='contain'>
+                            {isModeEdit ? t('buttons.edit') : t('buttons.create')}
                         </Button>
-                    )}
-                    <Button
-                        className='max-w-[300px]'
-                        isLoading={isModeEdit ? isLoadingEditProduct : isLoadingCreteProduct}
-                        style={{ gridArea: 'submit' }}
-                        type='submit'
-                        variant='contain'>
-                        {isModeEdit ? t('buttons.edit') : t('buttons.create')}
-                    </Button>
+                        {isModeEdit && (
+                            <Button
+                                className='max-w-[300px]'
+                                isLoading={isLoadingDeleteProduct}
+                                style={{ gridArea: 'delete' }}
+                                type='button'
+                                variant='outline'
+                                onClick={() => onClickDeleteItemHandler(currentProduct?._id)}>
+                                {t('buttons.remove')}
+                            </Button>
+                        )}
+                        <Button
+                            className='max-w-[300px]'
+                            style={{ gridArea: 'submit' }}
+                            type='button'
+                            onClick={() => navigate(-1)}
+                            variant='contain'>
+                            {t('buttons.goBack')}
+                        </Button>
+                    </div>
                 </form>
             </Form.Root>
         </div>

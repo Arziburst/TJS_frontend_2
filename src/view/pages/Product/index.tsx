@@ -1,6 +1,6 @@
 // Core
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // Assets
 import { SCREENS_NUMBER } from '@/assets';
@@ -9,14 +9,15 @@ import { SCREENS_NUMBER } from '@/assets';
 import { useCustomTranslation, useWindowWidth } from '@/tools/hooks';
 
 // Book
-import { ParamsLowerCase } from '@/view/routes/book';
+import { BOOK, ParamsLowerCase } from '@/view/routes/book';
 
 // Bus
 import { useProducts } from '@/bus/products';
 import { useCart } from '@/bus/cart';
+import { useProfile } from '@/bus/profile';
 
 // Components
-import { ErrorBoundary } from '@/view/components';
+import { ErrorBoundary, Icons } from '@/view/components';
 import { Slider } from './Slider';
 import { ImageProduct } from './ImageProduct';
 
@@ -29,13 +30,9 @@ import S from './styles.module.css';
 // Static
 import { checkIsProductAddedToCart } from './static';
 
-// Types
-type PropTypes = {
-    /* type props here */
-}
-
-const Product: FC<PropTypes> = () => {
+const Product = () => {
     const refDescriptionProduct = useRef<null | HTMLDivElement>(null);
+    const navigate = useNavigate();
 
     const { id } = useParams<Pick<ParamsLowerCase, 'id'>>();
 
@@ -46,6 +43,7 @@ const Product: FC<PropTypes> = () => {
     // Hooks of Bus
     const { products: { currentProduct }, fetchProduct, setCurrentProduct } = useProducts();
     const { cart, setProductOfCart } = useCart();
+    const { profile } = useProfile();
 
     // States
     const [, setHeightState] = useState(0);
@@ -74,14 +72,28 @@ const Product: FC<PropTypes> = () => {
         setHeightState(result || 0);
     }, [currentProduct]);
 
+    const onClickEditItemHandler = () => {
+        navigate(`${BOOK.PRODUCT}/${id}${BOOK.MANAGEMENT}`);
+    };
+
     useEffect(() => {
         setIsProductAddedToCartState(checkIsProductAddedToCart({ cart, id }));
     }, [cart]);
 
     return (
         <div
-            className={'flex flex-row gap-6'}
+            className={'relative flex flex-row gap-6'}
             style={{ minWidth: 0 }}>
+            {profile?.role === 'admin' && (
+                <Button
+                    style={{ border: "1px solid #FF614A", color: "#FF614A" }}
+                    className='absolute top-0 right-0 z-[1] w-auto p-3 bg-white shadow-md'
+                    variant='outline'
+                    onClick={onClickEditItemHandler}
+                >
+                    <Icons.EditItem />
+                </Button>
+            )}
             {width > SCREENS_NUMBER.SB && (
                 <div className='w-1/2 space-y-[50px]'>
                     <div ref={refDescriptionProduct}>
@@ -111,8 +123,15 @@ const Product: FC<PropTypes> = () => {
                 style={{ minWidth: 0 }}>
                 <div
                     className={`${S.sticky} flex flex-col
-                        sb:sticky sb:justify-between` }
+                    sb:sticky sb:justify-between` }
                     style={{ minHeight: refDescriptionProduct.current && refDescriptionProduct.current.clientHeight > 0 ? `${refDescriptionProduct.current.clientHeight}px` : 'auto' }}>
+                    <Button
+                        className='mb-6 h-5 w-44'
+                        variant='outline'
+                        onClick={() => navigate(-1)}
+                    >
+                        {t('buttons.goBack')}
+                    </Button>
                     <div className='space-y-[12px]'>
                         {currentProduct?.type && (
                             <TitlePage>
