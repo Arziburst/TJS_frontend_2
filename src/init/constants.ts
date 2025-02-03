@@ -18,11 +18,12 @@ export enum CSS_VARIABLES {
 
 export enum ENUM_CATEGORIES {
     ALL = 'see-all',
-    BROOCH = 'brooch',
     EARRINGS = 'earrings',
-    BRACELETS = 'bracelets',
     NECKLACE = 'necklace',
+    BRACELETS = 'bracelets',
+    CORALS = 'corals',
     RINGS = 'rings',
+    BROOCH = 'brooch'
 }
 
 export enum STATUS_OF_PRODUCT {
@@ -36,6 +37,7 @@ export const CATEGORIES_ITEMS = [
     ENUM_CATEGORIES.EARRINGS,
     ENUM_CATEGORIES.NECKLACE,
     ENUM_CATEGORIES.BRACELETS,
+    ENUM_CATEGORIES.CORALS,
     ENUM_CATEGORIES.RINGS,
     ENUM_CATEGORIES.BROOCH,
 ];

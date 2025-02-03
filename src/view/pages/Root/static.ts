@@ -5,11 +5,12 @@ import { MutableRefObject, useEffect } from 'react';
 import { SCREENS_NUMBER } from '@/assets';
 
 // Images
-import image_category_brooch from '@/assets/images/image_category_brooch.png';
-import image_category_earrings from '@/assets/images/image_category_earrings.png';
-import image_category_bracelets from '@/assets/images/image_category_bracelets.png';
-import image_category_necklace from '@/assets/images/image_category_necklace.png';
-import image_category_rings from '@/assets/images/image_category_rings.png';
+import image_category_brooch from '@/assets/images/image_category_brooch.jpg';
+import image_category_earrings from '@/assets/images/image_category_earrings.jpg';
+import image_category_bracelets from '@/assets/images/image_category_bracelets.jpg';
+import image_category_necklace from '@/assets/images/image_category_necklace.jpg';
+import image_category_rings from '@/assets/images/image_category_rings.jpg';
+import image_category_colars from '@/assets/images/image_category_colars.jpg';
 
 // Init
 import { ENUM_CATEGORIES } from '@/init';
@@ -37,6 +38,10 @@ export const CATEGORIES_ITEMS_WITH_IMAGES = [
     {
         category: ENUM_CATEGORIES.BRACELETS,
         image:    image_category_bracelets,
+    },
+    {
+        category: ENUM_CATEGORIES.CORALS,
+        image:    image_category_colars,
     },
     {
         category: ENUM_CATEGORIES.RINGS,

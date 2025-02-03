@@ -1,11 +1,12 @@
 {
     "categories": {
         "see-all": "Всі",
-        "brooch": "Брошка",
         "earrings": "Сережки",
-        "bracelets": "Браслети",
         "necklace": "Намисто",
-        "rings": "Обручки"
+        "bracelets": "Браслети",
+        "corals": "Корали",
+        "rings": "Обручки",
+        "brooch": "Брошка"
     },
     "filtersByPrice": {
         "init": "вибрати",

@@ -32,23 +32,23 @@ export const LinkCategory: FC<PropTypes> = ({
 }) => {
     return (
         <div
-            { ...props }
-            className = { cn('flex sm:justify-center', className) }>
+            {...props}
+            className={cn('flex sm:justify-center', className)}>
             <NavLink
-                className = { cn(`${S.root} flex gap-3 flex-wrap items-center`, className) }
-                to = { `${BOOK.SHOP}/${category}` }
-                variant = 'none'>
+                className={cn(`${S.root} flex gap-3 flex-wrap items-center`, className)}
+                to={`${BOOK.SHOP}/${category}`}
+                variant='none'>
                 <Image
-                    alt = { t('pages.root.linkAltImage') }
-                    className = 'w-[60px] aspect-[10/8] sb:w-[100px]'
-                    src = { image }
+                    alt={t('pages.root.linkAltImage')}
+                    className='w-[60px] aspect-[10/8] sb:w-[100px] rounded-[4px]'
+                    src={image}
                 />
-                <p className = { `flex content-start flex-wrap text-[40px] leading-[54px] uppercase
+                <p className={`flex content-start flex-wrap text-[40px] leading-[54px] uppercase
                 max-[420px]:text-3xl
                 max-[350px]:text-xl
                 ` }>
                     {t(`categories.${category}`)}
-                    <span className = 'text-base font-secondary text-quaternary'>
+                    <span className='text-base font-secondary text-quaternary'>
                         {`(${numberItems < 10 ? `0${numberItems}` : numberItems})`}
                     </span>
                 </p>

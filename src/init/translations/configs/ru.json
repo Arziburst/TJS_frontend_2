@@ -1,11 +1,12 @@
 {
     "categories": {
         "see-all": "Все",
-        "brooch": "Брошь",
         "earrings": "Серьги",
-        "bracelets": "Браслеты",
         "necklace": "Ожерелье",
-        "rings": "Кольца"
+        "bracelets": "Браслеты",
+        "corals": "Кораллы",
+        "rings": "Кольца",
+        "brooch": "Брошь"
     },
     "filtersByPrice": {
         "init": "выбрать",

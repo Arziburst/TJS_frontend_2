@@ -79,7 +79,7 @@ const Root: FC = () => {
                     <Image
                         alt={t('pages.root.altImage')}
                         className={`w-[60px] aspect-[10/8]
-                            sb:w-[100px]` }
+                            sb:w-[100px] rounded-[4px]` }
                         src={image_category_see_all}
                     />
                 </div>

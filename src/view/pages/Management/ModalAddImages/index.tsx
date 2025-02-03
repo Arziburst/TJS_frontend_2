@@ -86,6 +86,7 @@ export const ModalAddImages: FC<PropTypes> = ({
                             type='button'
                             className='w-100% p-2'
                             onClick={handleButtonClick}
+                            isLoading={isLoading}
                         >
                             {t('pages.management.openFileDialog')}
                         </Button>

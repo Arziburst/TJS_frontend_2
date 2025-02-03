@@ -1,11 +1,12 @@
 {
     "categories": {
         "see-all": "See all",
-        "brooch": "Brooch",
         "earrings": "Earrings",
-        "bracelets": "Bracelets",
         "necklace": "Necklace",
-        "rings": "Rings"
+        "bracelets": "Bracelets",
+        "corals": "Corals",
+        "rings": "Rings",
+        "brooch": "Brooch"
     },
     "filtersByPrice": {
         "init": "select filter",

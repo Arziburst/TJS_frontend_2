@@ -135,7 +135,7 @@ const Product = () => {
                     <div className='space-y-[12px]'>
                         {currentProduct?.type && (
                             <TitlePage>
-                                {t(`categories.${currentProduct?.type?.toLowerCase()}`)}
+                                {t(`categories.${currentProduct?.type}`)}
                             </TitlePage>
                         )}
                         {width < SCREENS_NUMBER.SB && (

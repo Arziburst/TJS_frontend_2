@@ -16,7 +16,6 @@ import { fetchEditProductAction, watchFetchEditProduct } from './fetchEditProduc
 
 // Types
 import * as types from './types';
-import { transformToCapitalize } from '@/tools/utils';
 
 export const useProductsSaga = () => {
     const dispatch = useDispatch();
@@ -24,32 +23,17 @@ export const useProductsSaga = () => {
     return {
         fetchProductsByPagination: (
             payload: types.FetchProductsByPaginationRequest,
-        ) => dispatch(fetchProductsByPaginationAction({
-            ...payload,
-            type: transformToCapitalize(payload.type),
-        })),
+        ) => dispatch(fetchProductsByPaginationAction(payload)),
         fetchProductsByPaginationAtEnd: (
             payload: types.FetchProductsByPaginationAtEndRequest,
-        ) => dispatch(fetchProductsByPaginationAtEndAction({
-            ...payload,
-            type: transformToCapitalize(payload.type),
-        })),
+        ) => dispatch(fetchProductsByPaginationAtEndAction(payload)),
         fetchProduct:          (payload: types.FetchProductRequest) => dispatch(fetchProductAction(payload)),
         fetchProducts:         (payload: types.FetchProductsRequest) => dispatch(fetchProductsAction(payload)),
         fetchCreateNewProduct: (payload: types.FetchCreateNewProductRequest) => dispatch(
-            fetchCreateNewProductAction({
-                ...payload,
-                type: transformToCapitalize(payload.type),
-            }),
+            fetchCreateNewProductAction(payload),
         ),
         fetchDeleteProduct: (_id: types.FetchDeleteProductRequest) => dispatch(fetchDeleteProductAction(_id)),
-        fetchEditProduct:   (payload: types.FetchEditProductRequest) => dispatch(fetchEditProductAction({
-            ...payload,
-            editedProduct: {
-                ...payload.editedProduct,
-                type: transformToCapitalize(payload.editedProduct.type),
-            },
-        })),
+        fetchEditProduct:   (payload: types.FetchEditProductRequest) => dispatch(fetchEditProductAction(payload)),
         // MarkerGen function
     };
 };
